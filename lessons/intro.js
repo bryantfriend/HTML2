@@ -47,8 +47,8 @@ window.Lessons.intro = {
                     document.getElementById('game-container').classList.add('fireworks-bg');
                     document.getElementById('game-container').innerHTML = '<h1 style=\\'color:white; font-size:40px; text-align:center;\\'>🎉 BOOM! READY! 🎉</h1>';
                     const editor = document.getElementById('code-editor');
-                    if(!editor.value.includes('MISSION_COMPLETE')) {
-                        editor.value += '\\n<!-- MISSION_COMPLETE -->';
+                    if(!editor.value.includes('MISSION_' + 'COMPLETE')) {
+                        editor.value += '\\n<!-- ' + 'MISSION_' + 'COMPLETE' + ' -->';
                         editor.dispatchEvent(new Event('input', { bubbles: true }));
                     }
                 }
@@ -97,8 +97,8 @@ window.Lessons.intro = {
             document.getElementById('rack').classList.toggle('server-on');
             if(this.classList.contains('on')) {
                 const editor = document.getElementById('code-editor');
-                if(!editor.value.includes('SERVER_ON')) {
-                    editor.value += '\\n<!-- SERVER_ON -->';
+                if(!editor.value.includes('SERV' + 'ER_ON')) {
+                    editor.value += '\\n<!-- ' + 'SERV' + 'ER_ON' + ' -->';
                     editor.dispatchEvent(new Event('input', { bubbles: true }));
                 }
             }
@@ -141,8 +141,8 @@ window.Lessons.intro = {
                         packet.style.opacity = '0'; pc.innerText = '🖥️✨';
                         this.innerText = 'WEBSITE LOADED!'; this.style.background = '#00ff9d';
                         const editor = document.getElementById('code-editor');
-                        if(!editor.value.includes('FETCHED_SITE')) {
-                            editor.value += '\\n<!-- FETCHED_SITE -->';
+                        if(!editor.value.includes('FETCHE' + 'D_SITE')) {
+                            editor.value += '\\n<!-- ' + 'FETCHE' + 'D_SITE' + ' -->';
                             editor.dispatchEvent(new Event('input', { bubbles: true }));
                         }
                     }, 1500);
@@ -178,8 +178,8 @@ window.Lessons.intro = {
     <div class="icon" ondblclick="
         document.getElementById('browser-win').style.display = 'flex';
         const editor = document.getElementById('code-editor');
-        if(!editor.value.includes('BROWSER_OPENED')) {
-            editor.value += '\\n<!-- BROWSER_OPENED -->';
+        if(!editor.value.includes('BROWSER' + '_OPENED')) {
+            editor.value += '\\n<!-- ' + 'BROWSER' + '_OPENED' + ' -->';
             editor.dispatchEvent(new Event('input', { bubbles: true }));
         }
     ">
@@ -249,8 +249,8 @@ window.Lessons.intro = {
                if(window.placedCount >= 5) {
                    document.getElementById('hg').style.background = 'radial-gradient(circle, #00ff9d, #0f172a)';
                    const editor = document.getElementById('code-editor');
-                   if(!editor.value.includes('HOUSE_BUILT')) {
-                       editor.value += '\\n<!-- HOUSE_BUILT -->';
+                   if(!editor.value.includes('HOUSE' + '_BUILT')) {
+                       editor.value += '\\n<!-- ' + 'HOUSE' + '_BUILT' + ' -->';
                        editor.dispatchEvent(new Event('input', { bubbles: true }));
                    }
                }
@@ -338,10 +338,10 @@ window.changeCloth = function(type, val) {
   }
   
   const editor = document.getElementById('code-editor');
-  if(!editor.value.includes('CSS_CHANGED')) {
+  if(!editor.value.includes('CSS_C' + 'HANGED')) {
       document.getElementById('ap').style.borderColor = '#00ff9d';
       document.getElementById('ap').style.boxShadow = '0 0 20px rgba(0,255,157,0.2)';
-      editor.value += '\\n<!-- CSS_CHANGED -->';
+      editor.value += '\\n<!-- ' + 'CSS_C' + 'HANGED' + ' -->';
       editor.dispatchEvent(new Event('input', { bubbles: true }));
   }
 };
@@ -366,8 +366,8 @@ window.ytCheck = setInterval(() => {
     if(document.activeElement === document.getElementById('yt-player')) {
         clearInterval(window.ytCheck);
         const editor = document.getElementById('code-editor');
-        if(!editor.value.includes('VIDEO_PLAYED')) {
-            editor.value += '\\n<!-- VIDEO_PLAYED -->';
+        if(!editor.value.includes('VIDEO_' + 'PLAYED')) {
+            editor.value += '\\n<!-- ' + 'VIDEO_' + 'PLAYED' + ' -->';
             editor.dispatchEvent(new Event('input', { bubbles: true }));
         }
     }
@@ -421,8 +421,8 @@ window.ytCheck = setInterval(() => {
       document.getElementById('src-view').style.display = 'block';
       document.getElementById('dg').style.boxShadow = '0 0 20px #00ff9d';
       const editor = document.getElementById('code-editor');
-      if(!editor.value.includes('F12_PRESSED')) {
-          editor.value += '\\n<!-- F12_PRESSED -->';
+      if(!editor.value.includes('F12_P' + 'RESSED')) {
+          editor.value += '\\n<!-- ' + 'F12_P' + 'RESSED' + ' -->';
           editor.dispatchEvent(new Event('input', { bubbles: true }));
       }
     ">F12</div>
@@ -478,13 +478,13 @@ window.ytCheck = setInterval(() => {
    <p style="color:#64748b;">Change "Welcome" to "Hola" in the code, then click refresh!</p>
    <button onclick="
       const editor = document.getElementById('code-editor');
-      if(editor.value.includes('Hola') || editor.value.includes('hola') || editor.value.includes('HOLA')) {
+      if(editor.value.includes('Ho' + 'la') || editor.value.includes('ho' + 'la') || editor.value.includes('HO' + 'LA')) {
          document.getElementById('preview-title').innerText = 'Success! You refreshed the page!';
          this.innerText = 'Refreshed! Mission Complete!';
          this.style.background = '#00ff9d';
          this.style.color = 'black';
-         if(!editor.value.includes('REFRESHED')) {
-             editor.value += '\\n<!-- REFRESHED -->';
+         if(!editor.value.includes('REFR' + 'ESHED')) {
+             editor.value += '\\n<!-- ' + 'REFR' + 'ESHED' + ' -->';
              editor.dispatchEvent(new Event('input', { bubbles: true }));
          }
       } else {
@@ -517,8 +517,8 @@ window.ytCheck = setInterval(() => {
         this.innerText = 'Error Fixed!';
         this.style.background = '#00ff9d'; this.style.color = 'black';
         const editor = document.getElementById('code-editor');
-        if(!editor.value.includes('ERROR_FIXED')) {
-            editor.value += '\\n<!-- ERROR_FIXED -->';
+        if(!editor.value.includes('ERROR' + '_FIXED')) {
+            editor.value += '\\n<!-- ' + 'ERROR' + '_FIXED' + ' -->';
             editor.dispatchEvent(new Event('input', { bubbles: true }));
         }
     " style="padding:10px 20px; background:#3b82f6; color:white; border:none; border-radius:4px; font-weight:bold; cursor:pointer; margin: 0 auto; width: 200px; transition:0.3s;">🛠️ Fix Error</button>
@@ -543,8 +543,8 @@ window.ytCheck = setInterval(() => {
         this.innerText = 'Understood! (Not 10)';
         this.style.background = '#00ff9d'; this.style.color = 'black';
         const editor = document.getElementById('code-editor');
-        if(!editor.value.includes('UNDERSTOOD')) {
-            editor.value += '\\n<!-- UNDERSTOOD -->';
+        if(!editor.value.includes('UNDER' + 'STOOD')) {
+            editor.value += '\\n<!-- ' + 'UNDER' + 'STOOD' + ' -->';
             editor.dispatchEvent(new Event('input', { bubbles: true }));
         }
     " style="padding:12px 24px; background:#3b82f6; color:white; border:none; border-radius:4px; cursor:pointer; font-weight:bold; margin: 0 auto; transition:0.3s;">CALCULATE 5 + 5</button>
@@ -577,8 +577,8 @@ window.ytCheck = setInterval(() => {
             document.getElementById('sg').style.background = 'radial-gradient(circle at bottom, rgba(16,185,129,0.2) 0%, #0f172a 70%)';
             setTimeout(() => {
                 const editor = document.getElementById('code-editor');
-                if(!editor.value.includes('FOUNDATION_BUILT')) {
-                    editor.value += '\\n<!-- FOUNDATION_BUILT -->';
+                if(!editor.value.includes('FOUNDATI' + 'ON_BUILT')) {
+                    editor.value += '\\n<!-- ' + 'FOUNDATI' + 'ON_BUILT' + ' -->';
                     editor.dispatchEvent(new Event('input', { bubbles: true }));
                 }
             }, 1000);
@@ -627,8 +627,8 @@ window.ytCheck = setInterval(() => {
             pc.appendChild(title);
             pc.style.background = 'radial-gradient(circle, #1e1b4b, #0f172a)';
             const editor = document.getElementById('code-editor');
-            if(!editor.value.includes('POSTER_BUILT')) {
-                editor.value += '\\n<!-- POSTER_BUILT -->';
+            if(!editor.value.includes('POSTER' + '_BUILT')) {
+                editor.value += '\\n<!-- ' + 'POSTER' + '_BUILT' + ' -->';
                 editor.dispatchEvent(new Event('input', { bubbles: true }));
             }
         }, 2000);
@@ -679,8 +679,8 @@ window.pfClick = function(btn) {
         document.getElementById('p-success').style.display = 'flex';
         document.getElementById('pf').style.boxShadow = '0 0 20px #10b981';
         const editor = document.getElementById('code-editor');
-        if(!editor.value.includes('PORTFOLIO_REVIEWED')) {
-            editor.value += '\\n<!-- PORTFOLIO_REVIEWED -->';
+        if(!editor.value.includes('PORTFOLIO' + '_REVIEWED')) {
+            editor.value += '\\n<!-- ' + 'PORTFOLIO' + '_REVIEWED' + ' -->';
             editor.dispatchEvent(new Event('input', { bubbles: true }));
         }
     }
@@ -722,8 +722,8 @@ window.selEmo = function(btn, emoji) {
     window.lessonEmoji = emoji; // Save globally so completion screen can read it
     document.getElementById('egrid').style.boxShadow = '0 0 20px rgba(0,255,157,0.3)';
     const editor = document.getElementById('code-editor');
-    if(!editor.value.includes('EMOJI_SELECTED')) {
-        editor.value += '\\n<!-- EMOJI_SELECTED -->';
+    if(!editor.value.includes('EMOJI_S' + 'ELECTED')) {
+        editor.value += '\\n<!-- ' + 'EMOJI_S' + 'ELECTED' + ' -->';
         editor.dispatchEvent(new Event('input', { bubbles: true }));
     }
 }

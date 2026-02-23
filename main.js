@@ -86,6 +86,7 @@ document.getElementById('prev-btn').addEventListener('click', function () {
 });
 
 document.getElementById('code-editor').addEventListener('input', function (e) {
+    console.log("Input event fired", e.target, e.target.value);
     window.IntentEngine.run(window.Intents.updatePreview, { code: e.target.value });
 });
 

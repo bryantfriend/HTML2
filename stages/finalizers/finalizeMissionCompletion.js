@@ -1,5 +1,7 @@
 function finalizeMissionCompletion(payload, newState, oldState, contextData) {
+    console.log("finalizeMissionCompletion CHECK:", { view: newState.view, isComplete: newState.isComplete, oldMission: oldState.missionCompleted, newMission: newState.missionCompleted });
     if (newState.view === 'LESSON' && !newState.isComplete && !oldState.missionCompleted && newState.missionCompleted) {
+        console.log("finalizeMissionCompletion TRIGGERED! Clearing interval.");
 
         // Mission just completed successfully! Clear the timer and unlock the button.
         if (window.missionTimerInterval) {
