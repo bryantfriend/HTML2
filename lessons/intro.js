@@ -387,7 +387,7 @@ window.ytCheck = setInterval(() => {
         },
         {
             title: "9. Viewing page source",
-            body: `<p>Teachers can demonstrate hitting F12 or Right Click -> View Page Source to see the messy Matrix of code behind the interface.</p>
+            body: `<p>In most browsers, you can press F12 (or right-click and select "Inspect") to see the messy Matrix of code behind the interface.</p>
             <p class="text-sm italic text-gray-400 mt-4">Mission: Hit the glowing F12 key to reveal the source code of WebSpace!</p>`,
             svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><text x="10" y="40" fill="#00ff9d" font-family="monospace" font-size="8">&lt;div class="hero"&gt;&lt;h1&gt;Hi&lt;/h1&gt;...</text><text x="10" y="60" fill="#00ff9d" font-family="monospace" font-size="8">&lt;script src="main.js"&gt;&lt;/script&gt;</text></svg>`,
             initialCode: `<!-- INTERACTIVE MODULE -->
