@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tag Matcher: HTML Quest</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap');
+
+        body {
+            font-family: 'Fira+Code', monospace;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            overflow: hidden;
+            touch-action: none;
+        }
+
+        .game-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(to bottom, #0f172a, #1e293b);
+        }
+
+        .player {
+            position: absolute;
+            bottom: 40px;
+            transform: translateX(-50%);
+            transition: transform 0.1s ease-out;
+            z-index: 20;
+        }
+
+        .tag {
+            position: absolute;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            white-space: nowrap;
+            user-select: none;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .closing-tag {
+            background: #10b981;
+            color: white;
+            border: 2px solid #059669;
+        }
+
+        .wrong-tag {
+            background: #ef4444;
+            color: white;
+            border: 2px solid #dc2626;
+        }
+
+        .opening-tag-ui {
+            background: #3b82f6;
+            color: white;
+        }
+
+        #particle-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .scanline {
+            width: 100%;
+            height: 100px;
+            z-index: 10;
+            background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(59, 130, 246, 0.1) 50%, rgba(0, 0, 0, 0) 100%);
+            opacity: 0.1;
+            position: absolute;
+            bottom: 100%;
+            pointer-events: none;
+            animation: scanline 6s linear infinite;
+        }
+
+        @keyframes scanline {
+            0% {
+                bottom: 100%;
+            }
+
+            100% {
+                bottom: -100px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="game-ui" class="game-container flex flex-col items-center justify-center p-4">
+
+        <!-- Start Screen -->
+        <div id="start-screen"
+            class="z-50 text-center max-w-lg bg-slate-800/80 backdrop-blur-md p-8 rounded-2xl border-2 border-blue-500 shadow-2xl">
+            <h1 class="text-4xl font-bold mb-4 text-blue-400">🌐 Tag Matcher</h1>
+            <p class="text-lg mb-6">In HTML, almost every <span class="text-blue-400 font-bold">&lt;tag&gt;</span> needs
+                a matching <span class="text-emerald-400 font-bold">&lt;/closing&gt;</span> tag!</p>
+            <div class="bg-slate-900 p-4 rounded-lg mb-6 text-left border-l-4 border-yellow-500">
+                <p class="text-sm text-slate-400 mb-2">// MISSION:</p>
+                <p>Catch the correct <span class="text-emerald-400 underline">Closing Tag</span> for the element shown
+                    at the bottom. Avoid the red "buggy" tags!</p>
+            </div>
+            <button onclick="startGame()"
+                class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-8 rounded-full transition-all transform hover:scale-105 active:scale-95">
+                START CODING
+            </button>
+        </div>
+
+        <!-- HUD -->
+        <div id="hud" class="hidden absolute top-0 left-0 w-full p-6 flex justify-between items-start z-30">
+            <div class="bg-slate-800/50 backdrop-blur px-4 py-2 rounded-lg border border-slate-700">
+                <span class="text-slate-400">Score:</span> <span id="score"
+                    class="text-2xl font-bold text-blue-400">0</span>
+            </div>
+            <div id="health-container" class="flex gap-2">
+                <!-- Health icons added by JS -->
+            </div>
+        </div>
+
+        <!-- Target Tag Display -->
+        <div id="target-container" class="hidden absolute bottom-24 left-1/2 -translate-x-1/2 z-30 text-center">
+            <p class="text-xs uppercase tracking-widest text-slate-500 mb-2">Needs a match:</p>
+            <div id="target-tag"
+                class="text-3xl font-bold px-6 py-2 bg-blue-600 rounded-lg shadow-lg border-2 border-blue-400 floating">
+                &lt;p&gt;
+            </div>
+        </div>
+
+        <!-- Player -->
+        <div id="player" class="hidden player">
+            <div class="flex flex-col items-center">
+                <div
+                    class="bg-slate-700 w-16 h-16 rounded-xl border-2 border-slate-500 flex items-center justify-center text-3xl shadow-lg">
+                    👨💻
+                </div>
+                <div class="mt-2 text-xs font-bold text-slate-400 uppercase">You</div>
+            </div>
+        </div>
+
+        <canvas id="particle-canvas"></canvas>
+        <div class="scanline"></div>
+
+        <!-- Game Over -->
+        <div id="game-over"
+            class="hidden z-50 text-center bg-slate-800 p-8 rounded-2xl border-2 border-red-500 shadow-2xl">
+            <h2 class="text-4xl font-bold mb-2 text-red-500">404: Game Over</h2>
+            <p class="text-xl mb-6">You missed too many closing tags!</p>
+            <div class="text-2xl mb-8">Final Score: <span id="final-score" class="text-blue-400 font-bold">0</span>
+            </div>
+            <button onclick="location.reload()"
+                class="bg-slate-700 hover:bg-slate-600 text-white font-bold py-3 px-8 rounded-full transition-all">
+                TRY AGAIN
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const tags = [
+            { open: '<p>', close: '</p>', label: 'Paragraph' },
+            { open: '<h1>', close: '</h1>', label: 'Heading 1' },
+            { open: '<div>', close: '</div>', label: 'Division' },
+            { open: '<a>', close: '</a>', label: 'Link' },
+            { open: '<ul>', close: '</ul>', label: 'Unordered List' },
+            { open: '<li>', close: '</li>', label: 'List Item' },
+            { open: '<span>', close: '</span>', label: 'Span' }
+        ];
+
+        const bugs = ['<p>', '<div>', '</p', '<p\>', '<h1/>', '<.div>', '/p>', '<br>', '<img/>'];
+
+        let score = 0;
+        let health = 3;
+        let isGameRunning = false;
+        let currentTarget = tags[0];
+        let playerX = window.innerWidth / 2;
+        let fallingObjects = [];
+        let lastSpawn = 0;
+        let spawnRate = 1500;
+        let speedMultiplier = 1;
+
+        const playerEl = document.getElementById('player');
+        const hudEl = document.getElementById('hud');
+        const targetContainerEl = document.getElementById('target-container');
+        const startScreenEl = document.getElementById('start-screen');
+        const gameOverEl = document.getElementById('game-over');
+        const scoreEl = document.getElementById('score');
+        const finalScoreEl = document.getElementById('final-score');
+        const healthContainer = document.getElementById('health-container');
+        const targetTagEl = document.getElementById('target-tag');
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function updateHealth() {
+            healthContainer.innerHTML = '';
+            for (let i = 0; i < 3; i++) {
+                const heart = document.createElement('span');
+                heart.innerHTML = i < health ? '❤️' : '🖤';
+                heart.className = 'text-xl';
+                healthContainer.appendChild(heart);
+            }
+        }
+
+        function setNewTarget() {
+            currentTarget = tags[Math.floor(Math.random() * tags.length)];
+            targetTagEl.textContent = currentTarget.open;
+            // Visual pulse
+            targetTagEl.style.transform = 'scale(1.2) translateX(-50%)';
+            setTimeout(() => {
+                targetTagEl.style.transform = '';
+            }, 200);
+        }
+
+        function startGame() {
+            score = 0;
+            health = 3;
+            speedMultiplier = 1;
+            spawnRate = 1500;
+            isGameRunning = true;
+
+            startScreenEl.classList.add('hidden');
+            gameOverEl.classList.add('hidden');
+            playerEl.classList.remove('hidden');
+            hudEl.classList.remove('hidden');
+            targetContainerEl.classList.remove('hidden');
+
+            updateHealth();
+            setNewTarget();
+            requestAnimationFrame(gameLoop);
+        }
+
+        // Controls
+        window.addEventListener('mousemove', (e) => {
+            playerX = e.clientX;
+            updatePlayerPosition();
+        });
+
+        window.addEventListener('touchmove', (e) => {
+            playerX = e.touches[0].clientX;
+            updatePlayerPosition();
+        });
+
+        function updatePlayerPosition() {
+            const min = 40;
+            const max = window.innerWidth - 40;
+            if (playerX < min) playerX = min;
+            if (playerX > max) playerX = max;
+            playerEl.style.left = playerX + 'px';
+        }
+
+        function spawnTag() {
+            const isCorrect = Math.random() > 0.6;
+            let text;
+            let type;
+
+            if (isCorrect) {
+                text = currentTarget.close;
+                type = 'correct';
+            } else {
+                // Pick a random closing tag or a bug
+                if (Math.random() > 0.5) {
+                    const otherTags = tags.filter(t => t.close !== currentTarget.close);
+                    text = otherTags[Math.floor(Math.random() * otherTags.length)].close;
+                } else {
+                    text = bugs[Math.floor(Math.random() * bugs.length)];
+                }
+                type = 'wrong';
+            }
+
+            const x = Math.random() * (window.innerWidth - 100) + 50;
+            const el = document.createElement('div');
+            el.className = `tag ${type === 'correct' ? 'closing-tag' : 'wrong-tag'}`;
+            el.textContent = text;
+            el.style.left = x + 'px';
+            el.style.top = '-50px';
+
+            document.body.appendChild(el);
+
+            fallingObjects.push({
+                el: el,
+                x: x,
+                y: -50,
+                type: type,
+                speed: (3 + Math.random() * 2) * speedMultiplier
+            });
+        }
+
+        function gameLoop(timestamp) {
+            if (!isGameRunning) return;
+
+            // Spawning logic
+            if (timestamp - lastSpawn > spawnRate) {
+                spawnTag();
+                lastSpawn = timestamp;
+                // Gradually increase difficulty
+                spawnRate = Math.max(600, 1500 - (score * 10));
+                speedMultiplier = 1 + (score * 0.02);
+            }
+
+            // Update falling objects
+            for (let i = fallingObjects.length - 1; i >= 0; i--) {
+                const obj = fallingObjects[i];
+                obj.y += obj.speed;
+                obj.el.style.top = obj.y + 'px';
+
+                // Collision Check
+                const playerRect = playerEl.getBoundingClientRect();
+                const objRect = obj.el.getBoundingClientRect();
+
+                if (
+                    objRect.bottom > playerRect.top &&
+                    objRect.top < playerRect.bottom &&
+                    objRect.left < playerRect.right &&
+                    objRect.right > playerRect.left
+                ) {
+                    if (obj.type === 'correct') {
+                        score += 10;
+                        scoreEl.textContent = score;
+                        createParticles(obj.x, obj.y, '#10b981');
+                        setNewTarget();
+                    } else {
+                        health--;
+                        updateHealth();
+                        createParticles(obj.x, obj.y, '#ef4444');
+                        if (health <= 0) endGame();
+                    }
+
+                    obj.el.remove();
+                    fallingObjects.splice(i, 1);
+                    continue;
+                }
+
+                // Remove if off screen
+                if (obj.y > window.innerHeight) {
+                    if (obj.type === 'correct') {
+                        // Optional: Penalty for missing the correct tag
+                        // health--;
+                        // updateHealth();
+                    }
+                    obj.el.remove();
+                    fallingObjects.splice(i, 1);
+                }
+            }
+
+            drawParticles();
+            requestAnimationFrame(gameLoop);
+        }
+
+        function endGame() {
+            isGameRunning = false;
+            finalScoreEl.textContent = score;
+            gameOverEl.classList.remove('hidden');
+            playerEl.classList.add('hidden');
+            targetContainerEl.classList.add('hidden');
+
+            // Clean up tags
+            fallingObjects.forEach(obj => obj.el.remove());
+            fallingObjects = [];
+        }
+
+        // Simple Particle System
+        let particles = [];
+        function createParticles(x, y, color) {
+            for (let i = 0; i < 12; i++) {
+                particles.push({
+                    x: x,
+                    y: y,
+                    vx: (Math.random() - 0.5) * 10,
+                    vy: (Math.random() - 0.5) * 10,
+                    alpha: 1,
+                    color: color
+                });
+            }
+        }
+
+        function drawParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+                p.alpha -= 0.02;
+                if (p.alpha <= 0) {
+                    particles.splice(i, 1);
+                    continue;
+                }
+                ctx.globalAlpha = p.alpha;
+                ctx.fillStyle = p.color;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 4, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+    </script>
+</body>
+
+</html>

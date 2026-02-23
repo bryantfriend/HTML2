@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber-Builder Academy: Mission HTML</title>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link rel="stylesheet" href="styles.css">
+    <!-- ICF Stages Pipeline -->
+    <script src="stages/validators/validators.js"></script>
+    <script src="stages/normalizers/normalizers.js"></script>
+    <script src="stages/contexts/contexts.js"></script>
+    <script src="stages/authorizors/authorizors.js"></script>
+    <script src="stages/processors/processors.js"></script>
+    <script src="stages/finalizers/finalizers.js"></script>
+    <script src="stages/emitters/emitters.js"></script>
+</head>
+
+<body class="p-4 md:p-8">
+    <!-- Intro Video Overlay -->
+    <div id="intro-video-container"
+        class="fixed inset-0 z-50 bg-black flex items-center justify-center cursor-pointer transition-opacity duration-1000">
+        <video id="intro-video" class="w-full h-full object-contain" src="assets/OquWay_Logo_Animation_Generation.mp4"
+            playsinline></video>
+        <div id="start-prompt" class="absolute inset-0 flex items-center justify-center bg-black/60 hidden">
+            <button
+                class="bg-[var(--neon-pink)] text-white font-bold py-4 px-8 rounded-lg text-2xl heading-font animate-pulse shadow-[0_0_20px_var(--neon-pink)]">INITIALIZE
+                ACADEMY</button>
+        </div>
+        <button id="skip-video-btn"
+            class="absolute bottom-6 right-6 text-gray-400 hover:text-white code-font text-sm z-50 tracking-widest hidden">SKIP
+            >></button>
+    </div>
+
+    <header class="max-w-6xl mx-auto mb-12 flex justify-between items-center">
+        <div>
+            <h1 class="heading-font text-3xl md:text-4xl font-bold text-white glow-text cursor-pointer" id="logo-btn">
+                CYBER-BUILDER <span class="text-[var(--neon-pink)]">ACADEMY</span></h1>
+            <p id="mission-subtitle" class="text-[var(--neon-cyan)] code-font text-sm mt-2">DASHBOARD_ACCESS_GRANTED</p>
+        </div>
+        <div class="hidden md:flex items-center gap-6" id="header-controls">
+            <button id="back-menu-btn"
+                class="hidden text-xs heading-font bg-gray-800 hover:bg-gray-700 text-gray-300 py-2 px-4 rounded transition">
+                &larr; ABORT MISSION
+            </button>
+            <div id="progress-container" class="hidden text-right">
+                <div id="progress-bar-bg" class="w-48 h-2 bg-gray-800 rounded-full overflow-hidden">
+                    <div id="progress-bar-fill" class="h-full bg-[var(--neon-green)] transition-all duration-500"
+                        style="width: 25%;"></div>
+                </div>
+                <p class="text-xs mt-1 code-font">SYNC: <span id="progress-text">25%</span></p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Menu View -->
+    <main id="menu-view" class="max-w-6xl mx-auto hidden">
+        <h2 class="heading-font text-2xl text-[var(--neon-cyan)] mb-6">AVAILABLE TRAINING MODULES</h2>
+        <div id="menu-grid" class="menu-grid">
+            <!-- Dynamic Content -->
+        </div>
+    </main>
+
+    <!-- Lesson View -->
+    <main id="lesson-view" class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 items-start hidden">
+
+        <!-- Left Column: Instructional Content -->
+        <section id="lesson-content" class="space-y-6">
+            <div class="cyber-card p-6 rounded-xl border-l-4 border-l-[var(--neon-cyan)]">
+                <h2 id="module-title" class="heading-font text-xl text-[var(--neon-cyan)] mb-4">LOADING MODULE...</h2>
+                <div id="module-body" class="space-y-4 text-gray-300 leading-relaxed">
+                    <!-- Dynamic content injected here -->
+                </div>
+            </div>
+
+            <!-- Animated SVG Zone -->
+            <div class="cyber-card p-8 rounded-xl flex justify-center items-center min-h-[300px]" id="svg-display">
+                <!-- Dynamic SVG injected here -->
+            </div>
+
+            <div class="mt-6 flex gap-4">
+                <button id="prev-btn"
+                    class="flex-1 py-3 px-6 rounded-lg bg-gray-800 text-gray-400 hover:bg-gray-700 transition heading-font text-sm hidden">BACK</button>
+                <button id="next-btn"
+                    class="flex-1 py-3 px-6 rounded-lg bg-[var(--neon-cyan)] text-black font-bold hover:shadow-[0_0_20px_var(--neon-cyan)] transition heading-font text-sm">NEXT
+                    MISSION</button>
+            </div>
+        </section>
+
+        <!-- Right Column: Interactive Editor -->
+        <section id="editor-section" class="sticky top-8">
+            <div class="rounded-xl overflow-hidden shadow-2xl border border-gray-700">
+                <div class="terminal-header p-3 flex items-center">
+                    <span class="dot dot-red"></span>
+                    <span class="dot dot-yellow"></span>
+                    <span class="dot dot-green"></span>
+                    <span class="ml-4 text-xs code-font text-gray-400">CYBER_TERM_1.0 — <span
+                            id="file-name">index.html</span></span>
+                </div>
+                <div id="code-input-container" class="p-4 bg-[#1e1e1e]">
+                    <label class="block text-xs text-gray-500 mb-2 code-font uppercase tracking-widest">Input
+                        Code</label>
+                    <textarea id="code-editor" class="w-full h-48 md:h-64 p-4 code-font text-sm rounded-md"
+                        spellcheck="false"></textarea>
+                </div>
+                <div class="p-4 bg-[#252525] border-t border-gray-700">
+                    <div class="flex justify-between items-center mb-2">
+                        <label class="text-xs text-gray-500 code-font uppercase tracking-widest">Neural Link
+                            Preview</label>
+                        <span class="text-[10px] text-[var(--neon-green)] animate-pulse">● LIVE_FEED</span>
+                    </div>
+                    <div id="preview-area" class="p-4 overflow-auto prose max-w-none">
+                        <!-- Output appears here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Completion View -->
+    <main id="completion-view" class="max-w-6xl mx-auto hidden">
+        <div id="completion-content"></div>
+    </main>
+
+    <script src="lessons/intro.js"></script>
+    <script src="lessons/lesson1.js"></script>
+    <script src="lessons/lesson2.js"></script>
+    <script src="lessons/lesson3.js"></script>
+    <script src="lessons/lesson4.js"></script>
+    <script src="lessons/lesson5.js"></script>
+    <script src="lessons/lesson6.js"></script>
+    <script src="lessons/lessons.js"></script>
+
+    <script src="stages/validators/validateShowMenu.js"></script>
+    <script src="stages/validators/validateStartLesson.js"></script>
+    <script src="stages/validators/validateLoadModule.js"></script>
+    <script src="stages/validators/validateUpdatePreview.js"></script>
+    <script src="stages/validators/validateCompleteLesson.js"></script>
+    <script src="stages/validators/validators.js"></script>
+
+    <script src="stages/normalizers/normalizeStartLesson.js"></script>
+    <script src="stages/normalizers/normalizeLoadModule.js"></script>
+    <script src="stages/normalizers/normalizers.js"></script>
+
+    <script src="stages/contexts/addContextCourseData.js"></script>
+    <script src="stages/contexts/contexts.js"></script>
+
+    <script src="stages/authorizors/authorizeAll.js"></script>
+    <script src="stages/authorizors/authorizors.js"></script>
+
+    <script src="stages/processors/processShowMenu.js"></script>
+    <script src="stages/processors/processStartLesson.js"></script>
+    <script src="stages/processors/processLoadModule.js"></script>
+    <script src="stages/processors/processUpdatePreview.js"></script>
+    <script src="stages/processors/processCompleteLesson.js"></script>
+    <script src="stages/processors/processors.js"></script>
+
+    <script src="stages/finalizers/finalizeMenuRender.js"></script>
+    <script src="stages/finalizers/finalizeLessonModule.js"></script>
+    <script src="stages/finalizers/finalizePreviewRender.js"></script>
+    <script src="stages/finalizers/finalizeCompleteLesson.js"></script>
+    <script src="stages/finalizers/finalizeMissionCompletion.js"></script>
+    <script src="stages/finalizers/finalizers.js"></script>
+
+    <script src="stages/emitters/emitResult.js"></script>
+    <script src="stages/emitters/emitters.js"></script>
+
+    <script src="intents/showMenu.js"></script>
+    <script src="intents/startLesson.js"></script>
+    <script src="intents/loadModule.js"></script>
+    <script src="intents/updatePreview.js"></script>
+    <script src="intents/completeLesson.js"></script>
+    <script src="intents/intents.js"></script>
+
+    <script src="intentEngine.js"></script>
+    <script src="main.js"></script>
+</body>
+
+</html>

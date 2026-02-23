@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Fira+Code:wght@400;500&family=Inter:wght@300;400;600&display=swap');
+
+:root {
+    --neon-cyan: #00f2ff;
+    --neon-pink: #ff00e5;
+    --neon-green: #00ff9d;
+    --bg-dark: #0a0b1e;
+    --card-bg: #161b33;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: #e0e0e0;
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+}
+
+.heading-font {
+    font-family: 'Orbitron', sans-serif;
+}
+
+.code-font {
+    font-family: 'Fira Code', monospace;
+}
+
+.neon-border {
+    border: 2px solid var(--neon-cyan);
+    box-shadow: 0 0 15px rgba(0, 242, 255, 0.3);
+}
+
+.cyber-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.cyber-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+    animation: scan 3s linear infinite;
+}
+
+@keyframes scan {
+    0% {
+        transform: translateX(-100%);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.glow-text {
+    text-shadow: 0 0 10px var(--neon-cyan);
+}
+
+.terminal-header {
+    background: #2d3436;
+    border-bottom: 1px solid #444;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 6px;
+}
+
+.dot-red {
+    background: #ff5f56;
+}
+
+.dot-yellow {
+    background: #ffbd2e;
+}
+
+.dot-green {
+    background: #27c93f;
+}
+
+#code-editor {
+    background: #1e1e1e;
+    color: #dcdcdc;
+    resize: none;
+    outline: none;
+    border: none;
+}
+
+#preview-area {
+    background: white;
+    color: black;
+    min-height: 200px;
+    border-radius: 4px;
+}
+
+.svg-container svg {
+    filter: drop-shadow(0 0 8px var(--neon-pink));
+}
+
+/* Animations for SVGs */
+@keyframes bounce-low {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+.animate-bounce-slow {
+    animation: bounce-low 2s ease-in-out infinite;
+}
+
+@keyframes pulse-cyan {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.pulse-cyan {
+    animation: pulse-cyan 1.5s infinite;
+}

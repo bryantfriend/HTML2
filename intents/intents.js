@@ -1,0 +1,1 @@
+window.Intents = window.Intents || {};
