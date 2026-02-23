@@ -75,10 +75,10 @@ window.Lessons.intro = {
 .server-blade { flex: 1; background: #0f172a; border: 2px solid #475569; border-radius: 4px; position: relative; }
 .light { width: 12px; height: 12px; border-radius: 50%; background: #334155; position: absolute; right: 10px; top: 10px; }
 .server-on .light { animation: blink-light 0.5s infinite alternate; }
-.server-on .blade-1 .light { animation-delay: 0s; background: #00ff9d; box-shadow: 0 0 10px #00ff9d; }
-.server-on .blade-2 .light { animation-delay: 0.2s; background: #00f2ff; box-shadow: 0 0 10px #00f2ff;}
-.server-on .blade-3 .light { animation-delay: 0.4s; background: #ff00e5; box-shadow: 0 0 10px #ff00e5;}
-@keyframes blink-light { 0% { opacity: 0.3; } 100% { opacity: 1; } }
+.server-on .blade-1 .light { animation: blink-light 0.41s infinite; background: #00ff9d; box-shadow: 0 0 10px #00ff9d; }
+.server-on .blade-2 .light { animation: blink-light 0.37s infinite; background: #00f2ff; box-shadow: 0 0 10px #00f2ff;}
+.server-on .blade-3 .light { animation: blink-light 0.53s infinite; background: #ff00e5; box-shadow: 0 0 10px #ff00e5;}
+@keyframes blink-light { 0%, 30% { opacity: 0.1; } 31%, 100% { opacity: 1; } }
 .switch-container { text-align: center; margin-top: 20px; }
 .switch { width: 60px; height: 30px; background: #ef4444; border-radius: 15px; display: inline-block; position: relative; cursor: pointer; transition: background 0.3s; }
 .switch::after { content: ''; position: absolute; width: 26px; height: 26px; background: white; border-radius: 50%; top: 2px; left: 2px; transition: transform 0.3s; }
@@ -119,8 +119,8 @@ window.Lessons.intro = {
 .world { background: #0f172a; height: 200px; position: relative; border-radius: 12px; overflow: hidden; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; }
 .pc { font-size: 50px; z-index: 10; }
 .server { font-size: 50px; z-index: 10; }
-.character { position: absolute; left: 80px; font-size: 40px; transition: left 1.5s linear, transform 0.2s; z-index: 20; display:flex; align-items:center; }
-.packet { font-size: 20px; opacity: 0; transition: opacity 0.2s; margin-left: -10px; }
+.character { position: absolute; left: 80px; font-size: 40px; transition: left 1.5s linear, transform 0.2s; z-index: 20; display:flex; align-items:center; transform: scaleX(-1); }
+.packet { font-size: 20px; opacity: 0; transition: opacity 0.2s; margin-left: 10px; transform: scaleX(-1); }
 </style>
 <div style="background:#020617; padding:20px; border-radius:12px;">
     <div class="world">
@@ -134,11 +134,11 @@ window.Lessons.intro = {
             const char = document.getElementById('char'); const packet = document.getElementById('packet'); const pc = document.getElementById('home-pc');
             char.style.left = 'calc(100% - 130px)';
             setTimeout(() => {
-                packet.style.opacity = '1'; char.style.transform = 'scaleX(-1)';
+                packet.style.opacity = '1'; char.style.transform = 'scaleX(1)';
                 setTimeout(() => {
                     char.style.left = '80px';
                     setTimeout(() => {
-                        packet.style.opacity = '0'; pc.innerText = '🖥️✨';
+                        packet.style.opacity = '0'; pc.innerText = '🖥️✨'; char.style.transform = 'scaleX(-1)';
                         this.innerText = 'WEBSITE LOADED!'; this.style.background = '#00ff9d';
                         const editor = document.getElementById('code-editor');
                         if(!editor.value.includes('FETCHE' + 'D_SITE')) {
@@ -164,7 +164,8 @@ window.Lessons.intro = {
 .desktop { background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%); height: 300px; border-radius: 12px; position: relative; overflow: hidden; }
 .icon { width: 64px; height: 64px; position: absolute; top: 20px; left: 20px; display: flex; flex-direction: column; align-items: center; cursor: pointer; color: white; text-shadow: 1px 1px 2px black; font-family: sans-serif; font-size: 12px; }
 .icon:hover { background: rgba(255,255,255,0.2); border-radius: 8px; }
-.browser-window { position: absolute; top: 10%; left: 10%; width: 80%; height: 80%; background: white; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: none; flex-direction: column; overflow: hidden; }
+.browser-window { position: absolute; top: 10%; left: 10%; width: 80%; height: 80%; background: white; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: none; flex-direction: column; overflow: hidden; transform: scale(0.5); opacity: 0; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.browser-window.open { display: flex; transform: scale(1); opacity: 1; }
 .browser-bar { background: #e2e8f0; padding: 10px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #cbd5e1; }
 .browser-dots { display: flex; gap: 5px; } .dot { width: 12px; height: 12px; border-radius: 50%; }
 .dot-red { background: #ef4444; } .dot-yellow { background: #eab308; } .dot-green { background: #22c55e; }
@@ -176,7 +177,9 @@ window.Lessons.intro = {
 </style>
 <div class="desktop">
     <div class="icon" ondblclick="
-        document.getElementById('browser-win').style.display = 'flex';
+        const win = document.getElementById('browser-win');
+        win.style.display = 'flex';
+        setTimeout(() => win.classList.add('open'), 10);
         const editor = document.getElementById('code-editor');
         if(!editor.value.includes('BROWSER' + '_OPENED')) {
             editor.value += '\\n<!-- ' + 'BROWSER' + '_OPENED' + ' -->';
@@ -229,21 +232,14 @@ window.Lessons.intro = {
 .dz-head.filled { background: #00ff9d !important; border: none !important; color: black !important; }
 </style>
 <div class="house-game" id="hg" onclick="
-   if(event.target.classList.contains('piece')) {
-       document.querySelectorAll('.piece').forEach(p => p.classList.remove('selected'));
-       event.target.classList.add('selected');
-       window.selectedPiece = event.target;
-   } else if(event.target.classList.contains('dz')) {
-       if(window.selectedPiece && !event.target.classList.contains('filled')) {
-           let targetType = event.target.dataset.type;
-           let pieceType = window.selectedPiece.dataset.type;
-           if(targetType === pieceType) {
-               event.target.classList.add('filled');
-               event.target.innerHTML = window.selectedPiece.innerHTML;
-               window.selectedPiece.classList.add('placed');
-               window.selectedPiece.classList.remove('selected');
-               window.selectedPiece = null;
-               
+   if(event.target.classList.contains('piece') && !event.target.classList.contains('placed')) {
+       let targetType = event.target.dataset.type;
+       let dzs = document.querySelectorAll('.dz');
+       for(let dz of dzs) {
+           if(dz.dataset.type === targetType && !dz.classList.contains('filled')) {
+               dz.classList.add('filled');
+               dz.innerHTML = event.target.innerHTML;
+               event.target.classList.add('placed');
                if(!window.placedCount) window.placedCount = 0;
                window.placedCount++;
                if(window.placedCount >= 5) {
@@ -254,6 +250,7 @@ window.Lessons.intro = {
                        editor.dispatchEvent(new Event('input', { bubbles: true }));
                    }
                }
+               break;
            }
        }
    }
@@ -356,20 +353,32 @@ window.changeCloth = function(type, val) {
             svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><rect x="40" y="30" width="160" height="90" rx="6" fill="#161b33" stroke="#00f2ff" stroke-width="2"/><circle cx="120" cy="75" r="20" fill="red"/><polygon points="115,65 115,85 130,75" fill="white"/></svg>`,
             initialCode: `<!-- INTERACTIVE MODULE -->
 <div style="background:#0f172a; border-radius:12px; height:300px; display:flex; flex-direction:column; justify-content:center; align-items:center; padding:10px;">
-    <h3 style="color:#00f2ff; margin-bottom:10px; font-family:sans-serif; font-size:14px; text-transform:uppercase; letter-spacing:1px; animation: pulse-cyan 2s infinite;">Click Play to Complete!</h3>
+    <h3 id="vid-msg" style="color:#00f2ff; margin-bottom:10px; font-family:sans-serif; font-size:14px; text-transform:uppercase; letter-spacing:1px; animation: pulse-cyan 2s infinite;">Click Play to Complete!</h3>
     <div style="width:100%; max-width:400px; border-radius:8px; overflow:hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-        <iframe width="100%" height="225" src="https://www.youtube.com/embed/dQw4w9WgXcQ?enablejsapi=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen id="yt-player"></iframe>
+        <iframe width="100%" height="225" src="https://www.youtube.com/embed/ok-plXXHlWw?enablejsapi=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen id="yt-player"></iframe>
     </div>
 </div>
 <script>
+window.vtClicked = false;
 window.ytCheck = setInterval(() => {
-    if(document.activeElement === document.getElementById('yt-player')) {
-        clearInterval(window.ytCheck);
-        const editor = document.getElementById('code-editor');
-        if(!editor.value.includes('VIDEO_' + 'PLAYED')) {
-            editor.value += '\\n<!-- ' + 'VIDEO_' + 'PLAYED' + ' -->';
-            editor.dispatchEvent(new Event('input', { bubbles: true }));
-        }
+    if(!window.vtClicked && document.activeElement === document.getElementById('yt-player')) {
+        window.vtClicked = true;
+        document.getElementById('vid-msg').innerText = 'INITIALIZING... (10s)';
+        let left = 10;
+        window.vtTimer = setInterval(() => {
+            left--;
+            document.getElementById('vid-msg').innerText = 'WATCHING... (' + left + 's)';
+            if(left <= 0) {
+                clearInterval(window.vtTimer);
+                clearInterval(window.ytCheck);
+                document.getElementById('vid-msg').innerText = 'MISSION ACCOMPLISHED!';
+                const editor = document.getElementById('code-editor');
+                if(!editor.value.includes('VIDEO_' + 'PLAYED')) {
+                    editor.value += '\\n<!-- ' + 'VIDEO_' + 'PLAYED' + ' -->';
+                    editor.dispatchEvent(new Event('input', { bubbles: true }));
+                }
+            }
+        }, 1000);
     }
 }, 500);
 </script>`,
@@ -417,18 +426,28 @@ window.ytCheck = setInterval(() => {
   <div class="keyboard-area text-[10px] md:text-sm">
     <div class="key">F10</div>
     <div class="key">F11</div>
-    <div class="key key-f12" onclick="
-      document.getElementById('src-view').style.display = 'block';
-      document.getElementById('dg').style.boxShadow = '0 0 20px #00ff9d';
-      const editor = document.getElementById('code-editor');
-      if(!editor.value.includes('F12_P' + 'RESSED')) {
-          editor.value += '\\n<!-- ' + 'F12_P' + 'RESSED' + ' -->';
-          editor.dispatchEvent(new Event('input', { bubbles: true }));
-      }
-    ">F12</div>
+    <div class="key key-f12" id="f12-btn" onclick="window.triggerF12()">F12</div>
     <div class="key" style="margin-left:20px;">PrtSc</div>
   </div>
-</div>`,
+</div>
+<script>
+window.triggerF12 = function() {
+  document.getElementById('src-view').style.display = 'block';
+  document.getElementById('dg').style.boxShadow = '0 0 20px #00ff9d';
+  const editor = document.getElementById('code-editor');
+  if(!editor.value.includes('F12_P' + 'RESSED')) {
+      editor.value += '\\n<!-- ' + 'F12_P' + 'RESSED' + ' -->';
+      editor.dispatchEvent(new Event('input', { bubbles: true }));
+  }
+};
+window.f12Listener = function(e) {
+  if (e.key === 'F12') {
+    e.preventDefault();
+    window.triggerF12();
+  }
+};
+document.addEventListener('keydown', window.f12Listener);
+</script>`,
             progress: 45,
             validator: function (code) { return code.includes("F12_PRESSED"); }
         },
@@ -472,14 +491,12 @@ window.ytCheck = setInterval(() => {
             title: "14. Save → Refresh cycle 🔄",
             body: `<p>When building on a real computer, you change code, <strong>save the file</strong>, and <strong>refresh the browser</strong>.</p>
             <p class="text-sm italic text-gray-400 mt-4">Mission: Change the text in the code editor to include the word "Hola", then click Refresh below!</p>`,
-            svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><path d="M120 40 A35 35 0 1 1 85 75" fill="none" stroke="#ff00e5" stroke-width="4"/><polygon points="75,70 95,70 85,85" fill="#ff00e5"/></svg>`,
-            initialCode: `<div style="background:white; border-radius:8px; padding:20px; color:black; font-family:sans-serif; text-align:center;">
-   <h2 id="preview-title" style="margin-bottom:15px; font-size:24px;">Welcome</h2>
-   <p style="color:#64748b;">Change "Welcome" to "Hola" in the code, then click refresh!</p>
+            svg: `<div style="background:white; border-radius:8px; padding:20px; color:black; font-family:sans-serif; text-align:center; height:150px; display:flex; flex-direction:column; justify-content:center;">
+   <div id="sim-bro" style="border:2px solid #e2e8f0; border-radius:4px; padding:10px; margin-bottom:10px; min-height:40px; display:flex; align-items:center; justify-content:center; font-size:20px; font-weight:bold;">Welcome</div>
    <button onclick="
       const editor = document.getElementById('code-editor');
       if(editor.value.includes('Ho' + 'la') || editor.value.includes('ho' + 'la') || editor.value.includes('HO' + 'LA')) {
-         document.getElementById('preview-title').innerText = 'Success! You refreshed the page!';
+         document.getElementById('sim-bro').innerText = 'Hola';
          this.innerText = 'Refreshed! Mission Complete!';
          this.style.background = '#00ff9d';
          this.style.color = 'black';
@@ -488,10 +505,11 @@ window.ytCheck = setInterval(() => {
              editor.dispatchEvent(new Event('input', { bubbles: true }));
          }
       } else {
-         alert('Please change the code in the editor to include Hola first!');
+         alert('Please change the code below to include Hola first!');
       }
-   " style="margin-top:20px; padding:10px 20px; background:#3b82f6; color:white; border:none; border-radius:4px; font-weight:bold; cursor:pointer; width:100%;">↻ REFRESH BROWSER</button>
+   " style="padding:5px 10px; background:#3b82f6; color:white; border:none; border-radius:4px; font-weight:bold; cursor:pointer; font-size:12px; transition:0.3s;">↻ REFRESH BROWSER</button>
 </div>`,
+            initialCode: `<h2>Welcome</h2>`,
             progress: 70,
             validator: function (code) { return code.includes("REFRESHED"); }
         },
@@ -532,22 +550,37 @@ window.ytCheck = setInterval(() => {
             <p class="text-sm italic text-gray-400 mt-4">Mission: Click 'CALCULATE' to see how HTML handles math.</p>`,
             svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><text x="120" y="80" fill="#00f2ff" font-family="monospace" font-size="14" text-anchor="middle">NOT PROGRAMMING</text></svg>`,
             initialCode: `<!-- INTERACTIVE MODULE -->
-<div style="background:#0f172a; padding:20px; border-radius:12px; text-align:center; color:white; height:300px; display:flex; flex-direction:column; justify-content:center;">
-    <h3 style="margin-bottom:15px; color:#00f2ff; font-size:20px;">HTML Cannot Do Math!</h3>
-    <div style="font-family:monospace; font-size:30px; background:#1e293b; padding:20px; border-radius:8px; display:inline-block; margin:0 auto; color:#ff00e5;">
-        &lt;p&gt; <span id="math-result">5 + 5</span> &lt;/p&gt;
-    </div>
-    <p style="margin:20px 0; color:#94a3b8; font-size:14px;">If you write 5 + 5 in HTML, it just shows "5 + 5" on the screen. It doesn't calculate 10!</p>
+<div id="math-container" style="background:#0f172a; padding:20px; border-radius:12px; text-align:center; color:white; height:300px; display:flex; flex-direction:column; justify-content:center; align-items:center;">
+    <h3 style="margin-bottom:15px; color:#00f2ff; font-size:20px;">Try to do math in HTML!</h3>
     <button onclick="
-        document.getElementById('math-result').style.color = '#ef4444';
-        this.innerText = 'Understood! (Not 10)';
-        this.style.background = '#00ff9d'; this.style.color = 'black';
+        document.getElementById('math-container').innerHTML = \`
+        <svg width='100%' height='200' viewBox='0 0 300 200' xmlns='http://www.w3.org/2000/svg'>
+            <style>
+              .math { font-size: 30px; font-weight: bold; fill: #00ff9d; }
+              .cross { stroke: #ef4444; stroke-width: 6; stroke-dasharray: 100; stroke-dashoffset: 100; animation: drawX 0.4s 0.5s forwards; }
+              .res { font-size: 40px; font-weight: bold; fill: #ff00e5; opacity: 0; animation: popIn 0.5s 1s forwards cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+              .spark { fill: #fcd34d; opacity: 0; animation: sparks 0.8s 1s ease-out forwards; }
+              @keyframes drawX { to { stroke-dashoffset: 0; } }
+              @keyframes popIn { 0% { opacity:0; transform: scale(0); } 100% { opacity:1; transform: scale(1); } }
+              @keyframes sparks { 0% { opacity: 1; transform: translate(0,0) scale(1.5); } 100% { opacity: 0; transform: translate(var(--x), var(--y)) scale(0); } }
+            </style>
+            <text x='150' y='60' text-anchor='middle' class='math' font-family='monospace'>5 + 5 = 10?</text>
+            <line x1='120' y1='30' x2='180' y2='70' class='cross' />
+            <line x1='180' y1='30' x2='120' y2='70' class='cross' />
+            <text x='150' y='140' text-anchor='middle' class='res' font-family='monospace'>"5 + 5"</text>
+            <circle cx='150' cy='120' r='5' class='spark' style='--x: -60px; --y: -40px;' />
+            <circle cx='150' cy='120' r='5' class='spark' style='--x: 60px; --y: -50px;' />
+            <circle cx='150' cy='120' r='5' class='spark' style='--x: 0px; --y: -80px;' />
+            <circle cx='150' cy='120' r='5' class='spark' style='--x: -50px; --y: 30px;' />
+            <circle cx='150' cy='120' r='5' class='spark' style='--x: 50px; --y: 40px;' />
+        </svg>
+        <h3 style='color:#00f2ff; margin-top:10px; font-family:sans-serif;'>HTML only renders text!</h3>\`;
         const editor = document.getElementById('code-editor');
         if(!editor.value.includes('UNDER' + 'STOOD')) {
-            editor.value += '\\n<!-- ' + 'UNDER' + 'STOOD' + ' -->';
+            editor.value += '\\\\n<!-- ' + 'UNDER' + 'STOOD' + ' -->';
             editor.dispatchEvent(new Event('input', { bubbles: true }));
         }
-    " style="padding:12px 24px; background:#3b82f6; color:white; border:none; border-radius:4px; cursor:pointer; font-weight:bold; margin: 0 auto; transition:0.3s;">CALCULATE 5 + 5</button>
+    " style="padding:16px 32px; background:#3b82f6; color:white; border:none; border-radius:8px; cursor:pointer; font-weight:bold; transition:0.3s; font-size:16px;">CALCULATE 5 + 5</button>
 </div>`,
             progress: 80,
             validator: function (code) { return code.includes("UNDERSTOOD"); }
@@ -599,40 +632,62 @@ window.ytCheck = setInterval(() => {
             svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><rect x="70" y="20" width="100" height="110" fill="none" stroke="#ff00e5" stroke-width="2"/><circle cx="120" cy="50" r="15" fill="#00f2ff"/></svg>`,
             initialCode: `<!-- INTERACTIVE MODULE -->
 <style>
-.poster-container { height: 300px; background: #020617; border-radius: 12px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-.flying-tag { position: absolute; font-family: monospace; font-size: 24px; font-weight: bold; opacity: 0; transition: all 1.5s cubic-bezier(0.25, 1, 0.5, 1); }
+.poster-container { height: 300px; background: #020617; border-radius: 12px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; font-family: sans-serif; }
 .play-btn { background: #ff00e5; color: white; border: none; padding: 15px 30px; border-radius: 30px; font-size: 20px; font-weight: bold; cursor: pointer; box-shadow: 0 0 20px rgba(255,0,229,0.5); z-index: 10; transition: 0.3s; }
 .play-btn:hover { transform: scale(1.1); }
+.site-builder { width: 90%; height: 90%; background: white; border-radius: 8px; display: none; flex-direction: column; overflow: hidden; opacity: 0; transition: opacity 0.5s; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+.sb-nav { height: 40px; background: #1e293b; display: flex; align-items: center; padding: 0 15px; transform: translateY(-100%); transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.sb-logo { color: #00f2ff; font-weight: bold; font-size: 16px; opacity: 0; transition: 0.5s; }
+.sb-links { margin-left: auto; display: flex; gap: 10px; opacity: 0; transition: 0.5s; }
+.sb-link { width: 30px; height: 6px; background: #475569; border-radius: 3px; }
+.sb-hero { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; background: linear-gradient(135deg, #0f172a, #3b82f6); color: white; transform: scale(0.9); opacity: 0; transition: 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.sb-h1 { font-size: 24px; font-weight: bold; margin-bottom: 10px; opacity: 0; transform: translateY(20px); transition: 0.5s; }
+.sb-p { font-size: 12px; opacity: 0; transform: translateY(20px); transition: 0.5s; }
+.sb-btn-ui { margin-top: 15px; padding: 8px 20px; background: #00ff9d; color: black; border-radius: 20px; font-weight: bold; font-size: 12px; opacity: 0; transform: scale(0); transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.sb-cards { display: flex; height: 60px; gap: 10px; padding: 10px; background: #f1f5f9; transform: translateY(100%); transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.sb-card { flex: 1; background: white; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); opacity: 0; transform: translateY(20px); transition: 0.5s; }
+.progress-bar { position: absolute; bottom: 0; left: 0; height: 6px; background: #00ff9d; width: 0%; transition: width 1s linear; display: none; }
 </style>
 <div class="poster-container" id="pc">
     <button class="play-btn" id="play-btn" onclick="
         this.style.display = 'none';
-        const tags = [
-            {t: '&lt;h1&gt;', c: '#00f2ff', x: '-100px', y: '-100px', fx: '30px', fy: '40px'},
-            {t: '&lt;img&gt;', c: '#00ff9d', x: '100%', y: '-50px', fx: '25%', fy: '120px'},
-            {t: '&lt;button&gt;', c: '#ff00e5', x: '-50px', y: '100%', fx: '60%', fy: '220px'},
-            {t: '&lt;ul&gt;', c: '#fcd34d', x: '100%', y: '100%', fx: '50%', fy: '160px'},
-            {t: '&lt;p&gt;', c: '#8b5cf6', x: '50%', y: '-100px', fx: '10%', fy: '200px'}
-        ];
-        const pc = document.getElementById('pc');
-        tags.forEach((tag, i) => {
-            const el = document.createElement('div');
-            el.className = 'flying-tag'; el.innerHTML = tag.t; el.style.color = tag.c;
-            el.style.left = tag.x; el.style.top = tag.y;
-            pc.appendChild(el);
-            setTimeout(() => { el.style.opacity = '1'; el.style.left = tag.fx; el.style.top = tag.fy; el.style.transform = 'rotate(360deg)'; }, i * 200);
-        });
-        setTimeout(() => {
-            const title = document.createElement('h2'); title.innerText = 'AWESOME POSTER!'; title.style.color = 'white'; title.style.position = 'absolute'; title.style.zIndex='5'; title.style.fontSize='35px'; title.style.textShadow='0 0 20px #00f2ff'; title.style.fontWeight='bold';
-            pc.appendChild(title);
-            pc.style.background = 'radial-gradient(circle, #1e1b4b, #0f172a)';
+        const pbar = document.getElementById('pbar'); pbar.style.display = 'block';
+        const sb = document.getElementById('sb'); sb.style.display = 'flex';
+        setTimeout(() => { sb.style.opacity = '1'; pbar.style.width = '10%'; }, 100);
+        setTimeout(() => { document.getElementById('nav').style.transform = 'translateY(0)'; pbar.style.width = '20%'; }, 1000);
+        setTimeout(() => { document.getElementById('logo').style.opacity = '1'; pbar.style.width = '30%'; }, 2000);
+        setTimeout(() => { document.getElementById('links').style.opacity = '1'; pbar.style.width = '40%'; }, 3000);
+        setTimeout(() => { const hero = document.getElementById('hero'); hero.style.opacity = '1'; hero.style.transform = 'scale(1)'; pbar.style.width = '50%'; }, 4000);
+        setTimeout(() => { document.getElementById('h1').style.opacity = '1'; document.getElementById('h1').style.transform = 'translateY(0)'; pbar.style.width = '60%'; }, 5000);
+        setTimeout(() => { document.getElementById('p').style.opacity = '1'; document.getElementById('p').style.transform = 'translateY(0)'; pbar.style.width = '70%'; }, 6000);
+        setTimeout(() => { document.getElementById('btn-ui').style.opacity = '1'; document.getElementById('btn-ui').style.transform = 'scale(1)'; pbar.style.width = '80%'; }, 7000);
+        setTimeout(() => { document.getElementById('cards').style.transform = 'translateY(0)'; pbar.style.width = '90%'; }, 8000);
+        setTimeout(() => { document.querySelectorAll('.sb-card').forEach((c, i) => setTimeout(() => { c.style.opacity = '1'; c.style.transform = 'translateY(0)'; }, i * 200)); pbar.style.width = '95%'; }, 8500);
+        setTimeout(() => { 
+            pbar.style.width = '100%';
+            setTimeout(() => { pbar.style.display = 'none'; }, 500);
             const editor = document.getElementById('code-editor');
             if(!editor.value.includes('POSTER' + '_BUILT')) {
                 editor.value += '\\n<!-- ' + 'POSTER' + '_BUILT' + ' -->';
                 editor.dispatchEvent(new Event('input', { bubbles: true }));
             }
-        }, 2000);
+        }, 10000);
     ">▶ PLAY VIDEO</button>
+    <div class="site-builder" id="sb">
+        <div class="sb-nav" id="nav">
+            <div class="sb-logo" id="logo">MySite</div>
+            <div class="sb-links" id="links"><div class="sb-link"></div><div class="sb-link"></div><div class="sb-link"></div></div>
+        </div>
+        <div class="sb-hero" id="hero">
+            <div class="sb-h1" id="h1">Hello World!</div>
+            <div class="sb-p" id="p">Welcome to my awesome website.</div>
+            <div class="sb-btn-ui" id="btn-ui">Get Started</div>
+        </div>
+        <div class="sb-cards" id="cards">
+            <div class="sb-card"></div><div class="sb-card"></div><div class="sb-card"></div>
+        </div>
+    </div>
+    <div class="progress-bar" id="pbar"></div>
 </div>`,
             progress: 90,
             validator: function (code) { return code.includes("POSTER_BUILT"); }

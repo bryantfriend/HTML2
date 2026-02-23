@@ -3,6 +3,17 @@ function finalizePreviewRender(payload, newState, oldState, contextData) {
         const previewArea = document.getElementById('preview-area');
         if (previewArea) {
             previewArea.innerHTML = newState.editorContent;
+
+            // Execute any scripts that were injected via innerHTML
+            const scripts = previewArea.querySelectorAll('script');
+            scripts.forEach(oldScript => {
+                const newScript = document.createElement('script');
+                Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
+                newScript.appendChild(document.createTextNode(oldScript.innerHTML));
+                if (oldScript.parentNode) {
+                    oldScript.parentNode.replaceChild(newScript, oldScript);
+                }
+            });
         }
     }
 }
