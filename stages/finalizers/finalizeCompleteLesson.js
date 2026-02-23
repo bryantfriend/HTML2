@@ -11,7 +11,7 @@ function finalizeCompleteLesson(payload, newState, oldState, contextData) {
         const lesson = window.courseData.lessons[newState.currentLessonIndex];
         let specialIntroComplete = "";
         if (lesson && lesson.id === 'intro' && window.lessonEmoji) {
-            specialIntroComplete = `<div class="mb-6 text-6xl animate-bounce">\${window.lessonEmoji}</div><p class="text-[var(--neon-pink)] font-bold text-2xl mb-8">Please show your teacher this screen to get credit for this lesson.</p>`;
+            specialIntroComplete = `<div class="mb-6 text-6xl animate-bounce">${window.lessonEmoji}</div><p class="text-[var(--neon-pink)] font-bold text-2xl mb-8">Please show your teacher this screen to get credit for this lesson.</p>`;
         }
 
         document.getElementById('completion-content').innerHTML =
