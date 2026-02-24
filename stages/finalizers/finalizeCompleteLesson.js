@@ -22,7 +22,10 @@ function finalizeCompleteLesson(payload, newState, oldState, contextData) {
                 '</div>' +
                 '<h2 class="heading-font text-5xl text-white mb-4 glow-text">ACCESS GRANTED</h2>' +
                 '<p class="text-[var(--neon-cyan)] code-font text-xl mb-8">Recruit, you have successfully completed the framework.</p>') +
-            '<button onclick="window.IntentEngine.run(window.Intents.showMenu, {})" class="py-4 px-10 bg-[var(--neon-pink)] text-white font-bold rounded-lg heading-font hover:scale-105 transition">RETURN TO DASHBOARD</button>' +
+            '<div class="flex flex-col gap-4 items-center">' +
+            '<button onclick="window.IntentEngine.run(window.Intents.showMenu, {})" class="w-64 py-4 px-10 bg-[var(--neon-pink)] text-white font-bold rounded-lg heading-font hover:scale-105 transition shadow-[0_0_15px_var(--neon-pink)]">RETURN TO DASHBOARD</button>' +
+            (lesson && lesson.id === 'intro' ? '<button onclick="window.location.href=\\\'minigames/tag-matcher/index.html\\\'" class="w-64 py-4 px-10 bg-[var(--neon-cyan)] text-black font-bold rounded-lg heading-font hover:scale-105 transition shadow-[0_0_15px_var(--neon-cyan)]">PLAY TAG MATCHER</button>' : '') +
+            '</div>' +
             '</div>';
     }
 }
