@@ -567,7 +567,7 @@ document.addEventListener('keydown', window.f12Listener);
             <text x='150' y='60' text-anchor='middle' class='math' font-family='monospace'>5 + 5 = 10?</text>
             <line x1='120' y1='30' x2='180' y2='70' class='cross' />
             <line x1='180' y1='30' x2='120' y2='70' class='cross' />
-            <text x='150' y='140' text-anchor='middle' class='res' font-family='monospace'>"5 + 5"</text>
+            <text x='150' y='140' text-anchor='middle' class='res' font-family='monospace'>&quot;5 + 5&quot;</text>
             <circle cx='150' cy='120' r='5' class='spark' style='--x: -60px; --y: -40px;' />
             <circle cx='150' cy='120' r='5' class='spark' style='--x: 60px; --y: -50px;' />
             <circle cx='150' cy='120' r='5' class='spark' style='--x: 0px; --y: -80px;' />
