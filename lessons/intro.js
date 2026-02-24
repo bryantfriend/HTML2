@@ -441,7 +441,7 @@ window.triggerF12 = function() {
   }
 };
 window.f12Listener = function(e) {
-  if (e.key === 'F12') {
+  if (e.key === 'F12' && document.getElementById('src-view')) {
     e.preventDefault();
     window.triggerF12();
   }

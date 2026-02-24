@@ -16,11 +16,16 @@ function finalizeMenuRender(payload, newState, oldState, contextData) {
 
             const card = document.createElement('div');
             card.className = "cyber-card p-6 rounded-xl border-t-4 border-t-[var(--neon-green)] hover:scale-105 transition cursor-pointer flex flex-col justify-between h-48";
+            const isIntro = lesson.id === 'intro';
+            const gameIndicator = isIntro
+                ? '<button onclick="window.location.href=\\\'minigames/tag-matcher/index.html\\\'; event.stopPropagation();" class="text-[10px] mt-2 bg-[var(--neon-green)] text-black px-2 py-1 rounded font-bold uppercase tracking-wider hover:bg-white transition-colors">🎮 PLAY GAME</button>'
+                : '<span class="text-[10px] mt-2 text-gray-500 uppercase tracking-wider block">🔒 Game Locked</span>';
 
             card.innerHTML =
                 '<div>' +
                 '<h3 class="heading-font text-xl text-[var(--neon-green)] mb-2">' + lesson.title + '</h3>' +
                 '<p class="text-sm text-gray-400">' + lesson.description + '</p>' +
+                gameIndicator +
                 '</div>' +
                 '<div class="mt-4 text-xs font-mono text-[var(--neon-cyan)] flex justify-between items-center">' +
                 '<span>MODULES: ' + lesson.modules.length + '</span>' +
