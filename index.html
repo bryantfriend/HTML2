@@ -115,14 +115,20 @@
         <div id="completion-content"></div>
     </main>
 
-    <script src="lessons/intro.js"></script>
-    <script src="lessons/lesson1.js"></script>
-    <script src="lessons/lesson2.js"></script>
-    <script src="lessons/lesson3.js"></script>
-    <script src="lessons/lesson4.js"></script>
-    <script src="lessons/lesson5.js"></script>
-    <script src="lessons/lesson6.js"></script>
-    <script src="lessons/lessons.js"></script>
+    <script src="lessons/manifest.js"></script>
+    <script src="lessonLoader.js"></script>
+    <script id="main-lessons-loader">
+        // Initial load of metadata so the courseData can be built
+        // We'll wrap the main.js initialization in a way that waits for metadata
+        window.LessonMetadataLoaded = (async () => {
+            await window.LessonLoader.loadAllMetadata();
+            // Once metadata is loaded, we can define courseData
+            window.courseData = {
+                title: "Cyber-Builder Academy",
+                lessons: window.LessonManifest.lessons.map(l => window.Lessons[l.id])
+            };
+        })();
+    </script>
 
     <script src="stages/validators/validateShowMenu.js"></script>
     <script src="stages/validators/validateStartLesson.js"></script>

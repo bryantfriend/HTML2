@@ -1,0 +1,10 @@
+c297989 Add minigame lock states to dashboard and fix global F12 event listener.
+d2754b4 Add Tag Matcher Mini-Game link to Intro Lesson completion screen.
+287fc1d Fix Mod 16: encode nested double quotes in onclick handler to prevent HTML leakage.
+315998c Address QA feedback: Update text in Module 9 for F12.
+635dbd0 Address QA feedback: Fix Mod 16 leak, animate Mod 19 portfolio, fix Mod 20 template eval.
+2881d99 Fix finalizer: prevent interactive modules from losing their DOM state due to IntentEngine re-rendering.
+602763c Address QA feedback: Fix event handler script execution; update animations for Mods 2, 4, 16, 18; fix mechanics for Mods 3, 6, 8, 9, 14.
+e2fbad7 Fix validateShowMenu ReferenceError by removing premature index.html script imports and patch lesson6.js invalid backtick string literal
+9bbb3ad Fix syntax shadowing bug in interactive modules preventing immediate unlock
+97f8045 Initialize project and interactive intro modules

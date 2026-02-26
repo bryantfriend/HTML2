@@ -16,9 +16,9 @@ function finalizeMenuRender(payload, newState, oldState, contextData) {
 
             const card = document.createElement('div');
             card.className = "cyber-card p-6 rounded-xl border-t-4 border-t-[var(--neon-green)] hover:scale-105 transition cursor-pointer flex flex-col justify-between h-48";
-            const isIntro = lesson.id === 'intro';
-            const gameIndicator = isIntro
-                ? '<button onclick="window.location.href=\\\'minigames/tag-matcher/index.html\\\'; event.stopPropagation();" class="text-[10px] mt-2 bg-[var(--neon-green)] text-black px-2 py-1 rounded font-bold uppercase tracking-wider hover:bg-white transition-colors">🎮 PLAY GAME</button>'
+            const isCompleted = newState.completedLessons && newState.completedLessons.includes(lesson.id);
+            const gameIndicator = (isCompleted && lesson.gamePath)
+                ? `<button onclick="window.location.href='${lesson.gamePath}'; event.stopPropagation();" class="text-[10px] mt-2 bg-[var(--neon-green)] text-black px-2 py-1 rounded font-bold uppercase tracking-wider hover:bg-white transition-colors">🎮 PLAY ${lesson.gameTitle || 'GAME'}</button>`
                 : '<span class="text-[10px] mt-2 text-gray-500 uppercase tracking-wider block">🔒 Game Locked</span>';
 
             card.innerHTML =
@@ -32,8 +32,20 @@ function finalizeMenuRender(payload, newState, oldState, contextData) {
                 '<span class="bg-[var(--neon-cyan)]/20 px-2 py-1 rounded">START &rarr;</span>' +
                 '</div>';
 
-            card.onclick = function () {
-                window.IntentEngine.run(window.Intents.startLesson, { lessonIndex: i });
+            card.onclick = async function () {
+                // Show loading state if needed
+                card.style.opacity = '0.5';
+                card.style.pointerEvents = 'none';
+
+                try {
+                    await window.LessonLoader.loadLessonModules(lesson.id);
+                    window.IntentEngine.run(window.Intents.startLesson, { lessonIndex: i });
+                } catch (e) {
+                    console.error("Failed to load lesson modules", e);
+                    alert("Failed to load lesson modules. Please check your connection.");
+                    card.style.opacity = '1';
+                    card.style.pointerEvents = 'auto';
+                }
             };
 
             grid.appendChild(card);

@@ -4,11 +4,48 @@ window.state = {
     currentModuleIndex: 0,
     editorContent: "",
     isComplete: false,
-    missionCompleted: false
+    missionCompleted: false,
+    completedLessons: []
+};
+
+// Global helper for signaling module completion from interactive modules
+window.completeModule = function (marker) {
+    console.log("[Signal] completeModule called with marker:", marker);
+    try {
+        const editor = document.getElementById('code-editor');
+        if (editor) {
+            // Note: 'marker' is a variable, so checking it here doesn't cause self-detection of literals.
+            if (!editor.value.includes(marker)) {
+                editor.value += '\n<!-- ' + marker + ' -->';
+                console.log("[Signal] Added marker to editor.");
+            }
+
+            if (window.IntentEngine && window.Intents && window.Intents.updatePreview) {
+                console.log("[Signal] Triggering updatePreview intent...");
+                window.IntentEngine.run(window.Intents.updatePreview, { code: editor.value });
+                console.log("[Signal] updatePreview intent triggered.");
+            } else {
+                console.error("[Signal] IntentEngine or updatePreview intent missing!", {
+                    engine: !!window.IntentEngine,
+                    intents: !!window.Intents,
+                    updatePreview: window.Intents ? !!window.Intents.updatePreview : false
+                });
+            }
+        } else {
+            console.error("[Signal] CRITICAL: code-editor element not found in DOM!");
+        }
+    } catch (e) {
+        console.error("[Signal] EXCEPTION in completeModule:", e);
+    }
 };
 
 // Initialize
-window.onload = function () {
+window.onload = async function () {
+    // Wait for lesson metadata to load before doing anything
+    if (window.LessonMetadataLoaded) {
+        await window.LessonMetadataLoaded;
+    }
+
     const videoContainer = document.getElementById('intro-video-container');
     const video = document.getElementById('intro-video');
     const startPrompt = document.getElementById('start-prompt');
@@ -25,19 +62,16 @@ window.onload = function () {
     };
 
     if (videoContainer && video) {
-        // Try to play with sound
+        // ... (rest of video logic)
         let playPromise = video.play();
         if (playPromise !== undefined) {
             playPromise.then(_ => {
-                // Autoplay started successfully (rare for unmuted)
                 if (skipBtn) skipBtn.classList.remove('hidden');
             }).catch(error => {
-                // Autoplay was prevented. Show a "Start" button
                 if (startPrompt) startPrompt.classList.remove('hidden');
             });
         }
 
-        // Clicking anywhere on the container when prompt is active will start the video
         videoContainer.addEventListener('click', () => {
             if (!startPrompt.classList.contains('hidden')) {
                 startPrompt.classList.add('hidden');
@@ -59,7 +93,6 @@ window.onload = function () {
             finishIntro();
         };
 
-        // Fallback in case the video cannot load
         video.onerror = () => {
             finishIntro();
         };
@@ -67,6 +100,11 @@ window.onload = function () {
         window.IntentEngine.run(window.Intents.showMenu, {});
     }
 };
+
+// Global Event Listeners (Menu Buttons Generated Dynamically)
+// We need to catch the 'start-lesson' from menu.
+// The menu buttons currently probably call IntentEngine.run(window.Intents.startLesson, { index: ... })
+// I will intercept or just make sure it's loaded.
 // Global Event Listeners (Menu Buttons Generated Dynamically, so they use event delegation where necessary)
 
 document.getElementById('next-btn').addEventListener('click', function () {

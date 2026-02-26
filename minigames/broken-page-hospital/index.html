@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Broken Page Hospital</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .code-editor {
+            font-family: 'Fira Code', monospace;
+        }
+
+        .monitor-glow {
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.1);
+        }
+
+        .heart-pulse {
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 text-slate-900">
+
+    <!-- Header -->
+    <header class="bg-emerald-600 text-white p-4 shadow-lg flex items-center justify-between shrink-0 z-10">
+        <div class="flex items-center gap-3">
+            <div class="bg-white p-2 rounded-xl text-emerald-600 shadow-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h1a.3.3 0 1 0 .2-.3Z" />
+                    <path d="M10 22v-2" />
+                    <path d="M7 10v4a5 5 0 0 0 10 0v-4" />
+                    <path d="M2 10h20" />
+                    <path d="M21 10a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1Z" />
+                    <path d="M3 10a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1Z" />
+                </svg>
+            </div>
+            <div>
+                <h1 class="text-xl font-extrabold tracking-tight uppercase leading-none">Broken Page Hospital</h1>
+                <p class="text-[10px] font-bold opacity-80 uppercase tracking-widest">Web Triage Unit</p>
+            </div>
+        </div>
+
+        <div id="progress-container" class="flex flex-col items-end">
+            <span id="level-counter" class="text-xs font-bold opacity-90 mb-1">PATIENT 1 OF 3</span>
+            <div class="w-48 h-2 bg-emerald-800 rounded-full overflow-hidden">
+                <div id="progress-bar" class="h-full bg-emerald-300 transition-all duration-700" style="width: 33%">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 flex overflow-hidden w-full">
+        <!-- Left: Surgery Panel -->
+        <div class="w-1/2 flex flex-col border-r border-slate-200 bg-white">
+            <div class="p-6 border-b border-slate-100 bg-white shrink-0">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <h2 class="text-[10px] font-bold text-emerald-600 uppercase tracking-widest mb-1">Case File</h2>
+                        <h3 id="patient-name" class="text-2xl font-extrabold text-slate-800 tracking-tight">
+                            Portfolio.html</h3>
+                    </div>
+                    <div id="status-badge"
+                        class="px-4 py-2 rounded-full font-bold flex items-center gap-2 border-2 bg-red-50 border-red-200 text-red-600 transition-all duration-300">
+                        <span id="status-icon" class="heart-pulse">●</span>
+                        <span id="status-text">CRITICAL</span>
+                    </div>
+                </div>
+
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                    <p id="complaint-text" class="text-slate-700 font-medium leading-relaxed italic">"Symptoms
+                        loading..."</p>
+                </div>
+            </div>
+
+            <!-- Code Editor -->
+            <div class="flex-1 flex flex-col bg-slate-900 relative overflow-hidden">
+                <div
+                    class="bg-slate-800 px-4 py-2 flex items-center justify-between text-slate-400 text-[10px] font-bold uppercase tracking-widest shrink-0">
+                    <div class="flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="16 18 22 12 16 6" />
+                            <polyline points="8 6 2 12 8 18" />
+                        </svg>
+                        Editor
+                    </div>
+                    <button onclick="resetLevel()" class="hover:text-white transition-colors">RESET CASE</button>
+                </div>
+                <textarea id="code-editor"
+                    class="flex-1 w-full bg-slate-900 text-emerald-400 p-8 code-editor text-lg focus:outline-none resize-none leading-relaxed outline-none border-none"
+                    spellcheck="false"></textarea>
+
+                <!-- Success Message -->
+                <div id="success-panel"
+                    class="absolute bottom-6 left-6 right-6 transform translate-y-64 transition-transform duration-500 ease-out z-20">
+                    <div class="bg-emerald-500 text-white rounded-2xl p-6 shadow-2xl flex items-center justify-between">
+                        <div class="flex items-center gap-4">
+                            <div class="bg-white/20 p-2 rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M20 6 9 17l-5-5" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 class="font-extrabold text-lg leading-tight">Patient Stabilized!</h4>
+                                <p id="success-explanation" class="text-emerald-50 opacity-90 text-xs mt-1">Great job,
+                                    surgeon.</p>
+                            </div>
+                        </div>
+                        <button onclick="nextLevel()"
+                            class="bg-white text-emerald-600 px-5 py-2.5 rounded-xl font-extrabold hover:bg-emerald-50 transition-all transform hover:scale-105 shadow-md text-sm">
+                            NEXT CASE
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: Preview Panel -->
+        <div class="w-1/2 flex flex-col bg-slate-100 p-6">
+            <div class="flex items-center justify-between mb-3">
+                <h2 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="20" height="14" x="2" y="3" rx="2" />
+                        <line x1="8" x2="16" y1="21" y2="21" />
+                        <line x1="12" x2="12" y1="17" y2="21" />
+                    </svg>
+                    Live Vital Monitor
+                </h2>
+                <button onclick="toggleHint()"
+                    class="text-[10px] font-bold text-amber-600 hover:text-amber-700 uppercase tracking-widest flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                        <path d="M12 17h.01" />
+                    </svg>
+                    Help
+                </button>
+            </div>
+
+            <div id="preview-container"
+                class="flex-1 bg-white rounded-3xl shadow-xl border-4 border-slate-200 overflow-hidden relative flex flex-col monitor-glow transition-all duration-500">
+                <div class="bg-slate-50 border-b border-slate-100 p-3 flex items-center gap-3 shrink-0">
+                    <div class="flex gap-1.5">
+                        <div class="w-2 h-2 rounded-full bg-slate-300"></div>
+                        <div class="w-2 h-2 rounded-full bg-slate-300"></div>
+                        <div class="w-2 h-2 rounded-full bg-slate-300"></div>
+                    </div>
+                    <div id="url-bar"
+                        class="flex-1 bg-white border border-slate-200 rounded-lg py-1 px-3 text-[10px] text-slate-400 font-mono italic">
+                        loading...
+                    </div>
+                </div>
+
+                <div class="flex-1 relative bg-white">
+                    <iframe id="live-preview" class="w-full h-full border-none block"></iframe>
+                    <!-- Red Warning Overlay -->
+                    <div id="broken-overlay"
+                        class="absolute inset-0 pointer-events-none opacity-20 bg-[radial-gradient(#ef4444_1px,transparent_1px)] [background-size:16px_16px] transition-opacity duration-300">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hint Box -->
+            <div id="hint-box"
+                class="hidden mt-4 bg-amber-50 border border-amber-200 p-4 rounded-2xl animate-in fade-in slide-in-from-top-1 duration-300">
+                <div class="flex gap-3">
+                    <span class="text-lg">💡</span>
+                    <p id="hint-text" class="text-amber-700 text-xs italic leading-relaxed"></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Win Screen -->
+    <div id="win-screen"
+        class="fixed inset-0 bg-emerald-600/95 backdrop-blur-md hidden items-center justify-center p-6 z-50">
+        <div class="bg-white max-w-sm w-full rounded-[40px] p-10 text-center shadow-2xl">
+            <div
+                class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                        d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+                </svg>
+            </div>
+            <h2 class="text-3xl font-black text-slate-800 mb-2">Shift Complete!</h2>
+            <p class="text-slate-500 mb-8 text-sm">Every patient is stabilized. You've earned your Senior Developer
+                badge!</p>
+            <button onclick="location.reload()"
+                class="w-full py-4 bg-emerald-600 text-white rounded-2xl font-black hover:bg-emerald-700 transition-all shadow-lg">
+                NEW SHIFT
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const LEVELS = [
+            {
+                patientName: "Portfolio.html",
+                complaint: "The site feels incomplete and cut off. It's like it never finished talking.",
+                initialCode: `<!DOCTYPE html>\n<html>\n<head>\n  <title>My Portfolio</title>\n</head>\n<body>\n  <h1>Welcome!</h1>\n  <p>I am a web surgeon.</p>\n`,
+                check: (code) => {
+                    const clean = code.toLowerCase().replace(/\s/g, '');
+                    return clean.includes('</body>') && clean.includes('</html>');
+                },
+                hint: "Check the very end of the document. Every <body> needs a </body> closing tag, and every <html> needs a </html> tag!",
+                explanation: "Symmetry is vital. Without closing tags, the browser doesn't know where the 'body' of the page ends."
+            },
+            {
+                patientName: "HiddenBlog.html",
+                complaint: "I wrote a great post but the page is completely white! Where did it go?",
+                initialCode: `<!DOCTYPE html>\n<html>\n<head>\n  <title>My Secret Blog</title>\n  <h1>My First Post</h1>\n  <p>Why can't anyone see this?</p>\n</head>\n<body>\n</body>\n</html>`,
+                check: (code) => {
+                    const headMatch = code.match(/<head>([\s\S]*?)<\/head>/i);
+                    const bodyMatch = code.match(/<body>([\s\S]*?)<\/body>/i);
+                    const content = "My First Post";
+                    return bodyMatch && bodyMatch[1].includes(content) && headMatch && !headMatch[1].includes(content);
+                },
+                hint: "The <head> is for internal settings (brains). Move visible content like <h1> and <p> into the <body> instead!",
+                explanation: "The <head> section is for metadata. Only content inside <body> is rendered for the user to see."
+            },
+            {
+                patientName: "DivCollapse.html",
+                complaint: "Help! My footer is trapped inside the main content area! Everything is squished.",
+                initialCode: `<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    .container { border: 2px solid #ccc; padding: 20px; }\n    .footer { background: #eee; margin-top: 10px; padding: 10px; }\n  </style>\n</head>\n<body>\n  <div class="container">\n    <h1>Main Content</h1>\n    <p>We forgot to close the container...</p>\n  <div class="footer">I should be outside!</div>\n</body>\n</html>`,
+                check: (code) => {
+                    const divOpen = (code.match(/<div/g) || []).length;
+                    const divClose = (code.match(/<\/div>/g) || []).length;
+                    return divOpen === divClose && divOpen >= 2;
+                },
+                hint: "Count your <div> openings and closings. Add a </div> before the footer starts to free it from the container!",
+                explanation: "Unclosed divs cause layout 'bleeding' where one section accidentally swallows another."
+            }
+        ];
+
+        let currentLevel = 0;
+        let editor, preview, statusBadge, statusText, statusIcon, successPanel, brokenOverlay, hintBox;
+
+        function init() {
+            // Get all elements
+            editor = document.getElementById('code-editor');
+            preview = document.getElementById('live-preview');
+            statusBadge = document.getElementById('status-badge');
+            statusText = document.getElementById('status-text');
+            statusIcon = document.getElementById('status-icon');
+            successPanel = document.getElementById('success-panel');
+            brokenOverlay = document.getElementById('broken-overlay');
+            hintBox = document.getElementById('hint-box');
+
+            editor.addEventListener('input', updatePreview);
+            loadLevel();
+        }
+
+        function loadLevel() {
+            const level = LEVELS[currentLevel];
+            document.getElementById('patient-name').innerText = level.patientName;
+            document.getElementById('complaint-text').innerText = `"${level.complaint}"`;
+            document.getElementById('level-counter').innerText = `PATIENT ${currentLevel + 1} OF ${LEVELS.length}`;
+            document.getElementById('progress-bar').style.width = `${((currentLevel + 1) / LEVELS.length) * 100}%`;
+            document.getElementById('url-bar').innerText = `hospital://vitals/${level.patientName}`;
+            document.getElementById('hint-text').innerText = level.hint;
+            document.getElementById('success-explanation').innerText = level.explanation;
+
+            editor.value = level.initialCode;
+            updatePreview();
+
+            successPanel.classList.add('translate-y-64');
+            hintBox.classList.add('hidden');
+        }
+
+        function setVitals(isHealthy) {
+            if (isHealthy) {
+                statusBadge.className = "px-4 py-2 rounded-full font-bold flex items-center gap-2 border-2 bg-emerald-50 border-emerald-200 text-emerald-600";
+                statusText.innerText = "STABLE";
+                brokenOverlay.style.opacity = "0";
+                document.getElementById('preview-container').className = "flex-1 bg-white rounded-3xl shadow-xl border-4 border-emerald-400 overflow-hidden relative flex flex-col monitor-glow transition-all duration-500";
+                successPanel.classList.remove('translate-y-64');
+            } else {
+                statusBadge.className = "px-4 py-2 rounded-full font-bold flex items-center gap-2 border-2 bg-red-50 border-red-200 text-red-600";
+                statusText.innerText = "CRITICAL";
+                brokenOverlay.style.opacity = "0.2";
+                document.getElementById('preview-container').className = "flex-1 bg-white rounded-3xl shadow-xl border-4 border-slate-200 overflow-hidden relative flex flex-col monitor-glow transition-all duration-500";
+                successPanel.classList.add('translate-y-64');
+            }
+        }
+
+        function updatePreview() {
+            const code = editor.value;
+
+            // Using srcdoc but falling back to contentDocument for better reliability
+            try {
+                preview.srcdoc = code;
+            } catch (e) {
+                const doc = preview.contentDocument || preview.contentWindow.document;
+                doc.open();
+                doc.write(code);
+                doc.close();
+            }
+
+            if (LEVELS[currentLevel].check(code)) {
+                setVitals(true);
+            } else {
+                setVitals(false);
+            }
+        }
+
+        function resetLevel() {
+            editor.value = LEVELS[currentLevel].initialCode;
+            updatePreview();
+        }
+
+        function nextLevel() {
+            currentLevel++;
+            if (currentLevel < LEVELS.length) {
+                loadLevel();
+            } else {
+                document.getElementById('win-screen').style.display = 'flex';
+            }
+        }
+
+        function toggleHint() {
+            hintBox.classList.toggle('hidden');
+        }
+
+        // Use window.onload or DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+
+</html>

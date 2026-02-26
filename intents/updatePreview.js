@@ -5,6 +5,6 @@ window.Intents.updatePreview = {
     addContext: [window.Contexts.addContextCourseData],
     authorize: [window.Authorizors.authorizeAll],
     process: [window.Processors.processUpdatePreview],
-    finalize: [window.Finalizers.finalizePreviewRender, window.Finalizers.finalizeMissionCompletion],
+    finalize: [window.Finalizers.finalizeLessonModule, window.Finalizers.finalizePreviewRender, window.Finalizers.finalizeMissionCompletion],
     emit: [window.Emitters.emitResult]
 };

@@ -5,6 +5,6 @@ function processStartLesson(payload, currentState, contextData) {
     newState.currentModuleIndex = 0;
     newState.editorContent = contextData.courseData.lessons[payload.lessonIndex].modules[0].initialCode;
     newState.isComplete = false;
-    newState.missionCompleted = false;
+    newState.missionCompleted = false; // Start fresh
     return newState;
 }

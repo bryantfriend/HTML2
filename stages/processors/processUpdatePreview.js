@@ -13,8 +13,12 @@ function processUpdatePreview(payload, currentState, contextData) {
                 console.error("Validator failed with error:", e);
                 newState.missionCompleted = false;
             }
+        } else if (currentModule && currentModule.initialCode.includes('<!-- INTERACTIVE MODULE -->')) {
+            // Interactive modules REQUIRE a validator or an explicit signal. 
+            // If they don't have a validator, they don't auto-complete.
+            newState.missionCompleted = false;
         } else {
-            // If no validator exists, mission is inherently complete.
+            // If no validator exists and it's NOT an interactive module, mission is complete.
             newState.missionCompleted = true;
         }
     }
