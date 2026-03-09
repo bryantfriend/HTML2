@@ -100,6 +100,56 @@ body {
     border-radius: 4px;
 }
 
+#preview-area h4 {
+    font-size: 1.1em;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    line-height: 1.2;
+}
+
+#preview-area h5 {
+    font-size: 0.9em;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    line-height: 1.2;
+}
+
+#preview-area h6 {
+    font-size: 0.75em;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    line-height: 1.2;
+}
+
+/* Base styles for lesson interactive modules */
+.tower-block {
+    background-color: var(--neon-cyan);
+    margin: 4px;
+    border-radius: 4px;
+    text-align: center;
+    color: black;
+    font-family: monospace;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.heading-btn {
+    padding: 8px 12px;
+    margin: 4px;
+    background-color: #2d3436;
+    border: 1px solid var(--neon-pink);
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.heading-btn:hover {
+    background-color: var(--neon-pink);
+    color: black;
+}
+
+
 .svg-container svg {
     filter: drop-shadow(0 0 8px var(--neon-pink));
 }
