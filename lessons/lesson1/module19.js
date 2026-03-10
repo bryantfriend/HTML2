@@ -2,10 +2,10 @@ window.Lessons.lesson1.modules[18] = {
     title: "19. Blueprint vs Build 🏗️",
     body: `<p>HTML is the blueprint. The browser is the builder.</p>
     <p class="text-sm italic text-gray-400 mt-4">Mission: Click all 3 items to inspect their code and see the build!</p>`,
-    svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><rect x="50" y="35" width="60" height="80" fill="none" stroke="#3b82f6" stroke-width="2" rx="4"/></svg>`,
+    svg: ``,\
     widgetCode: `<!-- INTERACTIVE MODULE -->
 <style>
-.bp-game { background: #0f172a; height: 350px; border-radius: 12px; padding: 15px; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+.bp-game { background: #0f172a; height: 350px; width: 100%; border-radius: 12px; padding: 15px; display: flex; flex-direction: column; position: relative; overflow: hidden; }
 .checklist { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
 .cl-item { background: #1e293b; padding: 12px 15px; border-radius: 8px; border-left: 4px solid #3b82f6; cursor: pointer; display: flex; align-items: center; justify-content: space-between; color: white; transition: 0.2s; font-family: sans-serif; font-size: 14px; }
 .cl-item:hover { background: #334155; }
