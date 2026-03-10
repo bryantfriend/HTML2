@@ -1,7 +1,7 @@
 window.Lessons.lesson1.modules[12] = {
     title: "13. Whack-a-Bug 🐛",
     body: `<p>A "bug" is just a mistake in the code. Fix the 3 bugs in the editor below!</p>
-    <p class="text-sm italic text-gray-400 mt-4">Mission: 1. Fix "Mispelled Tab" to "My Tab". 2. Fix &lt;h1 bracket. 3. Fix "wobsit" to "website".</p>`,
+    <p class="text-sm italic text-gray-400 mt-4">Mission: 1. Fix "My Site Tab" to "My Tab". 2. Fix &lt;h1 bracket. 3. Fix "wobsit" to "website".</p>`,
     svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><text x="120" y="80" fill="#ef4444" font-size="40" text-anchor="middle">🐛🔨</text></svg>`,
     widgetCode: `<!-- INTERACTIVE MODULE -->
 <style>
@@ -28,7 +28,7 @@ window.Lessons.lesson1.modules[12] = {
         
         const editor = document.getElementById('code-editor');
         if(editor) {
-            editor.value = "<html>\\n<head>\\n    <title>Mispelled Tab</title>\\n</head>\\n<body>\\n    <h1Welcome</h1>\\n    <p>This is my wobsit.</p>\\n</body>\\n</html>";
+            editor.value = "<html>\\n<head>\\n    <title>My Site Tab</title>\\n</head>\\n<body>\\n    <h1Welcome</h1>\\n    <p>This is my wobsit.</p>\\n</body>\\n</html>";
             editor.dispatchEvent(new Event('input', { bubbles: true }));
         }
         
@@ -46,7 +46,7 @@ window.Lessons.lesson1.modules[12] = {
         if(!editor) return;
         const val = editor.value;
         
-        if(val.includes('My Tab')) { window.bf[0] = 1; markBug('i1'); }
+        if(val.includes('My Tab') && !val.includes('Site')) { window.bf[0] = 1; markBug('i1'); }
         if(val.includes('<h1>Welcome</h1>')) { window.bf[1] = 1; markBug('i2'); }
         if(val.includes('website')) { window.bf[2] = 1; markBug('i3'); }
         
@@ -99,7 +99,7 @@ window.Lessons.lesson1.modules[12] = {
         <div class="count" id="c-val">Bugs: 3</div>
     </div>
     <div class="list">
-        <div class="item" id="i1"><span>Title typo</span><span>🐛</span></div>
+        <div class="item" id="i1"><span>Title should be "My Tab"</span><span>🐛</span></div>
         <div class="item" id="i2"><span>Missing &lt;h1&gt; bracket</span><span>🐛</span></div>
         <div class="item" id="i3"><span>"wobsit" typo</span><span>🐛</span></div>
     </div>
