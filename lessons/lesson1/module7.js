@@ -20,10 +20,11 @@ window.Lessons.lesson1.modules[6] = {
 </div>
 <script>
 (function() {
-    const tabTitle = document.getElementById('tab-title');
-    const webContent = document.getElementById('web-content');
-
     window.syncModule7 = function(code) {
+        const tabTitle = document.getElementById('tab-title');
+        const webContent = document.getElementById('web-content');
+        if (!tabTitle || !webContent) return;
+
         // Extract title
         const titleMatch = code.match(/<title>([\s\S]*?)<\/title>/i);
         if (titleMatch) {
@@ -47,10 +48,18 @@ window.Lessons.lesson1.modules[6] = {
         }
     };
     
+    function handleInput(e) {
+        if (!document.getElementById('tab-title')) {
+            if (editor) editor.removeEventListener('input', handleInput);
+            return;
+        }
+        window.syncModule7(e.target.value);
+    }
+
     // Initial sync
     const editor = document.getElementById('code-editor');
     if(editor) {
-        editor.addEventListener('input', (e) => window.syncModule7(e.target.value));
+        editor.addEventListener('input', handleInput);
         window.syncModule7(editor.value);
     }
 })();
