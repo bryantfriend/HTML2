@@ -2,10 +2,10 @@ window.Lessons.lesson1.modules[10] = {
     title: "11. The Magic Extension ✨",
     body: `<p>A file is just text until you name it <code>.html</code>. That extension tells the computer to open it in a Browser.</p>
     <p class="text-sm italic text-gray-400 mt-4">Mission: 1. Click the "Rename" button below. 2. Change <code>index.txt</code> to <code>index.html</code>. 3. Double-click the file!</p>`,
-    svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><rect x="90" y="30" width="60" height="80" fill="white" stroke="#94a3b8" stroke-width="2"/><text x="120" y="130" fill="#00ff9d" font-family="monospace" font-size="14" text-anchor="middle">.html</text></svg>`,
+    svg: ``,
     widgetCode: `<!-- INTERACTIVE MODULE -->
 <style>
-.desktop { background: #1e3a8a; height: 350px; border-radius: 12px; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: sans-serif; }
+.desktop { background: #1e3a8a; height: 350px; width: 100%; border-radius: 12px; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: sans-serif; }
 .file-area { display: flex; flex-direction: column; align-items: center; }
 .file-wrapper { position: relative; cursor: pointer; display: flex; flex-direction: column; align-items: center; transition: 0.2s; }
 .file-wrapper:hover { transform: scale(1.05); }
