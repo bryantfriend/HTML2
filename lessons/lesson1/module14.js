@@ -24,8 +24,17 @@ window.Lessons.lesson1.modules[13] = {
 window.cleanCode = function() {
     const box = document.getElementById('cbox');
     const svg = document.getElementById('format-svg');
+    const editor = document.getElementById('code-editor');
+    
     box.classList.add('clean');
     box.innerHTML = '&lt;<span class="code-tag">html</span>&gt;\\n  &lt;<span class="code-tag">head</span>&gt;\\n    &lt;<span class="code-tag">title</span>&gt;My Site&lt;/<span class="code-tag">title</span>&gt;\\n  &lt;/<span class="code-tag">head</span>&gt;\\n  &lt;<span class="code-tag">body</span>&gt;\\n    &lt;<span class="code-tag">h1</span>&gt;Hello World&lt;/<span class="code-tag">h1</span>&gt;\\n    &lt;<span class="code-tag">p</span>&gt;Welcome!&lt;/<span class="code-tag">p</span>&gt;\\n  &lt;/<span class="code-tag">body</span>&gt;\\n&lt;/<span class="code-tag">html</span>&gt;';
+    
+    if(editor) {
+        editor.value = "<html>\\n  <head>\\n    <title>My Site</title>\\n  </head>\\n  <body>\\n    <h1>Hello World</h1>\\n    <p>Welcome!</p>\\n  </body>\\n</html>";
+        if (window.IntentEngine && window.Intents) {
+            window.IntentEngine.run(window.Intents.updatePreview, {code: editor.value});
+        }
+    }
     
     if(svg) {
         document.getElementById('rect1').setAttribute('x', '20');
@@ -57,7 +66,7 @@ window.cleanCode = function() {
     <div class="code-box" id="cbox">&lt;<span class="code-tag">html</span>&gt;&lt;<span class="code-tag">head</span>&gt;&lt;<span class="code-tag">title</span>&gt;My Site&lt;/<span class="code-tag">title</span>&gt;&lt;/<span class="code-tag">head</span>&gt;&lt;<span class="code-tag">body</span>&gt;&lt;<span class="code-tag">h1</span>&gt;Hello World&lt;/<span class="code-tag">h1</span>&gt;&lt;<span class="code-tag">p</span>&gt;Welcome!&lt;/<span class="code-tag">p</span>&gt;&lt;/<span class="code-tag">body</span>&gt;&lt;/<span class="code-tag">html</span>&gt;</div>
     <button class="clean-btn" id="cbtn" onclick="window.cleanCode()">🧹 MAKE IT READABLE</button>
 </div>`,
-    initialCode: ``,
+    initialCode: `<html><head><title>My Site</title></head><body><h1>Hello World</h1><p>Welcome!</p></body></html>`,
     progress: 70,
     validator: function (code) { return code.includes("FORMAT_CLEANED"); }
 };
