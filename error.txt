@@ -1,6 +1,6 @@
-C:\Users\fangb_kyiapn1\OneDrive\Desktop\Oxford International School\Classes\Games\HTML2\migrate.js:16
-let newIntro = \`window.Lessons = window.Lessons || {};
-               ^
+C:\Users\fangb_kyiapn1\OneDrive\Desktop\Oxford International School\Classes\Games\HTML2\replace_mod17.js:76
+const oldLogic = \`                        var obj = "Γ¡É";
+                 ^
 
 SyntaxError: Invalid or unexpected token
     at wrapSafe (node:internal/modules/cjs/loader:1486:18)

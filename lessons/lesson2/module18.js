@@ -1,7 +1,7 @@
 window.Lessons.lesson2.modules[17] = {
     title: "18. Add headings to organize",
     body: `<p>A website shouldn't just be one big paragraph. Use an H1 heading above your text to give the page a title.</p>
-    <p class="text-sm italic text-gray-400 mt-4">Mission: Add an &lt;h1&gt; tag ABOVE the paragraph to organize the hierarchy.</p>`,
+    <p class="text-sm italic text-gray-400 mt-4">Mission: Add an &lt;h1&gt; tag ABOVE the paragraph to organize the hierarchy. Type "My Hobbies" between the tags.</p>`,
     svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><text x="40" y="50" fill="white" font-size="24" font-weight="bold">TITLE (H1)</text><rect x="40" y="70" width="160" height="10" fill="#00ff9d"/></svg>`,
     initialCode: "\n<p>I like to play basketball.</p>",
     widgetCode: `
