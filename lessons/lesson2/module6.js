@@ -31,8 +31,13 @@ window.Lessons.lesson2.modules[5] = {
                 var msg = document.getElementById('lab-msg');
                 var btns = document.querySelectorAll('#size-lab .size-btn');
                 
-                var tested = { h1: false, p: false, h6: false };
-                window.m6_done = false;
+                
+                if (window.m6_tested === undefined) {
+                    window.m6_tested = { h1: false, p: false, h6: false };
+                }
+                var tested = window.m6_tested;
+                window.m6_done = window.m6_done || false;
+                var processing = false;
                 
                 function setScene(type) {
                     if (!document.getElementById('size-lab')) return;
@@ -84,7 +89,8 @@ window.Lessons.lesson2.modules[5] = {
                         lab.style.background = "#1e1e2f";
                     }
                     
-                    if (tested.h1 && tested.p && tested.h6 && !window.m6_done) {
+                    if (tested.h1 && tested.p && tested.h6 && !window.m6_done && !processing) {
+                        processing = true;
                         setTimeout(function() {
                             msg.innerHTML = "😲 SMALLER THAN P!<br>✅ You discovered the text size truth!";
                             msg.style.color = "var(--neon-green)";

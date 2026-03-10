@@ -61,8 +61,8 @@ window.cl = function(wId) {
     win.classList.remove('show');
     setTimeout(() => win.style.display = 'none', 300);
 }
-</script>`,
-    initialCode: `<div class="multi-desk" id="mdesk" onclick="document.querySelectorAll('.f-icon').forEach(el=>el.classList.remove('sel'))">
+</script>
+<div class="multi-desk" id="mdesk" onclick="document.querySelectorAll('.f-icon').forEach(el=>el.classList.remove('sel'))">
     <div class="f-icon" onclick="event.stopPropagation(); window.sel(this)" ondblclick="window.op('w-txt')">
         <div class="f-img">📄</div>
         <div class="f-name">notes.txt</div>
@@ -108,6 +108,7 @@ window.cl = function(wId) {
         </div>
     </div>
 </div>`,
+    initialCode: ``,
     progress: 60,
     validator: function (code) { return code.includes("APP_LAUNCHED"); }
 };

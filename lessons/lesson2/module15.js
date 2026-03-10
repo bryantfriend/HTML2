@@ -37,12 +37,7 @@ window.Lessons.lesson2.modules[14] = {
                 var bpPText = document.getElementById('bp-p-text');
                 var msg = document.getElementById('bp-msg');
                 var lab = document.getElementById('blueprint-lab');
-                var svgDisplay = document.querySelector('#svg-display');
                 
-                if (svgDisplay && lab) {
-                    svgDisplay.innerHTML = "";
-                    svgDisplay.appendChild(lab);
-                }
                 
                 window.m15_done = false;
                 
@@ -77,7 +72,8 @@ window.Lessons.lesson2.modules[14] = {
                         msg.innerHTML = "📐 BLUEPRINT COMPLETE!<br>Structure successfully mapped.";
                         msg.style.color = "#00f2ff";
                         
-                        if (!window.m15_done) {
+                        if (!window.m15_done && !window.m15_processing) {
+                            window.m15_processing = true;
                             setTimeout(function() {
                                 window.m15_done = true;
                                 if (window.IntentEngine && window.Intents) {

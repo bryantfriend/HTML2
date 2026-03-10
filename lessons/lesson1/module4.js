@@ -68,8 +68,8 @@ window.initDolls = function() {
         }
     };
 };
-</script>`,
-    initialCode: `<div class="doll-game" id="doll-root">
+</script>
+<div class="doll-game" id="doll-root">
     <div id="html-node" class="html-box">
         &lt;html&gt;
         <div class="hint">Click to open</div>
@@ -89,6 +89,7 @@ window.initDolls = function() {
     </div>
     <script>window.initDolls();</script>
 </div>`,
+    initialCode: ``,
     progress: 20,
     validator: function (code) { return code.includes("DOLLS_OPENED"); }
 };

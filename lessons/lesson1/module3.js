@@ -61,8 +61,8 @@ window.drop = function(e, lineTarget) {
         }
     }
 }
-</script>`,
-    initialCode: `<div style="display:flex; flex-direction:column; height: 100%;">
+</script>
+<div style="display:flex; flex-direction:column; height: 100%;">
     <div class="pieces-bar">
         <span style="color:#94a3b8; font-family:sans-serif; font-size:12px; margin-right:15px; font-weight:bold;">MISSING PIECE:</span>
         <div id="drag-piece" class="draggable" draggable="true" ondragstart="window.dragStart(event)">&lt;!DOCTYPE html&gt;</div>
@@ -95,6 +95,7 @@ window.drop = function(e, lineTarget) {
         <div id="msg" class="feedback"></div>
     </div>
 </div>`,
+    initialCode: ``,
     progress: 15,
     validator: function (code) { return code.includes("DOCTYPE_PLACED"); }
 };

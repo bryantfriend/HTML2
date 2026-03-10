@@ -35,8 +35,8 @@ window.applyStructure = function(btn) {
     btn.style.color = 'white';
     window.completeModule('STRUCTURE_APPLIED');
 };
-</script>`,
-    initialCode: `<div style="display: flex; flex-direction: column; height: 100%;">
+</script>
+<div style="display: flex; flex-direction: column; height: 100%;">
     <div id="pw" class="preview-window messy">
         <div class="el header">My Cool Site</div>
         <div class="el hero-img"></div>
@@ -47,6 +47,7 @@ window.applyStructure = function(btn) {
         <button class="btn-apply" onclick="window.applyStructure(this)">Apply Structure</button>
     </div>
 </div>`,
+    initialCode: ``,
     progress: 5,
     validator: function (code) { return code.includes("STRUCTURE_APPLIED"); }
 };

@@ -30,12 +30,7 @@ window.Lessons.lesson2.modules[17] = {
                 var pBlock = document.getElementById('p-block');
                 var msg = document.getElementById('org-msg');
                 var lab = document.getElementById('org-lab');
-                var svgDisplay = document.querySelector('#svg-display');
                 
-                if (svgDisplay && lab) {
-                    svgDisplay.innerHTML = "";
-                    svgDisplay.appendChild(lab);
-                }
                 
                 window.m18_done = false;
                 
@@ -67,7 +62,8 @@ window.Lessons.lesson2.modules[17] = {
                             msg.innerHTML = "✔ PERFECT HIERARCHY!<br>H1 established as the primary structural node.";
                             msg.style.color = "var(--neon-green)";
                             
-                            if (!window.m18_done) {
+                            if (!window.m18_done && !window.m18_processing) {
+                                window.m18_processing = true;
                                 setTimeout(function() {
                                     window.m18_done = true;
                                     if (window.IntentEngine && window.Intents) {

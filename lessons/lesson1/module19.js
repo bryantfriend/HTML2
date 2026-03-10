@@ -45,8 +45,8 @@ window.Lessons.lesson1.modules[18] = {
         document.getElementById('m-over').style.display = 'none';
     };
 })();
-</script>`,
-    initialCode: `<div class="bp-game">
+</script>
+<div class="bp-game">
     <div class="checklist">
         <div class="cl-item" id="c1" onclick="window.openBP(1)"><span>1. Navigation Bar</span><span>🔎</span></div>
         <div class="cl-item" id="c2" onclick="window.openBP(2)"><span>2. Hero Button</span><span>🔎</span></div>
@@ -69,6 +69,7 @@ window.Lessons.lesson1.modules[18] = {
         </div>
     </div>
 </div>`,
+    initialCode: ``,
     progress: 95,
     validator: function (code) { return code.includes("BP_REVIEWED"); }
 };

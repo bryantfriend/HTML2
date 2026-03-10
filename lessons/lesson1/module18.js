@@ -41,8 +41,8 @@ window.playSVG = function() {
         window.completeModule('SVG_PLAYED');
     }, 4000);
 }
-</script>`,
-    initialCode: `<div class="svg-stage">
+</script>
+<div class="svg-stage">
     <button class="play-btn" id="play-btn" onclick="window.playSVG()">▶ PLAY SVG</button>
     <svg class="svg-canvas" id="canvas" viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg">
         <g class="spin-group" style="transform-origin: 200px 175px;">
@@ -53,6 +53,7 @@ window.playSVG = function() {
         </g>
     </svg>
 </div>`,
+    initialCode: ``,
     progress: 90,
     validator: function (code) { return code.includes("SVG_PLAYED"); }
 };

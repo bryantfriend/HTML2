@@ -2,8 +2,8 @@ window.Lessons.intro.modules[15] = {
             title: "16. HTML is not programming",
             body: `<p>HTML is a markup language, not a programming language. You don't do math or logic, you just describe structure.</p>
             <p class="text-sm italic text-gray-400 mt-4">Mission: Click 'CALCULATE' to see how HTML handles math.</p>`,
-            svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><text x="120" y="80" fill="#00f2ff" font-family="monospace" font-size="14" text-anchor="middle">NOT PROGRAMMING</text></svg>`,
-            initialCode: `<!-- INTERACTIVE MODULE -->
+            svg: ``,
+            widgetCode: `<!-- INTERACTIVE MODULE -->
 <div id="math-container" style="background:#0f172a; padding:20px; border-radius:12px; text-align:center; color:white; height:300px; display:flex; flex-direction:column; justify-content:center; align-items:center;">
     <h3 style="margin-bottom:15px; color:#00f2ff; font-size:20px;">Try to do math in HTML!</h3>
     <button onclick="
@@ -36,6 +36,7 @@ window.Lessons.intro.modules[15] = {
         }
     " style="padding:16px 32px; background:#3b82f6; color:white; border:none; border-radius:8px; cursor:pointer; font-weight:bold; transition:0.3s; font-size:16px;">CALCULATE 5 + 5</button>
 </div>`,
+    initialCode: ``,
             progress: 80,
             validator: function (code) { return code.includes("UNDERSTOOD"); }
         };

@@ -81,8 +81,8 @@ window.Lessons.lesson1.modules[15] = {
         });
     }
 })();
-</script>`,
-    initialCode: `<div class="sort-game">
+</script>
+<div class="sort-game">
     <div class="sg-top">
         <div class="bucket head-b" id="b-head" data-target="head">
             <h3>&lt;head&gt;</h3>
@@ -101,6 +101,7 @@ window.Lessons.lesson1.modules[15] = {
     </div>
     <script>window.initDragSort();</script>
 </div>`,
+    initialCode: ``,
     progress: 80,
     validator: function (code) { return code.includes("SORTED_HEAD_BODY"); }
 };

@@ -91,8 +91,8 @@ window.Lessons.lesson1.modules[9] = {
         }
     };
 })();
-</script>`,
-    initialCode: `<div class="sb-game">
+</script>
+<div class="sb-game">
     <div id="start-scr" class="screen">
         <h2 style="color:#00ff9d; font-size:28px; margin:0;">Speed Build! ⚡</h2>
         <p style="color:#94a3b8; text-align:center; margin-top:10px;">Assemble the tags in 60s.</p>
@@ -126,6 +126,7 @@ window.Lessons.lesson1.modules[9] = {
         <button class="btn" onclick="window.location.reload()">RETRY</button>
     </div>
 </div>`,
+    initialCode: ``,
     progress: 50,
     validator: function (code) { return code.includes("SPEED_BUILT"); }
 };

@@ -4,23 +4,7 @@ function finalizePreviewRender(payload, newState, oldState, contextData) {
         if (previewArea) {
             const lesson = (contextData.courseData && contextData.courseData.lessons) ? contextData.courseData.lessons[newState.currentLessonIndex] : null;
             const currentModule = lesson ? lesson.modules[newState.currentModuleIndex] : null;
-            const widgetCode = (currentModule && currentModule.widgetCode) ? currentModule.widgetCode : "";
-
-            // Do not re-render interactive modules if we are already on that module.
-            // Interactive modules hide the code editor and modify the DOM themselves.
-            // Re-rendering on 'updatePreview' would wipe out their DOM state.
-            const isInteractive = (newState.editorContent && newState.editorContent.includes('<!-- INTERACTIVE MODULE -->')) ||
-                (widgetCode && widgetCode.includes('<!-- INTERACTIVE MODULE -->'));
-
-            if (isInteractive &&
-                oldState &&
-                oldState.currentModuleIndex === newState.currentModuleIndex &&
-                oldState.currentLessonIndex === newState.currentLessonIndex &&
-                oldState.view === newState.view) {
-                return;
-            }
-
-            previewArea.innerHTML = widgetCode + newState.editorContent;
+            previewArea.innerHTML = newState.editorContent;
 
             // Execute any scripts that were injected via innerHTML
             const scripts = previewArea.querySelectorAll('script');

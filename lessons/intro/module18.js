@@ -2,8 +2,8 @@ window.Lessons.intro.modules[17] = {
             title: "18. What students will build",
             body: `<p>Soon, you will create files with text, headings, lists, and images, creating a personalized digital poster.</p>
             <p class="text-sm italic text-gray-400 mt-4">Mission: Click PLAY to see how HTML tags come together.</p>`,
-            svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><rect x="70" y="20" width="100" height="110" fill="none" stroke="#ff00e5" stroke-width="2"/><circle cx="120" cy="50" r="15" fill="#00f2ff"/></svg>`,
-            initialCode: `<!-- INTERACTIVE MODULE -->
+            svg: ``,
+            widgetCode: `<!-- INTERACTIVE MODULE -->
 <style>
 .poster-container { height: 300px; background: #020617; border-radius: 12px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; font-family: sans-serif; }
 .play-btn { background: #ff00e5; color: white; border: none; padding: 15px 30px; border-radius: 30px; font-size: 20px; font-weight: bold; cursor: pointer; box-shadow: 0 0 20px rgba(255,0,229,0.5); z-index: 10; transition: 0.3s; }
@@ -62,6 +62,7 @@ window.Lessons.intro.modules[17] = {
     </div>
     <div class="progress-bar" id="pbar"></div>
 </div>`,
+    initialCode: ``,
             progress: 90,
             validator: function (code) { return code.includes("POSTER_BUILT"); }
         };

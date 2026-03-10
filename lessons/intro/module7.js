@@ -2,7 +2,7 @@ window.Lessons.intro.modules[6] = {
   title: "7. CSS vs HTML vs JavaScript",
   body: `<p><strong>HTML</strong> = The Skeleton (Structure)<br><strong>CSS</strong> = The Skin/Clothes (Styling, colors, layout)<br><strong>JavaScript</strong> = The Muscles/Brain (Interactivity, pop-ups, games)</p>
             <p class="text-sm italic text-gray-400 mt-4">Mission: Change at least 1 piece of clothing on the character to see how CSS works.</p>`,
-  svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><text x="120" y="60" fill="#00f2ff" font-size="12" text-anchor="middle">HTML = BONES</text><text x="120" y="85" fill="#ff00e5" font-size="12" text-anchor="middle">CSS = CLOTHES</text><text x="120" y="110" fill="#00ff9d" font-size="12" text-anchor="middle">JS = MUSCLES</text></svg>`,
+  svg: ``,
   widgetCode: `<!-- INTERACTIVE MODULE -->
 <style>
 .avatar-builder { display: flex; height: 300px; background: #0f172a; border-radius: 12px; padding: 20px; color: white; user-select: none; gap: 20px; }
@@ -38,8 +38,8 @@ window.changeCloth = function(type, val) {
       window.cssChangedSignalSent = true;
   }
 };
-</script>`,
-  initialCode: `<div class="avatar-builder">
+</script>
+<div class="avatar-builder">
   <div class="controls" id="btn-controls">
     <div class="category" style="margin-top:0;">Hats</div>
     <div class="btn-opt" onclick="window.changeCloth('hat', '')">None</div>
@@ -65,6 +65,7 @@ window.changeCloth = function(type, val) {
     <div id="disp-pants" class="av-pants"><div class="leg"></div><div class="leg"></div></div>
   </div>
 </div>`,
+  initialCode: ``,
   progress: 35,
   validator: function (code) { return code.includes("CSS_CHANGED"); }
 };

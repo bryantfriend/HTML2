@@ -19,14 +19,15 @@ window.Lessons.lesson1.modules[19] = {
         window.completeModule('EMOJI_SELECTED');
     };
 })();
-</script>`,
-    initialCode: `<div class="emoji-grid">
+</script>
+<div class="emoji-grid">
     <div class="emoji-btn" onclick="window.setEmo(this, '😀')">😀</div>
     <div class="emoji-btn" onclick="window.setEmo(this, '😎')">😎</div>
     <div class="emoji-btn" onclick="window.setEmo(this, '🚀')">🚀</div>
     <div class="emoji-btn" onclick="window.setEmo(this, '🤯')">🤯</div>
     <div class="emoji-btn" onclick="window.setEmo(this, '🎉')">🎉</div>
 </div>`,
+    initialCode: ``,
     progress: 100,
     validator: function (code) { return code.includes("EMOJI_SELECTED"); }
 };

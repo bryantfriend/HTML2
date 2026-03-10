@@ -35,12 +35,7 @@ window.Lessons.lesson2.modules[12] = {
                 var forceField = document.getElementById('force-field');
                 var msg = document.getElementById('magnet-msg');
                 var magnetLab = document.getElementById('magnet-lab');
-                var svgDisplay = document.querySelector('#svg-display');
                 
-                if (svgDisplay && magnetLab) {
-                    svgDisplay.innerHTML = "";
-                    svgDisplay.appendChild(magnetLab);
-                }
                 
                 window.m13_done = false;
                 var repelled = false;

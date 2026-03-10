@@ -36,12 +36,7 @@ window.Lessons.lesson2.modules[13] = {
                 var counter = document.getElementById('count');
                 var msg = document.getElementById('hole-msg');
                 var lab = document.getElementById('blackhole-lab');
-                var svgDisplay = document.querySelector('#svg-display');
                 
-                if (svgDisplay && lab) {
-                    svgDisplay.innerHTML = "";
-                    svgDisplay.appendChild(lab);
-                }
                 
                 window.m14_done = false;
                 var sucked = false;

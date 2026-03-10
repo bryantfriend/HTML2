@@ -2,8 +2,8 @@ window.Lessons.intro.modules[18] = {
             title: "19. Quick preview of final project",
             body: `<p>By the end of module 6, you will have a styled website showcasing your portfolio piece!</p>
             <p class="text-sm italic text-gray-400 mt-4">Mission: Interact with the simulated portfolio 3 times to unlock the final module.</p>`,
-            svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><text x="120" y="80" fill="#00ff9d" font-family="monospace" font-size="16" text-anchor="middle" class="pulse-cyan">YOUR PORTFOLIO</text></svg>`,
-            initialCode: `<!-- INTERACTIVE MODULE -->
+            svg: ``,
+            widgetCode: `<!-- INTERACTIVE MODULE -->
 <style>
 .portfolio { height: 300px; background: white; color: black; border-radius: 8px; font-family: sans-serif; position: relative; transition: 0.3s; display: flex; flex-direction: column; overflow: hidden; }
 .p-nav { display: flex; justify-content: space-around; background: #e2e8f0; padding: 10px; border-bottom: 2px solid #cbd5e1; }
@@ -83,6 +83,7 @@ window.navTo = function(btn, pageId) {
     }
 }
 </script>`,
+    initialCode: ``,
             progress: 95,
             validator: function (code) { return code.includes("PORTFOLIO_REVIEWED"); }
         };

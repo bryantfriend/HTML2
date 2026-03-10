@@ -3,7 +3,7 @@ window.Lessons.intro.modules[8] = {
   body: `<p>Every professional HTML document starts with <code>&lt;!DOCTYPE HTML&gt;</code>. It tells the browser "Hey, I'm using the latest version of HTML!"</p>
             <p class="text-[var(--neon-cyan)] font-bold">Step 1: Hit the glowing F12 key to reveal the source code.</p>
             <p class="text-[var(--neon-cyan)] font-bold">Step 2: Type <code>&lt;!DOCTYPE HTML&gt;</code> in the editor to validate your code!</p>`,
-  svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><text x="120" y="85" fill="#00ff9d" font-family="monospace" font-size="20" font-weight="bold" text-anchor="middle">&lt;!DOCTYPE HTML&gt;</text></svg>`,
+  svg: ``,
   widgetCode: `<!-- INTERACTIVE MODULE -->
 <style>
 .dev-game { display: flex; flex-direction: column; height: 300px; background: #0f172a; border-radius: 12px; overflow: hidden; user-select: none; }
@@ -34,8 +34,8 @@ window.f12Listener = function(e) {
   }
 };
 document.addEventListener('keydown', window.f12Listener);
-</script>`,
-  initialCode: `<div class="dev-game" id="dg">
+</script>
+<div class="dev-game" id="dg">
   <div class="fake-site">
     <div class="site-header">WebSpace ✨</div>
     <div class="site-body">Welcome to the best website ever! Click F12 below to see how I built this.</div>
@@ -58,6 +58,7 @@ document.addEventListener('keydown', window.f12Listener);
     <div class="key" style="margin-left:20px;">PrtSc</div>
   </div>
 </div>`,
+  initialCode: ``,
   progress: 45,
   validator: function (code) {
     return code.includes("F12_PRESSED") && code.toUpperCase().includes("<!DOCTYPE HTML>");

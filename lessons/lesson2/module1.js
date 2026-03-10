@@ -13,12 +13,15 @@ window.Lessons.lesson2.modules[0] = {
                 var editor = document.getElementById('code-editor');
                 var maxFloods = 100;
                 window.m1_done = false;
+                var flooded = false;
                 
                 function handleInput(e) {
                     if (!document.getElementById('flood-container')) {
                         if (editor) editor.removeEventListener('input', handleInput);
                         return;
                     }
+                    if (flooded) return;
+                    
                     var val = e.target.value.trim().toUpperCase();
                     if (!val) {
                         container.innerHTML = "";
@@ -31,28 +34,27 @@ window.Lessons.lesson2.modules[0] = {
                     }
                     container.innerHTML = newHTML;
                     
-                    if (!container.querySelector('.flood-msg')) {
-                        var msg = document.createElement('div');
-                        msg.className = 'flood-msg';
-                        msg.style.position = 'absolute';
-                        msg.style.top = '50%';
-                        msg.style.left = '50%';
-                        msg.style.transform = 'translate(-50%, -50%)';
-                        msg.style.background = 'rgba(0,0,0,0.8)';
-                        msg.style.padding = '20px';
-                        msg.style.border = '2px solid var(--neon-pink)';
-                        msg.style.textAlign = 'center';
-                        msg.style.zIndex = '10';
-                        msg.innerHTML = "<h2 style='color:var(--neon-pink); margin-bottom:10px;'>Too much text!</h2><p>HTML helps organize text.</p>";
-                        container.appendChild(msg);
-                        
-                        setTimeout(function(){
-                            window.m1_done = true;
-                            if (window.IntentEngine && window.Intents) {
-                                window.IntentEngine.run(window.Intents.updatePreview, {code: editor.value});
-                            }
-                        }, 1500);
-                    }
+                    flooded = true;
+                    var msg = document.createElement('div');
+                    msg.className = 'flood-msg';
+                    msg.style.position = 'absolute';
+                    msg.style.top = '50%';
+                    msg.style.left = '50%';
+                    msg.style.transform = 'translate(-50%, -50%)';
+                    msg.style.background = 'rgba(0,0,0,0.8)';
+                    msg.style.padding = '20px';
+                    msg.style.border = '2px solid var(--neon-pink)';
+                    msg.style.textAlign = 'center';
+                    msg.style.zIndex = '10';
+                    msg.innerHTML = "<h2 style='color:var(--neon-pink); margin-bottom:10px;'>Too much text!</h2><p>HTML helps organize text.</p>";
+                    container.appendChild(msg);
+                    
+                    setTimeout(function(){
+                        window.m1_done = true;
+                        if (window.IntentEngine && window.Intents) {
+                            window.IntentEngine.run(window.Intents.updatePreview, {code: editor.value});
+                        }
+                    }, 1500);
                 }
                 
                 if (editor) {

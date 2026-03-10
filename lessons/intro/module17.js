@@ -2,8 +2,8 @@ window.Lessons.intro.modules[16] = {
             title: "17. Why people learn HTML",
             body: `<p>HTML is the absolute foundation for all websites, web games, mobile apps built on web tech, and even email templates!</p>
             <p class="text-sm italic text-gray-400 mt-4">Mission: Click to build the web development foundation stack.</p>`,
-            svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><rect x="40" y="100" width="160" height="20" fill="#00ff9d"/></svg>`,
-            initialCode: `<!-- INTERACTIVE MODULE -->
+            svg: ``,
+            widgetCode: `<!-- INTERACTIVE MODULE -->
 <style>
 .stack-game { height: 300px; position: relative; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 5px; background: #0f172a; padding-bottom: 30px; border-radius: 12px; }
 .block { width: 80%; height: 50px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size:18px; opacity: 0; transform: translateY(-50px); transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
@@ -35,6 +35,7 @@ window.Lessons.intro.modules[16] = {
         this.onclick = null;
     ">Click to lay HTML Foundation</div>
 </div>`,
+    initialCode: ``,
             progress: 85,
             validator: function (code) { return code.includes("FOUNDATION_BUILT"); }
         };

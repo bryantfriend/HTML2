@@ -83,8 +83,8 @@ window.Lessons.lesson1.modules[12] = {
         }
     };
 })();
-</script>`,
-    initialCode: `<div class="bug-game" id="game-root">
+</script>
+<div class="bug-game" id="game-root">
     <div id="start-overlay" class="overlay">
         <h2 style="color:#ef4444; margin:0; font-size: 24px;">Whack-a-Bug! 🐛</h2>
         <p style="color:#94a3b8; padding: 0 20px; font-size: 14px;">The code editor below has 3 bugs. Fix them in 60 seconds!</p>
@@ -104,6 +104,7 @@ window.Lessons.lesson1.modules[12] = {
         <div class="item" id="i3"><span>"wobsit" typo</span><span>🐛</span></div>
     </div>
 </div>`,
+    initialCode: ``,
     progress: 65,
     validator: function (code) { return code.includes("BUGS_FIXED"); }
 };

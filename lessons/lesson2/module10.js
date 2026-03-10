@@ -90,6 +90,7 @@ window.Lessons.lesson2.modules[9] = {
                 
                 function toggleItalic() {
                     isItalic = !isItalic;
+                    syncUI();
                     
                     if (isItalic) {
                         if (editor) {

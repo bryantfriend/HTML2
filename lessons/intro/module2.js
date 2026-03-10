@@ -2,7 +2,7 @@ window.Lessons.intro.modules[1] = {
     title: "2. The Servers",
     body: `<p>A website is just a bunch of files. A server is a powerful computer that stays on 24/7 to serve those files to visitors.</p>
             <p class="text-sm italic text-gray-400 mt-4">Mission: Click the switch to power on the servers.</p>`,
-    svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><rect x="40" y="30" width="160" height="90" fill="none" stroke="#00ff9d" stroke-width="2"/><text x="120" y="80" fill="#00ff9d" font-family="sans-serif" font-size="14" text-anchor="middle">www.web.com</text></svg>`,
+    svg: ``,
     widgetCode: `<!-- INTERACTIVE MODULE -->
 <style>
 .server-rack { width: 200px; height: 150px; background: #1e293b; border: 4px solid #334155; border-radius: 8px; margin: 0 auto; display: flex; flex-direction: column; padding: 10px; gap: 10px; }
@@ -27,8 +27,8 @@ window.togglePower = function(sw) {
         window.completeModule('SERVER_ON');
     }
 };
-</script>`,
-    initialCode: `<div style="background:#020617; padding:40px 20px; border-radius:12px;">
+</script>
+<div style="background:#020617; padding:40px 20px; border-radius:12px;">
     <div id="rack" class="server-rack">
         <div class="server-blade blade-1"><div class="light"></div></div>
         <div class="server-blade blade-2"><div class="light"></div></div>
@@ -39,6 +39,7 @@ window.togglePower = function(sw) {
         <p style="color:white; margin-top:10px; font-family:monospace;">MAIN POWER</p>
     </div>
 </div>`,
+    initialCode: ``,
     progress: 10,
     validator: function (code) { return code.includes("SERVER_ON"); }
 };

@@ -46,8 +46,8 @@ window.Lessons.lesson1.modules[14] = {
         if(rob) rob.style.top = '35px'; 
     }, 500);
 })();
-</script>`,
-    initialCode: `<div class="robo-game">
+</script>
+<div class="robo-game">
     <div class="path-container" id="p-cont">
         <div class="walk-line"></div>
         <div class="robot" id="rob-15">🤖</div>
@@ -58,6 +58,7 @@ window.Lessons.lesson1.modules[14] = {
         <div class="flag">🚩</div>
     </div>
 </div>`,
+    initialCode: ``,
     progress: 75,
     validator: function (code) { return code.includes("ROBOT_SAVED"); }
 };

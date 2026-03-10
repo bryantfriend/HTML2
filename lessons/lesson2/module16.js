@@ -1,114 +1,66 @@
 window.Lessons.lesson2.modules[15] = {
-    title: "16. Teacher example",
+    title: "16. A Real 'About Me' Page",
     body: `<p>Let's look at a well-structured "About Me" page with H1, H2, and paragraph text.</p>
-    <p class="text-sm italic text-gray-400 mt-4">Mission: Type "ON" to power up the Virtual Projector!</p>`,
-    svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><path d="M60 75 Q120 20 180 75 Q120 130 60 75" fill="none" stroke="#00f2ff" stroke-width="4"/><circle cx="120" cy="75" r="15" fill="#00f2ff"/></svg>`,
+    <p class="text-sm italic text-gray-400 mt-4">Mission: Click the 'RENDER WEBSITE' button on the tablet to see how the code looks in a real browser!</p>`,
+    svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><rect x="40" y="30" width="160" height="100" rx="10" fill="none" stroke="#00f2ff" stroke-width="4"/><circle cx="120" cy="115" r="5" fill="#00f2ff"/></svg>`,
     initialCode: "",
     widgetCode: `
-        <div id="projector-lab" style="padding:15px; background:#111; border-radius:8px; display:flex; flex-direction:column; height: 100%; min-height: 250px; position:relative; overflow:hidden;">
-            <div style="text-align:center; font-weight:bold; color:#00f2ff; margin-bottom:5px; font-family:monospace;">📽️ VIRTUAL PROJECTOR</div>
+        <div id="tablet-lab" style="padding:15px; background:#111; border-radius:8px; display:flex; flex-direction:column; height: 100%; min-height: 250px; position:relative; overflow:hidden;">
+            <div style="text-align:center; font-weight:bold; color:#00f2ff; margin-bottom:5px; font-family:monospace;">📱 VIRTUAL TABLET</div>
             
-            <div id="projector-scene" style="flex-grow:1; display:flex; position:relative; margin-top:10px;">
-                <!-- Projector Device -->
-                <div style="position:absolute; bottom:20px; left:10px; width:40px; height:30px; background:#333; border-radius:4px; z-index:2; border-bottom:4px solid #111;">
-                    <div id="lens" style="position:absolute; right:-5px; top:5px; width:15px; height:15px; background:#222; border-radius:50%; border:2px solid #555; transition:all 0.5s;"></div>
-                    <div id="power-light" style="position:absolute; left:5px; top:5px; width:6px; height:6px; background:red; border-radius:50%; box-shadow:0 0 5px red; transition:all 0.5s;"></div>
+            <div id="tablet-screen" style="flex-grow:1; background:#fff; border: 8px solid #222; border-radius:12px; margin: 0 20px; position:relative; overflow:hidden; display:flex; flex-direction:column; transition:all 0.5s;">
+                <!-- Top Bar -->
+                <div style="background:#eee; padding:5px; display:flex; gap:5px; border-bottom:1px solid #ccc;">
+                    <div style="width:10px; height:10px; border-radius:50%; background:#ff5f56;"></div>
+                    <div style="width:10px; height:10px; border-radius:50%; background:#ffbd2e;"></div>
+                    <div style="width:10px; height:10px; border-radius:50%; background:#27c93f;"></div>
                 </div>
                 
-                <!-- Light Beam -->
-                <div id="beam" style="position:absolute; bottom:35px; left:45px; width:0%; height:0px; background:linear-gradient(90deg, rgba(0, 242, 255, 0.8), rgba(0, 242, 255, 0)); clip-path: polygon(0% 50%, 100% 0%, 100% 100%); transform-origin: left center; z-index:1; transition:all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275); opacity:0;"></div>
-                
-                <!-- Wall Projection screen -->
-                <div id="wall" style="position:absolute; right:10px; top:10px; bottom:10px; width:180px; background:#222; border: 2px solid #444; border-radius:4px; opacity:0; transition:all 1s; padding:10px; box-shadow: 0 0 20px rgba(0,242,255,0); display:flex; flex-direction:column; justify-content:center;">
-                    <div id="code-output" style="color:#00f2ff; font-family:monospace; font-size:10px; opacity:0; transition:opacity 1s;">
-                        <span style="color:#ff00e5">&lt;h1&gt;</span>About Me<span style="color:#ff00e5">&lt;/h1&gt;</span><br>
-                        <span style="color:#ff00e5">&lt;h2&gt;</span>Hobbies<span style="color:#ff00e5">&lt;/h2&gt;</span><br>
-                        <span style="color:#ff00e5">&lt;p&gt;</span>I love code!<span style="color:#ff00e5">&lt;/p&gt;</span>
-                    </div>
+                <!-- Content Area -->
+                <div id="tablet-code" style="padding:10px; font-family:monospace; font-size:12px; color:#333; height:100%; background:#f8f9fa;">
+                    &lt;h1&gt;Hi, I'm Alex!&lt;/h1&gt;<br>
+                    &lt;h2&gt;My Hobbies&lt;/h2&gt;<br>
+                    &lt;p&gt;I love coding websites, playing basketball, and reading sci-fi books.&lt;/p&gt;
                 </div>
+                
+                <div id="tablet-web" style="padding:15px; font-family:sans-serif; color:#222; height:100%; background:#fff; display:none;">
+                    <h1 style="margin:0 0 10px 0; color:#005f73; font-size:20px; border-bottom:2px solid #00f2ff; padding-bottom:5px;">Hi, I'm Alex!</h1>
+                    <h2 style="margin:0 0 5px 0; color:#ba1826; font-size:16px;">My Hobbies</h2>
+                    <p style="margin:0; font-size:12px; line-height:1.4; color:#555;">I love coding websites, playing basketball, and reading sci-fi books.</p>
+                </div>
+                
+                <!-- Overlay Button -->
+                <div id="render-btn" style="position:absolute; bottom:10px; left:50%; transform:translateX(-50%); background:var(--neon-green); color:black; font-weight:bold; padding:8px 16px; border-radius:20px; cursor:pointer; box-shadow:0 4px 10px rgba(0,255,157,0.5); transition:all 0.3s;" class="hover:scale-110">RENDER WEBSITE</div>
             </div>
             
-            <div id="proj-msg" style="text-align:center; margin-top:5px; font-weight:bold; min-height:24px; color:#aaa;">System Standby...</div>
+            <div id="tablet-msg" style="text-align:center; margin-top:5px; font-weight:bold; min-height:24px; color:#aaa;">Viewing Raw HTML</div>
         </div>
         <script>
             (function() {
+                var btn = document.getElementById('render-btn');
+                var tCode = document.getElementById('tablet-code');
+                var tWeb = document.getElementById('tablet-web');
+                var msg = document.getElementById('tablet-msg');
                 var editor = document.getElementById('code-editor');
-                var lens = document.getElementById('lens');
-                var powerLight = document.getElementById('power-light');
-                var beam = document.getElementById('beam');
-                var wall = document.getElementById('wall');
-                var codeOut = document.getElementById('code-output');
-                var msg = document.getElementById('proj-msg');
-                var lab = document.getElementById('projector-lab');
-                var svgDisplay = document.querySelector('#svg-display');
-                
-                if (svgDisplay && lab) {
-                    svgDisplay.innerHTML = "";
-                    svgDisplay.appendChild(lab);
-                }
                 
                 window.m16_done = false;
                 
-                function handleInput(e) {
-                    if (!document.getElementById('projector-lab')) {
-                        if (editor) editor.removeEventListener('input', handleInput);
-                        return;
-                    }
-                    if(!editor) return;
-                    
-                    var val = editor.value.toUpperCase();
-                    
-                    if (val.includes("ON")) {
-                        powerLight.style.background = "#00ff9d";
-                        powerLight.style.boxShadow = "0 0 10px #00ff9d";
-                        lens.style.background = "#00f2ff";
-                        lens.style.boxShadow = "0 0 15px #00f2ff";
+                if (btn) {
+                    btn.onclick = function() {
+                        btn.style.display = "none";
+                        tCode.style.display = "none";
+                        tWeb.style.display = "block";
                         
-                        beam.style.opacity = "0.4";
-                        beam.style.width = "calc(100% - 60px)";
-                        beam.style.height = "160px"; // Spread
-                        
-                        wall.style.opacity = "1";
-                        wall.style.boxShadow = "0 0 20px rgba(0,242,255,0.3)";
-                        wall.style.borderColor = "#00f2ff";
-                        
-                        setTimeout(function(){
-                            codeOut.style.opacity = "1";
-                        }, 500);
-                        
-                        msg.innerHTML = "📽️ PROJECTOR ONLINE!";
-                        msg.style.color = "#00ff9d";
+                        msg.innerHTML = "✨ RENDERED SUCCESSFULLY!";
+                        msg.style.color = "var(--neon-green)";
                         
                         if (!window.m16_done) {
-                            setTimeout(function() {
-                                window.m16_done = true;
-                                if (window.IntentEngine && window.Intents) {
-                                    window.IntentEngine.run(window.Intents.updatePreview, {code: editor.value});
-                                }
-                            }, 1500);
+                            window.m16_done = true;
+                            if (window.IntentEngine && window.Intents) {
+                                window.IntentEngine.run(window.Intents.updatePreview, {code: editor ? editor.value : ""});
+                            }
                         }
-                    } else {
-                        powerLight.style.background = "red";
-                        powerLight.style.boxShadow = "0 0 5px red";
-                        lens.style.background = "#222";
-                        lens.style.boxShadow = "none";
-                        
-                        beam.style.opacity = "0";
-                        beam.style.width = "0%";
-                        beam.style.height = "0px";
-                        
-                        wall.style.opacity = "0";
-                        wall.style.boxShadow = "none";
-                        wall.style.borderColor = "#444";
-                        
-                        codeOut.style.opacity = "0";
-                        msg.innerHTML = "System Standby... (Type ON)";
-                        msg.style.color = "#aaa";
-                    }
-                }
-                
-                if (editor) {
-                    editor.addEventListener('input', handleInput);
+                    };
                 }
             })();
         </script>

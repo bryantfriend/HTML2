@@ -1,9 +1,9 @@
 window.Lessons.lesson2.modules[18] = {
     title: "19. Review page readability",
     body: `<p>A website shouldn't just be a huge wall of text. Does the page look natural? Having good structure and whitespace makes it readable!</p>
-    <p class="text-sm italic text-gray-400 mt-4">Mission: Type "SCAN" anywhere in the editor to run the Readability Analyzer.</p>`,
+    <p class="text-sm italic text-gray-400 mt-4">Mission: Click the SCAN DATA button to run the Readability Analyzer.</p>`,
     svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><text x="120" y="80" fill="#00f2ff" font-family="monospace" font-size="16" text-anchor="middle" class="pulse-cyan">READABILITY</text></svg>`,
-    initialCode: "<h1>My Welcome Page</h1>\n<p>HTML is fun to write.</p>\n\n<!-- Type SCAN below -->\n",
+    initialCode: "<h1>My Welcome Page</h1>\n<p>HTML is fun to write.</p>",
     widgetCode: `
         <div id="scan-lab" style="padding:15px; background:#1e1e2f; border-radius:8px; display:flex; flex-direction:column; height: 100%; min-height: 250px; position:relative; overflow:hidden;">
             <div style="text-align:center; font-weight:bold; color:var(--neon-green); margin-bottom:5px; font-family:monospace; letter-spacing: 2px;">👁️ READABILITY SCANNER</div>
@@ -23,38 +23,27 @@ window.Lessons.lesson2.modules[18] = {
                 </div>
             </div>
             
-            <div id="scan-msg" style="text-align:center; margin-top:15px; font-weight:bold; min-height:24px; color:#aaa;">System Idle...</div>
+            <button id="trig-scan-btn" style="margin:10px auto 0 auto; padding:8px 16px; background:var(--neon-green); color:black; font-weight:bold; border-radius:4px; cursor:pointer;" class="hover:scale-105">SCAN DATA</button>
+            <div id="scan-msg" style="text-align:center; margin-top:5px; font-weight:bold; min-height:24px; color:#aaa;">System Idle...</div>
         </div>
         <script>
             (function() {
-                var editor = document.getElementById('code-editor');
+                var btn = document.getElementById('trig-scan-btn');
                 var laser = document.getElementById('laser');
                 var result = document.getElementById('scan-result');
                 var content = document.getElementById('scan-content');
                 var msg = document.getElementById('scan-msg');
-                var lab = document.getElementById('scan-lab');
-                var svgDisplay = document.querySelector('#svg-display');
-                
-                if (svgDisplay && lab) {
-                    svgDisplay.innerHTML = "";
-                    svgDisplay.appendChild(lab);
-                }
+                var editor = document.getElementById('code-editor');
                 
                 window.m19_done = false;
                 var scanning = false;
                 
-                function handleInput(e) {
-                    if (!document.getElementById('scan-lab')) {
-                        if (editor) editor.removeEventListener('input', handleInput);
-                        return;
-                    }
-                    if(!editor) return;
-                    
-                    var val = editor.value.toUpperCase();
-                    
-                    if (val.includes("SCAN") && !scanning && !window.m19_done) {
+                if (btn) {
+                    btn.onclick = function() {
+                        if (scanning || window.m19_done) return;
                         scanning = true;
                         
+                        btn.style.opacity = "0.5";
                         msg.innerHTML = "Scanning structural integrity...";
                         msg.style.color = "var(--neon-yellow)";
                         
@@ -77,16 +66,12 @@ window.Lessons.lesson2.modules[18] = {
                                     window.m19_done = true;
                                     scanning = false;
                                     if (window.IntentEngine && window.Intents) {
-                                        window.IntentEngine.run(window.Intents.updatePreview, {code: editor.value});
+                                        window.IntentEngine.run(window.Intents.updatePreview, {code: editor ? editor.value : ""});
                                     }
                                 }, 1500);
                             }
                         }, 2000);
-                    }
-                }
-                
-                if (editor) {
-                    editor.addEventListener('input', handleInput);
+                    };
                 }
             })();
         </script>

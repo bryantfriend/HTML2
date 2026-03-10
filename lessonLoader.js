@@ -17,7 +17,8 @@ window.LessonLoader = {
     loadScript: function (src) {
         return new Promise((resolve, reject) => {
             const script = document.createElement('script');
-            script.src = src;
+            // Cache buster for development mode to ensure latest modules are fetched
+            script.src = src + '?v=' + new Date().getTime();
             script.onload = resolve;
             script.onerror = reject;
             document.head.appendChild(script);

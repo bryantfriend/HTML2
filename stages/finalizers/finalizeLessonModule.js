@@ -25,7 +25,23 @@ function finalizeLessonModule(payload, newState, oldState, contextData) {
             document.getElementById('mission-subtitle').textContent = "MISSION: " + lesson.title;
             document.getElementById('module-title').textContent = mod.title;
             document.getElementById('module-body').innerHTML = mod.body;
-            document.getElementById('svg-display').innerHTML = mod.svg;
+            let svgHtml = mod.svg || "";
+            if (mod.widgetCode) {
+                svgHtml += mod.widgetCode;
+            }
+            const svgDisplay = document.getElementById('svg-display');
+            svgDisplay.innerHTML = svgHtml;
+
+            // Execute any scripts injected via innerHTML into svg-display
+            const scripts = svgDisplay.querySelectorAll('script');
+            scripts.forEach(oldScript => {
+                const newScript = document.createElement('script');
+                Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
+                newScript.appendChild(document.createTextNode(oldScript.innerHTML));
+                if (oldScript.parentNode) {
+                    oldScript.parentNode.replaceChild(newScript, oldScript);
+                }
+            });
             document.getElementById('code-editor').value = mod.initialCode;
 
             const inputContainer = document.getElementById('code-input-container');

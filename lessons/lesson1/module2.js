@@ -44,8 +44,8 @@ window.addTag = function(tag) {
         }, 500);
     }
 }
-</script>`,
-    initialCode: `<div style="display: flex; gap: 15px; height: 350px;">
+</script>
+<div style="display: flex; gap: 15px; height: 350px;">
     <div style="width: 140px; display: flex; flex-direction: column; gap: 10px; justify-content: center;">
         <button id="btn-html" class="tag-btn" onclick="window.addTag('html')">➕ &lt;html&gt;</button>
         <button id="btn-head" class="tag-btn" onclick="window.addTag('head')" disabled>➕ &lt;head&gt;</button>
@@ -66,6 +66,7 @@ window.addTag = function(tag) {
         </div>
     </div>
 </div>`,
+    initialCode: ``,
     progress: 10,
     validator: function (code) { return code.includes("ALL_TAGS_ADDED"); }
 };

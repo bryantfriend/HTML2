@@ -67,8 +67,8 @@ window.Lessons.lesson1.modules[10] = {
         }
     };
 })();
-</script>`,
-    initialCode: `<div class="desktop">
+</script>
+<div class="desktop">
     <div class="file-area">
         <div id="file-cont" class="file-wrapper" ondblclick="window.launchFile()">
             <div class="file-img" id="icon">📄</div>
@@ -98,6 +98,7 @@ window.Lessons.lesson1.modules[10] = {
         </div>
     </div>
 </div>`,
+    initialCode: ``,
     progress: 55,
     validator: function (code) { return code.includes("FILE_OPENED"); }
 };

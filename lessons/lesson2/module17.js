@@ -25,12 +25,7 @@ window.Lessons.lesson2.modules[16] = {
                 var emoji = document.getElementById('hobby-emoji');
                 var msg = document.getElementById('hobby-msg');
                 var lab = document.getElementById('hobby-lab');
-                var svgDisplay = document.querySelector('#svg-display');
                 
-                if (svgDisplay && lab) {
-                    svgDisplay.innerHTML = "";
-                    svgDisplay.appendChild(lab);
-                }
                 
                 window.m17_done = false;
                 var materialized = false;

@@ -52,11 +52,12 @@ window.cleanCode = function() {
         window.completeModule('FORMAT_CLEANED');
     }, 1500);
 }
-</script>`,
-    initialCode: `<div class="format-game">
+</script>
+<div class="format-game">
     <div class="code-box" id="cbox">&lt;<span class="code-tag">html</span>&gt;&lt;<span class="code-tag">head</span>&gt;&lt;<span class="code-tag">title</span>&gt;My Site&lt;/<span class="code-tag">title</span>&gt;&lt;/<span class="code-tag">head</span>&gt;&lt;<span class="code-tag">body</span>&gt;&lt;<span class="code-tag">h1</span>&gt;Hello World&lt;/<span class="code-tag">h1</span>&gt;&lt;<span class="code-tag">p</span>&gt;Welcome!&lt;/<span class="code-tag">p</span>&gt;&lt;/<span class="code-tag">body</span>&gt;&lt;/<span class="code-tag">html</span>&gt;</div>
     <button class="clean-btn" id="cbtn" onclick="window.cleanCode()">🧹 MAKE IT READABLE</button>
 </div>`,
+    initialCode: ``,
     progress: 70,
     validator: function (code) { return code.includes("FORMAT_CLEANED"); }
 };

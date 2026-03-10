@@ -2,8 +2,8 @@ window.Lessons.intro.modules[14] = {
             title: "15. Mistakes are normal",
             body: `<p>If you type a tag wrong, your code won't blow up. It will just look a bit weird or plain!</p>
             <p class="text-sm italic text-gray-400 mt-4">Mission: Click 'Fix Error' to add the missing closing bracket to the image tag.</p>`,
-            svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><text x="120" y="80" fill="#ff00e5" font-family="monospace" font-size="16" text-anchor="middle">ERROR: IT'S OK</text></svg>`,
-            initialCode: `<!-- INTERACTIVE MODULE -->
+            svg: ``,
+            widgetCode: `<!-- INTERACTIVE MODULE -->
 <div style="text-align:center; padding: 20px; background:#0f172a; border-radius:12px; height:300px; display:flex; flex-direction:column; justify-content:center;">
     <div id="err-img" style="width:100px; height:100px; background:#ef4444; color:white; display:flex; align-items:center; justify-content:center; margin:0 auto 20px; border-radius:8px; box-shadow:0 10px 20px rgba(0,0,0,0.5); transition:0.3s;">
         Broken Image
@@ -26,6 +26,7 @@ window.Lessons.intro.modules[14] = {
         }
     " style="padding:10px 20px; background:#3b82f6; color:white; border:none; border-radius:4px; font-weight:bold; cursor:pointer; margin: 0 auto; width: 200px; transition:0.3s;">🛠️ Fix Error</button>
 </div>`,
+    initialCode: ``,
             progress: 75,
             validator: function (code) { return code.includes("ERROR_FIXED"); }
         };
