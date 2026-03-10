@@ -78,14 +78,35 @@ window.Lessons.lesson2.modules[6] = {
                         // Add bounce effect dynamically
                         wordDown.style.animation = "heavy-bounce 0.5s ease-out " + (0.5 * brCount) + "s 1";
                         
-                        msg.innerHTML = "✔ Line Break Created<br>&lt;br&gt; forces text onto a new line.";
-                        msg.style.color = "var(--neon-green)";
+                        var funnyMsg = "✔ Line Break Created<br>&lt;br&gt; forces text onto a new line.";
+                        if (brCount === 2) funnyMsg = "Whoa, double drop! It's getting deep in here.";
+                        if (brCount === 3) funnyMsg = "Triple break! Is there a bottom to this page?!";
+                        if (brCount === 4) funnyMsg = "We are reaching subterranean HTML levels! 🚇";
+                        if (brCount === 5) {
+                            funnyMsg = "Going to the center of the Earth! 🌍🔥";
+                            wordDown.style.color = "#ff5f56";
+                            document.getElementById('rain-machine').style.background = "#3f1a1a";
+                        }
+                        if (brCount >= 6) {
+                            funnyMsg = "🚨 WARNING: CORE BREACH IMMINENT! TOO MUCH &lt;br&gt;! 🚨";
+                            wordDown.style.color = "#ff5f56";
+                            document.getElementById('rain-machine').style.background = "#5f0a0a";
+                            wordDown.style.animation = "heavy-bounce 0.1s linear infinite"; // panic mode
+                        }
+                        
+                        // Default background reset if < 5
+                        if (brCount < 5) {
+                            document.getElementById('rain-machine').style.background = "#1e1e2f";
+                        }
+
+                        msg.innerHTML = funnyMsg;
+                        msg.style.color = (brCount >= 5) ? "#ff5f56" : "var(--neon-green)";
                         
                         if (!window.m7_done) {
                             setTimeout(function() {
                                 window.m7_done = true;
                                 if (window.IntentEngine && window.Intents) {
-                                    window.IntentEngine.run(window.Intents.updatePreview, {code: editor.value});
+                                                                        window.IntentEngine.run(window.Intents.updatePreview, {code: editor.value});
                                 }
                             }, 1000);
                         }
@@ -96,6 +117,7 @@ window.Lessons.lesson2.modules[6] = {
                         wordDown.style.color = "white";
                         wordDown.style.animation = "none";
                         msg.innerHTML = "";
+                        document.getElementById('rain-machine').style.background = "#1e1e2f";
                     }
                 }
                 
