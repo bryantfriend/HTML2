@@ -44,10 +44,10 @@ window.Lessons.lesson2.modules[11] = {
                     if(!editor) return;
                     
                     var val = editor.value.toLowerCase();
-                    var hasP = /<p[>\\s]/.test(val) && /<\\/p>/.test(val);
-                    var hasB = /<b[>\\s]/.test(val) && /<\\/b>/.test(val);
-                    var isNested = /<p[>\\s]>.*<b[>\\s]>\\s*super\\s*<\\/b>.*<\\/p>/i.test(val);
-                    var badNest = /<p[>\\s]>.*<b[>\\s]>.*<\\/p>.*<\\/b>/i.test(val);
+                    var hasP = /<p(?:>|\\s[^>]*>)/.test(val) && /<\\/p>/.test(val);
+                    var hasB = /<b(?:>|\\s[^>]*>)/.test(val) && /<\\/b>/.test(val);
+                    var isNested = /<p(?:>|\\s[^>]*>).*<b(?:>|\\s[^>]*>)\\s*super\\s*<\\/b>.*<\\/p>/i.test(val);
+                    var badNest = /<p(?:>|\\s[^>]*>).*<b(?:>|\\s[^>]*>).*<\\/p>.*<\\/b>/i.test(val);
                     
                     if (hasP) {
                         pBox.style.borderColor = "var(--neon-cyan)";

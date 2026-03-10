@@ -42,7 +42,7 @@ window.Lessons.lesson2.modules[17] = {
                     if(!editor) return;
                     
                     var val = editor.value;
-                    var h1Match = val.match(/<h1[>\\s]>\\s*(.*?)\\s*<\\/h1>/i);
+                    var h1Match = val.match(/<h1(?:>|\\s[^>]*>)\\s*(.*?)\\s*<\\/h1>/i);
                     var pMatchPos = val.toLowerCase().indexOf("<p>");
                     var h1MatchPos = val.toLowerCase().indexOf("<h1");
                     
