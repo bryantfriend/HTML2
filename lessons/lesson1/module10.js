@@ -5,7 +5,7 @@ window.Lessons.lesson1.modules[9] = {
     svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><circle cx="120" cy="75" r="40" fill="none" stroke="#fcd34d" stroke-width="4"/><text x="120" y="80" fill="#fcd34d" font-size="20" font-weight="bold" text-anchor="middle">FAST</text></svg>`,
     widgetCode: `<!-- INTERACTIVE MODULE -->
 <style>
-.sb-game { background: #0f172a; height: 350px; border-radius: 12px; display: flex; flex-direction: column; overflow: hidden; font-family: 'Courier New', Courier, monospace; color: white; position: relative;}
+.sb-game { background: #0f172a; height: 350px; width: 100%; border-radius: 12px; display: flex; flex-direction: column; overflow: hidden; font-family: 'Courier New', Courier, monospace; color: white; position: relative;}
 .screen { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #0f172a; transition: 0.3s; padding: 20px; }
 .game-screen { align-items: stretch; justify-content: flex-start; visibility: hidden; opacity: 0; }
 .end-screen { visibility: hidden; opacity: 0; text-align: center; }
