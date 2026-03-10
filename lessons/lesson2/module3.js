@@ -5,25 +5,25 @@ window.Lessons.lesson2.modules[2] = {
         <li><code>&lt;h1&gt;</code> is the most powerful main title.</li>
         <li><code>&lt;h6&gt;</code> is the smallest label.</li>
     </ul>
-    <p class="text-sm italic text-gray-400 mt-4">Mission: Activate the heading control system. Type "H1 TO H6".</p>`,
-    svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg">
-            <text x="40" y="60" fill="white" font-size="24" font-weight="bold">H1</text>
-            <text x="80" y="60" fill="white" font-size="20">H2</text>
-            <text x="120" y="60" fill="white" font-size="16">H3</text>
-            <text x="160" y="60" fill="white" font-size="12">...</text>
-          </svg>`,
+    <p class="text-sm italic text-gray-400 mt-4">Mission: Click the BOOT SYSTEM button, then test all 6 heading power levels!</p>`,
+    svg: ``,
     initialCode: "",
     widgetCode: `<!-- INTERACTIVE MODULE -->
-        <div id="heading-control-panel" style="display:none; padding:15px; text-align:center; background:#1e1e2f; border-radius:8px;">
+        <div id="startup-screen" style="padding:15px; text-align:center; background:#1e1e2f; border-radius:8px; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:250px; width:100%;">
+            <div style="color:#aaa; margin-bottom: 20px; font-family:monospace; letter-spacing:2px;">HEADING SYSTEM OFFLINE</div>
+            <button id="activate-btn" style="background:#ef4444; color:white; border:none; padding:15px 30px; border-radius:50px; font-weight:bold; font-size:16px; cursor:pointer; box-shadow: 0 0 20px rgba(239,68,68,0.5); transition:all 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">🔌 BOOT SYSTEM</button>
+        </div>
+
+        <div id="heading-control-panel" style="display:none; padding:15px; text-align:center; background:#1e1e2f; border-radius:8px; width:100%; min-height:250px;">
             <div id="power-system" class="animate-pulse" style="color:var(--neon-green); font-weight:bold; margin-bottom:15px;">HEADING SYSTEM ONLINE</div>
             
             <div style="display:flex; justify-content:center; gap:5px; margin-bottom:15px; flex-wrap:wrap;">
-                <button class="heading-btn" data-level="1">H1</button>
-                <button class="heading-btn" data-level="2">H2</button>
-                <button class="heading-btn" data-level="3">H3</button>
-                <button class="heading-btn" data-level="4">H4</button>
-                <button class="heading-btn" data-level="5">H5</button>
-                <button class="heading-btn" data-level="6">H6</button>
+                <button class="heading-btn hover:bg-gray-600" data-level="1" style="background:#333; color:white; border:1px solid #555; padding:8px 16px; border-radius:4px; cursor:pointer; font-weight:bold; transition: 0.2s;">H1</button>
+                <button class="heading-btn hover:bg-gray-600" data-level="2" style="background:#333; color:white; border:1px solid #555; padding:8px 16px; border-radius:4px; cursor:pointer; font-weight:bold; transition: 0.2s;">H2</button>
+                <button class="heading-btn hover:bg-gray-600" data-level="3" style="background:#333; color:white; border:1px solid #555; padding:8px 16px; border-radius:4px; cursor:pointer; font-weight:bold; transition: 0.2s;">H3</button>
+                <button class="heading-btn hover:bg-gray-600" data-level="4" style="background:#333; color:white; border:1px solid #555; padding:8px 16px; border-radius:4px; cursor:pointer; font-weight:bold; transition: 0.2s;">H4</button>
+                <button class="heading-btn hover:bg-gray-600" data-level="5" style="background:#333; color:white; border:1px solid #555; padding:8px 16px; border-radius:4px; cursor:pointer; font-weight:bold; transition: 0.2s;">H5</button>
+                <button class="heading-btn hover:bg-gray-600" data-level="6" style="background:#333; color:white; border:1px solid #555; padding:8px 16px; border-radius:4px; cursor:pointer; font-weight:bold; transition: 0.2s;">H6</button>
             </div>
             
             <div style="margin-bottom:15px;">
@@ -38,10 +38,12 @@ window.Lessons.lesson2.modules[2] = {
             (function() {
                 var editor = document.getElementById('code-editor');
                 var panel = document.getElementById('heading-control-panel');
+                var startup = document.getElementById('startup-screen');
+                var actBtn = document.getElementById('activate-btn');
                 var powerBar = document.getElementById('power-bar');
                 var emojiDisplay = document.getElementById('emoji-display');
                 var isUnlocked = false;
-                var clickCount = 0;
+                var clickedLevels = new Set();
                 window.m3_done = false;
                 
                 var personalities = {
@@ -53,29 +55,20 @@ window.Lessons.lesson2.modules[2] = {
                     6: { emoji: "🤫 SECRET TITLE", bars: "█", size: "8px" }
                 };
                 
-                function handleInput(e) {
-                    if (!document.getElementById('power-system')) {
-                        if (editor) editor.removeEventListener('input', handleInput);
-                        return;
-                    }
-
-                    var val = e.target.value.trim().toUpperCase();
-                    if(!isUnlocked && val.includes("H1 TO H6")) {
+                if (actBtn) {
+                    actBtn.addEventListener('click', function() {
                         isUnlocked = true;
+                        startup.style.display = "none";
                         panel.style.display = "block";
                         
-                        var svgDisplay = document.querySelector('#svg-display');
-                        if (svgDisplay) {
-                            svgDisplay.innerHTML = "";
-                            svgDisplay.appendChild(panel);
-                        }
-                        
-                        // Set editor content to h1
                         if (editor) {
                             editor.value = "<h1>The Title</h1>";
+                            if(window.IntentEngine && window.Intents && window.Intents.updatePreview) {
+                                window.IntentEngine.run(window.Intents.updatePreview, {code: editor.value});
+                            }
                         }
                         updateDemo(1);
-                    }
+                    });
                 }
                 
                 function updateDemo(level) {
@@ -97,17 +90,22 @@ window.Lessons.lesson2.modules[2] = {
                         }
                     }
                     
-                    clickCount++;
-                    if(clickCount > 5 && !window.m3_done) {
+                    clickedLevels.add(level.toString());
+                    
+                    // Mark as tested buttons
+                    var btn = panel.querySelector('.heading-btn[data-level="' + level + '"]');
+                    if (btn) {
+                        btn.style.background = 'var(--neon-green)';
+                        btn.style.color = '#000';
+                        btn.style.borderColor = 'var(--neon-green)';
+                    }
+                    
+                    if(clickedLevels.size >= 6 && !window.m3_done) {
                         window.m3_done = true;
                         if(window.IntentEngine && window.Intents) {
                             window.IntentEngine.run(window.Intents.updatePreview, {code: editor.value});
                         }
                     }
-                }
-                
-                if (editor) {
-                    editor.addEventListener('input', handleInput);
                 }
                 
                 var btns = panel.querySelectorAll('.heading-btn');
