@@ -131,3 +131,99 @@ document.getElementById('code-editor').addEventListener('input', function (e) {
 document.getElementById('back-menu-btn').addEventListener('click', function () {
     window.IntentEngine.run(window.Intents.showMenu, {});
 });
+
+// --- Sandbox Event Listeners ---
+const sandboxNavBtn = document.getElementById('sandbox-nav-btn');
+if (sandboxNavBtn) {
+    sandboxNavBtn.addEventListener('click', function () {
+        window.IntentEngine.run(window.Intents.showSandbox, {});
+    });
+}
+
+const sandboxEditor = document.getElementById('sandbox-editor');
+if (sandboxEditor) {
+    sandboxEditor.addEventListener('input', function (e) {
+        window.IntentEngine.run(window.Intents.updateSandbox, { code: e.target.value });
+    });
+}
+
+const sandboxSaveBtn = document.getElementById('sandbox-save-btn');
+const saveModal = document.getElementById('save-modal');
+const saveFilenameInput = document.getElementById('save-filename-input');
+const confirmSaveBtn = document.getElementById('confirm-save-btn');
+const cancelSaveBtn = document.getElementById('cancel-save-btn');
+
+if (sandboxSaveBtn && saveModal) {
+    sandboxSaveBtn.addEventListener('click', function () {
+        saveFilenameInput.value = window.state.sandboxFilename || '';
+        saveModal.classList.remove('hidden');
+        saveFilenameInput.focus();
+    });
+
+    cancelSaveBtn.addEventListener('click', function () {
+        saveModal.classList.add('hidden');
+    });
+
+    confirmSaveBtn.addEventListener('click', function () {
+        const filename = saveFilenameInput.value.trim();
+        if (filename) {
+            window.IntentEngine.run(window.Intents.saveSandbox, { filename: filename });
+        } else {
+            alert("Please enter a valid file name.");
+        }
+    });
+}
+
+// Open Modal Logic
+const sandboxOpenBtn = document.getElementById('sandbox-open-btn');
+const openModal = document.getElementById('open-modal');
+const savedProjectsList = document.getElementById('saved-projects-list');
+const cancelOpenBtn = document.getElementById('cancel-open-btn');
+
+if (sandboxOpenBtn && openModal) {
+    sandboxOpenBtn.addEventListener('click', function () {
+        savedProjectsList.innerHTML = '';
+        let list = [];
+        try {
+            const listStr = localStorage.getItem('sandboxList');
+            if (listStr) list = JSON.parse(listStr);
+        } catch (e) { }
+
+        if (list.length === 0) {
+            savedProjectsList.innerHTML = '<p class="text-gray-500 code-font text-sm">No saved projects found.</p>';
+        } else {
+            list.forEach(item => {
+                const btn = document.createElement('button');
+                btn.className = 'w-full text-left p-3 bg-black hover:bg-gray-800 border border-gray-700 rounded text-[var(--neon-cyan)] code-font transition flex justify-between items-center';
+                btn.innerHTML = `<span>${item}</span><span class="text-xs text-gray-500">LOAD &rarr;</span>`;
+                btn.onclick = () => {
+                    window.IntentEngine.run(window.Intents.loadSandbox, { filename: item });
+                };
+                savedProjectsList.appendChild(btn);
+            });
+        }
+
+        openModal.classList.remove('hidden');
+    });
+
+    cancelOpenBtn.addEventListener('click', function () {
+        openModal.classList.add('hidden');
+    });
+}
+
+const sandboxExportBtn = document.getElementById('sandbox-export-btn');
+if (sandboxExportBtn) {
+    sandboxExportBtn.addEventListener('click', function () {
+        const code = window.state.sandboxCode || document.getElementById('sandbox-editor').value || '';
+        const blob = new Blob([code], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        const filename = window.state.sandboxFilename ? window.state.sandboxFilename + '.html' : 'my_awesome_website.html';
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    });
+}

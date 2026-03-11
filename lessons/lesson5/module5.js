@@ -1,9 +1,22 @@
 window.Lessons.lesson5.modules[4] = {
-            title: "5. External links",
-            body: `<p>Let's create an external link (a link going to a different website on the internet, like Google).</p>
-            <p class="text-sm italic text-gray-400 mt-4">Mission: Create a complete link pointing to https://google.com.</p>`,
-            svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><text x="120" y="80" fill="#00ff9d" font-family="monospace" font-size="14" text-anchor="middle">EXTERNAL SITE</text></svg>`,
-            initialCode: `<a href="">Go to Google</a>`,
-            progress: 25,
-            validator: function (code) { return code.toLowerCase().includes("href=\"https://google.com\""); }
-        };
+    title: "5. Passwords",
+    body: `<p>If you are typing a secret, you don't want people to see it! Use `type="password"`.</p>
+    <p class="text-sm italic text-gray-400 mt-4">Mission: Change the text input to a password input.</p>`,
+    svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" style="background:#1e293b; border-radius:8px;">
+        <rect x="40" y="50" width="160" height="30" fill="#3b82f6" opacity="0.5" rx="4"/>
+        <text x="120" y="70" fill="white" font-family="sans-serif" font-size="16" text-anchor="middle">MODULE 5</text>
+    </svg>`,
+    widgetCode: `<!-- INTERACTIVE MODULE -->
+<script>
+(function() {
+    const editor = document.getElementById('code-editor');
+    if (editor) {
+        editor.readOnly = false;
+        editor.style.opacity = "1";
+    }
+})();
+</script>`,
+    initialCode: `<form>\n  <input type="text">\n</form>`,
+    progress: 25,
+    validator: function(code) { return code.includes('type="password"'); }
+};

@@ -1,9 +1,22 @@
 window.Lessons.lesson6.modules[1] = {
-            title: "2. Why design matters",
-            body: `<p>Good design makes your content easier to read and enjoy. Poor design makes people click "back" immediately.</p>
-            <p class="text-sm italic text-gray-400 mt-4">Mission: Type "DESIGN".</p>`,
-            svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><path d="M70 75 Q120 20 170 75" fill="none" stroke="#00ff9d" stroke-width="4"/><circle cx="100" cy="65" r="5" fill="#00ff9d"/><circle cx="140" cy="65" r="5" fill="#00ff9d"/></svg>`,
-            initialCode: "",
-            progress: 10,
-            validator: function (code) { return code.toUpperCase().includes("DESIGN"); }
-        };
+    title: "2. The <header> Tag",
+    body: `<p>Instead of `<div id="header">`, we should use the built-in `<header>` tag. It means 'this is the top part of the page'.</p>
+    <p class="text-sm italic text-gray-400 mt-4">Mission: Create an opening and closing `<header>` tag.</p>`,
+    svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" style="background:#1e293b; border-radius:8px;">
+        <rect x="40" y="30" width="160" height="90" fill="none" stroke="#fde047" stroke-width="4" rx="4"/>
+        <text x="120" y="80" fill="#fde047" font-family="sans-serif" font-size="16" text-anchor="middle">MODULE 2</text>
+    </svg>`,
+    widgetCode: `<!-- INTERACTIVE MODULE -->
+<script>
+(function() {
+    const editor = document.getElementById('code-editor');
+    if (editor) {
+        editor.readOnly = false;
+        editor.style.opacity = "1";
+    }
+})();
+</script>`,
+    initialCode: ``,
+    progress: 10,
+    validator: function(code) { return code.includes("<header>") && code.includes("</header>"); }
+};

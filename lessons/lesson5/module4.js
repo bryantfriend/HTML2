@@ -1,9 +1,22 @@
 window.Lessons.lesson5.modules[3] = {
-            title: "4. href attribute",
-            body: `<p>An anchor tag is useless without a destination. We use the <code>href</code> (hypertext reference) attribute to give it an address.</p>
-            <p class="text-sm italic text-gray-400 mt-4">Mission: Type exactly: href="url"</p>`,
-            svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><rect x="40" y="55" width="160" height="30" rx="4" fill="#0a0b1e" stroke="#00f2ff" stroke-width="2"/><text x="120" y="75" fill="#00f2ff" font-family="monospace" font-size="16" text-anchor="middle">href="..."</text></svg>`,
-            initialCode: "",
-            progress: 20,
-            validator: function (code) { return code.toLowerCase().includes("href="); }
-        };
+    title: "4. Input Types",
+    body: `<p>There are lots of inputs! A text box is created with `type="text"`.</p>
+    <p class="text-sm italic text-gray-400 mt-4">Mission: Add `type="text"` to your input.</p>`,
+    svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" style="background:#1e293b; border-radius:8px;">
+        <rect x="40" y="50" width="160" height="30" fill="#3b82f6" opacity="0.5" rx="4"/>
+        <text x="120" y="70" fill="white" font-family="sans-serif" font-size="16" text-anchor="middle">MODULE 4</text>
+    </svg>`,
+    widgetCode: `<!-- INTERACTIVE MODULE -->
+<script>
+(function() {
+    const editor = document.getElementById('code-editor');
+    if (editor) {
+        editor.readOnly = false;
+        editor.style.opacity = "1";
+    }
+})();
+</script>`,
+    initialCode: `<form>\n  <input>\n</form>`,
+    progress: 20,
+    validator: function(code) { return code.includes('type="text"'); }
+};

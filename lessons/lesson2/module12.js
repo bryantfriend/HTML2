@@ -92,8 +92,8 @@ window.Lessons.lesson2.modules[11] = {
                             setTimeout(function() {
                                 msg.innerHTML = "✔ PERFECT COMBINATION!";
                                 window.m12_done = true;
-                                if (window.IntentEngine && window.Intents) {
-                                    window.IntentEngine.run(window.Intents.updatePreview, {code: editor.value});
+                                if (window.completeModule) {
+                                    window.completeModule('M12_DONE');
                                 }
                             }, 1500);
                         }
@@ -122,5 +122,5 @@ window.Lessons.lesson2.modules[11] = {
         </script>
     `,
     progress: 60,
-    validator: function (code) { return window.m12_done === true; }
+    validator: function (code) { return window.m12_done === true || code.includes('M12_DONE'); }
 };

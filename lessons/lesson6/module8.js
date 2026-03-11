@@ -1,9 +1,22 @@
 window.Lessons.lesson6.modules[7] = {
-            title: "8. Changing font color",
-            body: `<p>The property to change text color is simply called <code>color</code>. Like: <code>color: white;</code></p>
-            <p class="text-sm italic text-gray-400 mt-4">Mission: Give the p tag a text color of blue.</p>`,
-            svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><text x="120" y="80" fill="blue" font-family="monospace" font-size="24" font-weight="bold" text-anchor="middle">BLUE TEXT</text></svg>`,
-            initialCode: "<style>\n  p {\n    \n  }\n</style>\n<p>Make me blue!</p>",
-            progress: 40,
-            validator: function (code) { return code.toLowerCase().includes("color") && code.toLowerCase().includes("blue"); }
-        };
+    title: "8. The <section> Tag",
+    body: `<p>If your page has different parts (like 'About Us', 'Services', 'Contact'), use the `<section>` tag to separate them.</p>
+    <p class="text-sm italic text-gray-400 mt-4">Mission: Create a `<section>` tag.</p>`,
+    svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" style="background:#1e293b; border-radius:8px;">
+        <rect x="40" y="30" width="160" height="90" fill="none" stroke="#fde047" stroke-width="4" rx="4"/>
+        <text x="120" y="80" fill="#fde047" font-family="sans-serif" font-size="16" text-anchor="middle">MODULE 8</text>
+    </svg>`,
+    widgetCode: `<!-- INTERACTIVE MODULE -->
+<script>
+(function() {
+    const editor = document.getElementById('code-editor');
+    if (editor) {
+        editor.readOnly = false;
+        editor.style.opacity = "1";
+    }
+})();
+</script>`,
+    initialCode: ``,
+    progress: 40,
+    validator: function(code) { return code.includes("<section>") && code.includes("</section>"); }
+};

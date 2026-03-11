@@ -1,9 +1,22 @@
 window.Lessons.lesson5.modules[1] = {
-            title: "2. How the web connects pages",
-            body: `<p>The internet is literally a "web" of documents joined together by hyperlinks. Imagine a spiderweb of information!</p>
-            <p class="text-sm italic text-gray-400 mt-4">Mission: Type "WEB".</p>`,
-            svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><circle cx="70" cy="50" r="10" fill="#00ff9d"/><circle cx="170" cy="40" r="10" fill="#ff00e5"/><circle cx="120" cy="110" r="10" fill="#00f2ff"/><line x1="70" y1="50" x2="170" y2="40" stroke="white"/><line x1="170" y1="40" x2="120" y2="110" stroke="white"/><line x1="120" y1="110" x2="70" y2="50" stroke="white"/></svg>`,
-            initialCode: "",
-            progress: 10,
-            validator: function (code) { return code.toUpperCase().includes("WEB"); }
-        };
+    title: "2. The <form> Tag",
+    body: `<p>Everything related to collecting information goes inside a `<form>` tag.</p>
+    <p class="text-sm italic text-gray-400 mt-4">Mission: Create opening and closing `<form>` tags.</p>`,
+    svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" style="background:#1e293b; border-radius:8px;">
+        <rect x="40" y="50" width="160" height="30" fill="#3b82f6" opacity="0.5" rx="4"/>
+        <text x="120" y="70" fill="white" font-family="sans-serif" font-size="16" text-anchor="middle">MODULE 2</text>
+    </svg>`,
+    widgetCode: `<!-- INTERACTIVE MODULE -->
+<script>
+(function() {
+    const editor = document.getElementById('code-editor');
+    if (editor) {
+        editor.readOnly = false;
+        editor.style.opacity = "1";
+    }
+})();
+</script>`,
+    initialCode: ``,
+    progress: 10,
+    validator: function(code) { return code.includes("<form>") && code.includes("</form>"); }
+};

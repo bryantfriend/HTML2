@@ -1,9 +1,22 @@
 window.Lessons.lesson4.modules[10] = {
-            title: "11. Placing images on page",
-            body: `<p>Where you type the image code determines where it shows up. If you put it after a paragraph, the image will appear below the paragraph.</p>
-            <p class="text-sm italic text-gray-400 mt-4">Mission: Type "PLACEMENT".</p>`,
-            svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><text x="120" y="40" fill="white" font-size="14" text-anchor="middle">TEXT ABOVE</text><rect x="80" y="60" width="80" height="60" fill="#00f2ff"/><text x="120" y="140" fill="white" font-size="14" text-anchor="middle">TEXT BELOW</text></svg>`,
-            initialCode: "",
-            progress: 55,
-            validator: function (code) { return code.toUpperCase().includes("PLACEMENT"); }
-        };
+    title: "11. Image Formats",
+    body: `<p>Images come in different types like `.jpg`, `.png`, and `.gif`. GIFs can be animated!</p>
+    <p class="text-sm italic text-gray-400 mt-4">Mission: Change the src from cat.jpg to dance.gif</p>`,
+    svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" style="background:#1e293b; border-radius:8px;">
+        <circle cx="120" cy="75" r="40" fill="#3b82f6" opacity="0.5"/>
+        <text x="120" y="80" fill="white" font-family="sans-serif" font-size="20" text-anchor="middle">MODULE 11</text>
+    </svg>`,
+    widgetCode: `<!-- INTERACTIVE MODULE -->
+<script>
+(function() {
+    const editor = document.getElementById('code-editor');
+    if (editor) {
+        editor.readOnly = false;
+        editor.style.opacity = "1";
+    }
+})();
+</script>`,
+    initialCode: `<img src="cat.jpg">`,
+    progress: 55,
+    validator: function(code) { return code.includes('dance.gif'); }
+};

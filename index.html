@@ -49,7 +49,13 @@
 
     <!-- Menu View -->
     <main id="menu-view" class="max-w-6xl mx-auto hidden">
-        <h2 class="heading-font text-2xl text-[var(--neon-cyan)] mb-6">AVAILABLE TRAINING MODULES</h2>
+        <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+            <h2 class="heading-font text-2xl text-[var(--neon-cyan)]">AVAILABLE TRAINING MODULES</h2>
+            <button id="sandbox-nav-btn"
+                class="bg-[var(--neon-pink)] text-white font-bold py-2 px-6 rounded-lg text-lg heading-font hover:shadow-[0_0_15px_var(--neon-pink)] transition animate-pulse">
+                &lt; CODE SANDBOX /&gt;
+            </button>
+        </div>
         <div id="menu-grid" class="menu-grid">
             <!-- Dynamic Content -->
         </div>
@@ -116,6 +122,81 @@
         <div id="completion-content"></div>
     </main>
 
+    <!-- Sandbox View -->
+    <main id="sandbox-view" class="max-w-7xl mx-auto hidden">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="heading-font text-2xl text-[var(--neon-pink)] glow-text">CREATIVE SANDBOX</h2>
+            <div class="flex gap-4">
+                <button id="sandbox-open-btn"
+                    class="bg-blue-800 hover:bg-blue-700 text-white py-2 px-6 rounded-lg text-sm heading-font transition border border-blue-600">OPEN
+                    DATA</button>
+                <button id="sandbox-save-btn"
+                    class="bg-gray-800 hover:bg-gray-700 text-white py-2 px-6 rounded-lg text-sm heading-font transition border border-gray-600">SAVE
+                    PROGRESS</button>
+                <button id="sandbox-export-btn"
+                    class="bg-[var(--neon-green)] hover:bg-green-400 text-black font-bold py-2 px-6 rounded-lg text-sm heading-font transition shadow-[0_0_10px_var(--neon-green)]">EXPORT
+                    TO FILE</button>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 h-[70vh]">
+            <!-- Left: Editor -->
+            <section
+                class="flex flex-col rounded-xl overflow-hidden shadow-2xl border border-[var(--neon-pink)] bg-[#1e1e1e]">
+                <div class="terminal-header p-3 flex border-b border-gray-700">
+                    <span class="dot dot-red"></span><span class="dot dot-yellow"></span><span
+                        class="dot dot-green"></span>
+                    <span class="ml-4 text-xs code-font text-[var(--neon-pink)]">sandbox.html</span>
+                </div>
+                <textarea id="sandbox-editor"
+                    class="flex-1 w-full p-4 code-font text-sm bg-transparent text-white outline-none resize-none"
+                    spellcheck="false"
+                    placeholder="<!-- Build your awesome website here! -->&#10;<h1>My Portfolio</h1>"></textarea>
+            </section>
+            <!-- Right: Preview -->
+            <section class="flex flex-col rounded-xl overflow-hidden shadow-2xl border border-gray-700 bg-white">
+                <div class="p-3 bg-gray-200 border-b border-gray-300">
+                    <span class="text-xs code-font text-gray-800 font-bold uppercase tracking-widest">Live Browser
+                        Preview</span>
+                </div>
+                <iframe id="sandbox-preview" class="flex-1 w-full bg-white border-none"></iframe>
+            </section>
+        </div>
+    </main>
+
+    <!-- Sandbox Modals -->
+    <!-- Save Modal -->
+    <div id="save-modal" class="fixed inset-0 z-50 bg-black/80 flex items-center justify-center hidden">
+        <div
+            class="bg-[#1e1e1e] border border-[var(--neon-pink)] p-6 rounded-xl w-full max-w-sm shadow-[0_0_30px_rgba(255,0,229,0.3)]">
+            <h3 class="heading-font text-xl text-[var(--neon-pink)] mb-4">SAVE PROJECT</h3>
+            <label class="block text-xs text-gray-400 code-font mb-2">FILE NAME:</label>
+            <input type="text" id="save-filename-input"
+                class="w-full bg-black border border-gray-600 rounded p-2 text-white code-font mb-6 focus:border-[var(--neon-pink)] focus:outline-none"
+                placeholder="my_awesome_project">
+            <div class="flex justify-end gap-4">
+                <button id="cancel-save-btn"
+                    class="text-gray-400 hover:text-white code-font text-sm transition">CANCEL</button>
+                <button id="confirm-save-btn"
+                    class="bg-[var(--neon-pink)] hover:bg-pink-600 text-white font-bold py-2 px-4 rounded transition code-font">SAVE</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Open Modal -->
+    <div id="open-modal" class="fixed inset-0 z-50 bg-black/80 flex items-center justify-center hidden">
+        <div
+            class="bg-[#1e1e1e] border border-[var(--neon-cyan)] p-6 rounded-xl w-full max-w-md shadow-[0_0_30px_rgba(0,242,255,0.3)] flex flex-col max-h-[80vh]">
+            <h3 class="heading-font text-xl text-[var(--neon-cyan)] mb-4">OPEN PROJECT</h3>
+            <div id="saved-projects-list" class="flex-1 overflow-y-auto space-y-2 mb-6 min-h-[150px]">
+                <!-- Dynamic list goes here -->
+            </div>
+            <div class="flex justify-end">
+                <button id="cancel-open-btn"
+                    class="text-gray-400 hover:text-white code-font text-sm transition">CANCEL</button>
+            </div>
+        </div>
+    </div>
+
     <script src="lessons/manifest.js?v=2"></script>
     <script src="lessonLoader.js?v=2"></script>
     <script id="main-lessons-loader">
@@ -136,6 +217,10 @@
     <script src="stages/validators/validateLoadModule.js?v=2"></script>
     <script src="stages/validators/validateUpdatePreview.js?v=2"></script>
     <script src="stages/validators/validateCompleteLesson.js?v=2"></script>
+    <script src="stages/validators/validateShowSandbox.js?v=2"></script>
+    <script src="stages/validators/validateUpdateSandbox.js?v=2"></script>
+    <script src="stages/validators/validateSaveSandbox.js?v=2"></script>
+    <script src="stages/validators/validateLoadSandbox.js?v=2"></script>
     <script src="stages/validators/validators.js?v=2"></script>
 
     <script src="stages/normalizers/normalizeStartLesson.js?v=2"></script>
@@ -153,6 +238,10 @@
     <script src="stages/processors/processLoadModule.js?v=2"></script>
     <script src="stages/processors/processUpdatePreview.js?v=2"></script>
     <script src="stages/processors/processCompleteLesson.js?v=2"></script>
+    <script src="stages/processors/processShowSandbox.js?v=2"></script>
+    <script src="stages/processors/processUpdateSandbox.js?v=2"></script>
+    <script src="stages/processors/processSaveSandbox.js?v=2"></script>
+    <script src="stages/processors/processLoadSandbox.js?v=2"></script>
     <script src="stages/processors/processors.js?v=2"></script>
 
     <script src="stages/finalizers/finalizeMenuRender.js?v=2"></script>
@@ -160,6 +249,10 @@
     <script src="stages/finalizers/finalizePreviewRender.js?v=2"></script>
     <script src="stages/finalizers/finalizeCompleteLesson.js?v=2"></script>
     <script src="stages/finalizers/finalizeMissionCompletion.js?v=2"></script>
+    <script src="stages/finalizers/finalizeShowSandbox.js?v=2"></script>
+    <script src="stages/finalizers/finalizeUpdateSandbox.js?v=2"></script>
+    <script src="stages/finalizers/finalizeSaveSandbox.js?v=2"></script>
+    <script src="stages/finalizers/finalizeLoadSandbox.js?v=2"></script>
     <script src="stages/finalizers/finalizers.js?v=2"></script>
 
     <script src="stages/emitters/emitResult.js?v=2"></script>
@@ -170,6 +263,10 @@
     <script src="intents/loadModule.js?v=2"></script>
     <script src="intents/updatePreview.js?v=2"></script>
     <script src="intents/completeLesson.js?v=2"></script>
+    <script src="intents/showSandbox.js?v=2"></script>
+    <script src="intents/updateSandbox.js?v=2"></script>
+    <script src="intents/saveSandbox.js?v=2"></script>
+    <script src="intents/loadSandbox.js?v=2"></script>
     <script src="intents/intents.js?v=2"></script>
 
     <script src="intentEngine.js?v=2"></script>

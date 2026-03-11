@@ -1,9 +1,22 @@
 window.Lessons.lesson5.modules[7] = {
-            title: "8. Internal links (same site)",
-            body: `<p>If you build two HTML files in the same folder, you can link them together by just typing their filenames.</p>
-            <p class="text-sm italic text-gray-400 mt-4">Mission: Type "INTERNAL".</p>`,
-            svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><rect x="40" y="40" width="60" height="70" fill="none" stroke="#00f2ff" stroke-width="2"/><rect x="140" y="40" width="60" height="70" fill="none" stroke="#00f2ff" stroke-width="2"/><path d="M100 75 Q 120 40 140 75" fill="none" stroke="white" stroke-width="2"/><polygon points="140,75 130,65 130,85" fill="white"/></svg>`,
-            initialCode: "",
-            progress: 40,
-            validator: function (code) { return code.toUpperCase().includes("INTERNAL"); }
-        };
+    title: "8. The Placeholder",
+    body: `<p>A text box is confusing if it's empty. Use the `placeholder` attribute to show a hint!</p>
+    <p class="text-sm italic text-gray-400 mt-4">Mission: Add `placeholder="Enter your name"` to the text input.</p>`,
+    svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" style="background:#1e293b; border-radius:8px;">
+        <rect x="40" y="50" width="160" height="30" fill="#3b82f6" opacity="0.5" rx="4"/>
+        <text x="120" y="70" fill="white" font-family="sans-serif" font-size="16" text-anchor="middle">MODULE 8</text>
+    </svg>`,
+    widgetCode: `<!-- INTERACTIVE MODULE -->
+<script>
+(function() {
+    const editor = document.getElementById('code-editor');
+    if (editor) {
+        editor.readOnly = false;
+        editor.style.opacity = "1";
+    }
+})();
+</script>`,
+    initialCode: `<form>\n  <input type="text">\n</form>`,
+    progress: 40,
+    validator: function(code) { return code.includes('placeholder="Enter your name"'); }
+};

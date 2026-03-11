@@ -1,9 +1,9 @@
 window.Lessons = window.Lessons || {};
 window.Lessons.lesson5 = {
     id: "lesson5",
-    title: "05: THE LINKED WORLD — HYPERLINKS",
-    description: "Connect your pages together and to the world. [20 MODULES]",
-    gamePath: "tag-matcher.html",
-    gameTitle: "TAG MATCHER",
+    title: "Lesson 5: Forms & Inputs",
+    description: "Learn how to collect data from users with text boxes, checkboxes, and buttons!",
+    gameTitle: "Form Frenzy",
+    gamePath: "minigames/game5.html",
     modules: []
 };

@@ -1,9 +1,22 @@
 window.Lessons.lesson4.modules[15] = {
-            title: "16. Add favorite animal image 🐼",
-            body: `<p>Use the placeholder below (or a real URL if you have one) to display a picture of an animal!</p>
-            <p class="text-sm italic text-gray-400 mt-4">Mission: Add an image using: https://via.placeholder.com/150/000000/FFFFFF/?text=Panda</p>`,
-            svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="60" r="15" fill="white"/><circle cx="140" cy="60" r="15" fill="white"/><circle cx="105" cy="60" r="5" fill="black"/><circle cx="135" cy="60" r="5" fill="black"/><path d="M110 90 Q120 100 130 90" stroke="white" stroke-width="3" fill="none"/></svg>`,
-            initialCode: "<h1>My Favorite Animal</h1>\n<!-- Add image below -->",
-            progress: 80,
-            validator: function (code) { return code.toLowerCase().includes("<img") && code.includes("text=Panda"); }
-        };
+    title: "16. Video time!",
+    body: `<p>The `<video>` tag works exactly like the audio tag, but it shows moving pictures!</p>
+    <p class="text-sm italic text-gray-400 mt-4">Mission: Type `<video>` and `</video>`.</p>`,
+    svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" style="background:#1e293b; border-radius:8px;">
+        <circle cx="120" cy="75" r="40" fill="#3b82f6" opacity="0.5"/>
+        <text x="120" y="80" fill="white" font-family="sans-serif" font-size="20" text-anchor="middle">MODULE 16</text>
+    </svg>`,
+    widgetCode: `<!-- INTERACTIVE MODULE -->
+<script>
+(function() {
+    const editor = document.getElementById('code-editor');
+    if (editor) {
+        editor.readOnly = false;
+        editor.style.opacity = "1";
+    }
+})();
+</script>`,
+    initialCode: ``,
+    progress: 80,
+    validator: function(code) { return code.includes('<video>') && code.includes('</video>'); }
+};
