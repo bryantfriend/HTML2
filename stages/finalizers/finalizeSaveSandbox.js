@@ -1,7 +1,7 @@
-window.Finalizers = window.Finalizers || {};
-window.Finalizers.finalizeSaveSandbox = function (payload, newState, oldState, context) {
+function finalizeSaveSandbox(payload, newState, oldState, context) {
     const filename = payload.filename.trim();
-    localStorage.setItem('sandbox_' + filename, newState.sandboxCode || '');
+    const sandboxData = newState.sandbox || { html: "", css: "", js: "" };
+    localStorage.setItem('sandbox_' + filename, JSON.stringify(sandboxData));
 
     // Update the list of saved projects
     let savedList = [];
@@ -33,4 +33,4 @@ window.Finalizers.finalizeSaveSandbox = function (payload, newState, oldState, c
     if (nameDisplay) {
         nameDisplay.textContent = filename + ".html";
     }
-};
+}

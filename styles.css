@@ -186,3 +186,41 @@ body {
 .pulse-cyan {
     animation: pulse-cyan 1.5s infinite;
 }
+
+/* Sandbox Enhancements */
+.sandbox-tab {
+    background: #2d3436;
+    color: #94a3b8;
+    border-right: 1px solid #444;
+}
+
+.sandbox-tab.active {
+    background: #1e1e1e;
+    color: var(--neon-pink);
+    border-bottom: 2px solid var(--neon-pink);
+}
+
+.sandbox-tab:hover:not(.active) {
+    background: #3d4446;
+}
+
+.sandbox-editor {
+    transition: opacity 0.2s;
+}
+
+.sandbox-editor.hidden {
+    display: none;
+}
+
+#sandbox-preview.mobile-view {
+    width: 375px;
+    height: 667px;
+    margin: 0 auto;
+    border: 8px solid #333;
+    border-radius: 20px;
+}
+
+#preview-desktop-btn.active, #preview-mobile-btn.active {
+    background: var(--neon-pink);
+    color: white;
+}

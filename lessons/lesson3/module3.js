@@ -7,6 +7,18 @@ window.Lessons.lesson3.modules[2] = {
         <text id="m3-item1" x="60" y="55" fill="#f8fafc" font-family="sans-serif" font-size="14" transition="all 0.3s">Pizza</text>
         <text id="m3-item2" x="60" y="80" fill="#f8fafc" font-family="sans-serif" font-size="14" transition="all 0.3s">Burger</text>
         <text id="m3-item3" x="60" y="105" fill="#f8fafc" font-family="sans-serif" font-size="14" transition="all 0.3s">Sushi</text>
+        
+        <!-- Demo Overlay -->
+        <g id="m3-demo-group" style="display:none;">
+            <rect x="0" y="0" width="240" height="150" fill="black" opacity="0.4" />
+            <text id="m3-demo-text" x="50" y="40" fill="#10b981" font-family="monospace" font-size="16" font-weight="bold"></text>
+        </g>
+
+        <!-- Demo Button -->
+        <g id="m3-demo-btn" cursor="pointer">
+            <rect x="175" y="125" width="60" height="20" rx="4" fill="#3b82f6" />
+            <text x="205" y="139" fill="white" font-family="sans-serif" font-size="12" text-anchor="middle" font-weight="bold">DEMO</text>
+        </g>
     </svg>`,
     widgetCode: `<!-- INTERACTIVE MODULE -->
 <script>
@@ -17,11 +29,17 @@ window.Lessons.lesson3.modules[2] = {
         document.getElementById('m3-item2'),
         document.getElementById('m3-item3')
     ];
+    const demoBtn = document.getElementById('m3-demo-btn');
+    const demoGroup = document.getElementById('m3-demo-group');
+    const demoText = document.getElementById('m3-demo-text');
     
     function updateVisual(code) {
         if (!box) return;
-        const hasUl = code.toLowerCase().includes('<ul>') && code.toLowerCase().includes('</ul>');
-        if (hasUl) {
+        const hasUl = new RegExp("<ul>\\\\s*</ul>", "is").test(code) || (code.toLowerCase().includes('<ul>') && code.toLowerCase().includes('</ul>'));
+        // Simplified check for common cases, keeping it robust
+        const hasStart = /<ul>/i.test(code);
+        const hasEnd = /<\\/ul>/i.test(code);
+        if (hasStart && hasEnd) {
             box.setAttribute('stroke', '#10b981');
             box.setAttribute('stroke-dasharray', '0');
             box.setAttribute('fill', '#064e3b');
@@ -38,6 +56,38 @@ window.Lessons.lesson3.modules[2] = {
         }
     }
 
+    if (demoBtn) {
+        demoBtn.addEventListener('click', () => {
+            demoGroup.style.display = 'block';
+            demoText.textContent = "";
+            demoText.setAttribute('y', '30');
+            demoText.setAttribute('x', '40');
+            
+            let step = 0;
+            const text1 = "<ul>";
+            const text2 = "</ul>";
+            
+            const typing = setInterval(() => {
+                if (step < text1.length) {
+                    demoText.textContent += text1[step];
+                    step++;
+                } else if (step === text1.length) {
+                    setTimeout(() => {
+                        demoText.textContent = text2;
+                        demoText.setAttribute('y', '125');
+                        step++;
+                    }, 1000);
+                    step++;
+                } else if (step > text1.length + 1) {
+                    clearInterval(typing);
+                    setTimeout(() => {
+                        demoGroup.style.display = 'none';
+                    }, 2000);
+                }
+            }, 150);
+        });
+    }
+
     const editor = document.getElementById('code-editor');
     if (editor) { editor.readOnly = false; editor.style.opacity = '1';
         editor.addEventListener('input', (e) => updateVisual(e.target.value));
@@ -45,9 +95,10 @@ window.Lessons.lesson3.modules[2] = {
     }
 })();
 </script>`,
-    initialCode: `<li>Pizza</li>\n<li>Burger</li>\n<li>Sushi</li>`,
-    progress: 15,
+    initialCode: "<li>Pizza</li>\n<li>Burger</li>\n<li>Sushi</li>",
     validator: function (code) {
-        return code.toLowerCase().includes("<ul>") && code.toLowerCase().includes("</ul>");
+        if (!code) return false;
+        const c = code.toLowerCase();
+        return /<ul>/i.test(c) && /<\/ul>/i.test(c);
     }
 };

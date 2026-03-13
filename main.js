@@ -140,11 +140,52 @@ if (sandboxNavBtn) {
     });
 }
 
-const sandboxEditor = document.getElementById('sandbox-editor');
-if (sandboxEditor) {
-    sandboxEditor.addEventListener('input', function (e) {
-        window.IntentEngine.run(window.Intents.updateSandbox, { code: e.target.value });
+// sandboxTabs logic
+document.querySelectorAll('.sandbox-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+        const type = tab.dataset.tab;
+        document.querySelectorAll('.sandbox-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        
+        document.querySelectorAll('.sandbox-editor').forEach(e => e.classList.add('hidden'));
+        document.getElementById(`sandbox-editor-${type}`).classList.remove('hidden');
+        
+        const fileNames = { html: 'index.html', css: 'styles.css', js: 'script.js' };
+        document.getElementById('sandbox-file-indicator').textContent = fileNames[type];
     });
+});
+
+document.querySelectorAll('.sandbox-editor').forEach(editor => {
+    editor.addEventListener('input', (e) => {
+        const type = e.target.id.replace('sandbox-editor-', '');
+        window.IntentEngine.run(window.Intents.updateSandbox, { code: e.target.value, type: type });
+    });
+});
+
+// Responsive Preview toggles
+const deskBtn = document.getElementById('preview-desktop-btn');
+const mobBtn = document.getElementById('preview-mobile-btn');
+const previewFrame = document.getElementById('sandbox-preview');
+
+if (deskBtn && mobBtn && previewFrame) {
+    deskBtn.onclick = () => {
+        previewFrame.classList.remove('mobile-view');
+        deskBtn.classList.add('active');
+        mobBtn.classList.remove('active');
+        mobBtn.classList.replace('bg-gray-800', 'bg-gray-400');
+        mobBtn.classList.replace('text-white', 'text-gray-700');
+        deskBtn.classList.replace('bg-gray-400', 'bg-gray-800');
+        deskBtn.classList.replace('text-gray-700', 'text-white');
+    };
+    mobBtn.onclick = () => {
+        previewFrame.classList.add('mobile-view');
+        mobBtn.classList.add('active');
+        deskBtn.classList.remove('active');
+        deskBtn.classList.replace('bg-gray-800', 'bg-gray-400');
+        deskBtn.classList.replace('text-white', 'text-gray-700');
+        mobBtn.classList.replace('bg-gray-400', 'bg-gray-800');
+        mobBtn.classList.replace('text-gray-700', 'text-white');
+    };
 }
 
 const sandboxSaveBtn = document.getElementById('sandbox-save-btn');
@@ -193,13 +234,30 @@ if (sandboxOpenBtn && openModal) {
             savedProjectsList.innerHTML = '<p class="text-gray-500 code-font text-sm">No saved projects found.</p>';
         } else {
             list.forEach(item => {
-                const btn = document.createElement('button');
-                btn.className = 'w-full text-left p-3 bg-black hover:bg-gray-800 border border-gray-700 rounded text-[var(--neon-cyan)] code-font transition flex justify-between items-center';
-                btn.innerHTML = `<span>${item}</span><span class="text-xs text-gray-500">LOAD &rarr;</span>`;
-                btn.onclick = () => {
+                const container = document.createElement('div');
+                container.className = 'group flex gap-2 items-center';
+                
+                const loadBtn = document.createElement('button');
+                loadBtn.className = 'flex-1 text-left p-3 bg-black hover:bg-gray-800 border border-gray-700 rounded text-[var(--neon-cyan)] code-font transition flex justify-between items-center';
+                loadBtn.innerHTML = `<span>${item}</span><span class="text-xs text-gray-500">LOAD &rarr;</span>`;
+                loadBtn.onclick = () => {
                     window.IntentEngine.run(window.Intents.loadSandbox, { filename: item });
                 };
-                savedProjectsList.appendChild(btn);
+                
+                const deleteBtn = document.createElement('button');
+                deleteBtn.className = 'p-3 bg-black hover:bg-red-900 border border-gray-700 rounded text-gray-500 hover:text-white transition opacity-0 group-hover:opacity-100';
+                deleteBtn.innerHTML = '&times;';
+                deleteBtn.title = "Delete Project";
+                deleteBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    if (confirm(`Are you sure you want to delete "${item}"?`)) {
+                        window.IntentEngine.run(window.Intents.deleteSandbox, { filename: item });
+                    }
+                };
+                
+                container.appendChild(loadBtn);
+                container.appendChild(deleteBtn);
+                savedProjectsList.appendChild(container);
             });
         }
 
@@ -214,8 +272,20 @@ if (sandboxOpenBtn && openModal) {
 const sandboxExportBtn = document.getElementById('sandbox-export-btn');
 if (sandboxExportBtn) {
     sandboxExportBtn.addEventListener('click', function () {
-        const code = window.state.sandboxCode || document.getElementById('sandbox-editor').value || '';
-        const blob = new Blob([code], { type: 'text/html' });
+        const s = window.state.sandbox || { html: "", css: "", js: "" };
+        const combined = `<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>My Sandbox Project</title>
+    <style>${s.css || ""}</style>
+</head>
+<body>
+    ${s.html || ""}
+    <script>${s.js || ""}<\/script>
+</body>
+</html>`;
+        const blob = new Blob([combined], { type: 'text/html' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;

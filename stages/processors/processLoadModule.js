@@ -12,7 +12,7 @@ function processLoadModule(payload, currentState, contextData) {
         return newState;
     }
 
-    newState.editorContent = currentModule.initialCode;
+    newState.editorContent = currentModule.initialCode || "";
     newState.missionCompleted = false; // Start fresh
 
     if (typeof currentModule.validator === 'function') {

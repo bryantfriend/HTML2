@@ -1,2 +1,3 @@
-window.Validators = window.Validators || {};
-window.Validators.validateShowSandbox = function(payload) { return true; };
+function validateShowSandbox(payload) {
+    return true;
+}
