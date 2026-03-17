@@ -4,7 +4,8 @@ function finalizePreviewRender(payload, newState, oldState, contextData) {
         if (previewArea) {
             const lesson = (contextData.courseData && contextData.courseData.lessons) ? contextData.courseData.lessons[newState.currentLessonIndex] : null;
             const currentModule = lesson ? lesson.modules[newState.currentModuleIndex] : null;
-            previewArea.innerHTML = newState.editorContent;
+            const scaffold = currentModule && currentModule.previewScaffold ? currentModule.previewScaffold : "";
+            previewArea.innerHTML = scaffold + newState.editorContent;
 
             // Execute any scripts that were injected via innerHTML
             const scripts = previewArea.querySelectorAll('script');

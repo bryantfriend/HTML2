@@ -25,15 +25,26 @@ function finalizeLessonModule(payload, newState, oldState, contextData) {
             document.getElementById('mission-subtitle').textContent = "MISSION: " + lesson.title;
             document.getElementById('module-title').textContent = mod.title;
             document.getElementById('module-body').innerHTML = mod.body;
-            let svgHtml = mod.svg || "";
-            if (mod.widgetCode) {
-                svgHtml += mod.widgetCode;
-            }
-            const svgDisplay = document.getElementById('svg-display');
-            svgDisplay.innerHTML = svgHtml;
 
-            // Execute any scripts injected via innerHTML into svg-display
-            const scripts = svgDisplay.querySelectorAll('script');
+            const svgDisplay = document.getElementById('svg-display');
+            svgDisplay.innerHTML = mod.svg || "";
+            if (mod.hideVisualPanel) {
+                svgDisplay.classList.add('hidden');
+            } else {
+                svgDisplay.classList.remove('hidden');
+            }
+
+            let widgetHost = document.getElementById('lesson-widget-host');
+            if (!widgetHost) {
+                widgetHost = document.createElement('div');
+                widgetHost.id = 'lesson-widget-host';
+                widgetHost.className = 'hidden';
+                document.getElementById('lesson-view').appendChild(widgetHost);
+            }
+            widgetHost.innerHTML = mod.widgetCode || "";
+
+            // Execute helper scripts in a hidden host so demos keep working
+            const scripts = widgetHost.querySelectorAll('script');
             scripts.forEach(oldScript => {
                 const newScript = document.createElement('script');
                 Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
