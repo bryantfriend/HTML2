@@ -138,6 +138,7 @@ window.Lessons.lesson4.modules[14] = {
   });
 })();
 </script>`,
+    hiddenWidgetCode: true,
     previewScaffold: `<style>.controls-shell{padding:12px;border-radius:16px;background:#0f172a;border:1px solid #1e3a5f;color:#cbd5e1;margin-bottom:14px}.controls-shell strong{color:#67e8f9}</style>\n<div class="controls-shell"><strong>Mission hint:</strong> when controls appear, the player becomes usable.</div>`,
     initialCode: `<audio data-challenge="audio-controls" src="assets/media-master-tone.wav">\n</audio>`,
     hideVisualPanel: true,

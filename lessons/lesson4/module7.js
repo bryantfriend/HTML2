@@ -137,6 +137,7 @@ window.Lessons.lesson4.modules[6] = {
   });
 })();
 </script>`,
+    hiddenWidgetCode: true,
     previewScaffold: ``,
     initialCode: `<img data-challenge="alt-save" src="assets/cat-demo.svg" alt="Fluffy cat" width="190">`,
     hideVisualPanel: true,

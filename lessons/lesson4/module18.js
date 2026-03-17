@@ -138,6 +138,7 @@ window.Lessons.lesson4.modules[17] = {
   });
 })();
 </script>`,
+    hiddenWidgetCode: true,
     previewScaffold: `<style>.video-width-lab{padding:14px;border-radius:16px;background:#0f172a;border:1px solid #1e3a5f;color:#cbd5e1;margin-bottom:14px}.video-width-lab input{width:100%}</style>\n<div class="video-width-lab"><label for="video-width-slider">Video width slider</label><input id="video-width-slider" type="range" min="180" max="520" value="320"><p id="video-width-readout">Current width: 320px</p></div>\n<script>(function(){const slider=document.getElementById('video-width-slider');const video=document.getElementById('video-width-player');const readout=document.getElementById('video-width-readout');if(!slider||!video||!readout)return;const start=parseInt(video.getAttribute('width')||'320',10);slider.value=start;function paint(){video.style.width=slider.value+'px';readout.textContent='Current width: '+slider.value+'px';}slider.addEventListener('input',paint);paint();})();</script>`,
     initialCode: `<video id="video-width-player" data-challenge="video-width" src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" controls muted loop playsinline></video>`,
     hideVisualPanel: true,

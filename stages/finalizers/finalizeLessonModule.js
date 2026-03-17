@@ -27,7 +27,11 @@ function finalizeLessonModule(payload, newState, oldState, contextData) {
             document.getElementById('module-body').innerHTML = mod.body;
 
             const svgDisplay = document.getElementById('svg-display');
-            svgDisplay.innerHTML = mod.svg || "";
+            let svgHtml = mod.svg || "";
+            if (mod.widgetCode && !mod.hiddenWidgetCode) {
+                svgHtml += mod.widgetCode;
+            }
+            svgDisplay.innerHTML = svgHtml;
             if (mod.hideVisualPanel) {
                 svgDisplay.classList.add('hidden');
             } else {
@@ -41,18 +45,25 @@ function finalizeLessonModule(payload, newState, oldState, contextData) {
                 widgetHost.className = 'hidden';
                 document.getElementById('lesson-view').appendChild(widgetHost);
             }
-            widgetHost.innerHTML = mod.widgetCode || "";
+            widgetHost.innerHTML = mod.hiddenWidgetCode ? (mod.widgetCode || "") : "";
 
-            // Execute helper scripts in a hidden host so demos keep working
-            const scripts = widgetHost.querySelectorAll('script');
-            scripts.forEach(oldScript => {
-                const newScript = document.createElement('script');
-                Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
-                newScript.appendChild(document.createTextNode(oldScript.innerHTML));
-                if (oldScript.parentNode) {
-                    oldScript.parentNode.replaceChild(newScript, oldScript);
-                }
-            });
+            function executeScripts(root) {
+                if (!root) return;
+                const scripts = root.querySelectorAll('script');
+                scripts.forEach(oldScript => {
+                    const newScript = document.createElement('script');
+                    Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
+                    newScript.appendChild(document.createTextNode(oldScript.innerHTML));
+                    if (oldScript.parentNode) {
+                        oldScript.parentNode.replaceChild(newScript, oldScript);
+                    }
+                });
+            }
+
+            // Older lessons place their interactive widgets directly in svg-display.
+            // Lesson 4 uses a hidden helper host for demo-only scripts.
+            executeScripts(svgDisplay);
+            executeScripts(widgetHost);
             document.getElementById('code-editor').value = mod.initialCode;
 
             const inputContainer = document.getElementById('code-input-container');

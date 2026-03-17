@@ -138,6 +138,7 @@ window.Lessons.lesson4.modules[16] = {
   });
 })();
 </script>`,
+    hiddenWidgetCode: true,
     previewScaffold: `<div id="movie-unlock" style="padding:14px;border-radius:16px;background:#0f172a;border:1px solid #1e3a5f;color:#cbd5e1;margin-bottom:14px">Add <strong>src="movie.mp4"</strong> and <strong>controls</strong> to unlock the lesson recap video.</div>\n<script>(function(){const video=document.querySelector('video[data-challenge="lesson-movie"]');const slot=document.getElementById('movie-unlock');if(video&&slot&&/^movie\.mp4$/i.test((video.getAttribute('src')||'').trim())&&video.hasAttribute('controls')){slot.innerHTML='<iframe width="100%" height="220" src="https://www.youtube-nocookie.com/embed/qz0aGYrrlhU" title="HTML lesson recap" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';}})();</script>`,
     initialCode: `<video data-challenge="lesson-movie" width="320"></video>`,
     hideVisualPanel: true,

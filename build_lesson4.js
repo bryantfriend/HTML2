@@ -176,6 +176,7 @@ modules.forEach((mod, index) => {
     body: \`<p>${bodyMarkup}</p>\n    <p class="text-sm italic text-gray-400 mt-4">Mission: ${missionMarkup}</p>\`,
     svg: \`<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"></svg>\`,
     widgetCode: \`${widgetCode}\`,
+    hiddenWidgetCode: true,
     previewScaffold: \`${escTemplate(mod.previewScaffold || "").replace(/\n/g, '\\n')}\`,
     initialCode: \`${escTemplate(mod.initialCode).replace(/\n/g, '\\n')}\`,
     hideVisualPanel: true,

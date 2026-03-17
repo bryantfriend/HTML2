@@ -137,6 +137,7 @@ window.Lessons.lesson4.modules[7] = {
   });
 })();
 </script>`,
+    hiddenWidgetCode: true,
     previewScaffold: `<style>.width-lab{padding:14px;border-radius:16px;background:#0f172a;color:#e2e8f0;border:1px solid #1e3a5f;margin-bottom:14px}.width-lab input{width:100%}.width-lab img{display:block;margin:14px auto 0;transition:width .2s ease}</style>\n<div class="width-lab"><label for="width-slider-demo">Width slider</label><input id="width-slider-demo" type="range" min="80" max="340" value="180"><p id="width-slider-readout">Current width: 180px</p></div>\n<script>(function(){const slider=document.getElementById('width-slider-demo');const img=document.getElementById('width-slider-cat');const readout=document.getElementById('width-slider-readout');if(!slider||!img||!readout)return;const start=parseInt(img.getAttribute('width')||'180',10);slider.value=start;function paint(){img.style.width=slider.value+'px';readout.textContent='Current width: '+slider.value+'px';}slider.addEventListener('input',paint);paint();})();</script>`,
     initialCode: `<img id="width-slider-cat" data-challenge="width-cat" src="assets/cat-demo.svg" alt="Width cat demo">`,
     hideVisualPanel: true,

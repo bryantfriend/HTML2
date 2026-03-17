@@ -137,6 +137,7 @@ window.Lessons.lesson4.modules[2] = {
   });
 })();
 </script>`,
+    hiddenWidgetCode: true,
     previewScaffold: `<div style="padding:12px;border:1px solid #1e3a5f;border-radius:16px;background:#0f172a;color:#cbd5e1;margin-bottom:12px;"><p style="margin:0 0 10px;font-weight:700;color:#67e8f9;">Reference cat</p><img src="assets/cat-demo.svg" alt="Reference cat" width="120"></div>`,
     initialCode: `<img data-challenge="src-cat" alt="My cat friend">`,
     hideVisualPanel: true,

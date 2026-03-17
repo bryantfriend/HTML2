@@ -142,6 +142,7 @@ window.Lessons.lesson4.modules[19] = {
   });
 })();
 </script>`,
+    hiddenWidgetCode: true,
     previewScaffold: `<style>.portfolio-checklist{display:grid;gap:8px;margin-bottom:14px}.portfolio-check{padding:10px 12px;border-radius:12px;background:#0f172a;color:#cbd5e1;border:1px solid #334155}.portfolio-check.done{border-color:#22c55e;background:rgba(34,197,94,.12);color:#bbf7d0}</style>\n<div class="portfolio-checklist"><div id="portfolio-headings" class="portfolio-check">Add the Image, Audio, and Video headings</div><div id="portfolio-image" class="portfolio-check">Add an image tag</div><div id="portfolio-audio" class="portfolio-check">Add an audio tag</div><div id="portfolio-video" class="portfolio-check">Add a video tag</div></div>\n<script>(function(){const html=document.body.innerHTML;const headingCount=(html.match(/<h2/gi)||[]).length;const headings=document.getElementById('portfolio-headings');const image=document.getElementById('portfolio-image');const audio=document.getElementById('portfolio-audio');const video=document.getElementById('portfolio-video');if(headings)headings.classList.toggle('done',headingCount>=3);if(image)image.classList.toggle('done',/<img\b/i.test(html));if(audio)audio.classList.toggle('done',/<audio\b/i.test(html));if(video)video.classList.toggle('done',/<video\b/i.test(html));})();</script>`,
     initialCode: `<h2>My Image</h2>\n\n<h2>My Song</h2>\n\n<h2>My Movie</h2>`,
     hideVisualPanel: true,

@@ -137,6 +137,7 @@ window.Lessons.lesson4.modules[4] = {
   });
 })();
 </script>`,
+    hiddenWidgetCode: true,
     previewScaffold: ``,
     initialCode: `<img data-challenge="broken-cat" src="assets/cat-demo.svg" alt="Cat photo" width="190">`,
     hideVisualPanel: true,

@@ -137,6 +137,7 @@ window.Lessons.lesson4.modules[10] = {
   });
 })();
 </script>`,
+    hiddenWidgetCode: true,
     previewScaffold: ``,
     initialCode: `<img data-challenge="format-swap" src="assets/cat-demo.svg" alt="Dancing cat" width="220">`,
     hideVisualPanel: true,

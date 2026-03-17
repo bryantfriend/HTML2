@@ -138,6 +138,7 @@ window.Lessons.lesson4.modules[18] = {
   });
 })();
 </script>`,
+    hiddenWidgetCode: true,
     previewScaffold: `<p id="autoplay-status" style="color:#cbd5e1">Add autoplay to make the video start on its own.</p>\n<script>(function(){const video=document.getElementById('autoplay-player');const status=document.getElementById('autoplay-status');if(video&&status&&video.hasAttribute('autoplay')){video.play().catch(()=>{});status.textContent='Autoplay active: the video is trying to start automatically.';}})();</script>`,
     initialCode: `<video id="autoplay-player" data-challenge="autoplay-video" src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" controls width="300" muted loop playsinline>\n</video>`,
     hideVisualPanel: true,

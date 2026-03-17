@@ -137,6 +137,7 @@ window.Lessons.lesson4.modules[8] = {
   });
 })();
 </script>`,
+    hiddenWidgetCode: true,
     previewScaffold: `<style>.height-lab{padding:14px;border-radius:16px;background:#0f172a;color:#e2e8f0;border:1px solid #1e3a5f;margin-bottom:14px}.height-lab input{width:100%}.height-lab img{display:block;margin:14px auto 0;transition:height .2s ease;width:180px;object-fit:cover}</style>\n<div class="height-lab"><label for="height-slider-demo">Height slider</label><input id="height-slider-demo" type="range" min="80" max="340" value="180"><p id="height-slider-readout">Current height: 180px</p></div>\n<script>(function(){const slider=document.getElementById('height-slider-demo');const img=document.getElementById('height-slider-cat');const readout=document.getElementById('height-slider-readout');if(!slider||!img||!readout)return;const start=parseInt(img.getAttribute('height')||'180',10);slider.value=start;function paint(){img.style.height=slider.value+'px';readout.textContent='Current height: '+slider.value+'px';}slider.addEventListener('input',paint);paint();})();</script>`,
     initialCode: `<img id="height-slider-cat" data-challenge="height-cat" src="assets/cat-demo.svg" alt="Height cat demo">`,
     hideVisualPanel: true,

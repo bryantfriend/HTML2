@@ -138,6 +138,7 @@ window.Lessons.lesson4.modules[12] = {
   });
 })();
 </script>`,
+    hiddenWidgetCode: true,
     previewScaffold: `<button onclick="(function(){const ctx=new(window.AudioContext||window.webkitAudioContext)();const o=ctx.createOscillator();const g=ctx.createGain();o.type='triangle';o.frequency.value=440;o.connect(g);g.connect(ctx.destination);g.gain.setValueAtTime(0.0001,ctx.currentTime);g.gain.exponentialRampToValueAtTime(0.18,ctx.currentTime+.02);g.gain.exponentialRampToValueAtTime(0.0001,ctx.currentTime+.5);o.start();o.stop(ctx.currentTime+.55);})();" style="padding:12px 16px;border:none;border-radius:999px;background:#06b6d4;color:#082f49;font-weight:700;cursor:pointer;margin-bottom:12px">Play sample sound</button>`,
     initialCode: ``,
     hideVisualPanel: true,

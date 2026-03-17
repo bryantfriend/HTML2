@@ -137,6 +137,7 @@ window.Lessons.lesson4.modules[3] = {
   });
 })();
 </script>`,
+    hiddenWidgetCode: true,
     previewScaffold: ``,
     initialCode: ``,
     hideVisualPanel: true,

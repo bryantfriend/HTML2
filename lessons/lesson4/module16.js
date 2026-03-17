@@ -138,6 +138,7 @@ window.Lessons.lesson4.modules[15] = {
   });
 })();
 </script>`,
+    hiddenWidgetCode: true,
     previewScaffold: `<style>.video-start-lab{padding:14px;border-radius:16px;background:linear-gradient(180deg,#0f172a,#111827);border:1px solid #1e3a5f;color:#cbd5e1;margin-bottom:14px}.video-start-lab button{margin-top:10px;padding:10px 14px;border:none;border-radius:999px;background:#22d3ee;color:#082f49;font-weight:700;cursor:pointer}</style>\n<div class="video-start-lab"><strong>Video launch bay</strong><p style="margin:8px 0 0">Type the opening and closing video tags below. Use the button if you want to preview the structure first.</p><button type="button" onclick="(function(){const editor=window.parent.document.getElementById('code-editor');const openTag='<'+ 'video>';const closeTag='</'+'video>';if(editor&&!editor.value.toLowerCase().includes('<video')){editor.value+=openTag+'\n'+closeTag;window.parent.IntentEngine.run(window.parent.Intents.updatePreview,{code:editor.value});}})()">Insert demo video tag</button></div>`,
     initialCode: ``,
     hideVisualPanel: true,
