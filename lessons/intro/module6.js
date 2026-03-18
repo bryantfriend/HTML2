@@ -6,6 +6,16 @@ window.Lessons.intro.modules[5] = {
   svg: ``,
   widgetCode: `<!-- INTERACTIVE MODULE -->
 <style>
+.intro-demo-shell { margin-bottom: 12px; padding: 14px; border-radius: 16px; background: linear-gradient(180deg, #10203a, #0f172a); border: 1px solid #1e3a5f; color: #dbeafe; }
+.intro-demo-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; gap: 10px; }
+.intro-demo-kicker { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #67e8f9; }
+.intro-demo-replay { border: none; border-radius: 999px; padding: 7px 12px; background: #67e8f9; color: #082f49; font-weight: 700; cursor: pointer; }
+.intro-demo-stage { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: rgba(15, 23, 42, 0.7); border-radius: 14px; padding: 12px; margin-bottom: 10px; }
+.intro-demo-panel { min-height: 96px; border-radius: 12px; border: 1px solid rgba(103, 232, 249, 0.16); background: rgba(15, 23, 42, 0.95); padding: 12px; }
+.intro-demo-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: #93c5fd; margin-bottom: 8px; }
+.intro-demo-code { min-height: 54px; font: 700 16px/1.6 monospace; white-space: pre-wrap; color: white; }
+.intro-demo-preview { display: flex; align-items: center; justify-content: center; color: #67e8f9; font: 700 13px/1.5 sans-serif; text-align: center; }
+.intro-demo-status { color: #cbd5e1; font-size: 13px; }
 .house-game { display: flex; gap: 80px; height: 300px; background: #0f172a; border-radius: 12px; padding: 20px 40px; color: white; user-select: none; }
 .pieces { display: flex; flex-direction: column; gap: 10px; width: 140px; }
 .piece { background: #3b82f6; padding: 10px; border-radius: 8px; text-align: center; cursor: pointer; font-weight: bold; border: 2px solid transparent; font-size: 14px; transition: 0.2s; }
@@ -23,6 +33,33 @@ window.Lessons.intro.modules[5] = {
 .dz-head.filled { background: #00ff9d !important; border: none !important; color: black !important; align-items: flex-end !important; padding-bottom: 10px !important; }
 </style>
 <script>
+window.playIntroBodyDemo = function() {
+    const codeEl = document.getElementById('intro-body-demo-code');
+    const previewEl = document.getElementById('intro-body-demo-preview');
+    const statusEl = document.getElementById('intro-body-demo-status');
+    if (!codeEl || !previewEl || !statusEl) return;
+    const frames = ['', '<body>', '<body>\\n</body>'];
+    const statuses = [
+        'Step 1: start the body tag.',
+        'Step 2: close the body tag.',
+        'Now build the same tag pair in the editor.'
+    ];
+    let frame = 0;
+    clearInterval(window.introBodyDemoTimer);
+    codeEl.textContent = '';
+    previewEl.textContent = 'The body is where visible page content lives.';
+    statusEl.textContent = statuses[0];
+    window.introBodyDemoTimer = setInterval(function() {
+        codeEl.textContent = frames[frame];
+        statusEl.textContent = statuses[Math.min(frame, statuses.length - 1)];
+        if (frame === 1) previewEl.textContent = 'Body opening...';
+        if (frame === 2) {
+            previewEl.textContent = 'Body ready for headings and paragraphs.';
+            clearInterval(window.introBodyDemoTimer);
+        }
+        frame++;
+    }, 850);
+};
 window.placedCount = 0;
 window.handleHouseClick = function(target) {
     if(target.classList.contains('piece') && !target.classList.contains('placed')) {
@@ -46,7 +83,26 @@ window.handleHouseClick = function(target) {
        }
    }
 };
+const introBodyEditor = document.getElementById('code-editor');
+if (introBodyEditor) { introBodyEditor.readOnly = false; introBodyEditor.style.opacity = '1'; }
 </script>
+<div class="intro-demo-shell">
+  <div class="intro-demo-top">
+    <div>
+      <div class="intro-demo-kicker">Quick Demo</div>
+      <div style="font-size:13px;">Watch the body tag appear, then type it while you build the house.</div>
+    </div>
+    <button type="button" class="intro-demo-replay" onclick="window.playIntroBodyDemo()">Replay</button>
+  </div>
+  <div class="intro-demo-stage">
+    <div class="intro-demo-panel">
+      <div class="intro-demo-label">Type This</div>
+      <div id="intro-body-demo-code" class="intro-demo-code"></div>
+    </div>
+    <div id="intro-body-demo-preview" class="intro-demo-panel intro-demo-preview">The body is where visible page content lives.</div>
+  </div>
+  <div id="intro-body-demo-status" class="intro-demo-status">Demo loading...</div>
+</div>
 <div class="house-game" id="hg" onclick="window.handleHouseClick(event.target)">
   <div class="pieces">
     <div class="piece" data-type="head">head</div>
@@ -62,7 +118,8 @@ window.handleHouseClick = function(target) {
     <div class="dz dz-p1" data-type="p">p</div>
     <div class="dz dz-p2" data-type="p">p</div>
   </div>
-</div>`,
+</div>
+<script>window.playIntroBodyDemo();</script>`,
   initialCode: ``,
   progress: 30,
   validator: function (code) {

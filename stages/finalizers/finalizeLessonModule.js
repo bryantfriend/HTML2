@@ -64,7 +64,14 @@ function finalizeLessonModule(payload, newState, oldState, contextData) {
             // Lesson 4 uses a hidden helper host for demo-only scripts.
             executeScripts(svgDisplay);
             executeScripts(widgetHost);
-            document.getElementById('code-editor').value = mod.initialCode;
+
+            const codeEditor = document.getElementById('code-editor');
+            if (codeEditor) {
+                // Reset the editor for standard lessons before any module-specific widget tweaks.
+                codeEditor.readOnly = false;
+                codeEditor.style.opacity = '1';
+                codeEditor.value = mod.initialCode || "";
+            }
 
             const inputContainer = document.getElementById('code-input-container');
             if (inputContainer) {
