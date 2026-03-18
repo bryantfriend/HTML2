@@ -20,6 +20,13 @@ function finalizeCompleteLesson(payload, newState, oldState, contextData) {
         document.getElementById('mission-subtitle').textContent = "MISSION_ACCOMPLISHED";
 
         const lesson = window.courseData.lessons[newState.currentLessonIndex];
+        function buildExam1Code(score) {
+            const seed = window.exam1SessionSeed || Date.now();
+            const stamp = String(seed).slice(-6);
+            const checksum = ((score * 17) + (seed % 89)).toString(36).toUpperCase();
+            return `EX1-${String(score).padStart(2, '0')}-${stamp}-${checksum}`;
+        }
+
         let emojiCompletionHtml = "";
         if (window.lessonEmoji) {
             emojiCompletionHtml = `<div class="mb-6 text-6xl animate-bounce">${window.lessonEmoji}</div><p class="text-[var(--neon-pink)] font-bold text-2xl mb-8">Please show your teacher this screen to get credit for this lesson.</p>`;
@@ -34,6 +41,23 @@ function finalizeCompleteLesson(payload, newState, oldState, contextData) {
         let gameButtonHtml = '';
         if (lesson && lesson.gamePath && lesson.gameTitle) {
             gameButtonHtml = `<button onclick="window.location.href='${lesson.gamePath}'" class="w-64 py-4 px-10 bg-[var(--neon-cyan)] text-black font-bold rounded-lg heading-font hover:scale-105 transition shadow-[0_0_15px_var(--neon-cyan)]">PLAY ${lesson.gameTitle}</button>`;
+        }
+
+        if (lesson && lesson.id === 'exam1') {
+            const score = Object.values(window.exam1Answers || {}).filter(entry => entry && entry.correct).length;
+            if (!window.exam1ResultCode) {
+                window.exam1ResultCode = buildExam1Code(score);
+            }
+            emojiCompletionHtml =
+                `<div class="mb-6 text-6xl">${window.lessonEmoji || '📝'}</div>` +
+                `<h2 class="heading-font text-5xl text-white mb-4 glow-text">EXAM COMPLETE</h2>` +
+                `<p class="text-[var(--neon-cyan)] code-font text-2xl mb-4">Score: ${score} / 30</p>` +
+                `<div class="mb-8 rounded-xl border border-[var(--neon-pink)] bg-[var(--neon-pink)]/10 px-6 py-5">` +
+                `<p class="text-sm uppercase tracking-[0.3em] text-gray-400 mb-2">Write Down This Exam Code</p>` +
+                `<p class="heading-font text-3xl text-[var(--neon-pink)] break-all">${window.exam1ResultCode}</p>` +
+                `</div>` +
+                `<p class="text-[var(--neon-pink)] font-bold text-xl mb-8">Show this score and code to your teacher.</p>`;
+            gameButtonHtml = '';
         }
 
         document.getElementById('completion-content').innerHTML =
