@@ -70,7 +70,36 @@ function renderOption(option) {
   return looksLikeCode ? `<code class="exam1-inline-code">${escaped}</code>` : escaped;
 }
 
-questions.forEach((question, index) => {
+function createSeededRandom(seed) {
+  let state = seed >>> 0;
+  return function seededRandom() {
+    state = (state * 1664525 + 1013904223) >>> 0;
+    return state / 0x100000000;
+  };
+}
+
+function shuffleQuestion(question, index) {
+  const seededRandom = createSeededRandom((index + 1) * 9973);
+  const shuffledOptions = question.options.map((option, optionIndex) => ({
+    text: option,
+    isCorrect: optionIndex === question.correct
+  }));
+
+  for (let i = shuffledOptions.length - 1; i > 0; i -= 1) {
+    const swapIndex = Math.floor(seededRandom() * (i + 1));
+    const current = shuffledOptions[i];
+    shuffledOptions[i] = shuffledOptions[swapIndex];
+    shuffledOptions[swapIndex] = current;
+  }
+
+  return {
+    prompt: question.prompt,
+    options: shuffledOptions.map((option) => option.text),
+    correct: shuffledOptions.findIndex((option) => option.isCorrect)
+  };
+}
+
+questions.map(shuffleQuestion).forEach((question, index) => {
   const qNum = index + 1;
   const optionsHtml = question.options.map((option, optionIndex) => {
     const label = optionLabel(optionIndex);

@@ -18,7 +18,7 @@ window.Lessons.exam1.modules[18] = {
 <div class="exam1-shell">
   <p class="exam1-kicker">Exam 1 Question 19 of 30</p>
   <p class="exam1-question">Which type of list uses numbers by default?</p>
-  <div class="exam1-options"><button type="button" class="exam1-option" data-choice="A" onclick="window.exam1Pick(19, 'A', true)"><span class="exam1-badge">A</span><span>Ordered list</span></button><button type="button" class="exam1-option" data-choice="B" onclick="window.exam1Pick(19, 'B', false)"><span class="exam1-badge">B</span><span>Unordered list</span></button><button type="button" class="exam1-option" data-choice="C" onclick="window.exam1Pick(19, 'C', false)"><span class="exam1-badge">C</span><span>Image list</span></button><button type="button" class="exam1-option" data-choice="D" onclick="window.exam1Pick(19, 'D', false)"><span class="exam1-badge">D</span><span>Heading list</span></button></div>
+  <div class="exam1-options"><button type="button" class="exam1-option" data-choice="A" onclick="window.exam1Pick(19, 'A', false)"><span class="exam1-badge">A</span><span>Heading list</span></button><button type="button" class="exam1-option" data-choice="B" onclick="window.exam1Pick(19, 'B', true)"><span class="exam1-badge">B</span><span>Ordered list</span></button><button type="button" class="exam1-option" data-choice="C" onclick="window.exam1Pick(19, 'C', false)"><span class="exam1-badge">C</span><span>Unordered list</span></button><button type="button" class="exam1-option" data-choice="D" onclick="window.exam1Pick(19, 'D', false)"><span class="exam1-badge">D</span><span>Image list</span></button></div>
   <div id="exam1-status-19" class="exam1-status">Choose the best answer.</div>
 </div>
 <script>
