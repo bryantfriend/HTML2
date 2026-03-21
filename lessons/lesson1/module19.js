@@ -1,75 +1,84 @@
 window.Lessons.lesson1.modules[18] = {
-    title: "19. Blueprint vs Build 🏗️",
-    body: `<p>HTML is the blueprint. The browser is the builder.</p>
-    <p class="text-sm italic text-gray-400 mt-4">Mission: Click all 3 items to inspect their code and see the build!</p>`,
-    svg: ``,\
+    title: "19. Mission Review: Page Structure",
+    body: `<p>This checkpoint turns the big ideas from Lesson 1 into quick recall practice so students are ready for the exam wording.</p>
+    <p class="text-sm italic text-gray-400 mt-4">Mission: Answer all 3 structure questions correctly.</p>`,
+    svg: ``,
     widgetCode: `<!-- INTERACTIVE MODULE -->
 <style>
-.bp-game { background: #0f172a; height: 350px; width: 100%; border-radius: 12px; padding: 15px; display: flex; flex-direction: column; position: relative; overflow: hidden; }
-.checklist { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
-.cl-item { background: #1e293b; padding: 12px 15px; border-radius: 8px; border-left: 4px solid #3b82f6; cursor: pointer; display: flex; align-items: center; justify-content: space-between; color: white; transition: 0.2s; font-family: sans-serif; font-size: 14px; }
-.cl-item:hover { background: #334155; }
-.cl-item.done { border-left-color: #10b981; }
-
-.overlay { position: absolute; inset: 0; background: rgba(15,23,42,0.98); z-index: 20; display: none; flex-direction: column; padding: 15px; }
-.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-.modal-body { display: flex; gap: 10px; flex: 1; min-height: 0; }
-.code-view, .vis-view { flex: 1; display: flex; flex-direction: column; gap: 5px; }
-.code-content { background: #020617; color: #38bdf8; font-family: monospace; padding: 10px; border-radius: 6px; font-size: 12px; flex: 1; overflow: auto; }
-.vis-content { background: white; border-radius: 6px; flex: 1; display: flex; align-items: center; justify-content: center; padding: 10px; }
-.close-btn { background: #3b82f6; color: white; border: none; padding: 8px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; }
+.review-shell { background: linear-gradient(180deg, #0f172a, #111827); border: 1px solid #1e3a5f; border-radius: 16px; padding: 16px; color: #e2e8f0; font-family: sans-serif; }
+.review-kicker { font-size: 11px; text-transform: uppercase; letter-spacing: 0.24em; color: #67e8f9; margin-bottom: 8px; }
+.review-card { background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(103, 232, 249, 0.14); border-radius: 14px; padding: 12px; margin-top: 12px; }
+.review-question { font-weight: 700; color: white; margin-bottom: 10px; }
+.review-options { display: grid; gap: 8px; }
+.review-option { width: 100%; text-align: left; border: 1px solid #334155; background: #1e293b; color: #e2e8f0; border-radius: 10px; padding: 10px 12px; cursor: pointer; transition: 0.18s ease; }
+.review-option:hover { border-color: #67e8f9; transform: translateY(-1px); }
+.review-option.correct { background: rgba(16, 185, 129, 0.2); border-color: #10b981; color: white; }
+.review-option.wrong { background: rgba(239, 68, 68, 0.18); border-color: #ef4444; color: white; }
+.review-progress { margin-top: 14px; font-weight: 700; color: #67e8f9; }
 </style>
+<div class="review-shell">
+  <div class="review-kicker">Mission Review</div>
+  <div>These are the same structure words students need to recognize later on Exam 1.</div>
+
+  <div class="review-card" data-question="0">
+    <div class="review-question">1. Which part holds page information like the title?</div>
+    <div class="review-options">
+      <button class="review-option" data-correct="true">&lt;head&gt;</button>
+      <button class="review-option" data-correct="false">&lt;body&gt;</button>
+      <button class="review-option" data-correct="false">&lt;footer&gt;</button>
+    </div>
+  </div>
+
+  <div class="review-card" data-question="1">
+    <div class="review-question">2. Which part holds the visible content students actually see?</div>
+    <div class="review-options">
+      <button class="review-option" data-correct="false">&lt;title&gt;</button>
+      <button class="review-option" data-correct="true">&lt;body&gt;</button>
+      <button class="review-option" data-correct="false">&lt;doctype&gt;</button>
+    </div>
+  </div>
+
+  <div class="review-card" data-question="2">
+    <div class="review-question">3. What tag changes the text on the browser tab?</div>
+    <div class="review-options">
+      <button class="review-option" data-correct="false">&lt;html&gt;</button>
+      <button class="review-option" data-correct="true">&lt;title&gt;</button>
+      <button class="review-option" data-correct="false">&lt;section&gt;</button>
+    </div>
+  </div>
+
+  <div id="lesson1-review-status" class="review-progress">0 / 3 correct</div>
+</div>
 <script>
 (function() {
-    window.bpState = [0,0,0];
-    const bpData = {
-        1: { code: '<nav>\\n <a href="/">Home</a>\\n <a href="/ab">About</a>\\n</nav>', vis: '<nav style="display:flex;gap:10px;color:blue;"><span>Home</span><span>About</span></nav>' },
-        2: { code: '<button>\\n Click Me!\\n</button>', vis: '<button style="background:green;color:white;padding:10px;">Click Me!</button>' },
-        3: { code: '<aside>\\n Note on HTML\\n</aside>', vis: '<aside style="background:#eee;padding:10px;border-left:5px solid #ccc;">Note on HTML</aside>' }
-    };
+  const editor = document.getElementById('code-editor');
+  if (editor) {
+    editor.readOnly = true;
+    editor.style.opacity = '0.75';
+    editor.value = '<!-- Lesson 1 review checkpoint -->';
+  }
 
-    window.openBP = function(id) {
-        document.getElementById('m-code').innerText = bpData[id].code;
-        document.getElementById('m-vis').innerHTML = bpData[id].vis;
-        document.getElementById('m-over').style.display = 'flex';
-        document.getElementById('c' + id).classList.add('done');
-        window.bpState[id-1] = 1;
-        
-        if(window.bpState.every(x => x === 1)) {
-            setTimeout(() => {
-                window.completeModule('BP_REVIEWED');
-            }, 1000);
+  const solved = [false, false, false];
+  const status = document.getElementById('lesson1-review-status');
+  document.querySelectorAll('.review-card').forEach((card, cardIndex) => {
+    card.querySelectorAll('.review-option').forEach(button => {
+      button.addEventListener('click', () => {
+        const correct = button.dataset.correct === 'true';
+        card.querySelectorAll('.review-option').forEach(opt => opt.classList.remove('correct', 'wrong'));
+        button.classList.add(correct ? 'correct' : 'wrong');
+        if (correct) solved[cardIndex] = true;
+        const total = solved.filter(Boolean).length;
+        if (status) status.textContent = total + ' / 3 correct';
+        if (total === 3 && editor && !editor.value.includes('LESSON1_REVIEW_READY')) {
+          editor.value += '\\n<!-- LESSON1_REVIEW_READY -->';
+          editor.dispatchEvent(new Event('input', { bubbles: true }));
         }
-    };
-    window.closeBP = function() {
-        document.getElementById('m-over').style.display = 'none';
-    };
+      });
+    });
+  });
 })();
-</script>
-<div class="bp-game">
-    <div class="checklist">
-        <div class="cl-item" id="c1" onclick="window.openBP(1)"><span>1. Navigation Bar</span><span>🔎</span></div>
-        <div class="cl-item" id="c2" onclick="window.openBP(2)"><span>2. Hero Button</span><span>🔎</span></div>
-        <div class="cl-item" id="c3" onclick="window.openBP(3)"><span>3. Side Note</span><span>🔎</span></div>
-    </div>
-    <div id="m-over" class="overlay">
-        <div class="modal-header">
-            <span style="color:#00f2ff; font-weight:bold; font-size:14px;">BLUEPRINT INSPECTOR</span>
-            <button class="close-btn" onclick="window.closeBP()">CLOSE</button>
-        </div>
-        <div class="modal-body">
-            <div class="code-view">
-                <div style="font-size:10px; color:#94a3b8;">HTML CODE</div>
-                <div class="code-content" id="m-code"></div>
-            </div>
-            <div class="vis-view">
-                <div style="font-size:10px; color:#94a3b8;">RESULT</div>
-                <div class="vis-content" id="m-vis"></div>
-            </div>
-        </div>
-    </div>
-</div>`,
-    initialCode: ``,
+</script>`,
+    initialCode: `<!-- Lesson 1 review checkpoint -->`,
     progress: 95,
-    validator: function (code) { return code.includes("BP_REVIEWED"); }
+    validator: function (code) { return code.includes("LESSON1_REVIEW_READY"); }
 };

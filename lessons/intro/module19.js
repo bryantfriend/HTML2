@@ -1,89 +1,98 @@
 window.Lessons.intro.modules[18] = {
-            title: "19. Quick preview of final project",
-            body: `<p>By the end of module 6, you will have a styled website showcasing your portfolio piece!</p>
-            <p class="text-sm italic text-gray-400 mt-4">Mission: Interact with the simulated portfolio 3 times to unlock the final module.</p>`,
-            svg: ``,
-            widgetCode: `<!-- INTERACTIVE MODULE -->
+    title: "19. Mission Review: HTML Basics",
+    body: `<p>This checkpoint is here to help students <strong>remember</strong> the key words before the exam, not just copy code from a demo.</p>
+    <p class="text-sm italic text-gray-400 mt-4">Mission: Answer all 3 review checks correctly to unlock the final module.</p>`,
+    svg: ``,
+    widgetCode: `<!-- INTERACTIVE MODULE -->
 <style>
-.portfolio { height: 300px; background: white; color: black; border-radius: 8px; font-family: sans-serif; position: relative; transition: 0.3s; display: flex; flex-direction: column; overflow: hidden; }
-.p-nav { display: flex; justify-content: space-around; background: #e2e8f0; padding: 10px; border-bottom: 2px solid #cbd5e1; }
-.p-btn { padding: 8px 16px; background: transparent; color: #475569; font-weight: bold; cursor: pointer; border-radius: 20px; font-size: 14px; transition: 0.2s; border: none; }
-.p-btn:hover { background: #cbd5e1; color: #1e293b; }
-.p-btn.active { background: #3b82f6; color: white; }
-.p-page { flex: 1; padding: 20px; overflow-y: auto; display: none; flex-direction: column; align-items: center; text-align: center; }
-.p-page.active-page { display: flex; animation: p-fade 0.3s; }
-.p-success { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(16,185,129,0.95); color: white; display: none; flex-direction: column; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; z-index: 20; animation: p-fade 0.5s; backdrop-filter: blur(5px); }
-@keyframes p-fade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-/* Card styling for projects page */
-.p-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; margin-top: 15px; }
-.p-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 15px; }
+.review-shell { background: linear-gradient(180deg, #0f172a, #111827); border: 1px solid #1e3a5f; border-radius: 16px; padding: 16px; color: #e2e8f0; font-family: sans-serif; }
+.review-kicker { font-size: 11px; text-transform: uppercase; letter-spacing: 0.24em; color: #67e8f9; margin-bottom: 8px; }
+.review-card { background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(103, 232, 249, 0.14); border-radius: 14px; padding: 12px; margin-top: 12px; }
+.review-question { font-weight: 700; color: white; margin-bottom: 10px; }
+.review-options { display: grid; gap: 8px; }
+.review-option { width: 100%; text-align: left; border: 1px solid #334155; background: #1e293b; color: #e2e8f0; border-radius: 10px; padding: 10px 12px; cursor: pointer; transition: 0.18s ease; }
+.review-option:hover { border-color: #67e8f9; transform: translateY(-1px); }
+.review-option.correct { background: rgba(16, 185, 129, 0.2); border-color: #10b981; color: white; }
+.review-option.wrong { background: rgba(239, 68, 68, 0.18); border-color: #ef4444; color: white; }
+.review-progress { margin-top: 14px; font-weight: 700; color: #67e8f9; }
 </style>
-<div class="portfolio" id="pf">
-    <div class="p-nav">
-        <button class="p-btn active" onclick="window.navTo(this, 'pg-home')">Home</button>
-        <button class="p-btn" onclick="window.navTo(this, 'pg-proj')">Projects</button>
-        <button class="p-btn" onclick="window.navTo(this, 'pg-contact')">Contact</button>
-    </div>
-    
-    <div id="pg-home" class="p-page active-page">
-        <div style="font-size:60px; margin-bottom:10px;">👤</div>
-        <h2 style="font-weight:bold; font-size:28px; color:#0f172a; margin:0;">Alex Coder</h2>
-        <p style="color:#3b82f6; font-size:16px; font-weight:bold; margin-top:5px;">Future Web Developer</p>
-        <p style="color:#64748b; margin-top:15px; font-size:14px;">Welcome to my website! I'm learning HTML to build the foundations of the internet.</p>
-    </div>
-    
-    <div id="pg-proj" class="p-page">
-        <h2 style="font-weight:bold; font-size:24px; color:#0f172a; margin:0 0 5px 0;">My Work</h2>
-        <div class="p-grid">
-            <div class="p-card"><div style="font-size:24px; margin-bottom:5px;">🎮</div><b>Game App</b><p style="font-size:12px; color:#64748b; margin-top:5px;">A simple JS game</p></div>
-            <div class="p-card"><div style="font-size:24px; margin-bottom:5px;">📝</div><b>Blog UI</b><p style="font-size:12px; color:#64748b; margin-top:5px;">CSS styled blog</p></div>
-            <div class="p-card"><div style="font-size:24px; margin-bottom:5px;">🛍️</div><b>Store App</b><p style="font-size:12px; color:#64748b; margin-top:5px;">Mock e-commerce</p></div>
-            <div class="p-card"><div style="font-size:24px; margin-bottom:5px;">📱</div><b>Chat App</b><p style="font-size:12px; color:#64748b; margin-top:5px;">Firebase chat</p></div>
-        </div>
-    </div>
-    
-    <div id="pg-contact" class="p-page">
-        <h2 style="font-weight:bold; font-size:24px; color:#0f172a; margin-bottom:15px;">Let's Connect!</h2>
-        <div style="width:100%; max-width:250px; text-align:left; background:#f8fafc; padding:20px; border-radius:8px; border:1px solid #e2e8f0;">
-            <p style="margin:5px 0; font-size:14px;"><b>Email:</b> alex@coder.com</p>
-            <p style="margin:5px 0; font-size:14px;"><b>GitHub:</b> @alexcodes</p>
-            <p style="margin:5px 0; font-size:14px;"><b>Twitter:</b> @alex_dev</p>
-        </div>
-        <button style="margin-top:20px; padding:10px 30px; background:#3b82f6; color:white; border:none; border-radius:30px; font-weight:bold; cursor:pointer;" onclick="this.innerText='Message Sent!'; this.style.background='#10b981';">Send Message</button>
-    </div>
+<div class="review-shell">
+  <div class="review-kicker">Memory Booster</div>
+  <div>Students do better on the exam when they practice naming the idea, not just performing the action.</div>
 
-    <div class="p-success" id="p-success">
-        <div style="font-size:60px; margin-bottom:10px;">🌟</div>
-        <div style="text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Portfolio Complete!</div>
+  <div class="review-card" data-question="0">
+    <div class="review-question">1. Which tag wraps the whole HTML page?</div>
+    <div class="review-options">
+      <button class="review-option" data-correct="false">&lt;body&gt;</button>
+      <button class="review-option" data-correct="true">&lt;html&gt;</button>
+      <button class="review-option" data-correct="false">&lt;title&gt;</button>
     </div>
+  </div>
+
+  <div class="review-card" data-question="1">
+    <div class="review-question">2. Where does most of the visible page content go?</div>
+    <div class="review-options">
+      <button class="review-option" data-correct="false">&lt;head&gt;</button>
+      <button class="review-option" data-correct="true">&lt;body&gt;</button>
+      <button class="review-option" data-correct="false">&lt;doctype&gt;</button>
+    </div>
+  </div>
+
+  <div class="review-card" data-question="2">
+    <div class="review-question">3. What line tells the browser to use modern HTML?</div>
+    <div class="review-options">
+      <button class="review-option" data-correct="true">&lt;!DOCTYPE HTML&gt;</button>
+      <button class="review-option" data-correct="false">&lt;HEAD&gt;</button>
+      <button class="review-option" data-correct="false">&lt;TITLE&gt;</button>
+    </div>
+  </div>
+
+  <div id="intro-review-status" class="review-progress">0 / 3 correct</div>
 </div>
 <script>
-window.visitedPages = { 'pg-home': true };
-window.navTo = function(btn, pageId) {
-    // Update navigation buttons
-    document.querySelectorAll('.p-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    
-    // Swap pages
-    document.querySelectorAll('.p-page').forEach(p => p.classList.remove('active-page'));
-    document.getElementById(pageId).classList.add('active-page');
-    
-    // Track unique visited pages to unlock the mission
-    window.visitedPages[pageId] = true;
-    if(Object.keys(window.visitedPages).length >= 3) {
-        setTimeout(() => {
-            document.getElementById('p-success').style.display = 'flex';
-            document.getElementById('pf').style.boxShadow = '0 0 30px #10b981';
-            const editor = document.getElementById('code-editor');
-            if(!editor.value.includes('PORTFOLIO' + '_REVIEWED')) {
-                editor.value += '\\n<!-- ' + 'PORTFOLIO' + '_REVIEWED' + ' -->';
-                editor.dispatchEvent(new Event('input', { bubbles: true }));
-            }
-        }, 800);
+(function() {
+  const editor = document.getElementById('code-editor');
+  if (editor) {
+    editor.readOnly = true;
+    editor.style.opacity = '0.75';
+    editor.value = '<!-- Intro review checkpoint -->';
+  }
+
+  const solved = [false, false, false];
+  const cards = document.querySelectorAll('.review-card');
+  const status = document.getElementById('intro-review-status');
+
+  function syncStatus() {
+    const total = solved.filter(Boolean).length;
+    if (status) {
+      status.textContent = total + ' / 3 correct';
     }
-}
+    if (total === 3 && editor && !editor.value.includes('INTRO_REVIEW_READY')) {
+      editor.value += '\\n<!-- INTRO_REVIEW_READY -->';
+      editor.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+  }
+
+  cards.forEach((card, cardIndex) => {
+    card.querySelectorAll('.review-option').forEach(button => {
+      button.addEventListener('click', () => {
+        const correct = button.dataset.correct === 'true';
+        card.querySelectorAll('.review-option').forEach(opt => {
+          opt.classList.remove('correct', 'wrong');
+        });
+        button.classList.add(correct ? 'correct' : 'wrong');
+        if (correct) {
+          solved[cardIndex] = true;
+        }
+        syncStatus();
+      });
+    });
+  });
+
+  syncStatus();
+})();
 </script>`,
-    initialCode: ``,
-            progress: 95,
-            validator: function (code) { return code.includes("PORTFOLIO_REVIEWED"); }
-        };
+    initialCode: `<!-- Intro review checkpoint -->`,
+    progress: 95,
+    validator: function (code) { return code.includes("INTRO_REVIEW_READY"); }
+};

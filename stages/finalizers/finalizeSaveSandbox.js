@@ -29,8 +29,15 @@ function finalizeSaveSandbox(payload, newState, oldState, context) {
     }
 
     // Update the visual filename indicator
-    const nameDisplay = document.querySelector('#sandbox-view .terminal-header span:last-child');
+    const nameDisplay = document.getElementById('sandbox-file-indicator');
     if (nameDisplay) {
         nameDisplay.textContent = filename + ".html";
+    }
+    const projectName = document.getElementById('sandbox-project-name');
+    const statusProject = document.getElementById('sandbox-status-project');
+    if (projectName) projectName.textContent = filename;
+    if (statusProject) statusProject.textContent = filename + ".html";
+    if (window.setSandboxDirty) {
+        window.setSandboxDirty(false);
     }
 }

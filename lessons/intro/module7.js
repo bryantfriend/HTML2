@@ -1,6 +1,6 @@
 window.Lessons.intro.modules[6] = {
   title: "7. CSS vs HTML vs JavaScript",
-  body: `<p><strong>HTML</strong> = The Skeleton (Structure)<br><strong>CSS</strong> = The Skin/Clothes (Styling, colors, layout)<br><strong>JavaScript</strong> = The Muscles/Brain (Interactivity, pop-ups, games)</p>
+  body: `<p>You have already started using <strong>HTML</strong> to build structure. Next, here is the big picture:</p><p><strong>HTML</strong> = The Skeleton (Structure)<br><strong>CSS</strong> = The Skin/Clothes (Styling, colors, layout)<br><strong>JavaScript</strong> = The Muscles/Brain (Interactivity, pop-ups, games)</p>
             <p class="text-sm italic text-gray-400 mt-4">Mission: Change at least 1 piece of clothing on the character to see how CSS works.</p>`,
   svg: ``,
   widgetCode: `<!-- INTERACTIVE MODULE -->

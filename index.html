@@ -125,8 +125,17 @@
     <!-- Sandbox View -->
     <main id="sandbox-view" class="max-w-7xl mx-auto hidden">
         <div class="flex flex-col md:flex-row justify-between items-center mb-4 gap-4">
-            <h2 class="heading-font text-2xl text-[var(--neon-pink)] glow-text">CREATIVE SANDBOX</h2>
-            <div class="flex flex-wrap gap-3">
+            <div>
+                <h2 class="heading-font text-2xl text-[var(--neon-pink)] glow-text">CREATIVE SANDBOX</h2>
+                <p class="text-xs code-font text-gray-400 uppercase tracking-[0.28em] mt-2">HTML / CSS / JS IDE MODE</p>
+            </div>
+            <div class="flex flex-wrap gap-3 items-center">
+                <button id="sandbox-run-btn"
+                    class="bg-[var(--neon-cyan)] hover:bg-cyan-300 text-black font-bold py-2 px-4 rounded-lg text-xs heading-font transition shadow-[0_0_12px_var(--neon-cyan)]">RUN</button>
+                <button id="sandbox-autoplay-btn"
+                    class="bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded-lg text-xs heading-font transition border border-gray-600">AUTO-RUN: ON</button>
+                <button id="sandbox-reset-btn"
+                    class="bg-gray-800 hover:bg-gray-700 text-white py-2 px-4 rounded-lg text-xs heading-font transition border border-gray-600">RESET</button>
                 <button id="sandbox-open-btn"
                     class="bg-blue-800 hover:bg-blue-700 text-white py-2 px-4 rounded-lg text-xs heading-font transition border border-blue-600">OPEN</button>
                 <button id="sandbox-save-btn"
@@ -135,44 +144,107 @@
                     class="bg-[var(--neon-green)] hover:bg-green-400 text-black font-bold py-2 px-4 rounded-lg text-xs heading-font transition shadow-[0_0_10px_var(--neon-green)]">EXPORT</button>
             </div>
         </div>
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 h-[75vh]">
-            <!-- Left: Editor -->
-            <section
-                class="flex flex-col rounded-xl overflow-hidden shadow-2xl border border-[var(--neon-pink)] bg-[#1e1e1e]">
-                <div class="terminal-header flex border-b border-gray-700">
-                    <button class="sandbox-tab active px-4 py-2 text-xs code-font border-r border-gray-700 hover:bg-gray-800 transition" data-tab="html">index.html</button>
-                    <button class="sandbox-tab px-4 py-2 text-xs code-font border-r border-gray-700 hover:bg-gray-800 transition" data-tab="css">styles.css</button>
-                    <button class="sandbox-tab px-4 py-2 text-xs code-font border-r border-gray-700 hover:bg-gray-800 transition" data-tab="js">script.js</button>
-                    <div class="flex-1"></div>
-                    <span class="p-2 text-[10px] code-font text-gray-500 uppercase flex items-center" id="sandbox-file-indicator">project.html</span>
-                </div>
-                <div class="flex-1 relative">
-                    <textarea id="sandbox-editor-html"
-                        class="sandbox-editor absolute inset-0 w-full p-4 code-font text-sm bg-transparent text-white outline-none resize-none"
-                        spellcheck="false"
-                        placeholder="<!-- HTML goes here -->"></textarea>
-                    <textarea id="sandbox-editor-css"
-                        class="sandbox-editor absolute inset-0 w-full p-4 code-font text-sm bg-transparent text-white outline-none resize-none hidden"
-                        spellcheck="false"
-                        placeholder="/* CSS goes here */"></textarea>
-                    <textarea id="sandbox-editor-js"
-                        class="sandbox-editor absolute inset-0 w-full p-4 code-font text-sm bg-transparent text-white outline-none resize-none hidden"
-                        spellcheck="false"
-                        placeholder="// JS goes here"></textarea>
+        <div class="grid grid-cols-1 xl:grid-cols-[1.2fr_1fr] gap-6 h-[78vh]">
+            <section class="sandbox-ide-shell rounded-2xl overflow-hidden shadow-2xl border border-[var(--neon-pink)]">
+                <div class="sandbox-workbench">
+                    <aside class="sandbox-explorer">
+                        <div class="sandbox-pane-title">Explorer</div>
+                        <div id="sandbox-project-name" class="sandbox-project-name">untitled_project</div>
+                        <button class="sandbox-file active" data-tab="html">
+                            <span class="sandbox-file-icon sandbox-file-icon-html">H</span>
+                            <span>index.html</span>
+                            <span class="sandbox-file-dot" data-file-dot="html"></span>
+                        </button>
+                        <button class="sandbox-file" data-tab="css">
+                            <span class="sandbox-file-icon sandbox-file-icon-css">C</span>
+                            <span>styles.css</span>
+                            <span class="sandbox-file-dot" data-file-dot="css"></span>
+                        </button>
+                        <button class="sandbox-file" data-tab="js">
+                            <span class="sandbox-file-icon sandbox-file-icon-js">J</span>
+                            <span>script.js</span>
+                            <span class="sandbox-file-dot" data-file-dot="js"></span>
+                        </button>
+                        <div class="sandbox-pane-spacer"></div>
+                        <div class="sandbox-helper-card">
+                            <div class="sandbox-pane-title">Workflow</div>
+                            <p>Write code, use <strong>RUN</strong>, and watch the browser plus console update below.</p>
+                        </div>
+                    </aside>
+                    <div class="sandbox-editor-shell">
+                        <div class="terminal-header sandbox-editor-tabs border-b border-gray-700">
+                            <button class="sandbox-tab active px-4 py-2 text-xs code-font border-r border-gray-700 hover:bg-gray-800 transition" data-tab="html">index.html</button>
+                            <button class="sandbox-tab px-4 py-2 text-xs code-font border-r border-gray-700 hover:bg-gray-800 transition" data-tab="css">styles.css</button>
+                            <button class="sandbox-tab px-4 py-2 text-xs code-font border-r border-gray-700 hover:bg-gray-800 transition" data-tab="js">script.js</button>
+                            <div class="flex-1"></div>
+                            <span class="p-2 text-[10px] code-font text-gray-500 uppercase flex items-center" id="sandbox-file-indicator">index.html</span>
+                        </div>
+                        <div class="sandbox-editor-toolbar">
+                            <div class="sandbox-editor-meta">
+                                <span id="sandbox-active-language">HTML</span>
+                                <span id="sandbox-dirty-indicator">Saved</span>
+                            </div>
+                            <div class="sandbox-editor-meta">
+                                <span id="sandbox-cursor-position">Ln 1, Col 1</span>
+                                <span id="sandbox-selection-size">0 chars</span>
+                            </div>
+                        </div>
+                        <div class="sandbox-editor-stack">
+                            <div class="sandbox-editor-wrap" data-editor-wrap="html">
+                                <pre id="sandbox-gutter-html" class="sandbox-gutter" aria-hidden="true">1</pre>
+                                <textarea id="sandbox-editor-html"
+                                    class="sandbox-editor w-full p-4 code-font text-sm bg-transparent text-white outline-none resize-none"
+                                    spellcheck="false"
+                                    placeholder="<!-- HTML goes here -->"></textarea>
+                            </div>
+                            <div class="sandbox-editor-wrap hidden" data-editor-wrap="css">
+                                <pre id="sandbox-gutter-css" class="sandbox-gutter" aria-hidden="true">1</pre>
+                                <textarea id="sandbox-editor-css"
+                                    class="sandbox-editor w-full p-4 code-font text-sm bg-transparent text-white outline-none resize-none"
+                                    spellcheck="false"
+                                    placeholder="/* CSS goes here */"></textarea>
+                            </div>
+                            <div class="sandbox-editor-wrap hidden" data-editor-wrap="js">
+                                <pre id="sandbox-gutter-js" class="sandbox-gutter" aria-hidden="true">1</pre>
+                                <textarea id="sandbox-editor-js"
+                                    class="sandbox-editor w-full p-4 code-font text-sm bg-transparent text-white outline-none resize-none"
+                                    spellcheck="false"
+                                    placeholder="// JS goes here"></textarea>
+                            </div>
+                        </div>
+                        <div class="sandbox-statusbar">
+                            <span id="sandbox-status-project">untitled_project.html</span>
+                            <span id="sandbox-status-lines">1 line</span>
+                            <span id="sandbox-status-characters">0 chars</span>
+                            <span id="sandbox-preview-status">Preview synced</span>
+                        </div>
+                    </div>
                 </div>
             </section>
-            <!-- Right: Preview -->
-            <section class="flex flex-col rounded-xl overflow-hidden shadow-2xl border border-gray-700 bg-white">
-                <div class="p-2 bg-gray-200 border-b border-gray-300 flex justify-between items-center">
-                    <span class="text-[10px] code-font text-gray-800 font-bold uppercase tracking-widest">Live Browser
-                        Preview</span>
-                    <div class="flex gap-2">
+            <section class="flex flex-col rounded-2xl overflow-hidden shadow-2xl border border-gray-700 bg-white">
+                <div class="sandbox-preview-toolbar">
+                    <div>
+                        <span class="text-[10px] code-font text-gray-800 font-bold uppercase tracking-widest">Live Browser Preview</span>
+                        <div class="text-[10px] code-font text-gray-500 uppercase tracking-[0.28em] mt-1">Render + Console</div>
+                    </div>
+                    <div class="flex gap-2 flex-wrap justify-end">
                         <button id="preview-desktop-btn" class="p-1 px-2 text-[10px] bg-gray-800 text-white rounded active">DESKTOP</button>
+                        <button id="preview-tablet-btn" class="p-1 px-2 text-[10px] bg-gray-400 text-gray-700 rounded">TABLET</button>
                         <button id="preview-mobile-btn" class="p-1 px-2 text-[10px] bg-gray-400 text-gray-700 rounded">MOBILE</button>
+                        <button id="sandbox-clear-console-btn" class="p-1 px-2 text-[10px] bg-gray-800 text-white rounded">CLEAR LOG</button>
                     </div>
                 </div>
                 <div id="sandbox-preview-container" class="flex-1 w-full bg-gray-100 flex justify-center overflow-auto p-4 transition-all">
                     <iframe id="sandbox-preview" class="w-full h-full bg-white shadow-lg transition-all duration-300"></iframe>
+                </div>
+                <div class="sandbox-console-shell">
+                    <div class="sandbox-console-header">
+                        <span>Console</span>
+                        <span id="sandbox-console-count">0 entries</span>
+                    </div>
+                    <div id="sandbox-console-output" class="sandbox-console-output">
+                        <div class="sandbox-console-empty">Console output from your sandbox will appear here.</div>
+                    </div>
                 </div>
             </section>
         </div>

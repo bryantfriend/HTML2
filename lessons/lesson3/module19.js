@@ -1,96 +1,83 @@
 window.Lessons.lesson3.modules[18] = {
-    title: "19. Mini design improvement",
-    body: `<p>An <strong><code>&lt;h1&gt;</code></strong> is the most important heading on a page. It should be at the very top!</p>
-    <p class="text-sm italic text-gray-400 mt-4">Mission: Add an <code>&lt;h1&gt;</code> tag with the text "My Favorites" at the very top of the code.</p>`,
-    svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" id="m19-svg" style="background:#1e293b; border-radius:8px;">
-        <rect id="m19-preview" x="10" y="10" width="220" height="130" rx="4" fill="#334155" />
-        <text id="m19-title" x="120" y="40" fill="#94a3b8" font-family="sans-serif" font-size="16" font-weight="bold" text-anchor="middle">No &lt;h1&gt; yet...</text>
-        <circle cx="90" cy="70" r="4" fill="#cbd5e1" />
-        <rect x="105" y="65" width="40" height="10" rx="3" fill="#cbd5e1" />
-        <circle cx="90" cy="90" r="4" fill="#cbd5e1" />
-        <rect x="105" y="85" width="50" height="10" rx="3" fill="#cbd5e1" />
-
-        <!-- Demo Overlay -->
-        <g id="m19-demo-group" style="display:none;">
-            <rect x="0" y="0" width="240" height="150" fill="black" opacity="0.6" />
-            <text id="m19-demo-code" x="20" y="30" fill="#10b981" font-family="monospace" font-size="16" font-weight="bold"></text>
-            <text x="20" y="60" fill="#64748b" font-family="monospace" font-size="14" opacity="0.5">&lt;ul&gt;</text>
-        </g>
-
-        <!-- Demo Button -->
-        <g id="m19-demo-btn" cursor="pointer">
-            <rect x="175" y="125" width="60" height="20" rx="4" fill="#3b82f6" />
-            <text x="205" y="139" fill="white" font-family="sans-serif" font-size="12" text-anchor="middle" font-weight="bold">DEMO</text>
-        </g>
-    </svg>`,
+    title: "19. Mission Review: Lists",
+    body: `<p>This checkpoint gives students one more quick round of list vocabulary before the exam.</p>
+    <p class="text-sm italic text-gray-400 mt-4">Mission: Answer all 3 list questions correctly.</p>`,
+    svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" style="background:#1e293b; border-radius:8px;"><text x="120" y="80" fill="#10b981" font-family="monospace" font-size="16" text-anchor="middle">LIST CHECK</text></svg>`,
     widgetCode: `<!-- INTERACTIVE MODULE -->
 <style>
-.m19-container { display: flex; gap: 10px; background: #1e293b; padding: 10px; border-radius: 8px; font-family: sans-serif; }
-.m19-theme { flex: 1; padding: 10px; border-radius: 4px; text-align: center; cursor: pointer; border: 2px solid transparent; color: white; user-select: none; font-size: 12px; }
-.m19-theme:hover { transform: scale(1.05); }
-#t1 { background: #0f172a; }
-#t2 { background: #7c2d12; }
-#t3 { background: #14532d; }
+.review-shell { background: linear-gradient(180deg, #0f172a, #111827); border: 1px solid #1e3a5f; border-radius: 16px; padding: 16px; color: #e2e8f0; font-family: sans-serif; }
+.review-kicker { font-size: 11px; text-transform: uppercase; letter-spacing: 0.24em; color: #67e8f9; margin-bottom: 8px; }
+.review-card { background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(103, 232, 249, 0.14); border-radius: 14px; padding: 12px; margin-top: 12px; }
+.review-question { font-weight: 700; color: white; margin-bottom: 10px; }
+.review-options { display: grid; gap: 8px; }
+.review-option { width: 100%; text-align: left; border: 1px solid #334155; background: #1e293b; color: #e2e8f0; border-radius: 10px; padding: 10px 12px; cursor: pointer; transition: 0.18s ease; }
+.review-option:hover { border-color: #67e8f9; transform: translateY(-1px); }
+.review-option.correct { background: rgba(16, 185, 129, 0.2); border-color: #10b981; color: white; }
+.review-option.wrong { background: rgba(239, 68, 68, 0.18); border-color: #ef4444; color: white; }
+.review-progress { margin-top: 14px; font-weight: 700; color: #67e8f9; }
 </style>
-<div class="m19-container">
-    <div class="m19-theme" id="t1">Dark Blue</div>
-    <div class="m19-theme" id="t2">Warm Red</div>
-    <div class="m19-theme" id="t3">Forest Green</div>
+<div class="review-shell">
+  <div class="review-kicker">Mission Review</div>
+  <div>Students often remember the activity, but not the exact list tag names. This helps lock them in.</div>
+
+  <div class="review-card">
+    <div class="review-question">1. Which tag starts a bullet list?</div>
+    <div class="review-options">
+      <button class="review-option" data-correct="true">&lt;ul&gt;</button>
+      <button class="review-option" data-correct="false">&lt;ol&gt;</button>
+      <button class="review-option" data-correct="false">&lt;li&gt;</button>
+    </div>
+  </div>
+
+  <div class="review-card">
+    <div class="review-question">2. Which tag starts a numbered list?</div>
+    <div class="review-options">
+      <button class="review-option" data-correct="false">&lt;ul&gt;</button>
+      <button class="review-option" data-correct="true">&lt;ol&gt;</button>
+      <button class="review-option" data-correct="false">&lt;h1&gt;</button>
+    </div>
+  </div>
+
+  <div class="review-card">
+    <div class="review-question">3. Which tag is used for each item inside a list?</div>
+    <div class="review-options">
+      <button class="review-option" data-correct="false">&lt;p&gt;</button>
+      <button class="review-option" data-correct="false">&lt;body&gt;</button>
+      <button class="review-option" data-correct="true">&lt;li&gt;</button>
+    </div>
+  </div>
+
+  <div id="lesson3-review-status" class="review-progress">0 / 3 correct</div>
 </div>
 <script>
 (function() {
-    const preview = document.getElementById('m19-preview');
-    const headerText = document.getElementById('m19-title');
-    const editor = document.getElementById('code-editor');
-    const demoBtn = document.getElementById('m19-demo-btn');
-    const demoGroup = document.getElementById('m19-demo-group');
-    const demoCode = document.getElementById('m19-demo-code');
-    
-    document.getElementById('t1').onclick = () => preview.setAttribute('fill', '#0f172a');
-    document.getElementById('t2').onclick = () => preview.setAttribute('fill', '#7c2d12');
-    document.getElementById('t3').onclick = () => preview.setAttribute('fill', '#14532d');
-    
-    function updateVisual(val) {
-        if (!headerText) return;
-        const match = val.match(/<h1>(.*?)<\\/h1>/i);
-        if (match) {
-            headerText.setAttribute('fill', '#ffffff');
-            headerText.textContent = (match[1] || "").trim() || "Empty Title";
-        } else {
-            headerText.setAttribute('fill', '#94a3b8');
-            headerText.textContent = "No <h1> yet...";
+  const editor = document.getElementById('code-editor');
+  if (editor) {
+    editor.readOnly = true;
+    editor.style.opacity = '0.75';
+    editor.value = '<!-- Lesson 3 review checkpoint -->';
+  }
+  const solved = [false, false, false];
+  const status = document.getElementById('lesson3-review-status');
+  document.querySelectorAll('.review-card').forEach((card, cardIndex) => {
+    card.querySelectorAll('.review-option').forEach(button => {
+      button.addEventListener('click', () => {
+        const correct = button.dataset.correct === 'true';
+        card.querySelectorAll('.review-option').forEach(opt => opt.classList.remove('correct', 'wrong'));
+        button.classList.add(correct ? 'correct' : 'wrong');
+        if (correct) solved[cardIndex] = true;
+        const total = solved.filter(Boolean).length;
+        if (status) status.textContent = total + ' / 3 correct';
+        if (total === 3 && editor && !editor.value.includes('LESSON3_REVIEW_READY')) {
+          editor.value += '\\n<!-- LESSON3_REVIEW_READY -->';
+          editor.dispatchEvent(new Event('input', { bubbles: true }));
         }
-    }
-
-    if (demoBtn) {
-        demoBtn.addEventListener('click', () => {
-            demoGroup.style.display = 'block';
-            demoCode.textContent = "";
-            const textToType = "<h1>My Favorites</h1>";
-            let idx = 0;
-            const typing = setInterval(() => {
-                if (idx < textToType.length) {
-                    demoCode.textContent += textToType[idx];
-                    idx++;
-                } else {
-                    clearInterval(typing);
-                    setTimeout(() => { demoGroup.style.display = 'none'; }, 2000);
-                }
-            }, 60);
-        });
-    }
-    
-    if (editor) { editor.readOnly = false; editor.style.opacity = '1';
-        editor.addEventListener('input', (e) => updateVisual(e.target.value));
-        updateVisual(editor.value);
-    }
+      });
+    });
+  });
 })();
 </script>`,
-    initialCode: `<ul>\n  <li>Pizza</li>\n  <li>Burger</li>\n</ul>`,
+    initialCode: `<!-- Lesson 3 review checkpoint -->`,
     progress: 95,
-    validator: function (code) {
-        if (!code) return false;
-        const c = code.toLowerCase();
-        return /<h1>\s*my favorites\s*<\/h1>/i.test(c);
-    }
+    validator: function (code) { return code.includes("LESSON3_REVIEW_READY"); }
 };

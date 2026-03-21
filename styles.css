@@ -188,6 +188,119 @@ body {
 }
 
 /* Sandbox Enhancements */
+.sandbox-ide-shell {
+    background:
+        linear-gradient(180deg, rgba(255, 0, 229, 0.08), transparent 22%),
+        linear-gradient(135deg, rgba(0, 242, 255, 0.06), rgba(10, 11, 30, 0.95));
+}
+
+.sandbox-workbench {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    min-height: 0;
+}
+
+.sandbox-explorer {
+    background: #12182e;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 18px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sandbox-pane-title {
+    font-family: 'Fira Code', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.24em;
+    color: #7dd3fc;
+}
+
+.sandbox-project-name {
+    font-family: 'Orbitron', sans-serif;
+    color: white;
+    font-size: 14px;
+    margin-bottom: 6px;
+    word-break: break-word;
+}
+
+.sandbox-file {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    background: rgba(15, 23, 42, 0.75);
+    color: #cbd5e1;
+    font-family: 'Fira Code', monospace;
+    font-size: 12px;
+    transition: 0.2s ease;
+}
+
+.sandbox-file:hover,
+.sandbox-file.active {
+    border-color: rgba(103, 232, 249, 0.35);
+    background: rgba(15, 23, 42, 0.95);
+    color: white;
+    box-shadow: inset 0 0 0 1px rgba(0, 242, 255, 0.08);
+}
+
+.sandbox-file-icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.sandbox-file-icon-html { background: rgba(249, 115, 22, 0.2); color: #fdba74; }
+.sandbox-file-icon-css { background: rgba(59, 130, 246, 0.2); color: #93c5fd; }
+.sandbox-file-icon-js { background: rgba(250, 204, 21, 0.2); color: #fde047; }
+
+.sandbox-file-dot {
+    margin-left: auto;
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: transparent;
+    opacity: 0;
+    transition: opacity 0.2s ease, background 0.2s ease;
+}
+
+.sandbox-file-dot.dirty {
+    background: var(--neon-pink);
+    opacity: 1;
+    box-shadow: 0 0 8px rgba(255, 0, 229, 0.7);
+}
+
+.sandbox-pane-spacer {
+    flex: 1;
+}
+
+.sandbox-helper-card {
+    padding: 12px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(15, 23, 42, 0.85);
+    color: #cbd5e1;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.sandbox-editor-shell {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    background: #111522;
+}
+
 .sandbox-tab {
     background: #2d3436;
     color: #94a3b8;
@@ -204,12 +317,91 @@ body {
     background: #3d4446;
 }
 
+.sandbox-editor-toolbar,
+.sandbox-statusbar,
+.sandbox-preview-toolbar,
+.sandbox-console-header {
+    font-family: 'Fira Code', monospace;
+    font-size: 11px;
+}
+
+.sandbox-editor-toolbar {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 14px;
+    background: #0f172a;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    color: #94a3b8;
+}
+
+.sandbox-editor-meta {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.sandbox-editor-stack {
+    flex: 1;
+    min-height: 0;
+    position: relative;
+}
+
+.sandbox-editor-wrap {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: 58px 1fr;
+    background: #111522;
+}
+
+.sandbox-gutter {
+    margin: 0;
+    padding: 16px 10px 16px 0;
+    overflow: hidden;
+    text-align: right;
+    color: #4b5563;
+    background: #0b1020;
+    border-right: 1px solid rgba(255, 255, 255, 0.06);
+    user-select: none;
+    pointer-events: none;
+    font-family: 'Fira Code', monospace;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
 .sandbox-editor {
     transition: opacity 0.2s;
+    min-height: 0;
+    height: 100%;
+    padding-left: 16px;
+    line-height: 1.7;
+    tab-size: 2;
 }
 
 .sandbox-editor.hidden {
     display: none;
+}
+
+.sandbox-statusbar {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding: 10px 14px;
+    background: #09111f;
+    color: #7dd3fc;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sandbox-preview-toolbar {
+    padding: 10px 12px;
+    background: #e5e7eb;
+    border-bottom: 1px solid #cbd5e1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
 }
 
 #sandbox-preview.mobile-view {
@@ -220,7 +412,87 @@ body {
     border-radius: 20px;
 }
 
-#preview-desktop-btn.active, #preview-mobile-btn.active {
+#sandbox-preview.tablet-view {
+    width: 820px;
+    height: 1180px;
+    margin: 0 auto;
+    border: 10px solid #4b5563;
+    border-radius: 26px;
+}
+
+#preview-desktop-btn.active, #preview-mobile-btn.active, #preview-tablet-btn.active {
     background: var(--neon-pink);
     color: white;
+}
+
+.sandbox-console-shell {
+    background: #0b1020;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    min-height: 170px;
+    display: flex;
+    flex-direction: column;
+}
+
+.sandbox-console-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 12px;
+    color: #e2e8f0;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+}
+
+.sandbox-console-output {
+    flex: 1;
+    overflow: auto;
+    padding: 0 12px 12px;
+    font-family: 'Fira Code', monospace;
+    font-size: 12px;
+    line-height: 1.6;
+    color: #cbd5e1;
+}
+
+.sandbox-console-entry {
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sandbox-console-type {
+    color: #67e8f9;
+    text-transform: uppercase;
+}
+
+.sandbox-console-entry.error .sandbox-console-type {
+    color: #fda4af;
+}
+
+.sandbox-console-entry.warn .sandbox-console-type {
+    color: #fde68a;
+}
+
+.sandbox-console-empty {
+    color: #64748b;
+    padding: 8px 0;
+}
+
+.sandbox-preview-stale {
+    color: #fcd34d;
+}
+
+.sandbox-preview-ready {
+    color: var(--neon-green);
+}
+
+@media (max-width: 1024px) {
+    .sandbox-workbench {
+        grid-template-columns: 1fr;
+    }
+
+    .sandbox-explorer {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
 }

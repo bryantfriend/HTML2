@@ -1,7 +1,7 @@
 window.Lessons.intro.modules[9] = {
             title: "10. Tags = building blocks 🧱",
             body: `<p>HTML is built with <strong>Tags</strong>. Tags are special keywords wrapped in angle brackets.</p>
-            <p class="text-sm italic text-gray-400 mt-4">Mission: Watch the quick demo, then type a left angle bracket < and right angle bracket >.</p>`,
+            <p class="text-sm italic text-gray-400 mt-4">Mission: Watch the quick demo, then type a left angle bracket <code>&lt;</code> and right angle bracket <code>&gt;</code>.</p>`,
             svg: ``,
             widgetCode: `<!-- INTERACTIVE MODULE -->
 <style>

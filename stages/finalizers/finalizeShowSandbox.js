@@ -6,10 +6,10 @@ function finalizeShowSandbox(payload, newState, oldState, context) {
     
     // Default content if state is empty
     if (!newState.sandbox) {
-        newState.sandbox = {
-            html: "<!-- Build your website here! -->\n<h1>Hello Cyber-Builder!</h1>\n<p>Start editing to see the magic.</p>",
-            css: "/* Style your website here! */\nbody {\n  background: #0f172a;\n  color: #00f2ff;\n  font-family: sans-serif;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  height: 100vh;\n  margin: 0;\n}",
-            js: "// Write your logic here!\nconsole.log('Sanbox initialized!');"
+        newState.sandbox = window.getSandboxStarter ? window.getSandboxStarter() : {
+            html: "<h1>Hello Cyber-Builder!</h1>",
+            css: "body { font-family: sans-serif; }",
+            js: "console.log('Sandbox initialized');"
         };
     }
 
@@ -24,12 +24,38 @@ function finalizeShowSandbox(payload, newState, oldState, context) {
     if (editors.css) editors.css.value = s.css;
     if (editors.js) editors.js.value = s.js;
 
+    ['html', 'css', 'js'].forEach(type => {
+        if (window.updateSandboxLineNumbers) {
+            window.updateSandboxLineNumbers(type);
+        }
+    });
+
+    if (window.clearSandboxConsole) {
+        window.clearSandboxConsole();
+    }
+
+    if (window.setSandboxDirty) {
+        window.setSandboxDirty(false);
+    }
+
+    const projectName = document.getElementById('sandbox-project-name');
+    const statusProject = document.getElementById('sandbox-status-project');
+    const filename = newState.sandboxFilename || 'untitled_project';
+    if (projectName) projectName.textContent = filename;
+    if (statusProject) statusProject.textContent = filename + '.html';
+
     // Default to HTML tab
-    const htmlTab = document.querySelector('.sandbox-tab[data-tab="html"]');
-    if (htmlTab) htmlTab.click();
+    if (window.switchSandboxTab) {
+        window.switchSandboxTab('html');
+    } else {
+        const htmlTab = document.querySelector('.sandbox-tab[data-tab="html"]');
+        if (htmlTab) htmlTab.click();
+    }
     
     // Trigger initial preview
-    if (window.IntentEngine && window.Intents.updateSandbox) {
+    if (window.runSandboxPreview) {
+        window.runSandboxPreview();
+    } else if (window.IntentEngine && window.Intents.updateSandbox) {
         window.IntentEngine.run(window.Intents.updateSandbox, { type: 'html', code: s.html });
     }
 }

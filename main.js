@@ -140,52 +140,316 @@ if (sandboxNavBtn) {
     });
 }
 
-// sandboxTabs logic
-document.querySelectorAll('.sandbox-tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-        const type = tab.dataset.tab;
-        document.querySelectorAll('.sandbox-tab').forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        
-        document.querySelectorAll('.sandbox-editor').forEach(e => e.classList.add('hidden'));
-        document.getElementById(`sandbox-editor-${type}`).classList.remove('hidden');
-        
-        const fileNames = { html: 'index.html', css: 'styles.css', js: 'script.js' };
-        document.getElementById('sandbox-file-indicator').textContent = fileNames[type];
+window.sandboxIDE = window.sandboxIDE || {
+    activeTab: 'html',
+    autoRun: true,
+    dirty: false,
+    previewTimer: null,
+    consoleEntries: []
+};
+
+window.getSandboxEditors = function () {
+    return {
+        html: document.getElementById('sandbox-editor-html'),
+        css: document.getElementById('sandbox-editor-css'),
+        js: document.getElementById('sandbox-editor-js')
+    };
+};
+
+window.getSandboxStarter = function () {
+    return {
+        html: "<main class=\"app-shell\">\n  <h1>Creative Sandbox</h1>\n  <p>Build your own experiment with HTML, CSS, and JavaScript.</p>\n  <button id=\"surprise-btn\">Click me</button>\n</main>",
+        css: "body {\n  margin: 0;\n  min-height: 100vh;\n  display: grid;\n  place-items: center;\n  background: radial-gradient(circle at top, #12203f, #050816 65%);\n  color: #e2e8f0;\n  font-family: Arial, sans-serif;\n}\n\n.app-shell {\n  width: min(92vw, 520px);\n  padding: 32px;\n  border-radius: 24px;\n  background: rgba(15, 23, 42, 0.88);\n  border: 1px solid rgba(103, 232, 249, 0.24);\n  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.45);\n}\n\nbutton {\n  margin-top: 18px;\n  padding: 12px 18px;\n  border: none;\n  border-radius: 999px;\n  background: #67e8f9;\n  color: #082f49;\n  font-weight: 700;\n  cursor: pointer;\n}",
+        js: "const button = document.getElementById('surprise-btn');\nif (button) {\n  button.addEventListener('click', () => {\n    button.textContent = 'Nice work!';\n    console.log('Sandbox button clicked');\n  });\n}"
+    };
+};
+
+window.clearSandboxConsole = function () {
+    window.sandboxIDE.consoleEntries = [];
+    const output = document.getElementById('sandbox-console-output');
+    const count = document.getElementById('sandbox-console-count');
+    if (output) {
+        output.innerHTML = '<div class="sandbox-console-empty">Console output from your sandbox will appear here.</div>';
+    }
+    if (count) {
+        count.textContent = '0 entries';
+    }
+};
+
+window.renderSandboxConsole = function () {
+    const output = document.getElementById('sandbox-console-output');
+    const count = document.getElementById('sandbox-console-count');
+    if (!output || !count) return;
+
+    if (!window.sandboxIDE.consoleEntries.length) {
+        output.innerHTML = '<div class="sandbox-console-empty">Console output from your sandbox will appear here.</div>';
+        count.textContent = '0 entries';
+        return;
+    }
+
+    output.innerHTML = window.sandboxIDE.consoleEntries.map(function (entry) {
+        const safeMessage = String(entry.message || '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+        return '<div class="sandbox-console-entry ' + entry.type + '">' +
+            '<div class="sandbox-console-type">' + entry.type + '</div>' +
+            '<div>' + safeMessage + '</div>' +
+            '</div>';
+    }).join('');
+    count.textContent = window.sandboxIDE.consoleEntries.length + ' entries';
+    output.scrollTop = output.scrollHeight;
+};
+
+window.pushSandboxConsole = function (type, message) {
+    window.sandboxIDE.consoleEntries.push({ type: type, message: message });
+    if (window.sandboxIDE.consoleEntries.length > 60) {
+        window.sandboxIDE.consoleEntries.shift();
+    }
+    window.renderSandboxConsole();
+};
+
+window.updateSandboxLineNumbers = function (type) {
+    const editor = document.getElementById('sandbox-editor-' + type);
+    const gutter = document.getElementById('sandbox-gutter-' + type);
+    if (!editor || !gutter) return;
+    const lineCount = Math.max((editor.value.match(/\n/g) || []).length + 1, 1);
+    gutter.textContent = Array.from({ length: lineCount }, function (_, index) {
+        return String(index + 1);
+    }).join('\n');
+    gutter.scrollTop = editor.scrollTop;
+};
+
+window.updateSandboxCursorStatus = function (type) {
+    const editor = document.getElementById('sandbox-editor-' + type);
+    const cursor = document.getElementById('sandbox-cursor-position');
+    const selection = document.getElementById('sandbox-selection-size');
+    if (!editor || !cursor || !selection) return;
+
+    const start = editor.selectionStart || 0;
+    const before = editor.value.slice(0, start).split('\n');
+    const line = before.length;
+    const column = before[before.length - 1].length + 1;
+    cursor.textContent = 'Ln ' + line + ', Col ' + column;
+    selection.textContent = Math.abs((editor.selectionEnd || 0) - start) + ' chars';
+};
+
+window.updateSandboxStatusBar = function () {
+    const type = window.sandboxIDE.activeTab || 'html';
+    const editor = document.getElementById('sandbox-editor-' + type);
+    const lines = document.getElementById('sandbox-status-lines');
+    const chars = document.getElementById('sandbox-status-characters');
+    const language = document.getElementById('sandbox-active-language');
+    const previewStatus = document.getElementById('sandbox-preview-status');
+    const fileNames = { html: 'HTML', css: 'CSS', js: 'JavaScript' };
+    if (editor && lines) {
+        lines.textContent = Math.max((editor.value.match(/\n/g) || []).length + 1, 1) + ' line' + (((editor.value.match(/\n/g) || []).length + 1) === 1 ? '' : 's');
+    }
+    if (editor && chars) {
+        chars.textContent = editor.value.length + ' chars';
+    }
+    if (language) {
+        language.textContent = fileNames[type];
+    }
+    if (previewStatus && !previewStatus.textContent) {
+        previewStatus.textContent = 'Preview synced';
+    }
+};
+
+window.setSandboxDirty = function (isDirty) {
+    window.sandboxIDE.dirty = isDirty;
+    const indicator = document.getElementById('sandbox-dirty-indicator');
+    if (indicator) {
+        indicator.textContent = isDirty ? 'Unsaved changes' : 'Saved';
+        indicator.style.color = isDirty ? '#f9a8d4' : '#86efac';
+    }
+    document.querySelectorAll('[data-file-dot]').forEach(function (dot) {
+        dot.classList.toggle('dirty', isDirty);
+    });
+};
+
+window.setSandboxPreviewStatus = function (label, stale) {
+    const previewStatus = document.getElementById('sandbox-preview-status');
+    if (!previewStatus) return;
+    previewStatus.textContent = label;
+    previewStatus.classList.toggle('sandbox-preview-stale', !!stale);
+    previewStatus.classList.toggle('sandbox-preview-ready', !stale);
+};
+
+window.switchSandboxTab = function (type) {
+    window.sandboxIDE.activeTab = type;
+    document.querySelectorAll('.sandbox-tab').forEach(function (tab) {
+        tab.classList.toggle('active', tab.dataset.tab === type);
+    });
+    document.querySelectorAll('.sandbox-file').forEach(function (tab) {
+        tab.classList.toggle('active', tab.dataset.tab === type);
+    });
+    document.querySelectorAll('.sandbox-editor-wrap').forEach(function (wrap) {
+        wrap.classList.toggle('hidden', wrap.dataset.editorWrap !== type);
+    });
+    const fileNames = { html: 'index.html', css: 'styles.css', js: 'script.js' };
+    const indicator = document.getElementById('sandbox-file-indicator');
+    if (indicator) indicator.textContent = fileNames[type];
+    window.updateSandboxLineNumbers(type);
+    window.updateSandboxCursorStatus(type);
+    window.updateSandboxStatusBar();
+};
+
+window.runSandboxPreview = function () {
+    window.clearSandboxConsole();
+    window.setSandboxPreviewStatus('Preview synced', false);
+    if (window.IntentEngine && window.Intents.updateSandbox) {
+        window.IntentEngine.run(window.Intents.updateSandbox, {
+            type: window.sandboxIDE.activeTab || 'html',
+            code: (window.state.sandbox && window.state.sandbox[window.sandboxIDE.activeTab || 'html']) || ''
+        });
+    }
+};
+
+window.scheduleSandboxPreview = function () {
+    if (!window.sandboxIDE.autoRun) {
+        window.setSandboxPreviewStatus('Preview stale - press RUN', true);
+        return;
+    }
+    clearTimeout(window.sandboxIDE.previewTimer);
+    window.setSandboxPreviewStatus('Syncing preview...', false);
+    window.sandboxIDE.previewTimer = setTimeout(function () {
+        window.runSandboxPreview();
+    }, 220);
+};
+
+document.querySelectorAll('.sandbox-tab, .sandbox-file').forEach(function (tab) {
+    tab.addEventListener('click', function () {
+        window.switchSandboxTab(tab.dataset.tab);
     });
 });
 
-document.querySelectorAll('.sandbox-editor').forEach(editor => {
-    editor.addEventListener('input', (e) => {
-        const type = e.target.id.replace('sandbox-editor-', '');
-        window.IntentEngine.run(window.Intents.updateSandbox, { code: e.target.value, type: type });
+document.querySelectorAll('.sandbox-editor').forEach(function (editor) {
+    editor.addEventListener('keydown', function (e) {
+        if (e.key === 'Tab') {
+            e.preventDefault();
+            const start = editor.selectionStart;
+            const end = editor.selectionEnd;
+            editor.value = editor.value.slice(0, start) + '  ' + editor.value.slice(end);
+            editor.selectionStart = editor.selectionEnd = start + 2;
+            editor.dispatchEvent(new Event('input', { bubbles: true }));
+        }
     });
+
+    editor.addEventListener('input', function (e) {
+        const type = e.target.id.replace('sandbox-editor-', '');
+        window.updateSandboxLineNumbers(type);
+        window.updateSandboxCursorStatus(type);
+        window.updateSandboxStatusBar();
+        window.setSandboxDirty(true);
+        window.IntentEngine.run(window.Intents.updateSandbox, { code: e.target.value, type: type });
+        window.scheduleSandboxPreview();
+    });
+
+    editor.addEventListener('scroll', function (e) {
+        const type = e.target.id.replace('sandbox-editor-', '');
+        const gutter = document.getElementById('sandbox-gutter-' + type);
+        if (gutter) gutter.scrollTop = e.target.scrollTop;
+    });
+
+    ['click', 'keyup', 'select'].forEach(function (eventName) {
+        editor.addEventListener(eventName, function (e) {
+            const type = e.target.id.replace('sandbox-editor-', '');
+            window.updateSandboxCursorStatus(type);
+            window.updateSandboxStatusBar();
+        });
+    });
+});
+
+window.addEventListener('message', function (event) {
+    if (!event.data || event.data.source !== 'sandbox-preview') return;
+    window.pushSandboxConsole(event.data.level || 'log', event.data.message || '');
 });
 
 // Responsive Preview toggles
 const deskBtn = document.getElementById('preview-desktop-btn');
+const tabletBtn = document.getElementById('preview-tablet-btn');
 const mobBtn = document.getElementById('preview-mobile-btn');
 const previewFrame = document.getElementById('sandbox-preview');
 
-if (deskBtn && mobBtn && previewFrame) {
+if (deskBtn && mobBtn && tabletBtn && previewFrame) {
+    const activatePreviewMode = function (mode) {
+        previewFrame.classList.remove('mobile-view', 'tablet-view');
+        [deskBtn, tabletBtn, mobBtn].forEach(function (btn) {
+            btn.classList.remove('active');
+            btn.classList.replace('bg-gray-800', 'bg-gray-400');
+            btn.classList.replace('text-white', 'text-gray-700');
+        });
+
+        const buttonMap = { desktop: deskBtn, tablet: tabletBtn, mobile: mobBtn };
+        if (mode === 'mobile') previewFrame.classList.add('mobile-view');
+        if (mode === 'tablet') previewFrame.classList.add('tablet-view');
+
+        const activeButton = buttonMap[mode];
+        if (activeButton) {
+            activeButton.classList.add('active');
+            activeButton.classList.replace('bg-gray-400', 'bg-gray-800');
+            activeButton.classList.replace('text-gray-700', 'text-white');
+        }
+    };
+
     deskBtn.onclick = () => {
-        previewFrame.classList.remove('mobile-view');
-        deskBtn.classList.add('active');
-        mobBtn.classList.remove('active');
-        mobBtn.classList.replace('bg-gray-800', 'bg-gray-400');
-        mobBtn.classList.replace('text-white', 'text-gray-700');
-        deskBtn.classList.replace('bg-gray-400', 'bg-gray-800');
-        deskBtn.classList.replace('text-gray-700', 'text-white');
+        activatePreviewMode('desktop');
+    };
+    tabletBtn.onclick = () => {
+        activatePreviewMode('tablet');
     };
     mobBtn.onclick = () => {
-        previewFrame.classList.add('mobile-view');
-        mobBtn.classList.add('active');
-        deskBtn.classList.remove('active');
-        deskBtn.classList.replace('bg-gray-800', 'bg-gray-400');
-        deskBtn.classList.replace('text-white', 'text-gray-700');
-        mobBtn.classList.replace('bg-gray-400', 'bg-gray-800');
-        mobBtn.classList.replace('text-gray-700', 'text-white');
+        activatePreviewMode('mobile');
     };
+}
+
+const sandboxRunBtn = document.getElementById('sandbox-run-btn');
+if (sandboxRunBtn) {
+    sandboxRunBtn.addEventListener('click', function () {
+        window.runSandboxPreview();
+    });
+}
+
+const sandboxAutoplayBtn = document.getElementById('sandbox-autoplay-btn');
+if (sandboxAutoplayBtn) {
+    sandboxAutoplayBtn.addEventListener('click', function () {
+        window.sandboxIDE.autoRun = !window.sandboxIDE.autoRun;
+        sandboxAutoplayBtn.textContent = 'AUTO-RUN: ' + (window.sandboxIDE.autoRun ? 'ON' : 'OFF');
+        sandboxAutoplayBtn.classList.toggle('bg-[var(--neon-pink)]', window.sandboxIDE.autoRun);
+        sandboxAutoplayBtn.classList.toggle('text-white', window.sandboxIDE.autoRun);
+        sandboxAutoplayBtn.classList.toggle('border-pink-500', window.sandboxIDE.autoRun);
+        if (window.sandboxIDE.autoRun) {
+            window.scheduleSandboxPreview();
+        } else {
+            window.setSandboxPreviewStatus('Preview stale - press RUN', true);
+        }
+    });
+}
+
+const sandboxResetBtn = document.getElementById('sandbox-reset-btn');
+if (sandboxResetBtn) {
+    sandboxResetBtn.addEventListener('click', function () {
+        const starter = window.getSandboxStarter();
+        const editors = window.getSandboxEditors();
+        Object.keys(starter).forEach(function (type) {
+            if (editors[type]) {
+                editors[type].value = starter[type];
+                window.IntentEngine.run(window.Intents.updateSandbox, { code: starter[type], type: type });
+                window.updateSandboxLineNumbers(type);
+            }
+        });
+        window.setSandboxDirty(true);
+        window.switchSandboxTab('html');
+        window.scheduleSandboxPreview();
+    });
+}
+
+const sandboxClearConsoleBtn = document.getElementById('sandbox-clear-console-btn');
+if (sandboxClearConsoleBtn) {
+    sandboxClearConsoleBtn.addEventListener('click', function () {
+        window.clearSandboxConsole();
+    });
 }
 
 const sandboxSaveBtn = document.getElementById('sandbox-save-btn');
@@ -297,3 +561,16 @@ if (sandboxExportBtn) {
         URL.revokeObjectURL(url);
     });
 }
+
+document.addEventListener('keydown', function (e) {
+    const isSaveShortcut = (e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's';
+    if (!isSaveShortcut || window.state.view !== 'SANDBOX') return;
+    e.preventDefault();
+    if (window.state.sandboxFilename) {
+        window.IntentEngine.run(window.Intents.saveSandbox, { filename: window.state.sandboxFilename });
+    } else if (saveModal) {
+        saveFilenameInput.value = window.state.sandboxFilename || '';
+        saveModal.classList.remove('hidden');
+        saveFilenameInput.focus();
+    }
+});
