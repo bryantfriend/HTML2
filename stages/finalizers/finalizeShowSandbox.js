@@ -4,31 +4,25 @@ function finalizeShowSandbox(payload, newState, oldState, context) {
     document.getElementById('completion-view').classList.add('hidden');
     document.getElementById('sandbox-view').classList.remove('hidden');
     
-    // Default content if state is empty
-    if (!newState.sandbox) {
-        newState.sandbox = window.getSandboxStarter ? window.getSandboxStarter() : {
-            html: "<h1>Hello Cyber-Builder!</h1>",
-            css: "body { font-family: sans-serif; }",
-            js: "console.log('Sandbox initialized');"
-        };
+    if (!newState.sandboxProject) {
+        newState.sandboxProject = window.normalizeSandboxProject
+            ? window.normalizeSandboxProject(newState.sandbox || null)
+            : {
+                activeFile: 'index.html',
+                files: {
+                    'index.html': "<h1>Hello Cyber-Builder!</h1>",
+                    'styles.css': "body { font-family: sans-serif; }",
+                    'script.js': "console.log('Sandbox initialized');"
+                }
+            };
     }
 
-    const s = newState.sandbox;
-    const editors = {
-        html: document.getElementById('sandbox-editor-html'),
-        css: document.getElementById('sandbox-editor-css'),
-        js: document.getElementById('sandbox-editor-js')
+    const project = newState.sandboxProject;
+    newState.sandbox = {
+        html: project.files['index.html'] || "",
+        css: project.files['styles.css'] || "",
+        js: project.files['script.js'] || ""
     };
-
-    if (editors.html) editors.html.value = s.html;
-    if (editors.css) editors.css.value = s.css;
-    if (editors.js) editors.js.value = s.js;
-
-    ['html', 'css', 'js'].forEach(type => {
-        if (window.updateSandboxLineNumbers) {
-            window.updateSandboxLineNumbers(type);
-        }
-    });
 
     if (window.clearSandboxConsole) {
         window.clearSandboxConsole();
@@ -46,10 +40,17 @@ function finalizeShowSandbox(payload, newState, oldState, context) {
 
     // Default to HTML tab
     if (window.switchSandboxTab) {
-        window.switchSandboxTab('html');
-    } else {
-        const htmlTab = document.querySelector('.sandbox-tab[data-tab="html"]');
-        if (htmlTab) htmlTab.click();
+        window.switchSandboxTab(project.activeFile || 'index.html');
+    }
+    if (window.renderSandboxFileUI) {
+        window.renderSandboxFileUI();
+    }
+    if (window.refreshSandboxIDE) {
+        window.refreshSandboxIDE();
+    }
+
+    if (window.applySandboxPanelState) {
+        window.applySandboxPanelState();
     }
     
     // Trigger initial preview

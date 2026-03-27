@@ -1,0 +1,21 @@
+module1: progress=5 validator=validator: function(code) { return /<\s*img\b/i.test(code) && /\bsrc\s*=\s*['"][^'"]+['"]/i.test(code); }
+module2: progress=10 validator=validator: function(code) { return /^\s*<\s*img\s*\/??\s*>\s*$/i.test(code); }
+module3: progress=15 validator=validator: function(code) { return /<img\b[^>]*\bsrc\s*=\s*['"]assets\/cat-demo\.svg['"][^>]*>/i.test(code); }
+module4: progress=20 validator=validator: function(code) { return /<\s*img\b/i.test(code) && /\bsrc\s*=\s*['"][^'"]+['"]/i.test(code); }
+module5: progress=25 validator=validator: function(code) { return /<img\b(?=[^>]*data-challenge\s*=\s*['"]broken-cat['"])(?=[^>]*src\s*=\s*['"]assets\/cat-broken\.svg['"])[^>]*>/i.test(code); }
+module6: progress=30 validator=validator: function(code) { return /<\s*img\b/i.test(code) && /\balt\s*=\s*['"][^'"]+['"]/i.test(code); }
+module7: progress=35 validator=validator: function(code) { const tag = code.match(/<img\b[^>]*data-challenge\s*=\s*['"]alt-save['"][^>]*>/i); if (!tag) return false; const src = tag[0].match(/\bsrc\s*=\s*['"]([^'"]+)['"]/i); const alt = tag[0].match(/\balt\s*=\s*['"]([^'"]+)['"]/i); return !!src && !!alt && alt[1].trim().toLowerCase() === 'fluffy cat' && !/^assets\/cat-demo\.svg$/i.test(src[1].trim()); }
+module8: progress=40 validator=validator: function(code) { return /<img\b(?=[^>]*data-challenge\s*=\s*['"]width-cat['"])(?=[^>]*width\s*=\s*['"]100['"])[^>]*>/i.test(code); }
+module9: progress=45 validator=validator: function(code) { return /<img\b(?=[^>]*data-challenge\s*=\s*['"]height-cat['"])(?=[^>]*height\s*=\s*['"]300['"])[^>]*>/i.test(code); }
+module10: progress=50 validator=validator: function(code) { return /<img\b(?=[^>]*data-challenge\s*=\s*['"]squish-cat['"])(?=[^>]*width\s*=\s*['"]500['"])(?=[^>]*height\s*=\s*['"]50['"])[^>]*>/i.test(code); }
+module11: progress=55 validator=validator: function(code) { return /<img\b(?=[^>]*data-challenge\s*=\s*['"]format-swap['"])(?=[^>]*src\s*=\s*['"][^'"]*\.gif['"])[^>]*>/i.test(code); }
+module12: progress=60 validator=validator: function(code) { return /<img\b(?=[^>]*data-challenge\s*=\s*['"]ultimate-image['"])(?=[^>]*src\s*=\s*['"][^'"]+['"])(?=[^>]*alt\s*=\s*['"][^'"]+['"])(?=[^>]*width\s*=\s*['"][^'"]+['"])[^>]*>/i.test(code); }
+module13: progress=65 validator=validator: function(code) { return /<\s*audio\b/i.test(code) && /<\s*\/\s*audio\s*>/i.test(code); }
+module14: progress=70 validator=validator: function(code) { return /<audio\b(?=[^>]*data-challenge\s*=\s*['"]dj-source['"])(?=[^>]*src\s*=\s*['"]music\.mp3['"])[^>]*>/i.test(code); }
+module15: progress=75 validator=validator: function(code) { const tag = code.match(/<audio\b[^>]*data-challenge\s*=\s*['"]audio-controls['"][^>]*>/i); return !!tag && /(?:\s|<)controls(?=\s|>)/i.test(tag[0]); }
+module16: progress=80 validator=validator: function(code) { return /<\s*video\b/i.test(code) && /<\s*\/\s*video\s*>/i.test(code); }
+module17: progress=85 validator=validator: function(code) { const tag = code.match(/<video\b[^>]*data-challenge\s*=\s*['"]lesson-movie['"][^>]*>/i); return !!tag && /\bsrc\s*=\s*['"]movie\.mp4['"]/i.test(tag[0]) && /(?:\s|<)controls(?=\s|>)/i.test(tag[0]); }
+module18: progress=90 validator=validator: function(code) { return /<video\b(?=[^>]*data-challenge\s*=\s*['"]video-width['"])(?=[^>]*width\s*=\s*['"]300['"])[^>]*>/i.test(code); }
+module19: progress=95 validator=validator: function(code) { const tag = code.match(/<video\b[^>]*data-challenge\s*=\s*['"]autoplay-video['"][^>]*>/i); return !!tag && /(?:\s|<)autoplay(?=\s|>)/i.test(tag[0]); }
+module20: progress=100 validator=validator: function(code) { const clean = code.replace(/<script[\s\S]*?<\/script>/gi, ''); const headingCount = (clean.match(/<h2\b/gi) || []).length; return headingCount >= 3 && /<img\b/i.test(clean) && /<audio\b/i.test(clean) && /<video\b/i.test(clean); }
+module21: progress=100 validator=validator: function (code) { return code.includes("EMOJI_SELECTED"); }

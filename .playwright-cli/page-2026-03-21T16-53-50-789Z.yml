@@ -1,0 +1,51 @@
+- generic [ref=e1]:
+  - banner [ref=e6]:
+    - generic [ref=e7]:
+      - heading "CYBER-BUILDER ACADEMY v1.011" [level=1] [ref=e8] [cursor=pointer]
+      - paragraph [ref=e9]: "MISSION: 00: INTRO LESSON — WHAT IS HTML?"
+    - generic [ref=e144]:
+      - button "← ABORT MISSION" [ref=e145] [cursor=pointer]
+      - paragraph [ref=e149]: "SYNC: 95%"
+  - main [ref=e150]:
+    - generic [ref=e151]:
+      - generic [ref=e152]:
+        - 'heading "19. Mission Review: HTML Basics" [level=2] [ref=e153]'
+        - generic [ref=e154]:
+          - paragraph [ref=e155]:
+            - text: This checkpoint is here to help students
+            - strong [ref=e156]: remember
+            - text: the key words before the exam, not just copy code from a demo.
+          - paragraph [ref=e157]: "Mission: Answer all 3 review checks correctly to unlock the final module."
+      - generic [ref=e159]:
+        - generic [ref=e160]: Memory Booster
+        - generic [ref=e161]: Students do better on the exam when they practice naming the idea, not just performing the action.
+        - generic [ref=e162]:
+          - generic [ref=e163]: 1. Which tag wraps the whole HTML page?
+          - generic [ref=e164]:
+            - button "<body>" [ref=e165] [cursor=pointer]
+            - button "<html>" [ref=e166] [cursor=pointer]
+            - button "<title>" [ref=e167] [cursor=pointer]
+        - generic [ref=e168]:
+          - generic [ref=e169]: 2. Where does most of the visible page content go?
+          - generic [ref=e170]:
+            - button "<head>" [ref=e171] [cursor=pointer]
+            - button "<body>" [ref=e172] [cursor=pointer]
+            - button "<doctype>" [ref=e173] [cursor=pointer]
+        - generic [ref=e174]:
+          - generic [ref=e175]: 3. What line tells the browser to use modern HTML?
+          - generic [ref=e176]:
+            - button "<!DOCTYPE HTML>" [active] [ref=e177] [cursor=pointer]
+            - button "<HEAD>" [ref=e178] [cursor=pointer]
+            - button "<TITLE>" [ref=e179] [cursor=pointer]
+        - generic [ref=e180]: 3 / 3 correct
+      - generic [ref=e181]:
+        - button "BACK" [ref=e182] [cursor=pointer]
+        - button "MISSION ACCOMPLISHED (NEXT)" [ref=e201] [cursor=pointer]
+    - generic [ref=e185]:
+      - generic [ref=e190]: CYBER_TERM_1.0 — index.html
+      - generic [ref=e191]:
+        - generic [ref=e192]: Input Code
+        - textbox [ref=e193]: <!-- Intro review checkpoint --> <!-- INTRO_REVIEW_READY -->
+      - generic [ref=e195]:
+        - generic [ref=e196]: Neural Link Preview
+        - generic [ref=e197]: ● LIVE_FEED

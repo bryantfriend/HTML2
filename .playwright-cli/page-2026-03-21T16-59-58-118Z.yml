@@ -1,0 +1,51 @@
+- generic [ref=e1]:
+  - banner [ref=e6]:
+    - generic [ref=e7]:
+      - heading "CYBER-BUILDER ACADEMY v1.011" [level=1] [ref=e8] [cursor=pointer]
+      - paragraph [ref=e9]: "MISSION: 02: THE DEEP NESTING — TAG MATCHING"
+    - generic [ref=e144]:
+      - button "← ABORT MISSION" [ref=e145] [cursor=pointer]
+      - paragraph [ref=e149]: "SYNC: 95%"
+  - main [ref=e150]:
+    - generic [ref=e151]:
+      - generic [ref=e152]:
+        - 'heading "19. Mission Review: Text Tags" [level=2] [ref=e232]'
+        - generic [ref=e154]:
+          - paragraph [ref=e233]: This checkpoint helps students practice the text tags by name, which is the part many of them miss on the exam.
+          - paragraph [ref=e234]: "Mission: Answer all 3 text questions correctly."
+      - generic [ref=e158]:
+        - img [ref=e235]:
+          - generic [ref=e236]: TEXT CHECK
+        - generic [ref=e237]:
+          - generic [ref=e238]: Mission Review
+          - generic [ref=e239]: Students need to know not just how the tags look, but what each one is called and when to use it.
+          - generic [ref=e240]:
+            - generic [ref=e241]: 1. Which tag makes a paragraph?
+            - generic [ref=e242]:
+              - button "<p>" [ref=e243] [cursor=pointer]
+              - button "<h1>" [ref=e244] [cursor=pointer]
+              - button "<br>" [ref=e245] [cursor=pointer]
+          - generic [ref=e246]:
+            - generic [ref=e247]: 2. Which tag is best for the biggest heading?
+            - generic [ref=e248]:
+              - button "<p>" [ref=e249] [cursor=pointer]
+              - button "<h1>" [active] [ref=e250] [cursor=pointer]
+              - button "<strong>" [ref=e251] [cursor=pointer]
+          - generic [ref=e252]:
+            - generic [ref=e253]: 3. Which tag means important or strong text?
+            - generic [ref=e254]:
+              - button "<em>" [ref=e255] [cursor=pointer]
+              - button "<li>" [ref=e256] [cursor=pointer]
+              - button "<strong>" [ref=e257] [cursor=pointer]
+          - generic [ref=e258]: 3 / 3 correct
+      - generic [ref=e181]:
+        - button "BACK" [ref=e182] [cursor=pointer]
+        - button "MISSION ACCOMPLISHED (NEXT)" [ref=e262] [cursor=pointer]
+    - generic [ref=e185]:
+      - generic [ref=e190]: CYBER_TERM_1.0 — index.html
+      - generic [ref=e191]:
+        - generic [ref=e192]: Input Code
+        - textbox [ref=e193]: <!-- Lesson 2 review checkpoint --> <!-- LESSON2_REVIEW_READY -->
+      - generic [ref=e195]:
+        - generic [ref=e196]: Neural Link Preview
+        - generic [ref=e197]: ● LIVE_FEED

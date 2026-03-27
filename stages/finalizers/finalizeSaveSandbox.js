@@ -1,6 +1,6 @@
 function finalizeSaveSandbox(payload, newState, oldState, context) {
     const filename = payload.filename.trim();
-    const sandboxData = newState.sandbox || { html: "", css: "", js: "" };
+    const sandboxData = newState.sandboxProject || newState.sandbox || { html: "", css: "", js: "" };
     localStorage.setItem('sandbox_' + filename, JSON.stringify(sandboxData));
 
     // Update the list of saved projects

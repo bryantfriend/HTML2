@@ -1,0 +1,51 @@
+- generic [ref=e1]:
+  - banner [ref=e6]:
+    - generic [ref=e7]:
+      - heading "CYBER-BUILDER ACADEMY v1.011" [level=1] [ref=e8] [cursor=pointer]
+      - paragraph [ref=e9]: "MISSION: 03: THE CONTENT KING — TEXT & FONTS"
+    - generic [ref=e144]:
+      - button "← ABORT MISSION" [ref=e145] [cursor=pointer]
+      - paragraph [ref=e149]: "SYNC: 95%"
+  - main [ref=e150]:
+    - generic [ref=e151]:
+      - generic [ref=e152]:
+        - 'heading "19. Mission Review: Lists" [level=2] [ref=e263]'
+        - generic [ref=e154]:
+          - paragraph [ref=e264]: This checkpoint gives students one more quick round of list vocabulary before the exam.
+          - paragraph [ref=e265]: "Mission: Answer all 3 list questions correctly."
+      - generic [ref=e158]:
+        - img [ref=e266]:
+          - generic [ref=e267]: LIST CHECK
+        - generic [ref=e268]:
+          - generic [ref=e269]: Mission Review
+          - generic [ref=e270]: Students often remember the activity, but not the exact list tag names. This helps lock them in.
+          - generic [ref=e271]:
+            - generic [ref=e272]: 1. Which tag starts a bullet list?
+            - generic [ref=e273]:
+              - button "<ul>" [ref=e274] [cursor=pointer]
+              - button "<ol>" [ref=e275] [cursor=pointer]
+              - button "<li>" [ref=e276] [cursor=pointer]
+          - generic [ref=e277]:
+            - generic [ref=e278]: 2. Which tag starts a numbered list?
+            - generic [ref=e279]:
+              - button "<ul>" [ref=e280] [cursor=pointer]
+              - button "<ol>" [active] [ref=e281] [cursor=pointer]
+              - button "<h1>" [ref=e282] [cursor=pointer]
+          - generic [ref=e283]:
+            - generic [ref=e284]: 3. Which tag is used for each item inside a list?
+            - generic [ref=e285]:
+              - button "<p>" [ref=e286] [cursor=pointer]
+              - button "<body>" [ref=e287] [cursor=pointer]
+              - button "<li>" [ref=e288] [cursor=pointer]
+          - generic [ref=e289]: 3 / 3 correct
+      - generic [ref=e181]:
+        - button "BACK" [ref=e182] [cursor=pointer]
+        - button "MISSION ACCOMPLISHED (NEXT)" [ref=e292] [cursor=pointer]
+    - generic [ref=e185]:
+      - generic [ref=e190]: CYBER_TERM_1.0 — index.html
+      - generic [ref=e191]:
+        - generic [ref=e192]: Input Code
+        - textbox [ref=e193]: <!-- Lesson 3 review checkpoint --> <!-- LESSON3_REVIEW_READY -->
+      - generic [ref=e195]:
+        - generic [ref=e196]: Neural Link Preview
+        - generic [ref=e197]: ● LIVE_FEED

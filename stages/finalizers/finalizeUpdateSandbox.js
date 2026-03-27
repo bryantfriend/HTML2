@@ -1,17 +1,24 @@
 function finalizeUpdateSandbox(payload, newState, oldState, context) {
     const iframe = document.getElementById('sandbox-preview');
     if (iframe) {
-        const s = newState.sandbox || { html: "", css: "", js: "" };
+        const project = newState.sandboxProject || { files: {} };
+        const files = project.files || {};
+        const htmlFile = (project.activeFile && String(project.activeFile).endsWith('.html') ? project.activeFile : null)
+            || Object.keys(files).find(name => name.endsWith('.html'))
+            || 'index.html';
+        const html = files[htmlFile] || '';
+        const css = Object.keys(files).filter(name => name.endsWith('.css')).map(name => files[name] || '').join('\n\n');
+        const js = Object.keys(files).filter(name => name.endsWith('.js')).map(name => files[name] || '').join('\n\n');
         const combined = `
             <!DOCTYPE html>
             <html>
             <head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <style>${s.css || ""}</style>
+                <style>${css}</style>
             </head>
             <body>
-                ${s.html || ""}
+                ${html}
                 <script>
                     (function() {
                         const send = function(level, args) {
@@ -41,7 +48,7 @@ function finalizeUpdateSandbox(payload, newState, oldState, context) {
                         });
                     })();
                 <\/script>
-                <script>${s.js || ""}<\/script>
+                <script>${js}<\/script>
             </body>
             </html>
         `;

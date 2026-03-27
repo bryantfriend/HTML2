@@ -1,0 +1,56 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e6]:
+    - generic [ref=e7]:
+      - heading "CYBER-BUILDER ACADEMY v1.011" [level=1] [ref=e8] [cursor=pointer]
+      - paragraph [ref=e9]: "MISSION: 00: INTRO LESSON — WHAT IS HTML?"
+    - generic [ref=e144]:
+      - button "← ABORT MISSION" [ref=e145] [cursor=pointer]
+      - paragraph [ref=e149]: "SYNC: 55%"
+  - main [ref=e150]:
+    - generic [ref=e151]:
+      - generic [ref=e152]:
+        - heading "11. The DOCTYPE 📜" [level=2] [ref=e246]
+        - generic [ref=e154]:
+          - paragraph [ref=e247]:
+            - text: Every professional HTML document starts with
+            - code [ref=e248]: <!DOCTYPE HTML>
+            - text: . It tells the browser "Hey, I'm using the latest version of HTML!"
+          - paragraph [ref=e249]: "Step 1: Choose the correct opening line for the document scanner."
+          - paragraph [ref=e250]:
+            - text: "Step 2: Type"
+            - code [ref=e251]: <!DOCTYPE HTML>
+            - text: in the editor to launch the page in standards mode.
+      - generic [ref=e157]:
+        - generic [ref=e252]:
+          - generic [ref=e253]:
+            - generic [ref=e254]:
+              - generic [ref=e255]: Quick Demo
+              - generic [ref=e256]: Watch the first line appear, then type that same line below.
+            - button "Replay" [ref=e257] [cursor=pointer]
+          - generic [ref=e258]:
+            - generic [ref=e259]:
+              - generic [ref=e260]: Type This
+              - generic [ref=e261]: <!DOCTYPE HTML>
+            - generic [ref=e262]: DOCTYPE confirmed.
+          - generic [ref=e263]: Now type the full line in the editor.
+        - generic [ref=e264]:
+          - generic [ref=e265]: Document Scanner
+          - generic [ref=e266]: Choose the correct first line to help the browser understand what kind of file this is.
+          - generic [ref=e267]:
+            - button "<!DOCTYPE HTML>" [ref=e268] [cursor=pointer]
+            - button "<body>" [ref=e269] [cursor=pointer]
+            - button "<title>My Page</title>" [ref=e270] [cursor=pointer]
+          - generic [ref=e271]:
+            - generic [ref=e272]: Pick the correct opening line.
+            - generic [ref=e273]: Once you find it here, type the full line in the editor to finish the mission.
+      - generic [ref=e161]:
+        - button "BACK" [ref=e212] [cursor=pointer]
+        - 'button "AWAITING CODE: 53s" [disabled] [ref=e275]'
+    - generic [ref=e164]:
+      - generic [ref=e169]: CYBER_TERM_1.0 — index.html
+      - generic [ref=e170]:
+        - generic [ref=e171]: Input Code
+        - textbox [ref=e172]
+      - generic [ref=e174]:
+        - generic [ref=e175]: Neural Link Preview
+        - generic [ref=e176]: ● LIVE_FEED

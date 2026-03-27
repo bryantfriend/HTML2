@@ -1,0 +1,59 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e6]:
+    - generic [ref=e7]:
+      - heading "CYBER-BUILDER ACADEMY v1.011" [level=1] [ref=e8] [cursor=pointer]
+      - paragraph [ref=e9]: "MISSION: 00: INTRO LESSON — WHAT IS HTML?"
+    - generic [ref=e144]:
+      - button "← ABORT MISSION" [ref=e145] [cursor=pointer]
+      - paragraph [ref=e149]: "SYNC: 40%"
+  - main [ref=e150]:
+    - generic [ref=e151]:
+      - generic [ref=e152]:
+        - heading "8. HTML builds structure" [level=2] [ref=e178]
+        - generic [ref=e154]:
+          - paragraph [ref=e179]:
+            - text: HTML is like a
+            - strong [ref=e180]: skeleton
+            - text: . It gives a website its shape and tells the browser where the important parts should go.
+          - paragraph [ref=e181]: "Step 1: Build the digital skeleton by placing the missing bones."
+          - paragraph [ref=e182]:
+            - text: "Step 2: Type"
+            - code [ref=e183]: <body></body>
+            - text: in the editor to give the page a real body.
+      - generic [ref=e157]:
+        - generic [ref=e184]:
+          - generic [ref=e185]:
+            - generic [ref=e186]:
+              - generic [ref=e187]: Quick Demo
+              - generic [ref=e188]: Watch the body tag appear, then type it while you build the house.
+            - button "Replay" [ref=e189] [cursor=pointer]
+          - generic [ref=e190]:
+            - generic [ref=e191]:
+              - generic [ref=e192]: Type This
+              - generic [ref=e193]: <body> </body>
+            - generic [ref=e194]: Body ready for headings and paragraphs.
+          - generic [ref=e195]: Now build the same tag pair in the editor.
+        - generic [ref=e196]:
+          - generic [ref=e197]:
+            - generic [ref=e198] [cursor=pointer]: Skull
+            - generic [ref=e199] [cursor=pointer]: Spine
+            - generic [ref=e200] [cursor=pointer]: Ribs
+            - generic [ref=e201] [cursor=pointer]: Leg Bones
+            - generic [ref=e202]: 0 / 4 bones placed
+          - generic [ref=e203]:
+            - generic:
+              - generic [ref=e205]: Skull
+              - generic [ref=e207]: Spine
+              - generic [ref=e209]: Ribs
+              - generic [ref=e211]: Legs
+      - generic [ref=e161]:
+        - button "BACK" [ref=e212] [cursor=pointer]
+        - 'button "AWAITING CODE: 7s" [disabled] [ref=e214]'
+    - generic [ref=e164]:
+      - generic [ref=e169]: CYBER_TERM_1.0 — index.html
+      - generic [ref=e170]:
+        - generic [ref=e171]: Input Code
+        - textbox [ref=e172]
+      - generic [ref=e174]:
+        - generic [ref=e175]: Neural Link Preview
+        - generic [ref=e176]: ● LIVE_FEED

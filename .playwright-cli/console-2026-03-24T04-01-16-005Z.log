@@ -1,0 +1,22 @@
+[     680ms] [WARNING] cdn.tailwindcss.com should not be used in production. To use Tailwind CSS in production, install it as a PostCSS plugin or use the Tailwind CLI: https://tailwindcss.com/docs/installation @ https://cdn.tailwindcss.com/?plugins=typography:65
+[    2711ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://127.0.0.1:4180/favicon.ico:0
+[  611425ms] SyntaxError: Failed to execute 'replaceChild' on 'Node': Identifier 'introDoctypeEditor' has already been declared
+    at http://127.0.0.1:4180/stages/finalizers/finalizeLessonModule.js?v=2:58:46
+    at NodeList.forEach (<anonymous>)
+    at executeScripts (http://127.0.0.1:4180/stages/finalizers/finalizeLessonModule.js?v=2:53:25)
+    at Array.finalizeLessonModule (http://127.0.0.1:4180/stages/finalizers/finalizeLessonModule.js?v=2:65:13)
+    at Object.run (http://127.0.0.1:4180/intentEngine.js?v=2:57:39)
+    at eval (eval at evaluate (:301:30), <anonymous>:1:29)
+    at UtilityScript.evaluate (<anonymous>:303:16)
+    at UtilityScript.<anonymous> (<anonymous>:1:44)
+[  674339ms] [WARNING] cdn.tailwindcss.com should not be used in production. To use Tailwind CSS in production, install it as a PostCSS plugin or use the Tailwind CLI: https://tailwindcss.com/docs/installation @ https://cdn.tailwindcss.com/?plugins=typography:65
+[ 1214524ms] [WARNING] cdn.tailwindcss.com should not be used in production. To use Tailwind CSS in production, install it as a PostCSS plugin or use the Tailwind CLI: https://tailwindcss.com/docs/installation @ https://cdn.tailwindcss.com/?plugins=typography:65
+[ 3146344ms] [WARNING] cdn.tailwindcss.com should not be used in production. To use Tailwind CSS in production, install it as a PostCSS plugin or use the Tailwind CLI: https://tailwindcss.com/docs/installation @ https://cdn.tailwindcss.com/?plugins=typography:65
+[ 3146709ms] TypeError: Cannot read properties of undefined (reading 'index.html')
+    at window.normalizeSandboxProject (http://127.0.0.1:4180/sandboxIdeUpgrade.js?v=2:43:93)
+    at ensureProject (http://127.0.0.1:4180/sandboxIdeUpgrade.js?v=2:52:46)
+    at window.refreshSandboxIDE (http://127.0.0.1:4180/sandboxIdeUpgrade.js?v=2:614:9)
+    at http://127.0.0.1:4180/sandboxIdeUpgrade.js?v=2:624:16
+[ 3176191ms] [WARNING] cdn.tailwindcss.com should not be used in production. To use Tailwind CSS in production, install it as a PostCSS plugin or use the Tailwind CLI: https://tailwindcss.com/docs/installation @ https://cdn.tailwindcss.com/?plugins=typography:65
+[ 3832188ms] [WARNING] cdn.tailwindcss.com should not be used in production. To use Tailwind CSS in production, install it as a PostCSS plugin or use the Tailwind CLI: https://tailwindcss.com/docs/installation @ https://cdn.tailwindcss.com/?plugins=typography:65
+[ 3897028ms] [WARNING] cdn.tailwindcss.com should not be used in production. To use Tailwind CSS in production, install it as a PostCSS plugin or use the Tailwind CLI: https://tailwindcss.com/docs/installation @ https://cdn.tailwindcss.com/?plugins=typography:65

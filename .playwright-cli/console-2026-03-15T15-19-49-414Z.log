@@ -1,0 +1,17 @@
+[     781ms] [WARNING] cdn.tailwindcss.com should not be used in production. To use Tailwind CSS in production, install it as a PostCSS plugin or use the Tailwind CLI: https://tailwindcss.com/docs/installation @ https://cdn.tailwindcss.com/?plugins=typography:65
+[    1573ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://127.0.0.1:4173/favicon.ico:0
+[  132786ms] Unexpected identifier 'src'
+[  132791ms] Unexpected identifier 'alt'
+[  132792ms] ReferenceError: img is not defined
+    at http://127.0.0.1:4173/lessons/lesson4/module2.js?v=1773588122140:4:74
+[  132822ms] Unexpected identifier 'width'
+[  132828ms] Unexpected identifier 'height'
+[  132938ms] Invalid regular expression flags
+[  132940ms] Unexpected identifier 'src'
+[  132942ms] Unexpected identifier 'controls'
+[  132946ms] Invalid regular expression flags
+[  132948ms] Unexpected identifier 'width'
+[  132949ms] Unexpected identifier 'autoplay'
+[  132951ms] ReferenceError: h2 is not defined
+    at http://127.0.0.1:4173/lessons/lesson4/module20.js?v=1773588122144:4:71
+[  235101ms] [WARNING] cdn.tailwindcss.com should not be used in production. To use Tailwind CSS in production, install it as a PostCSS plugin or use the Tailwind CLI: https://tailwindcss.com/docs/installation @ https://cdn.tailwindcss.com/?plugins=typography:65

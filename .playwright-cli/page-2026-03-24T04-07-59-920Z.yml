@@ -1,0 +1,54 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e6]:
+    - generic [ref=e7]:
+      - heading "CYBER-BUILDER ACADEMY v1.011" [level=1] [ref=e8] [cursor=pointer]
+      - paragraph [ref=e9]: "MISSION: 00: INTRO LESSON — WHAT IS HTML?"
+    - generic [ref=e144]:
+      - button "← ABORT MISSION" [ref=e145] [cursor=pointer]
+      - paragraph [ref=e149]: "SYNC: 45%"
+  - main [ref=e150]:
+    - generic [ref=e151]:
+      - generic [ref=e152]:
+        - heading "9. CSS vs HTML vs JavaScript" [level=2] [ref=e215]
+        - generic [ref=e154]:
+          - paragraph [ref=e216]:
+            - text: You have already started using
+            - strong [ref=e217]: HTML
+            - text: to build structure. Before we learn CSS or JavaScript in detail, here is the big picture of how they work together.
+          - paragraph [ref=e218]:
+            - strong [ref=e219]: HTML
+            - text: = The Structure
+            - strong [ref=e220]: CSS
+            - text: = The Style
+            - strong [ref=e221]: JavaScript
+            - text: = The Action
+          - paragraph [ref=e222]: "Mission: Activate HTML, then CSS, then JavaScript to see how one webpage grows step by step."
+      - generic [ref=e223]:
+        - generic [ref=e224]:
+          - button "1. HTML Add the structure." [ref=e225] [cursor=pointer]:
+            - strong [ref=e226]: 1. HTML
+            - text: Add the structure.
+          - button "2. CSS Add color and style." [ref=e227] [cursor=pointer]:
+            - strong [ref=e228]: 2. CSS
+            - text: Add color and style.
+          - button "3. JavaScript Add movement and action." [ref=e229] [cursor=pointer]:
+            - strong [ref=e230]: 3. JavaScript
+            - text: Add movement and action.
+          - generic [ref=e231]: Click HTML to start building the page.
+        - generic [ref=e232]:
+          - generic [ref=e237]: one webpage
+          - generic [ref=e239]:
+            - heading "Starter Page" [level=3] [ref=e240]
+            - paragraph [ref=e241]: HTML creates the page parts. CSS styles them. JavaScript makes them do something.
+            - generic [ref=e242]: Launch
+      - generic [ref=e161]:
+        - button "BACK" [ref=e212] [cursor=pointer]
+        - 'button "AWAITING CODE: 51s" [disabled] [ref=e244]'
+    - generic [ref=e164]:
+      - generic [ref=e169]: CYBER_TERM_1.0 — index.html
+      - generic [ref=e170]:
+        - generic [ref=e171]: Input Code
+        - textbox [ref=e172]
+      - generic [ref=e174]:
+        - generic [ref=e175]: Neural Link Preview
+        - generic [ref=e176]: ● LIVE_FEED

@@ -1,0 +1,61 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e6]:
+    - generic [ref=e7]:
+      - heading "CYBER-BUILDER ACADEMY v1.011" [level=1] [ref=e8] [cursor=pointer]
+      - paragraph [ref=e9]: "MISSION: Lesson 4: Images & Media"
+    - generic [ref=e136]:
+      - button "← ABORT MISSION" [ref=e137] [cursor=pointer]
+      - paragraph [ref=e141]: "SYNC: 5%"
+  - main [ref=e142]:
+    - generic [ref=e143]:
+      - generic [ref=e144]:
+        - heading "1. A World of Pictures" [level=2] [ref=e145]
+        - generic [ref=e146]:
+          - text: Meet your new media mission with a tiny demo instead of a wall of text.
+          - generic [ref=e147]:
+            - generic [ref=e148]:
+              - generic [ref=e149]:
+                - paragraph [ref=e150]: Quick Demo
+                - paragraph [ref=e151]: Watch how one image tag turns into a real picture.
+              - generic [ref=e152]: 12 sec loop
+            - generic [ref=e153]:
+              - generic [ref=e155]:
+                - generic [ref=e161]: my-gallery.html
+                - generic [ref=e162]:
+                  - generic [ref=e163]:
+                    - paragraph [ref=e164]: Code
+                    - generic [ref=e165]: <img src="assets/cat-demo.svg" alt="Sleepy cat">
+                  - paragraph [ref=e167]: Preview
+                - generic [ref=e174]:
+                  - generic [ref=e175]: 1. We type an <img> tag.
+                  - generic [ref=e176]:
+                    - text: 2. The browser finds the picture with
+                    - code [ref=e177]: src
+                    - text: .
+                  - generic [ref=e178]: 3. A website instantly feels more alive.
+                - button "Replay demo" [ref=e179] [cursor=pointer]
+              - generic [ref=e180]:
+                - generic [ref=e181]:
+                  - paragraph [ref=e182]: Watch
+                  - paragraph [ref=e183]: See the tag become a picture.
+                - generic [ref=e184]:
+                  - paragraph [ref=e185]: Type
+                  - paragraph [ref=e186]: Enter a simple image tag in the editor.
+                - generic [ref=e187]:
+                  - paragraph [ref=e188]: Unlock
+                  - paragraph [ref=e189]: The mission clears as soon as your tag appears.
+          - paragraph [ref=e190]:
+            - text: "Mission: Copy the demo and type an image tag like"
+            - code [ref=e191]: <img src="assets/cat-demo.svg" alt="A cat">
+            - text: .
+      - img [ref=e193]:
+        - generic [ref=e195]: MODULE 1
+      - 'button "AWAITING CODE: 58s" [disabled] [ref=e197]'
+    - generic [ref=e199]:
+      - generic [ref=e204]: CYBER_TERM_1.0 — index.html
+      - generic [ref=e205]:
+        - generic [ref=e206]: Input Code
+        - textbox [ref=e207]: <!-- Build your first picture! -->
+      - generic [ref=e209]:
+        - generic [ref=e210]: Neural Link Preview
+        - generic [ref=e211]: ● LIVE_FEED

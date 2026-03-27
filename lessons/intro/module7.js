@@ -1,71 +1,98 @@
 window.Lessons.intro.modules[6] = {
   title: "7. CSS vs HTML vs JavaScript",
-  body: `<p>You have already started using <strong>HTML</strong> to build structure. Next, here is the big picture:</p><p><strong>HTML</strong> = The Skeleton (Structure)<br><strong>CSS</strong> = The Skin/Clothes (Styling, colors, layout)<br><strong>JavaScript</strong> = The Muscles/Brain (Interactivity, pop-ups, games)</p>
-            <p class="text-sm italic text-gray-400 mt-4">Mission: Change at least 1 piece of clothing on the character to see how CSS works.</p>`,
+  body: `<p>You have already started using <strong>HTML</strong> to build structure. Before we learn CSS or JavaScript in detail, here is the big picture of how they work together.</p><p><strong>HTML</strong> = The Structure<br><strong>CSS</strong> = The Style<br><strong>JavaScript</strong> = The Action</p>
+            <p class="text-sm italic text-gray-400 mt-4">Mission: Activate HTML, then CSS, then JavaScript to see how one webpage grows step by step.</p>`,
   svg: ``,
   widgetCode: `<!-- INTERACTIVE MODULE -->
 <style>
-.avatar-builder { display: flex; height: 300px; background: #0f172a; border-radius: 12px; padding: 20px; color: white; user-select: none; gap: 20px; }
-.controls { width: 140px; display: flex; flex-direction: column; gap: 6px; overflow-y: auto; padding-right: 5px; }
-/* Scrollbar styling for controls */
-.controls::-webkit-scrollbar { width: 4px; }
-.controls::-webkit-scrollbar-track { background: transparent; }
-.controls::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
-.category { font-size: 10px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: -2px; margin-top: 6px; }
-.btn-opt { background: #1e293b; color: white; border: 1px solid #334155; padding: 4px; border-radius: 4px; cursor: pointer; text-align: center; font-size: 12px; transition: 0.2s; }
-.btn-opt:hover { background: #3b82f6; border-color: #60a5fa; }
-.avatar-preview { flex: 1; background: #1e293b; border-radius: 8px; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 20px; border: 2px dashed #475569; transition: box-shadow 0.3s, border-color 0.3s; }
-.av-head { width: 60px; height: 60px; background: #fcd34d; border-radius: 50%; position: relative; z-index: 2; margin-bottom: -10px; display: flex; justify-content: center; align-items: center; font-size: 24px; }
-.av-shirt { width: 80px; height: 100px; background: #e2e8f0; border-radius: 20px 20px 5px 5px; z-index: 1; display: flex; justify-content: center; align-items: center; overflow: hidden; font-size: 30px; transition: 0.3s; box-shadow: inset 0 -10px 20px rgba(0,0,0,0.1); }
-.av-pants { width: 80px; height: 80px; background: #1e3a8a; border-radius: 5px 5px 10px 10px; display: flex; flex-direction: row; gap: 4px; z-index: 1; transition: 0.3s; box-shadow: inset 0 -10px 20px rgba(0,0,0,0.2); }
-.leg { flex: 1; background: inherit; border-radius: 0 0 10px 10px; }
-.av-hat { position: absolute; top: -20px; font-size: 40px; z-index: 3; }
+.stack-lab { display: grid; grid-template-columns: 170px 1fr; gap: 18px; min-height: 300px; background: linear-gradient(180deg, #0f172a, #111827); border-radius: 14px; padding: 18px; color: white; }
+.stack-controls { display: flex; flex-direction: column; gap: 10px; }
+.stack-btn { border: 1px solid #334155; background: #1e293b; color: #e2e8f0; border-radius: 12px; padding: 12px; cursor: pointer; text-align: left; transition: 0.18s ease; }
+.stack-btn:hover { border-color: #67e8f9; transform: translateY(-1px); }
+.stack-btn.active { border-color: #10b981; background: rgba(16, 185, 129, 0.18); color: white; }
+.stack-btn strong { display: block; margin-bottom: 4px; }
+.stack-screen { position: relative; border-radius: 14px; background: rgba(15, 23, 42, 0.75); border: 1px solid rgba(103, 232, 249, 0.18); overflow: hidden; }
+.stack-browser-bar { display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: rgba(2, 6, 23, 0.8); border-bottom: 1px solid rgba(255,255,255,0.06); }
+.stack-dot { width: 10px; height: 10px; border-radius: 999px; background: #475569; }
+.stack-preview { min-height: 236px; padding: 22px; display: flex; flex-direction: column; justify-content: center; gap: 14px; transition: 0.25s ease; }
+.stack-card { padding: 18px; border-radius: 18px; border: 2px dashed #475569; color: #94a3b8; transition: 0.25s ease; }
+.stack-title { font-size: 28px; font-weight: 800; margin: 0 0 6px; }
+.stack-text { margin: 0; line-height: 1.5; }
+.stack-button { margin-top: 8px; display: inline-flex; width: fit-content; padding: 10px 16px; border-radius: 999px; border: 1px solid #475569; color: #94a3b8; font-weight: 700; transition: 0.25s ease; }
+.stack-preview.html-on .stack-card { border-style: solid; border-color: #64748b; color: white; }
+.stack-preview.css-on { background: radial-gradient(circle at top, rgba(56, 189, 248, 0.14), transparent 45%); }
+.stack-preview.css-on .stack-card { background: rgba(30, 41, 59, 0.95); border-color: rgba(103, 232, 249, 0.45); box-shadow: 0 18px 40px rgba(0,0,0,0.28); }
+.stack-preview.css-on .stack-title { color: #67e8f9; }
+.stack-preview.css-on .stack-button { background: #67e8f9; color: #082f49; border-color: transparent; }
+.stack-preview.js-on .stack-button { animation: stack-pulse 1s ease-in-out infinite alternate; }
+.stack-preview.js-on .stack-card { transform: translateY(-4px); }
+.stack-status { margin-top: 12px; color: #67e8f9; font-weight: 700; font-size: 13px; }
+@keyframes stack-pulse { from { transform: scale(1); box-shadow: 0 0 0 rgba(103,232,249,0.2); } to { transform: scale(1.05); box-shadow: 0 0 24px rgba(103,232,249,0.35); } }
 </style>
 <script>
-window.changeCloth = function(type, val) {
-  if(type === 'hat') document.getElementById('disp-hat').innerText = val;
-  if(type === 'shirt') document.getElementById('disp-shirt').style.background = val;
-  if(type === 'pants') {
-    document.getElementById('disp-pants').style.background = val;
-    if(val === '#ef4444') { document.getElementById('disp-pants').style.height = '40px'; } 
-    else { document.getElementById('disp-pants').style.height = '80px'; }
+window.webStackState = window.webStackState || { html: false, css: false, js: false };
+window.activateWebStack = function(layer) {
+  const order = ['html', 'css', 'js'];
+  const currentIndex = order.indexOf(layer);
+  const requiredPrevious = currentIndex === 0 ? true : window.webStackState[order[currentIndex - 1]];
+  const status = document.getElementById('stack-status');
+  if (!requiredPrevious) {
+    if (status) status.textContent = 'Start with HTML first, then move forward.';
+    return;
   }
-  
-  if(!window.cssChangedSignalSent) {
-      document.getElementById('ap').style.borderColor = '#00ff9d';
-      document.getElementById('ap').style.boxShadow = '0 0 20px rgba(0,255,157,0.2)';
-      window.completeModule('CSS_CHANGED');
-      window.cssChangedSignalSent = true;
+  window.webStackState[layer] = true;
+  document.querySelectorAll('.stack-btn').forEach(btn => {
+    btn.classList.toggle('active', !!window.webStackState[btn.dataset.layer]);
+  });
+  const preview = document.getElementById('stack-preview');
+  if (preview) {
+    preview.classList.toggle('html-on', window.webStackState.html);
+    preview.classList.toggle('css-on', window.webStackState.css);
+    preview.classList.toggle('js-on', window.webStackState.js);
+  }
+  if (status) {
+    if (!window.webStackState.css) status.textContent = 'HTML adds the structure first.';
+    else if (!window.webStackState.js) status.textContent = 'CSS adds style on top of the structure.';
+    else status.textContent = 'Perfect. HTML, CSS, and JavaScript each have a job.';
+  }
+  if (window.webStackState.html && window.webStackState.css && window.webStackState.js) {
+    window.completeModule('STACK_SEEN');
   }
 };
 </script>
-<div class="avatar-builder">
-  <div class="controls" id="btn-controls">
-    <div class="category" style="margin-top:0;">Hats</div>
-    <div class="btn-opt" onclick="window.changeCloth('hat', '')">None</div>
-    <div class="btn-opt" onclick="window.changeCloth('hat', '🎩')">Top Hat</div>
-    <div class="btn-opt" onclick="window.changeCloth('hat', '🧢')">Cap</div>
-    <div class="btn-opt" onclick="window.changeCloth('hat', '👑')">Crown</div>
-    <div class="category">Shirts</div>
-    <div class="btn-opt" onclick="window.changeCloth('shirt', '#e2e8f0')">White</div>
-    <div class="btn-opt" onclick="window.changeCloth('shirt', '#ef4444')">Red</div>
-    <div class="btn-opt" onclick="window.changeCloth('shirt', '#3b82f6')">Blue</div>
-    <div class="btn-opt" onclick="window.changeCloth('shirt', '#10b981')">Green</div>
-    <div class="btn-opt" onclick="window.changeCloth('shirt', '#8b5cf6')">Purple</div>
-    <div class="category">Pants</div>
-    <div class="btn-opt" onclick="window.changeCloth('pants', '#1e3a8a')">Jeans</div>
-    <div class="btn-opt" onclick="window.changeCloth('pants', '#000000')">Black Pants</div>
-    <div class="btn-opt" onclick="window.changeCloth('pants', '#f59e0b')">Khakis</div>
-    <div class="btn-opt" onclick="window.changeCloth('pants', '#10b981')">Green Cargo</div>
-    <div class="btn-opt" onclick="window.changeCloth('pants', '#ef4444')">Red Shorts</div>
+<div class="stack-lab">
+  <div class="stack-controls">
+    <button class="stack-btn" data-layer="html" onclick="window.activateWebStack('html')">
+      <strong>1. HTML</strong>
+      Add the structure.
+    </button>
+    <button class="stack-btn" data-layer="css" onclick="window.activateWebStack('css')">
+      <strong>2. CSS</strong>
+      Add color and style.
+    </button>
+    <button class="stack-btn" data-layer="js" onclick="window.activateWebStack('js')">
+      <strong>3. JavaScript</strong>
+      Add movement and action.
+    </button>
+    <div class="stack-status" id="stack-status">Click HTML to start building the page.</div>
   </div>
-  <div class="avatar-preview" id="ap">
-    <div class="av-head">👀<div id="disp-hat" class="av-hat"></div></div>
-    <div id="disp-shirt" class="av-shirt"></div>
-    <div id="disp-pants" class="av-pants"><div class="leg"></div><div class="leg"></div></div>
+  <div class="stack-screen">
+    <div class="stack-browser-bar">
+      <div class="stack-dot"></div>
+      <div class="stack-dot"></div>
+      <div class="stack-dot"></div>
+      <div style="margin-left:8px; font-size:11px; letter-spacing:0.14em; color:#94a3b8; text-transform:uppercase;">one webpage</div>
+    </div>
+    <div id="stack-preview" class="stack-preview">
+      <div class="stack-card">
+        <h3 class="stack-title">Starter Page</h3>
+        <p class="stack-text">HTML creates the page parts. CSS styles them. JavaScript makes them do something.</p>
+        <div class="stack-button">Launch</div>
+      </div>
+    </div>
   </div>
 </div>`,
   initialCode: ``,
   progress: 35,
-  validator: function (code) { return code.includes("CSS_CHANGED"); }
+  validator: function (code) { return code.includes("STACK_SEEN"); }
 };

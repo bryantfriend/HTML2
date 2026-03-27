@@ -199,6 +199,7 @@ body {
     display: grid;
     grid-template-columns: 220px 1fr;
     min-height: 0;
+    transition: grid-template-columns 0.24s ease;
 }
 
 .sandbox-explorer {
@@ -208,6 +209,14 @@ body {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    min-width: 0;
+}
+
+.sandbox-pane-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
 }
 
 .sandbox-pane-title {
@@ -216,6 +225,80 @@ body {
     text-transform: uppercase;
     letter-spacing: 0.24em;
     color: #7dd3fc;
+}
+
+.sandbox-pane-toggle,
+.sandbox-view-mode-btn {
+    border: 1px solid rgba(148, 163, 184, 0.35);
+    background: rgba(15, 23, 42, 0.85);
+    color: #cbd5e1;
+    border-radius: 999px;
+    padding: 6px 10px;
+    font-family: 'Fira Code', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    transition: 0.18s ease;
+}
+
+.sandbox-pane-toggle:hover,
+.sandbox-view-mode-btn:hover {
+    border-color: rgba(103, 232, 249, 0.55);
+    color: white;
+}
+
+.sandbox-pane-toggle-light {
+    background: rgba(255, 255, 255, 0.75);
+    color: #111827;
+    border-color: rgba(71, 85, 105, 0.35);
+}
+
+.sandbox-view-mode-group {
+    display: inline-flex;
+    gap: 8px;
+    padding: 6px;
+    border-radius: 999px;
+    background: rgba(15, 23, 42, 0.82);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sandbox-view-mode-btn.active {
+    background: rgba(255, 0, 229, 0.18);
+    color: white;
+    border-color: rgba(255, 0, 229, 0.45);
+    box-shadow: 0 0 20px rgba(255, 0, 229, 0.15);
+}
+
+.sandbox-shell-grid {
+    display: grid;
+    grid-template-columns: minmax(0, var(--sandbox-editor-percent, 54%)) 10px minmax(0, 1fr);
+    gap: 0;
+}
+
+.sandbox-main-resizer,
+.sandbox-console-resizer {
+    position: relative;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.sandbox-main-resizer {
+    cursor: col-resize;
+    border-radius: 999px;
+    margin: 0 10px;
+}
+
+.sandbox-console-resizer {
+    cursor: row-resize;
+    min-height: 8px;
+}
+
+.sandbox-main-resizer::after,
+.sandbox-console-resizer::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(180deg, rgba(103, 232, 249, 0.05), rgba(255, 0, 229, 0.18), rgba(103, 232, 249, 0.05));
 }
 
 .sandbox-project-name {
@@ -247,6 +330,35 @@ body {
     background: rgba(15, 23, 42, 0.95);
     color: white;
     box-shadow: inset 0 0 0 1px rgba(0, 242, 255, 0.08);
+}
+
+.sandbox-file-list,
+.sandbox-tab-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sandbox-tab-list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0;
+}
+
+.sandbox-add-file-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.sandbox-add-file-btn {
+    border: 1px dashed rgba(103, 232, 249, 0.35);
+    background: rgba(15, 23, 42, 0.4);
+    color: #cbd5e1;
+    border-radius: 10px;
+    padding: 8px 10px;
+    font-family: 'Fira Code', monospace;
+    font-size: 11px;
 }
 
 .sandbox-file-icon {
@@ -284,6 +396,27 @@ body {
     flex: 1;
 }
 
+.sandbox-workbench.explorer-collapsed {
+    grid-template-columns: 78px 1fr;
+}
+
+.sandbox-workbench.explorer-collapsed .sandbox-project-name,
+.sandbox-workbench.explorer-collapsed .sandbox-helper-card,
+.sandbox-workbench.explorer-collapsed .sandbox-pane-spacer,
+.sandbox-workbench.explorer-collapsed .sandbox-file span:not(.sandbox-file-icon):not(.sandbox-file-dot) {
+    display: none;
+}
+
+.sandbox-workbench.explorer-collapsed .sandbox-file {
+    justify-content: center;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.sandbox-workbench.explorer-collapsed .sandbox-file-dot {
+    display: none;
+}
+
 .sandbox-helper-card {
     padding: 12px;
     border-radius: 14px;
@@ -292,6 +425,18 @@ body {
     color: #cbd5e1;
     font-size: 12px;
     line-height: 1.6;
+}
+
+.sandbox-coach-output {
+    display: grid;
+    gap: 8px;
+}
+
+.sandbox-coach-tip {
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: rgba(8, 15, 30, 0.65);
+    border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .sandbox-editor-shell {
@@ -315,6 +460,12 @@ body {
 
 .sandbox-tab:hover:not(.active) {
     background: #3d4446;
+}
+
+.sandbox-tab {
+    padding: 10px 14px;
+    font-family: 'Fira Code', monospace;
+    font-size: 12px;
 }
 
 .sandbox-editor-toolbar,
@@ -384,6 +535,55 @@ body {
     display: none;
 }
 
+.sandbox-autocomplete {
+    position: absolute;
+    left: 74px;
+    top: 14px;
+    width: min(320px, calc(100% - 96px));
+    max-height: 240px;
+    overflow: auto;
+    border-radius: 16px;
+    border: 1px solid rgba(103, 232, 249, 0.24);
+    background: rgba(8, 15, 30, 0.96);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.38);
+    z-index: 20;
+    padding: 8px;
+}
+
+.sandbox-autocomplete.hidden {
+    display: none;
+}
+
+.sandbox-autocomplete-item {
+    width: 100%;
+    display: grid;
+    gap: 4px;
+    text-align: left;
+    padding: 10px 12px;
+    border-radius: 12px;
+    color: #e2e8f0;
+    border: 1px solid transparent;
+    background: transparent;
+    font-family: 'Fira Code', monospace;
+    font-size: 12px;
+}
+
+.sandbox-autocomplete-item strong {
+    color: white;
+    font-weight: 700;
+}
+
+.sandbox-autocomplete-item span {
+    color: #94a3b8;
+    font-size: 11px;
+}
+
+.sandbox-autocomplete-item.active,
+.sandbox-autocomplete-item:hover {
+    border-color: rgba(255, 0, 229, 0.25);
+    background: rgba(255, 0, 229, 0.12);
+}
+
 .sandbox-statusbar {
     display: flex;
     gap: 16px;
@@ -402,6 +602,49 @@ body {
     justify-content: space-between;
     align-items: center;
     gap: 10px;
+}
+
+.sandbox-preview-stack {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) 8px minmax(54px, var(--sandbox-console-height, 190px));
+    min-height: 0;
+    flex: 1;
+}
+
+.sandbox-console-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sandbox-console-shell.collapsed {
+    min-height: 54px;
+}
+
+.sandbox-console-shell.collapsed .sandbox-console-output {
+    display: none;
+}
+
+.sandbox-console-shell.collapsed .sandbox-console-header {
+    border-bottom: none;
+}
+
+.sandbox-preview-panel.hidden-panel,
+#sandbox-editor-panel.hidden-panel {
+    display: none;
+}
+
+#sandbox-shell-grid.focus-editor {
+    grid-template-columns: 1fr;
+}
+
+#sandbox-shell-grid.focus-preview {
+    grid-template-columns: 1fr;
+}
+
+#sandbox-shell-grid.focus-editor .sandbox-main-resizer,
+#sandbox-shell-grid.focus-preview .sandbox-main-resizer {
+    display: none;
 }
 
 #sandbox-preview.mobile-view {
@@ -486,7 +729,96 @@ body {
     color: var(--neon-green);
 }
 
+.sandbox-overlay-card {
+    width: min(92vw, 720px);
+    max-height: 80vh;
+    overflow: auto;
+    border-radius: 24px;
+    border: 1px solid rgba(103, 232, 249, 0.32);
+    background: linear-gradient(180deg, #111827, #0f172a);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+    padding: 22px;
+}
+
+.sandbox-overlay-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.sandbox-overlay-close {
+    border: 1px solid rgba(148, 163, 184, 0.35);
+    background: rgba(15, 23, 42, 0.65);
+    color: #cbd5e1;
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-family: 'Fira Code', monospace;
+    font-size: 11px;
+}
+
+.snippet-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+}
+
+.snippet-card,
+.sandbox-command-item {
+    display: grid;
+    gap: 6px;
+    text-align: left;
+    padding: 16px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(15, 23, 42, 0.75);
+    color: #e2e8f0;
+}
+
+.snippet-card strong {
+    color: white;
+}
+
+.snippet-card span {
+    color: #94a3b8;
+    font-size: 12px;
+}
+
+.sandbox-command-card {
+    width: min(92vw, 640px);
+}
+
+.sandbox-command-input {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 16px;
+    border: 1px solid rgba(103, 232, 249, 0.24);
+    background: rgba(8, 15, 30, 0.9);
+    color: white;
+    margin-bottom: 14px;
+}
+
+.sandbox-command-list {
+    display: grid;
+    gap: 10px;
+}
+
+.sandbox-command-item.active {
+    border-color: rgba(255, 0, 229, 0.36);
+    box-shadow: 0 0 22px rgba(255, 0, 229, 0.12);
+}
+
 @media (max-width: 1024px) {
+    .sandbox-shell-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .sandbox-main-resizer {
+        display: none;
+    }
+
     .sandbox-workbench {
         grid-template-columns: 1fr;
     }
@@ -494,5 +826,26 @@ body {
     .sandbox-explorer {
         border-right: none;
         border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .sandbox-workbench.explorer-collapsed {
+        grid-template-columns: 1fr;
+    }
+
+    .sandbox-workbench.explorer-collapsed .sandbox-project-name,
+    .sandbox-workbench.explorer-collapsed .sandbox-helper-card,
+    .sandbox-workbench.explorer-collapsed .sandbox-pane-spacer,
+    .sandbox-workbench.explorer-collapsed .sandbox-file span:not(.sandbox-file-icon):not(.sandbox-file-dot) {
+        display: initial;
+    }
+
+    .sandbox-workbench.explorer-collapsed .sandbox-file {
+        justify-content: flex-start;
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .sandbox-workbench.explorer-collapsed .sandbox-file-dot {
+        display: inline-block;
     }
 }

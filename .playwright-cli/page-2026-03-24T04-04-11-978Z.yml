@@ -1,0 +1,25 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e6]:
+    - generic [ref=e7]:
+      - heading "CYBER-BUILDER ACADEMY v1.011" [level=1] [ref=e8] [cursor=pointer]
+      - paragraph [ref=e9]: "MISSION: 00: INTRO LESSON — WHAT IS HTML?"
+    - generic [ref=e144]:
+      - button "← ABORT MISSION" [ref=e145] [cursor=pointer]
+      - paragraph [ref=e149]: "SYNC: 5%"
+  - main [ref=e150]:
+    - generic [ref=e151]:
+      - generic [ref=e152]:
+        - heading "1. Welcome to Web Design 🌐" [level=2] [ref=e153]
+        - generic [ref=e154]:
+          - paragraph [ref=e155]: Welcome to Web Design! This is where you learn to build the digital world.
+          - paragraph [ref=e156]: "Mission: Click and hold the READY button for 5 seconds."
+      - button "READY" [ref=e159] [cursor=pointer]
+      - 'button "AWAITING CODE: 58s" [disabled] [ref=e162]'
+    - generic [ref=e164]:
+      - generic [ref=e169]: CYBER_TERM_1.0 — index.html
+      - generic [ref=e170]:
+        - generic [ref=e171]: Input Code
+        - textbox [ref=e172]
+      - generic [ref=e174]:
+        - generic [ref=e175]: Neural Link Preview
+        - generic [ref=e176]: ● LIVE_FEED

@@ -10,23 +10,22 @@ function finalizeLoadSandbox(payload, newState, oldState, context) {
             // Fallback for old single-string saves
             sandboxData = { html: savedStr, css: "", js: "" };
         }
-        
-        newState.sandbox = sandboxData;
-        
-        // Update all three editors
-        const htmlEditor = document.getElementById('sandbox-editor-html');
-        const cssEditor = document.getElementById('sandbox-editor-css');
-        const jsEditor = document.getElementById('sandbox-editor-js');
-        
-        if (htmlEditor) htmlEditor.value = sandboxData.html || "";
-        if (cssEditor) cssEditor.value = sandboxData.css || "";
-        if (jsEditor) jsEditor.value = sandboxData.js || "";
 
-        ['html', 'css', 'js'].forEach(type => {
-            if (window.updateSandboxLineNumbers) {
-                window.updateSandboxLineNumbers(type);
-            }
-        });
+        newState.sandboxProject = window.normalizeSandboxProject
+            ? window.normalizeSandboxProject(sandboxData)
+            : {
+                activeFile: 'index.html',
+                files: {
+                    'index.html': sandboxData.html || "",
+                    'styles.css': sandboxData.css || "",
+                    'script.js': sandboxData.js || ""
+                }
+            };
+        newState.sandbox = {
+            html: newState.sandboxProject.files['index.html'] || "",
+            css: newState.sandboxProject.files['styles.css'] || "",
+            js: newState.sandboxProject.files['script.js'] || ""
+        };
 
         // Update name indicator
         const nameDisplay = document.getElementById('sandbox-file-indicator');
@@ -50,7 +49,16 @@ function finalizeLoadSandbox(payload, newState, oldState, context) {
 
         // Trigger preview update
         if (window.switchSandboxTab) {
-            window.switchSandboxTab('html');
+            window.switchSandboxTab(newState.sandboxProject.activeFile || 'index.html');
+        }
+        if (window.renderSandboxFileUI) {
+            window.renderSandboxFileUI();
+        }
+        if (window.refreshSandboxIDE) {
+            window.refreshSandboxIDE();
+        }
+        if (window.applySandboxPanelState) {
+            window.applySandboxPanelState();
         }
         if (window.runSandboxPreview) {
             window.runSandboxPreview();

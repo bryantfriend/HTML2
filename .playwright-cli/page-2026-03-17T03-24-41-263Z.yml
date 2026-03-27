@@ -1,0 +1,133 @@
+- generic [ref=e1]:
+  - banner [ref=e6]:
+    - generic [ref=e7]:
+      - heading "CYBER-BUILDER ACADEMY v1.011" [level=1] [ref=e8] [cursor=pointer]
+      - paragraph [ref=e9]: DASHBOARD_ACCESS_GRANTED
+    - generic [ref=e136]:
+      - button "← ABORT MISSION" [active] [ref=e137] [cursor=pointer]
+      - paragraph [ref=e141]: "SYNC: 5%"
+  - main [ref=e11]:
+    - generic [ref=e12]:
+      - heading "AVAILABLE TRAINING MODULES" [level=2] [ref=e13]
+      - button "< CODE SANDBOX />" [ref=e14] [cursor=pointer]
+    - generic [ref=e15]:
+      - generic [ref=e316] [cursor=pointer]:
+        - generic [ref=e317]:
+          - 'heading "00: INTRO LESSON — WHAT IS HTML?" [level=3] [ref=e318]'
+          - paragraph [ref=e319]: Understand the basics of Web Design and HTML. [20 MODULES]
+          - generic [ref=e320]: 🔒 Game Locked
+        - generic [ref=e321]:
+          - generic [ref=e322]: "MODULES: 0"
+          - generic [ref=e323]: START →
+      - generic [ref=e324] [cursor=pointer]:
+        - generic [ref=e325]:
+          - 'heading "01: THE FIRST CONSTRUCTION — PAGE STRUCTURE" [level=3] [ref=e326]'
+          - paragraph [ref=e327]: Learn how to build the skeleton of a website using HTML tags. [20 MODULES]
+          - generic [ref=e328]: 🔒 Game Locked
+        - generic [ref=e329]:
+          - generic [ref=e330]: "MODULES: 20"
+          - generic [ref=e331]: START →
+      - generic [ref=e332] [cursor=pointer]:
+        - generic [ref=e333]:
+          - 'heading "02: THE DEEP NESTING — TAG MATCHING" [level=3] [ref=e334]'
+          - paragraph [ref=e335]: Master the art of nesting HTML tags inside each other. [20 MODULES]
+          - generic [ref=e336]: 🔒 Game Locked
+        - generic [ref=e337]:
+          - generic [ref=e338]: "MODULES: 0"
+          - generic [ref=e339]: START →
+      - generic [ref=e340] [cursor=pointer]:
+        - generic [ref=e341]:
+          - 'heading "03: THE CONTENT KING — TEXT & FONTS" [level=3] [ref=e342]'
+          - paragraph [ref=e343]: Style your text and headers to make them pop. [20 MODULES]
+          - generic [ref=e344]: 🔒 Game Locked
+        - generic [ref=e345]:
+          - generic [ref=e346]: "MODULES: 21"
+          - generic [ref=e347]: START →
+      - generic [ref=e348] [cursor=pointer]:
+        - generic [ref=e349]:
+          - 'heading "Lesson 4: Images & Media" [level=3] [ref=e350]'
+          - paragraph [ref=e351]: Make your websites pop with pictures, GIFs, audio, and video!
+          - generic [ref=e352]: 🔒 Game Locked
+        - generic [ref=e353]:
+          - generic [ref=e354]: "MODULES: 0"
+          - generic [ref=e355]: START →
+      - generic [ref=e356] [cursor=pointer]:
+        - generic [ref=e357]:
+          - 'heading "Lesson 5: Forms & Inputs" [level=3] [ref=e358]'
+          - paragraph [ref=e359]: Learn how to collect data from users with text boxes, checkboxes, and buttons!
+          - generic [ref=e360]: 🔒 Game Locked
+        - generic [ref=e361]:
+          - generic [ref=e362]: "MODULES: 0"
+          - generic [ref=e363]: START →
+      - generic [ref=e364] [cursor=pointer]:
+        - generic [ref=e365]:
+          - 'heading "Lesson 6: Semantic HTML" [level=3] [ref=e366]'
+          - paragraph [ref=e367]: Learn to build properly structured websites that search engines love!
+          - generic [ref=e368]: 🔒 Game Locked
+        - generic [ref=e369]:
+          - generic [ref=e370]: "MODULES: 0"
+          - generic [ref=e371]: START →
+      - generic [ref=e372] [cursor=pointer]:
+        - generic [ref=e373]:
+          - 'heading "Lesson 7: Intro to CSS" [level=3] [ref=e374]'
+          - paragraph [ref=e375]: Time to make things beautiful! Learn how to add style and color to your HTML.
+          - generic [ref=e376]: 🔒 Game Locked
+        - generic [ref=e377]:
+          - generic [ref=e378]: "MODULES: 0"
+          - generic [ref=e379]: START →
+      - generic [ref=e380] [cursor=pointer]:
+        - generic [ref=e381]:
+          - 'heading "Lesson 8: The Box Model" [level=3] [ref=e382]'
+          - paragraph [ref=e383]: Every HTML element is a box! Let's learn to control spacing with Margins, Padding, and Borders.
+          - generic [ref=e384]: 🔒 Game Locked
+        - generic [ref=e385]:
+          - generic [ref=e386]: "MODULES: 0"
+          - generic [ref=e387]: START →
+      - generic [ref=e388] [cursor=pointer]:
+        - generic [ref=e389]:
+          - 'heading "Lesson 9: Layouts with Flexbox" [level=3] [ref=e390]'
+          - paragraph [ref=e391]: Centering things used to be a nightmare. Thanks to Flexbox, building layouts is easy!
+          - generic [ref=e392]: 🔒 Game Locked
+        - generic [ref=e393]:
+          - generic [ref=e394]: "MODULES: 0"
+          - generic [ref=e395]: START →
+      - generic [ref=e396] [cursor=pointer]:
+        - generic [ref=e397]:
+          - 'heading "Lesson 10: Advanced Styling" [level=3] [ref=e398]'
+          - paragraph [ref=e399]: Hover effects, shadows, transitions, and making your site pop!
+          - generic [ref=e400]: 🔒 Game Locked
+        - generic [ref=e401]:
+          - generic [ref=e402]: "MODULES: 0"
+          - generic [ref=e403]: START →
+      - generic [ref=e404] [cursor=pointer]:
+        - generic [ref=e405]:
+          - 'heading "Lesson 11: Intro to JavaScript" [level=3] [ref=e406]'
+          - paragraph [ref=e407]: Give your websites a brain! Learn how to show alerts, use the console, and store data in variables.
+          - generic [ref=e408]: 🔒 Game Locked
+        - generic [ref=e409]:
+          - generic [ref=e410]: "MODULES: 0"
+          - generic [ref=e411]: START →
+      - generic [ref=e412] [cursor=pointer]:
+        - generic [ref=e413]:
+          - 'heading "Lesson 12: Interactivity" [level=3] [ref=e414]'
+          - paragraph [ref=e415]: Make buttons actually do things! Learn about Event Listeners and how to change HTML from JavaScript.
+          - generic [ref=e416]: 🔒 Game Locked
+        - generic [ref=e417]:
+          - generic [ref=e418]: "MODULES: 0"
+          - generic [ref=e419]: START →
+      - generic [ref=e420] [cursor=pointer]:
+        - generic [ref=e421]:
+          - 'heading "Lesson 13: Logic & Decisions" [level=3] [ref=e422]'
+          - paragraph [ref=e423]: Teach your website to think! Learn about If/Else statements and Loops.
+          - generic [ref=e424]: 🔒 Game Locked
+        - generic [ref=e425]:
+          - generic [ref=e426]: "MODULES: 0"
+          - generic [ref=e427]: START →
+      - generic [ref=e428] [cursor=pointer]:
+        - generic [ref=e429]:
+          - 'heading "Lesson 14: Portfolio Capstone" [level=3] [ref=e430]'
+          - paragraph [ref=e431]: The ultimate challenge. Combine HTML, CSS, and JS to build a multi-page portfolio showcasing your minigames!
+          - generic [ref=e432]: 🔒 Game Locked
+        - generic [ref=e433]:
+          - generic [ref=e434]: "MODULES: 0"
+          - generic [ref=e435]: START →

@@ -1,0 +1,48 @@
+- generic [ref=e1]:
+  - banner [ref=e6]:
+    - generic [ref=e7]:
+      - heading "CYBER-BUILDER ACADEMY v1.011" [level=1] [ref=e8] [cursor=pointer]
+      - paragraph [ref=e9]: "MISSION: 01: THE FIRST CONSTRUCTION — PAGE STRUCTURE"
+    - generic [ref=e144]:
+      - button "← ABORT MISSION" [ref=e145] [cursor=pointer]
+      - paragraph [ref=e149]: "SYNC: 95%"
+  - main [ref=e150]:
+    - generic [ref=e151]:
+      - generic [ref=e152]:
+        - 'heading "19. Mission Review: Page Structure" [level=2] [ref=e202]'
+        - generic [ref=e154]:
+          - paragraph [ref=e203]: This checkpoint turns the big ideas from Lesson 1 into quick recall practice so students are ready for the exam wording.
+          - paragraph [ref=e204]: "Mission: Answer all 3 structure questions correctly."
+      - generic [ref=e205]:
+        - generic [ref=e206]: Mission Review
+        - generic [ref=e207]: These are the same structure words students need to recognize later on Exam 1.
+        - generic [ref=e208]:
+          - generic [ref=e209]: 1. Which part holds page information like the title?
+          - generic [ref=e210]:
+            - button "<head>" [ref=e211] [cursor=pointer]
+            - button "<body>" [ref=e212] [cursor=pointer]
+            - button "<footer>" [ref=e213] [cursor=pointer]
+        - generic [ref=e214]:
+          - generic [ref=e215]: 2. Which part holds the visible content students actually see?
+          - generic [ref=e216]:
+            - button "<title>" [ref=e217] [cursor=pointer]
+            - button "<body>" [active] [ref=e218] [cursor=pointer]
+            - button "<doctype>" [ref=e219] [cursor=pointer]
+        - generic [ref=e220]:
+          - generic [ref=e221]: 3. What tag changes the text on the browser tab?
+          - generic [ref=e222]:
+            - button "<html>" [ref=e223] [cursor=pointer]
+            - button "<title>" [ref=e224] [cursor=pointer]
+            - button "<section>" [ref=e225] [cursor=pointer]
+        - generic [ref=e226]: 2 / 3 correct
+      - generic [ref=e181]:
+        - button "BACK" [ref=e182] [cursor=pointer]
+        - button "BYPASS GRANTED (NEXT)" [ref=e230] [cursor=pointer]
+    - generic [ref=e185]:
+      - generic [ref=e190]: CYBER_TERM_1.0 — index.html
+      - generic [ref=e191]:
+        - generic [ref=e192]: Input Code
+        - textbox [ref=e193]: <!-- Lesson 1 review checkpoint -->
+      - generic [ref=e195]:
+        - generic [ref=e196]: Neural Link Preview
+        - generic [ref=e197]: ● LIVE_FEED

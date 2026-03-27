@@ -1,0 +1,66 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - paragraph [ref=e4]: Shared Landing Page
+    - heading "ICF Academy" [level=1] [ref=e5]
+    - paragraph [ref=e6]: One place to enter every track, monitor progress, and export completion summaries across the full course set.
+  - generic [ref=e7]:
+    - article [ref=e8]:
+      - paragraph [ref=e9]: Tracks
+      - generic [ref=e10]:
+        - link "Beginner Track" [ref=e11] [cursor=pointer]:
+          - /url: ./ICF Begginer/index.html
+        - link "Intermediate Track" [ref=e12] [cursor=pointer]:
+          - /url: ./Intermediate/index.html
+        - link "Advanced Track" [ref=e13] [cursor=pointer]:
+          - /url: ./Advanced/index.html
+        - link "Using ICF in Roblox" [ref=e14] [cursor=pointer]:
+          - /url: ./using ICF in Roblox/index.html
+    - article [ref=e15]:
+      - generic [ref=e16]:
+        - paragraph [ref=e17]: Academy Progress
+        - button "Refresh" [ref=e18] [cursor=pointer]
+      - generic [ref=e19]:
+        - generic [ref=e20]:
+          - text: Tracks
+          - strong [ref=e21]: "4"
+        - generic [ref=e22]:
+          - text: Modules Done
+          - strong [ref=e23]: 0/21
+        - generic [ref=e24]:
+          - text: Average Readiness
+          - strong [ref=e25]: 0%
+        - generic [ref=e26]:
+          - text: Next Step
+          - strong [ref=e27]: Open any track
+    - article [ref=e28]:
+      - paragraph [ref=e29]: Track Summaries
+      - generic [ref=e30]:
+        - 'link "Beginner 0/6 modules complete Readiness: 0% No saved progress yet." [ref=e31] [cursor=pointer]':
+          - /url: ./ICF Begginer/index.html
+          - heading "Beginner" [level=3] [ref=e32]
+          - paragraph [ref=e33]: 0/6 modules complete
+          - paragraph [ref=e34]: "Readiness: 0%"
+          - paragraph [ref=e35]: No saved progress yet.
+        - 'link "Intermediate 0/5 modules complete Readiness: 0% No saved progress yet." [ref=e36] [cursor=pointer]':
+          - /url: ./Intermediate/index.html
+          - heading "Intermediate" [level=3] [ref=e37]
+          - paragraph [ref=e38]: 0/5 modules complete
+          - paragraph [ref=e39]: "Readiness: 0%"
+          - paragraph [ref=e40]: No saved progress yet.
+        - 'link "Advanced 0/5 modules complete Readiness: 0% No saved progress yet." [ref=e41] [cursor=pointer]':
+          - /url: ./Advanced/index.html
+          - heading "Advanced" [level=3] [ref=e42]
+          - paragraph [ref=e43]: 0/5 modules complete
+          - paragraph [ref=e44]: "Readiness: 0%"
+          - paragraph [ref=e45]: No saved progress yet.
+        - 'link "Roblox 0/5 modules complete Readiness: 0% No saved progress yet." [ref=e46] [cursor=pointer]':
+          - /url: ./using ICF in Roblox/index.html
+          - heading "Roblox" [level=3] [ref=e47]
+          - paragraph [ref=e48]: 0/5 modules complete
+          - paragraph [ref=e49]: "Readiness: 0%"
+          - paragraph [ref=e50]: No saved progress yet.
+    - article [ref=e51]:
+      - generic [ref=e52]:
+        - paragraph [ref=e53]: Export Completion Summary
+        - button "Generate Summary" [ref=e54] [cursor=pointer]
+      - generic [ref=e55]: Generate a summary to capture cross-track progress.

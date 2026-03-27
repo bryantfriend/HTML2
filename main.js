@@ -145,7 +145,12 @@ window.sandboxIDE = window.sandboxIDE || {
     autoRun: true,
     dirty: false,
     previewTimer: null,
-    consoleEntries: []
+    consoleEntries: [],
+    panels: {
+        explorerCollapsed: false,
+        consoleCollapsed: false,
+        focusMode: 'split'
+    }
 };
 
 window.getSandboxEditors = function () {
@@ -274,6 +279,87 @@ window.setSandboxPreviewStatus = function (label, stale) {
     previewStatus.textContent = label;
     previewStatus.classList.toggle('sandbox-preview-stale', !!stale);
     previewStatus.classList.toggle('sandbox-preview-ready', !stale);
+};
+
+window.applySandboxPanelState = function () {
+    const panels = window.sandboxIDE.panels || {};
+    const workbench = document.querySelector('.sandbox-workbench');
+    const shellGrid = document.getElementById('sandbox-shell-grid');
+    const editorPanel = document.getElementById('sandbox-editor-panel');
+    const previewPanel = document.getElementById('sandbox-preview-panel');
+    const consoleShell = document.getElementById('sandbox-console-shell');
+    const explorerToggle = document.getElementById('sandbox-explorer-toggle');
+    const previewToggle = document.getElementById('sandbox-preview-toggle');
+    const consoleToggle = document.getElementById('sandbox-console-toggle');
+    const splitBtn = document.getElementById('sandbox-split-view-btn');
+    const editorBtn = document.getElementById('sandbox-editor-focus-btn');
+    const previewBtn = document.getElementById('sandbox-preview-focus-btn');
+
+    if (workbench) {
+        workbench.classList.toggle('explorer-collapsed', !!panels.explorerCollapsed);
+    }
+    if (consoleShell) {
+        consoleShell.classList.toggle('collapsed', !!panels.consoleCollapsed);
+    }
+    if (shellGrid) {
+        shellGrid.classList.remove('focus-editor', 'focus-preview');
+        if (panels.focusMode === 'editor') {
+            shellGrid.classList.add('focus-editor');
+        } else if (panels.focusMode === 'preview') {
+            shellGrid.classList.add('focus-preview');
+        }
+    }
+    if (editorPanel) {
+        editorPanel.classList.toggle('hidden-panel', panels.focusMode === 'preview');
+    }
+    if (previewPanel) {
+        previewPanel.classList.toggle('hidden-panel', panels.focusMode === 'editor');
+    }
+
+    if (explorerToggle) {
+        explorerToggle.textContent = panels.explorerCollapsed ? 'EXP' : 'MIN';
+        explorerToggle.setAttribute('aria-expanded', String(!panels.explorerCollapsed));
+    }
+    if (previewToggle) {
+        const previewHidden = panels.focusMode === 'editor';
+        previewToggle.textContent = previewHidden ? 'EXP' : 'MIN';
+        previewToggle.setAttribute('aria-expanded', String(!previewHidden));
+    }
+    if (consoleToggle) {
+        consoleToggle.textContent = panels.consoleCollapsed ? 'EXP' : 'MIN';
+        consoleToggle.setAttribute('aria-expanded', String(!panels.consoleCollapsed));
+    }
+
+    [
+        [splitBtn, panels.focusMode === 'split'],
+        [editorBtn, panels.focusMode === 'editor'],
+        [previewBtn, panels.focusMode === 'preview']
+    ].forEach(function (pair) {
+        const btn = pair[0];
+        const active = pair[1];
+        if (btn) btn.classList.toggle('active', active);
+    });
+};
+
+window.toggleSandboxExplorer = function () {
+    window.sandboxIDE.panels.explorerCollapsed = !window.sandboxIDE.panels.explorerCollapsed;
+    window.applySandboxPanelState();
+};
+
+window.toggleSandboxConsole = function () {
+    window.sandboxIDE.panels.consoleCollapsed = !window.sandboxIDE.panels.consoleCollapsed;
+    window.applySandboxPanelState();
+};
+
+window.setSandboxFocusMode = function (mode) {
+    window.sandboxIDE.panels.focusMode = mode;
+    window.applySandboxPanelState();
+};
+
+window.toggleSandboxPreviewPanel = function () {
+    const currentMode = window.sandboxIDE.panels.focusMode;
+    window.sandboxIDE.panels.focusMode = currentMode === 'editor' ? 'split' : 'editor';
+    window.applySandboxPanelState();
 };
 
 window.switchSandboxTab = function (type) {
@@ -452,6 +538,48 @@ if (sandboxClearConsoleBtn) {
     });
 }
 
+const sandboxExplorerToggle = document.getElementById('sandbox-explorer-toggle');
+if (sandboxExplorerToggle) {
+    sandboxExplorerToggle.addEventListener('click', function () {
+        window.toggleSandboxExplorer();
+    });
+}
+
+const sandboxConsoleToggle = document.getElementById('sandbox-console-toggle');
+if (sandboxConsoleToggle) {
+    sandboxConsoleToggle.addEventListener('click', function () {
+        window.toggleSandboxConsole();
+    });
+}
+
+const sandboxPreviewToggle = document.getElementById('sandbox-preview-toggle');
+if (sandboxPreviewToggle) {
+    sandboxPreviewToggle.addEventListener('click', function () {
+        window.toggleSandboxPreviewPanel();
+    });
+}
+
+const sandboxSplitViewBtn = document.getElementById('sandbox-split-view-btn');
+if (sandboxSplitViewBtn) {
+    sandboxSplitViewBtn.addEventListener('click', function () {
+        window.setSandboxFocusMode('split');
+    });
+}
+
+const sandboxEditorFocusBtn = document.getElementById('sandbox-editor-focus-btn');
+if (sandboxEditorFocusBtn) {
+    sandboxEditorFocusBtn.addEventListener('click', function () {
+        window.setSandboxFocusMode('editor');
+    });
+}
+
+const sandboxPreviewFocusBtn = document.getElementById('sandbox-preview-focus-btn');
+if (sandboxPreviewFocusBtn) {
+    sandboxPreviewFocusBtn.addEventListener('click', function () {
+        window.setSandboxFocusMode('preview');
+    });
+}
+
 const sandboxSaveBtn = document.getElementById('sandbox-save-btn');
 const saveModal = document.getElementById('save-modal');
 const saveFilenameInput = document.getElementById('save-filename-input');
@@ -536,7 +664,22 @@ if (sandboxOpenBtn && openModal) {
 const sandboxExportBtn = document.getElementById('sandbox-export-btn');
 if (sandboxExportBtn) {
     sandboxExportBtn.addEventListener('click', function () {
-        const s = window.state.sandbox || { html: "", css: "", js: "" };
+        const project = window.normalizeSandboxProject
+            ? window.normalizeSandboxProject(window.state.sandboxProject || window.state.sandbox || null)
+            : null;
+        const files = project && project.files ? project.files : null;
+        const activeHtml = files
+            ? ((project.activeFile && String(project.activeFile).endsWith('.html') ? project.activeFile : null)
+                || Object.keys(files).find(name => name.endsWith('.html'))
+                || 'index.html')
+            : null;
+        const s = files
+            ? {
+                html: files[activeHtml] || "",
+                css: Object.keys(files).filter(name => name.endsWith('.css')).map(name => files[name] || "").join('\n\n'),
+                js: Object.keys(files).filter(name => name.endsWith('.js')).map(name => files[name] || "").join('\n\n')
+            }
+            : (window.state.sandbox || { html: "", css: "", js: "" });
         const combined = `<!DOCTYPE html>
 <html>
 <head>

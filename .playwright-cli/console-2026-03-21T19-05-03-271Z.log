@@ -1,0 +1,37 @@
+Total messages: 29 (Errors: 5, Warnings: 1)
+
+[WARNING] cdn.tailwindcss.com should not be used in production. To use Tailwind CSS in production, install it as a PostCSS plugin or use the Tailwind CLI: https://tailwindcss.com/docs/installation @ https://cdn.tailwindcss.com/?plugins=typography:65
+[ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://127.0.0.1:4180/favicon.ico:0
+[LOG] IntentEngine: Running intent {validate: Array(1), normalize: Array(0), addContext: Array(0), authorize: Array(1), process: Array(1)} with payload {} @ http://127.0.0.1:4180/intentEngine.js?v=2:2
+[LOG] [ICF PIPELINE COMPLETE] -> New State view: MENU @ http://127.0.0.1:4180/stages/emitters/emitResult.js?v=2:1
+[LOG] IntentEngine: Running intent {validate: Array(1), normalize: Array(1), addContext: Array(1), authorize: Array(1), process: Array(1)} with payload {index: 0} @ http://127.0.0.1:4180/intentEngine.js?v=2:2
+[ERROR] Validation failed at index 0 for payload {index: 0} @ http://127.0.0.1:4180/intentEngine.js?v=2:10
+[LOG] IntentEngine: Running intent {validate: Array(1), normalize: Array(1), addContext: Array(1), authorize: Array(1), process: Array(1)} with payload {index: 18} @ http://127.0.0.1:4180/intentEngine.js?v=2:2
+[ERROR] Module data missing for index 18 @ http://127.0.0.1:4180/stages/processors/processLoadModule.js?v=2:10
+[LOG] [ICF PIPELINE COMPLETE] -> New State view: MENU @ http://127.0.0.1:4180/stages/emitters/emitResult.js?v=2:1
+[LOG] IntentEngine: Running intent {validate: Array(1), normalize: Array(1), addContext: Array(1), authorize: Array(1), process: Array(1)} with payload {index: 0} @ http://127.0.0.1:4180/intentEngine.js?v=2:2
+[ERROR] Validation failed at index 0 for payload {index: 0} @ http://127.0.0.1:4180/intentEngine.js?v=2:10
+[LOG] IntentEngine: Running intent {validate: Array(1), normalize: Array(1), addContext: Array(1), authorize: Array(1), process: Array(1)} with payload {index: 18} @ http://127.0.0.1:4180/intentEngine.js?v=2:2
+[ERROR] Module data missing for index 18 @ http://127.0.0.1:4180/stages/processors/processLoadModule.js?v=2:10
+[LOG] [ICF PIPELINE COMPLETE] -> New State view: MENU @ http://127.0.0.1:4180/stages/emitters/emitResult.js?v=2:1
+[LOG] Input event fired JSHandle@node <!-- Intro review checkpoint -->
+<!-- INTRO_REVIEW_READY --> @ http://127.0.0.1:4180/main.js?v=2:126
+[LOG] IntentEngine: Running intent {validate: Array(1), normalize: Array(0), addContext: Array(1), authorize: Array(1), process: Array(1)} with payload {code: <!-- Intro review checkpoint -->
+<!-- INTRO_REVIEW_READY -->} @ http://127.0.0.1:4180/intentEngine.js?v=2:2
+[LOG] processUpdatePreview: processing module 18 has validator: true @ http://127.0.0.1:4180/stages/processors/processUpdatePreview.js?v=2:7
+[LOG] processUpdatePreview: newState.missionCompleted = true @ http://127.0.0.1:4180/stages/processors/processUpdatePreview.js?v=2:24
+[LOG] [ICF PIPELINE COMPLETE] -> New State view: LESSON @ http://127.0.0.1:4180/stages/emitters/emitResult.js?v=2:1
+[LOG] Input event fired JSHandle@node <!-- Lesson 1 review checkpoint -->
+<!-- LESSON1_REVIEW_READY --> @ http://127.0.0.1:4180/main.js?v=2:126
+[LOG] IntentEngine: Running intent {validate: Array(1), normalize: Array(0), addContext: Array(1), authorize: Array(1), process: Array(1)} with payload {code: <!-- Lesson 1 review checkpoint -->
+<!-- LESSON1_REVIEW_READY -->} @ http://127.0.0.1:4180/intentEngine.js?v=2:2
+[LOG] processUpdatePreview: processing module 18 has validator: true @ http://127.0.0.1:4180/stages/processors/processUpdatePreview.js?v=2:7
+[LOG] processUpdatePreview: newState.missionCompleted = true @ http://127.0.0.1:4180/stages/processors/processUpdatePreview.js?v=2:24
+[LOG] [ICF PIPELINE COMPLETE] -> New State view: LESSON @ http://127.0.0.1:4180/stages/emitters/emitResult.js?v=2:1
+[LOG] Input event fired JSHandle@node <!-- Lesson 2 review checkpoint -->
+<!-- LESSON2_REVIEW_READY --> @ http://127.0.0.1:4180/main.js?v=2:126
+[LOG] IntentEngine: Running intent {validate: Array(1), normalize: Array(0), addContext: Array(1), authorize: Array(1), process: Array(1)} with payload {code: <!-- Lesson 2 review checkpoint -->
+<!-- LESSON2_REVIEW_READY -->} @ http://127.0.0.1:4180/intentEngine.js?v=2:2
+[LOG] processUpdatePreview: processing module 18 has validator: true @ http://127.0.0.1:4180/stages/processors/processUpdatePreview.js?v=2:7
+[LOG] processUpdatePreview: newState.missionCompleted = true @ http://127.0.0.1:4180/stages/processors/processUpdatePreview.js?v=2:24
+[LOG] [ICF PIPELINE COMPLETE] -> New State view: LESSON @ http://127.0.0.1:4180/stages/emitters/emitResult.js?v=2:1

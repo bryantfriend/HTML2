@@ -1,8 +1,8 @@
 window.Lessons.intro.modules[8] = {
   title: "9. The DOCTYPE 📜",
   body: `<p>Every professional HTML document starts with <code>&lt;!DOCTYPE HTML&gt;</code>. It tells the browser "Hey, I'm using the latest version of HTML!"</p>
-            <p class="text-[var(--neon-cyan)] font-bold">Step 1: Hit the glowing F12 key to reveal the source code.</p>
-            <p class="text-[var(--neon-cyan)] font-bold">Step 2: Type <code>&lt;!DOCTYPE HTML&gt;</code> in the editor to validate your code!</p>`,
+            <p class="text-[var(--neon-cyan)] font-bold">Step 1: Choose the correct opening line for the document scanner.</p>
+            <p class="text-[var(--neon-cyan)] font-bold">Step 2: Type <code>&lt;!DOCTYPE HTML&gt;</code> in the editor to launch the page in standards mode.</p>`,
   svg: ``,
   widgetCode: `<!-- INTERACTIVE MODULE -->
 <style>
@@ -16,20 +16,15 @@ window.Lessons.intro.modules[8] = {
 .intro-demo-code { min-height: 54px; font: 700 15px/1.6 monospace; white-space: pre-wrap; color: white; }
 .intro-demo-preview { display: flex; align-items: center; justify-content: center; color: #67e8f9; font: 700 13px/1.5 sans-serif; text-align: center; }
 .intro-demo-status { color: #cbd5e1; font-size: 13px; }
-.dev-game { display: flex; flex-direction: column; height: 300px; background: #0f172a; border-radius: 12px; overflow: hidden; user-select: none; }
-.fake-site { flex: 1; background: white; color: black; padding: 20px; font-family: sans-serif; position: relative; }
-.site-header { font-size: 24px; font-weight: bold; color: #3b82f6; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
-.site-body { margin-top: 10px; color: #475569; font-size: 14px; }
-.hero-img { width: 100%; height: 80px; background: linear-gradient(45deg, #10b981, #3b82f6); border-radius: 8px; margin-top: 15px; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; }
-.source-view { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #1e1e1e; color: #d4d4d4; padding: 20px; font-family: 'Consolas', monospace; font-size: 13px; display: none; overflow: auto; line-height: 1.5; }
-.code-tag { color: #569cd6; }
-.code-str { color: #ce9178; }
-.code-cmt { color: #6a9955; }
-.keyboard-area { height: 70px; background: #1e293b; border-top: 4px solid #334155; display: flex; justify-content: center; align-items: center; gap: 8px; padding: 10px; }
-.key { background: #0f172a; border: 2px solid #475569; border-radius: 6px; color: #94a3b8; padding: 10px 15px; font-family: monospace; font-size: 14px; font-weight: bold; box-shadow: 0 4px 0 #020617; }
-.key-f12 { border-color: #ff00e5; color: white; box-shadow: 0 0 15px #ff00e5, 0 4px 0 #86007b; animation: pulse-pink 1.5s infinite; cursor: pointer; transition: 0.1s; }
-.key-f12:active { transform: translateY(4px); box-shadow: 0 0 15px #ff00e5, 0 0px 0 #86007b; }
-@keyframes pulse-pink { 0% { box-shadow: 0 0 5px #ff00e5, 0 4px 0 #86007b; } 50% { box-shadow: 0 0 20px #ff00e5, 0 4px 0 #86007b; } 100% { box-shadow: 0 0 5px #ff00e5, 0 4px 0 #86007b; } }
+.doctype-lab { background: linear-gradient(180deg, #0f172a, #111827); border-radius: 14px; padding: 16px; color: white; min-height: 300px; }
+.doctype-options { display: grid; gap: 10px; margin-top: 14px; }
+.doctype-choice { border: 1px solid #334155; background: #1e293b; color: #e2e8f0; border-radius: 12px; padding: 12px 14px; font: 700 14px/1.5 monospace; cursor: pointer; text-align: left; transition: 0.18s ease; }
+.doctype-choice:hover { border-color: #67e8f9; transform: translateY(-1px); }
+.doctype-choice.correct { border-color: #10b981; background: rgba(16, 185, 129, 0.18); }
+.doctype-choice.wrong { border-color: #ef4444; background: rgba(239, 68, 68, 0.18); }
+.doctype-screen { margin-top: 14px; border-radius: 14px; border: 1px solid rgba(103, 232, 249, 0.14); background: rgba(15, 23, 42, 0.85); padding: 14px; min-height: 120px; display: flex; flex-direction: column; justify-content: center; }
+.doctype-status { color: #67e8f9; font-weight: 700; font-size: 13px; }
+.doctype-boot { margin-top: 8px; color: #cbd5e1; font-size: 13px; line-height: 1.5; }
 </style>
 <script>
 window.playIntroDoctypeDemo = function() {
@@ -58,26 +53,33 @@ window.playIntroDoctypeDemo = function() {
     frame++;
   }, 800);
 };
-window.triggerF12 = function() {
-  document.getElementById('src-view').style.display = 'block';
-  document.getElementById('dg').style.boxShadow = '0 0 20px #00ff9d';
-  window.completeModule('F12_PRESSED');
-};
-window.f12Listener = function(e) {
-  if (e.key === 'F12' && document.getElementById('src-view')) {
-    e.preventDefault();
-    window.triggerF12();
+window.pickDoctypeLine = function(button, isCorrect) {
+  const status = document.getElementById('doctype-status');
+  const boot = document.getElementById('doctype-boot');
+  document.querySelectorAll('.doctype-choice').forEach(choice => choice.classList.remove('correct', 'wrong'));
+  button.classList.add(isCorrect ? 'correct' : 'wrong');
+  if (isCorrect) {
+    if (status) status.textContent = 'Correct first line found.';
+    if (boot) boot.textContent = 'Nice. Now type <!DOCTYPE HTML> in the editor so the document launches in standards mode.';
+    window.completeModule('DOCTYPE_PICKED');
+  } else {
+    if (status) status.textContent = 'Not quite. The DOCTYPE line must come first.';
+    if (boot) boot.textContent = 'Try again. We want the special line that tells the browser this is an HTML document.';
   }
 };
-document.addEventListener('keydown', window.f12Listener);
-const introDoctypeEditor = document.getElementById('code-editor');
-if (introDoctypeEditor) { introDoctypeEditor.readOnly = false; introDoctypeEditor.style.opacity = '1'; }
+(function() {
+  const introDoctypeEditor = document.getElementById('code-editor');
+  if (introDoctypeEditor) {
+    introDoctypeEditor.readOnly = false;
+    introDoctypeEditor.style.opacity = '1';
+  }
+})();
 </script>
 <div class="intro-demo-shell">
   <div class="intro-demo-top">
     <div>
       <div class="intro-demo-kicker">Quick Demo</div>
-      <div style="font-size:13px;">Press F12 here, then copy the DOCTYPE line into the editor.</div>
+      <div style="font-size:13px;">Watch the first line appear, then type that same line below.</div>
     </div>
     <button type="button" class="intro-demo-replay" onclick="window.playIntroDoctypeDemo()">Replay</button>
   </div>
@@ -90,33 +92,23 @@ if (introDoctypeEditor) { introDoctypeEditor.readOnly = false; introDoctypeEdito
   </div>
   <div id="intro-doctype-demo-status" class="intro-demo-status">Demo loading...</div>
 </div>
-<div class="dev-game" id="dg">
-  <div class="fake-site">
-    <div class="site-header">WebSpace ✨</div>
-    <div class="site-body">Welcome to the best website ever! Click F12 below to see how I built this.</div>
-    <div class="hero-img">Super Cool Image</div>
-    <div id="src-view" class="source-view">
-      <span class="code-cmt">&lt;!-- Developer Tools --&gt;</span><br>
-      &lt;<span class="code-tag">html</span>&gt;<br>
-      &nbsp;&lt;<span class="code-tag">body</span>&gt;<br>
-      &nbsp;&nbsp;&lt;<span class="code-tag">div</span> class=<span class="code-str">"header"</span>&gt;WebSpace ✨&lt;/<span class="code-tag">div</span>&gt;<br>
-      &nbsp;&nbsp;&lt;<span class="code-tag">div</span> class=<span class="code-str">"body"</span>&gt;Welcome to the best website ever!&lt;/<span class="code-tag">div</span>&gt;<br>
-      &nbsp;&nbsp;&lt;<span class="code-tag">div</span> class=<span class="code-str">"hero"</span>&gt;Super Cool Image&lt;/<span class="code-tag">div</span>&gt;<br>
-      &nbsp;&lt;/<span class="code-tag">body</span>&gt;<br>
-      &lt;/<span class="code-tag">html</span>&gt;
-    </div>
+<div class="doctype-lab">
+  <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.24em; color:#67e8f9;">Document Scanner</div>
+  <div style="margin-top:6px; color:#cbd5e1; font-size:13px;">Choose the correct first line to help the browser understand what kind of file this is.</div>
+  <div class="doctype-options">
+    <button class="doctype-choice" onclick="window.pickDoctypeLine(this, true)">&lt;!DOCTYPE HTML&gt;</button>
+    <button class="doctype-choice" onclick="window.pickDoctypeLine(this, false)">&lt;body&gt;</button>
+    <button class="doctype-choice" onclick="window.pickDoctypeLine(this, false)">&lt;title&gt;My Page&lt;/title&gt;</button>
   </div>
-  <div class="keyboard-area text-[10px] md:text-sm">
-    <div class="key">F10</div>
-    <div class="key">F11</div>
-    <div class="key key-f12" id="f12-btn" onclick="window.triggerF12()">F12</div>
-    <div class="key" style="margin-left:20px;">PrtSc</div>
+  <div class="doctype-screen">
+    <div id="doctype-status" class="doctype-status">Pick the correct opening line.</div>
+    <div id="doctype-boot" class="doctype-boot">Once you find it here, type the full line in the editor to finish the mission.</div>
   </div>
 </div>
 <script>window.playIntroDoctypeDemo();</script>`,
   initialCode: ``,
   progress: 45,
   validator: function (code) {
-    return code.includes("F12_PRESSED") && code.toUpperCase().includes("<!DOCTYPE HTML>");
+    return code.includes("DOCTYPE_PICKED") && code.toUpperCase().includes("<!DOCTYPE HTML>");
   }
 };
