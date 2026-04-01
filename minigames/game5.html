@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Frenzy</title>
+  <style>
+    :root { color-scheme: dark; --bg:#04111d; --panel:#0f1f33; --line:#1d4ed8; --accent:#38bdf8; --accent2:#4ade80; --ink:#e0f2fe; }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; display:grid; place-items:center; padding:24px; font-family:Arial,sans-serif; background:radial-gradient(circle at top, #082032, #020617 68%); color:var(--ink); }
+    .game { width:min(900px, 100%); display:grid; gap:18px; padding:24px; border-radius:28px; background:linear-gradient(180deg, rgba(15,31,51,.95), rgba(2,6,23,.96)); border:1px solid rgba(56,189,248,.22); box-shadow:0 20px 50px rgba(0,0,0,.35); }
+    .top { display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; align-items:end; }
+    .eyebrow { margin:0 0 8px; color:var(--accent); font-size:12px; text-transform:uppercase; letter-spacing:.24em; font-weight:800; }
+    h1 { margin:0; font-size:clamp(32px, 5vw, 48px); }
+    .sub { margin:8px 0 0; color:#cbd5e1; max-width:620px; line-height:1.55; }
+    .stats { display:flex; gap:12px; flex-wrap:wrap; }
+    .pill { min-width:110px; padding:12px 14px; border-radius:18px; background:rgba(8,47,73,.55); border:1px solid rgba(56,189,248,.2); }
+    .pill b { display:block; font-size:22px; color:white; }
+    .arena { display:grid; gap:16px; grid-template-columns:1.15fr .85fr; }
+    .card, .choices { padding:18px; border-radius:24px; background:rgba(15,23,42,.86); border:1px solid rgba(148,163,184,.14); }
+    .prompt { margin:0 0 10px; color:#93c5fd; font-size:12px; text-transform:uppercase; letter-spacing:.18em; font-weight:800; }
+    .artifact { padding:18px; border-radius:22px; background:linear-gradient(180deg, rgba(14,165,233,.16), rgba(59,130,246,.08)); border:1px solid rgba(56,189,248,.18); }
+    .artifact h2 { margin:0 0 8px; font-size:28px; }
+    .artifact p { margin:0; color:#cbd5e1; line-height:1.55; }
+    .code { margin-top:14px; padding:14px; border-radius:18px; background:#020617; color:#f8fafc; font:700 15px/1.6 Consolas, monospace; white-space:pre-wrap; }
+    .choices { display:grid; gap:12px; align-content:start; }
+    button { font:inherit; }
+    .choice { width:100%; padding:14px 16px; border-radius:18px; border:1px solid rgba(148,163,184,.16); background:rgba(15,23,42,.76); color:white; text-align:left; cursor:pointer; transition:transform .12s ease, border-color .12s ease, background .12s ease; }
+    .choice:hover { transform:translateY(-1px); border-color:rgba(56,189,248,.35); }
+    .choice b { display:block; margin-bottom:4px; font-size:15px; }
+    .choice small { color:#cbd5e1; line-height:1.45; }
+    .choice.good { background:rgba(20,83,45,.45); border-color:rgba(74,222,128,.6); }
+    .choice.bad { background:rgba(127,29,29,.45); border-color:rgba(248,113,113,.6); }
+    .meter { height:12px; border-radius:999px; overflow:hidden; background:rgba(148,163,184,.18); }
+    .meter > div { height:100%; width:0%; border-radius:inherit; background:linear-gradient(90deg, var(--accent), var(--accent2)); transition:width .2s ease; }
+    .msg { min-height:24px; margin:0; color:#bae6fd; font-weight:700; }
+    .end { display:none; gap:12px; padding:18px; border-radius:24px; background:linear-gradient(180deg, rgba(20,83,45,.35), rgba(6,78,59,.28)); border:1px solid rgba(74,222,128,.25); }
+    .end.show { display:grid; }
+    .restart { justify-self:start; padding:12px 16px; border:none; border-radius:999px; background:linear-gradient(90deg, var(--accent), var(--accent2)); color:#082f49; font-weight:900; cursor:pointer; }
+    @media (max-width: 760px) { .arena { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <main class="game">
+    <section class="top">
+      <div>
+        <p class="eyebrow">Mini Game</p>
+        <h1>Form Frenzy</h1>
+        <p class="sub">Classify each website control before the timer ends. Pick the best job for each card and train your form-builder reflexes.</p>
+      </div>
+      <div class="stats">
+        <div class="pill"><span>Round</span><b id="round">1 / 8</b></div>
+        <div class="pill"><span>Score</span><b id="score">0</b></div>
+        <div class="pill"><span>Time</span><b id="time">60</b></div>
+      </div>
+    </section>
+
+    <div class="meter"><div id="meter"></div></div>
+    <p class="msg" id="message">Pick the best form control for the job.</p>
+
+    <section class="arena">
+      <article class="card">
+        <p class="prompt">Incoming Form Mission</p>
+        <div class="artifact">
+          <h2 id="artifact-title">Loading...</h2>
+          <p id="artifact-copy"></p>
+          <pre class="code" id="artifact-code"></pre>
+        </div>
+      </article>
+
+      <section class="choices" id="choices"></section>
+    </section>
+
+    <section class="end" id="end">
+      <p class="eyebrow">Mission Report</p>
+      <h2 id="end-title" style="margin:0;font-size:30px;">Great run!</h2>
+      <p id="end-copy" style="margin:0;color:#dcfce7;line-height:1.55;"></p>
+      <button class="restart" id="restart">Play Again</button>
+    </section>
+  </main>
+
+  <script>
+    const rounds = [
+      { title:'Collect a short username', copy:'The player should type one line of text.', code:'<input type="text">', answer:'text' },
+      { title:'Hide a password', copy:'The answer should stay hidden with dots.', code:'<input type="password">', answer:'password' },
+      { title:'Pick all favorite toppings', copy:'The player may want more than one answer.', code:'<input type="checkbox">', answer:'checkbox' },
+      { title:'Pick one team color', copy:'The player should choose only one option.', code:'<input type="radio">', answer:'radio' },
+      { title:'Write a full message', copy:'The player needs lots of writing space.', code:'<textarea rows="5"></textarea>', answer:'textarea' },
+      { title:'Choose from a list', copy:'The player should open a menu and pick one choice.', code:'<select><option>Choice</option></select>', answer:'select' },
+      { title:'Send the form', copy:'The player is finished and ready to submit.', code:'<button type="submit">Send</button>', answer:'submit' },
+      { title:'Give a helpful hint', copy:'The text should guide the user before typing.', code:'placeholder="Enter your name"', answer:'placeholder' }
+    ];
+
+    const choices = [
+      { value:'text', label:'Text input', copy:'One-line typing box.' },
+      { value:'password', label:'Password input', copy:'Hides the letters.' },
+      { value:'checkbox', label:'Checkbox', copy:'Good for many answers.' },
+      { value:'radio', label:'Radio button', copy:'Good for one answer.' },
+      { value:'textarea', label:'Textarea', copy:'Bigger message box.' },
+      { value:'select', label:'Select menu', copy:'Dropdown list.' },
+      { value:'submit', label:'Submit button', copy:'Sends the form.' },
+      { value:'placeholder', label:'Placeholder', copy:'Hint text inside a field.' }
+    ];
+
+    const state = { index:0, score:0, time:60, timer:null };
+    const roundEl = document.getElementById('round');
+    const scoreEl = document.getElementById('score');
+    const timeEl = document.getElementById('time');
+    const meterEl = document.getElementById('meter');
+    const msgEl = document.getElementById('message');
+    const titleEl = document.getElementById('artifact-title');
+    const copyEl = document.getElementById('artifact-copy');
+    const codeEl = document.getElementById('artifact-code');
+    const choicesEl = document.getElementById('choices');
+    const endEl = document.getElementById('end');
+
+    function renderChoices() {
+      choicesEl.innerHTML = choices.map(choice => `
+        <button class="choice" data-value="${choice.value}">
+          <b>${choice.label}</b>
+          <small>${choice.copy}</small>
+        </button>`).join('');
+      choicesEl.querySelectorAll('.choice').forEach(button => button.addEventListener('click', onChoice));
+    }
+
+    function renderRound() {
+      const round = rounds[state.index];
+      roundEl.textContent = `${state.index + 1} / ${rounds.length}`;
+      scoreEl.textContent = state.score;
+      titleEl.textContent = round.title;
+      copyEl.textContent = round.copy;
+      codeEl.textContent = round.code;
+      meterEl.style.width = `${(state.index / rounds.length) * 100}%`;
+    }
+
+    function onChoice(event) {
+      const round = rounds[state.index];
+      const button = event.currentTarget;
+      const correct = button.dataset.value === round.answer;
+      button.classList.add(correct ? 'good' : 'bad');
+      msgEl.textContent = correct ? 'Correct! Form knowledge unlocked.' : `Not quite. "${choices.find(c => c.value === round.answer).label}" fits this round best.`;
+      if (correct) state.score += 1;
+      scoreEl.textContent = state.score;
+      choicesEl.querySelectorAll('.choice').forEach(choice => choice.disabled = true);
+      setTimeout(nextRound, 700);
+    }
+
+    function nextRound() {
+      state.index += 1;
+      if (state.index >= rounds.length) return finishGame();
+      renderChoices();
+      renderRound();
+      msgEl.textContent = 'Pick the best form control for the job.';
+    }
+
+    function finishGame() {
+      clearInterval(state.timer);
+      meterEl.style.width = '100%';
+      endEl.classList.add('show');
+      const title = document.getElementById('end-title');
+      const copy = document.getElementById('end-copy');
+      title.textContent = state.score >= 7 ? 'Form champion!' : state.score >= 5 ? 'Strong builder!' : 'Good practice run!';
+      copy.textContent = `You scored ${state.score} out of ${rounds.length}. Replay to sharpen your form instincts and try for a perfect mission report.`;
+      choicesEl.innerHTML = '';
+      msgEl.textContent = 'Mission complete.';
+    }
+
+    function startGame() {
+      state.index = 0;
+      state.score = 0;
+      state.time = 60;
+      endEl.classList.remove('show');
+      renderChoices();
+      renderRound();
+      msgEl.textContent = 'Pick the best form control for the job.';
+      clearInterval(state.timer);
+      state.timer = setInterval(() => {
+        state.time -= 1;
+        timeEl.textContent = state.time;
+        if (state.time <= 0) finishGame();
+      }, 1000);
+      timeEl.textContent = state.time;
+    }
+
+    document.getElementById('restart').addEventListener('click', startGame);
+    startGame();
+  </script>
+</body>
+</html>

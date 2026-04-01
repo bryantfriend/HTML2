@@ -1,21 +1,150 @@
-window.Lessons.lesson6.modules[2] = {
-    title: "3. Add Navigation",
-    body: `<section class="quest-body">
-    <p class="quest-kicker">Mission Brief</p>
-    <h3 class="quest-title">3. Add Navigation</h3>
-    <p class="quest-summary">The <code>&lt;nav&gt;</code> tag marks the menu area with links to other parts of the site.</p>
+const fs = require('fs');
+const path = require('path');
+
+function escTemplate(value) {
+  return String(value || '').replace(/\\/g, '\\\\').replace(/`/g, '\\`');
+}
+
+function escDouble(value) {
+  return String(value || '').replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+}
+
+function escHtml(value) {
+  return String(value || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function makeStep(label, copy) {
+  return `<div class="quest-step-card"><p class="quest-step-label">${label}</p><p class="quest-step-copy">${copy}</p></div>`;
+}
+
+function buildBody(module) {
+  return `<section class="quest-body">
+    <p class="quest-kicker">${module.kicker || 'Mission Brief'}</p>
+    <h3 class="quest-title">${module.title}</h3>
+    <p class="quest-summary">${module.intro}</p>
     <div class="quest-step-grid">
-      <div class="quest-step-card"><p class="quest-step-label">Watch</p><p class="quest-step-copy">The nav bar belongs inside the header in this example.</p></div>
-      <div class="quest-step-card"><p class="quest-step-label">Play</p><p class="quest-step-copy">Tap the steps in the correct order.</p></div>
-      <div class="quest-step-card"><p class="quest-step-label">Type</p><p class="quest-step-copy">Put <code>&lt;nav&gt;&lt;/nav&gt;</code> inside the header.</p></div>
+      ${makeStep('Watch', module.watch)}
+      ${makeStep('Play', module.play)}
+      ${makeStep('Type', module.type)}
     </div>
-    <div class="quest-memory"><strong>Remember:</strong> Nav usually lives in or near the header.</div>
-    <p class="quest-mission">Mission: Add a nav tag inside the header.</p>
-  </section>`,
-    svg: ``,
-    widgetCode: `<!-- INTERACTIVE MODULE -->
+    <div class="quest-memory"><strong>Remember:</strong> ${module.remember}</div>
+    <p class="quest-mission">Mission: ${module.mission}</p>
+  </section>`;
+}
+
+function buildDemoWidget(widget) {
+  return `<div class="quest-widget-shell">
+    <div class="quest-widget-top">
+      <div>
+        <p class="quest-widget-kicker">Quick Demo</p>
+        <h4 class="quest-widget-title">${widget.heading}</h4>
+      </div>
+      <span class="quest-chip">${widget.chip || 'demo'}</span>
+    </div>
+    <div class="quest-demo" data-quest-demo="true">
+      <div class="quest-browser">
+        <div class="quest-browser-dots"><span></span><span></span><span></span></div>
+        <div class="quest-browser-bar">${widget.browserTitle || 'mission-preview.html'}</div>
+      </div>
+      <div class="quest-demo-grid">
+        <div class="quest-demo-panel">
+          <p class="quest-panel-label">Code</p>
+          <pre class="quest-demo-snippet">${escHtml(widget.code)}</pre>
+        </div>
+        <div class="quest-demo-panel">
+          <p class="quest-panel-label">Preview</p>
+          <div class="quest-demo-preview">${widget.preview}</div>
+        </div>
+      </div>
+      <div class="quest-caption-stack">
+        ${widget.captions.map((caption, index) => `<p class="quest-caption${index === 0 ? ' is-active' : ''}">${caption}</p>`).join('')}
+      </div>
+      <button type="button" class="quest-replay">Replay</button>
+    </div>
+  </div>`;
+}
+
+function buildChoiceWidget(widget, key) {
+  return `<div class="quest-widget-shell quest-choice-shell"
+      data-quest-choice="true"
+      data-marker="${widget.marker || ''}"
+      data-success="${escHtml(widget.success || 'Mini game complete. Great job!')}"
+      data-retry="${escHtml(widget.retry || 'Nice try. Pick the card that matches the mission.')}"
+      data-correct="${(widget.correct || []).join('|')}"
+      data-multi="${widget.multi ? 'true' : 'false'}">
+    <div class="quest-widget-top">
+      <div>
+        <p class="quest-widget-kicker">${widget.label || 'Mini Game'}</p>
+        <h4 class="quest-widget-title">${widget.heading}</h4>
+      </div>
+      <span class="quest-chip">${widget.chip || 'tap cards'}</span>
+    </div>
+    <div class="quest-choice-scene">${widget.scene || ''}</div>
+    <p class="quest-choice-prompt">${widget.prompt}</p>
+    <div class="quest-choice-grid quest-choice-grid-${widget.columns || 2}">
+      ${widget.options.map((option) => `<button type="button" class="quest-choice-btn" data-value="${option.value}"><span>${escHtml(option.label)}</span><small>${escHtml(option.copy)}</small></button>`).join('')}
+    </div>
+    <p class="quest-status" id="${key}-status">${widget.status || (widget.multi ? 'Find every correct card.' : 'Tap the best answer.')}</p>
+  </div>`;
+}
+
+function buildSequenceWidget(widget, key) {
+  return `<div class="quest-widget-shell quest-sequence-shell"
+      data-quest-sequence="true"
+      data-marker="${widget.marker || ''}"
+      data-success="${escHtml(widget.success || 'Sequence solved. Nice work!')}"
+      data-reset="${escHtml(widget.reset || 'Start at step 1 again.')}"
+      data-order="${widget.steps.map((step) => step.value).join('|')}">
+    <div class="quest-widget-top">
+      <div>
+        <p class="quest-widget-kicker">${widget.label || 'Mini Game'}</p>
+        <h4 class="quest-widget-title">${widget.heading}</h4>
+      </div>
+      <span class="quest-chip">${widget.chip || 'follow order'}</span>
+    </div>
+    <div class="quest-sequence-track">
+      ${widget.steps.map((step, index) => `<div class="quest-sequence-node${index === 0 ? ' is-current' : ''}" data-node="${step.value}">${index + 1}</div>`).join('')}
+    </div>
+    <div class="quest-sequence-buttons">
+      ${widget.steps.map((step) => `<button type="button" class="quest-sequence-btn" data-value="${step.value}">${step.label}</button>`).join('')}
+    </div>
+    <p class="quest-status" id="${key}-status">${widget.status || 'Tap the buttons in the correct order.'}</p>
+  </div>`;
+}
+
+function buildToggleWidget(widget, key) {
+  return `<div class="quest-widget-shell quest-toggle-shell" data-quest-toggle="true">
+    <div class="quest-widget-top">
+      <div>
+        <p class="quest-widget-kicker">${widget.label || 'Explore It'}</p>
+        <h4 class="quest-widget-title">${widget.heading}</h4>
+      </div>
+      <span class="quest-chip">${widget.chip || 'tap tabs'}</span>
+    </div>
+    <div class="quest-toggle-tabs">
+      ${widget.tabs.map((tab, index) => `<button type="button" class="quest-toggle-btn${index === 0 ? ' is-active' : ''}" data-target="${key}-panel-${index}">${tab.label}</button>`).join('')}
+    </div>
+    <div class="quest-toggle-panels">
+      ${widget.tabs.map((tab, index) => `<div class="quest-toggle-panel${index === 0 ? ' is-active' : ''}" id="${key}-panel-${index}">${tab.content}</div>`).join('')}
+    </div>
+    <p class="quest-status">${widget.status || 'Tap each tab to compare the changes.'}</p>
+  </div>`;
+}
+
+function buildWidget(module, theme, key) {
+  const widget = module.widget || {};
+  const introSvg = module.hero || '';
+  let inner = '';
+  if (widget.type === 'choice') inner = buildChoiceWidget(widget, key);
+  else if (widget.type === 'sequence') inner = buildSequenceWidget(widget, key);
+  else if (widget.type === 'toggle') inner = buildToggleWidget(widget, key);
+  else inner = buildDemoWidget(widget);
+  return `<!-- INTERACTIVE MODULE -->
 <style>
-:root { --quest-accent:#fbbf24; --quest-accent-soft:#f59e0b; --quest-panel:rgba(67,20,7,0.82); --quest-panel-2:rgba(17,24,39,0.96); --quest-success:#4ade80; --quest-ink:#451a03; }
+:root { --quest-accent:${theme.accent}; --quest-accent-soft:${theme.accentSoft}; --quest-panel:${theme.panel}; --quest-panel-2:${theme.panelAlt}; --quest-success:${theme.success}; --quest-ink:${theme.ink}; }
 .quest-body { display:grid; gap:14px; margin-bottom:10px; padding:18px; border-radius:24px; background:linear-gradient(180deg, rgba(15,23,42,0.96), rgba(11,18,32,0.94)); border:1px solid rgba(148,163,184,0.14); box-shadow:0 16px 40px rgba(2,6,23,0.22); }
 .quest-kicker,.quest-widget-kicker { margin:0; color:var(--quest-accent); font-size:11px; font-weight:800; letter-spacing:0.22em; text-transform:uppercase; }
 .quest-title { margin:0; color:#f8fafc; font-size:24px; line-height:1.15; }
@@ -27,7 +156,7 @@ window.Lessons.lesson6.modules[2] = {
 .quest-memory { padding:12px 14px; border-radius:16px; background:rgba(8,47,73,0.35); border:1px solid rgba(56,189,248,0.22); color:#e0f2fe; font-size:14px; line-height:1.55; }
 .quest-mission { margin:0; color:#cbd5e1; font-size:14px; font-style:italic; }
 .quest-hero { margin-bottom:12px; }
-.quest-widget-shell { display:grid; gap:14px; padding:16px; border-radius:24px; background:linear-gradient(180deg, rgba(67,20,7,0.82), rgba(17,24,39,0.96)); border:1px solid rgba(148,163,184,0.14); color:#e2e8f0; box-shadow:0 16px 40px rgba(2,6,23,0.24); }
+.quest-widget-shell { display:grid; gap:14px; padding:16px; border-radius:24px; background:linear-gradient(180deg, ${theme.panel}, ${theme.panelAlt}); border:1px solid rgba(148,163,184,0.14); color:#e2e8f0; box-shadow:0 16px 40px rgba(2,6,23,0.24); }
 .quest-widget-top { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
 .quest-widget-title { margin:4px 0 0; color:white; font-size:16px; line-height:1.35; }
 .quest-chip { display:inline-flex; align-items:center; justify-content:center; padding:6px 10px; min-height:28px; border-radius:999px; color:#ecfeff; background:rgba(8,47,73,0.66); border:1px solid rgba(34,211,238,0.22); font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:0.16em; white-space:nowrap; }
@@ -63,7 +192,7 @@ window.Lessons.lesson6.modules[2] = {
 .quest-sequence-node { display:grid; place-items:center; min-height:44px; border-radius:999px; border:1px dashed rgba(148,163,184,0.35); color:#94a3b8; font-weight:800; }
 .quest-sequence-node.is-current { border-style:solid; border-color:rgba(34,211,238,0.5); color:#a5f3fc; }
 .quest-sequence-node.is-done { border-style:solid; border-color:rgba(74,222,128,0.6); background:rgba(20,83,45,0.42); color:#dcfce7; }
-.quest-toggle-tabs { grid-template-columns:repeat(2, minmax(0,1fr)); }
+.quest-toggle-tabs { grid-template-columns:repeat(${theme.toggleColumns || 3}, minmax(0,1fr)); }
 .quest-toggle-btn.is-active { border-color:rgba(34,211,238,0.45); background:rgba(8,47,73,0.58); color:#cffafe; }
 .quest-toggle-panel { display:none; color:#e2e8f0; }
 .quest-toggle-panel.is-active { display:block; }
@@ -71,35 +200,8 @@ window.Lessons.lesson6.modules[2] = {
 .quest-svg-stage { width:100%; height:auto; display:block; }
 @media (min-width: 720px) { .quest-step-grid,.quest-demo-grid { grid-template-columns:repeat(3, minmax(0,1fr)); } .quest-demo-grid { grid-template-columns:1fr 1fr; } }
 </style>
-<div class="quest-hero"><svg class="quest-svg-stage" viewBox="0 0 320 150" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <rect x="10" y="10" width="300" height="130" rx="24" fill="#111827" stroke="rgba(148,163,184,0.22)"/>
-    <rect x="34" y="28" width="252" height="20" rx="10" fill="#93c5fd"/>
-    <rect x="34" y="56" width="232" height="16" rx="8" fill="#fde68a"/>
-    <rect x="34" y="80" width="164" height="40" rx="16" fill="#bbf7d0"/>
-    <rect x="206" y="80" width="80" height="40" rx="16" fill="#fecdd3"/>
-    <text x="270" y="42" fill="#e0f2fe" font-size="12" font-family="Arial, sans-serif" text-anchor="end">Add the menu</text>
-  </svg></div>
-<div class="quest-widget-shell quest-sequence-shell"
-      data-quest-sequence="true"
-      data-marker="NAV_READY"
-      data-success="Great. The menu belongs in the top area here."
-      data-reset="Start at step 1 again."
-      data-order="header|nav">
-    <div class="quest-widget-top">
-      <div>
-        <p class="quest-widget-kicker">Mini Game</p>
-        <h4 class="quest-widget-title">Build the top area in order.</h4>
-      </div>
-      <span class="quest-chip">2 steps</span>
-    </div>
-    <div class="quest-sequence-track">
-      <div class="quest-sequence-node is-current" data-node="header">1</div><div class="quest-sequence-node" data-node="nav">2</div>
-    </div>
-    <div class="quest-sequence-buttons">
-      <button type="button" class="quest-sequence-btn" data-value="header">Place the header</button><button type="button" class="quest-sequence-btn" data-value="nav">Place the nav menu</button>
-    </div>
-    <p class="quest-status" id="lesson6-3-status">Tap the buttons in the correct order.</p>
-  </div>
+${introSvg ? `<div class="quest-hero">${introSvg}</div>` : ''}
+${inner}
 <script>
 (function() {
   const editor = document.getElementById('code-editor');
@@ -251,9 +353,45 @@ window.Lessons.lesson6.modules[2] = {
     });
   });
 })();
-</script>`,
-    initialCode: `<header>\n</header>`,
-    previewScaffold: `<style>\nbody { margin:0; padding:14px; background:linear-gradient(180deg,#f8fafc,#eef2ff); font-family:Arial, sans-serif; color:#0f172a; display:grid; gap:10px; }\nheader, nav, main, article, section, aside, footer { display:block; position:relative; padding:14px; border-radius:16px; border:1px solid #cbd5e1; background:white; min-height:18px; }\nheader { background:#dbeafe; }\nnav { background:#fef3c7; }\nmain { background:#dcfce7; }\narticle { background:#e9d5ff; }\nsection { background:#ede9fe; }\naside { background:#fee2e2; }\nfooter { background:#c7d2fe; }\nheader::before, nav::before, main::before, article::before, section::before, aside::before, footer::before {\n  display:block; margin-bottom:8px; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:0.12em; color:#334155;\n}\nheader::before { content:'header'; }\nnav::before { content:'nav'; }\nmain::before { content:'main'; }\narticle::before { content:'article'; }\nsection::before { content:'section'; }\naside::before { content:'aside'; }\nfooter::before { content:'footer'; }\ntable { width:100%; border-collapse:collapse; background:white; border-radius:14px; overflow:hidden; }\ncaption { caption-side:top; padding-bottom:8px; font-weight:800; color:#0f172a; }\nth, td { border:1px solid #cbd5e1; padding:10px; text-align:left; }\nth { background:#e0f2fe; }\n</style>`,
-    progress: 15,
-    validator: function(code) { return code.includes("<!-- NAV_READY -->") && /<\s*nav\b/i.test(code) && /<\s*\/\s*nav\s*>/i.test(code); }
+</script>`;
+}
+
+function writeInteractiveLesson(config) {
+  const outDir = path.resolve(config.outDir);
+  fs.mkdirSync(outDir, { recursive: true });
+
+  // Overwrite the active module files in place. Some synced folders can briefly lock
+  // generated files, so avoiding eager deletes makes rebuilds more reliable here.
+
+  fs.writeFileSync(path.join(outDir, 'metadata.js'), `window.Lessons = window.Lessons || {};
+window.Lessons.${config.lessonId} = {
+    id: "${config.lessonId}",
+    title: "${escDouble(config.title)}",
+    description: "${escDouble(config.description)}",
+    gameTitle: "${escDouble(config.gameTitle)}",
+    gamePath: "${escDouble(config.gamePath)}",
+    modules: []
+};`);
+
+  config.modules.forEach((module, index) => {
+    const bodyMarkup = escTemplate(buildBody(module));
+    const widgetCode = escTemplate(buildWidget(module, config.theme, `${config.lessonId}-${index + 1}`));
+    const previewScaffold = escTemplate((config.previewScaffold || '') + (module.previewScaffold || ''));
+    const fileContent = `window.Lessons.${config.lessonId}.modules[${index}] = {
+    title: "${escDouble(module.title)}",
+    body: \`${bodyMarkup}\`,
+    svg: \`\`,
+    widgetCode: \`${widgetCode}\`,
+    initialCode: \`${escTemplate(module.initialCode || '').replace(/\n/g, '\\n')}\`,
+    previewScaffold: \`${previewScaffold.replace(/\n/g, '\\n')}\`,
+    progress: ${(index + 1) * 5},
+    validator: ${module.validator}
+};`;
+    fs.writeFileSync(path.join(outDir, `module${index + 1}.js`), fileContent);
+  });
+}
+
+module.exports = {
+  writeInteractiveLesson,
+  escHtml
 };
