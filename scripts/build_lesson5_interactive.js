@@ -73,8 +73,8 @@ function formHero(label, accent) {
 }
 
 const previewScaffold = `<style>
-body { margin:0; padding:14px; background:linear-gradient(180deg,#eff6ff,#f8fafc); font-family:Arial, sans-serif; color:#0f172a; }
-form { display:grid; gap:12px; max-width:340px; padding:16px; border-radius:18px; background:white; border:1px solid #bfdbfe; box-shadow:0 12px 26px rgba(148,163,184,0.16); }
+body { margin:0; padding:14px; background:linear-gradient(180deg,#020617,#0f172a); font-family:Arial, sans-serif; color:#e2e8f0; }
+form { display:grid; gap:12px; max-width:340px; padding:16px; border-radius:18px; background:linear-gradient(180deg,#f8fbff,#e0f2fe); border:1px solid rgba(125,211,252,0.35); box-shadow:0 12px 26px rgba(2,6,23,0.32); }
 label { display:block; font-weight:700; margin-bottom:6px; color:#0f172a; }
 input, textarea, select, button { width:100%; box-sizing:border-box; font:600 14px/1.3 Arial, sans-serif; padding:10px 12px; border-radius:12px; border:1px solid #93c5fd; }
 textarea { min-height:120px; resize:vertical; }
@@ -86,33 +86,27 @@ module.exports = function buildLesson5Interactive() {
   const modules = [
     {
       title: '1. Form Mission Control',
-      intro: 'Forms are the parts of a website that collect information from people.',
-      watch: 'Watch the form kit light up on the left.',
-      play: 'Tap every card that belongs in a form.',
-      type: 'No typing yet. Solve the mini game to unlock the mission.',
-      remember: 'A form is a team of controls that collects answers.',
-      mission: 'Tap the 3 cards that belong in a form.',
+      intro: 'Welcome to forms. In this lesson students will learn what forms do, which tags build them, and how inputs, labels, textareas, dropdowns, and buttons work together.',
+      watch: 'Watch the sample form fill with a name box, a message box, and a send button.',
+      play: 'Tap through the example cards to see the main jobs a form can do.',
+      type: 'No typing yet. This first mission is only an introduction to what is coming next.',
+      remember: 'A form is a team of website parts that collects information from a person.',
+      mission: 'Explore the intro cards to unlock the lesson.',
       hero: formHero('Form kit', 176),
       widget: {
-        type: 'choice',
-        heading: 'Find the form tools.',
-        chip: '3 correct',
-        prompt: 'Which cards belong in a form?',
-        multi: true,
-        marker: 'FORM_TOOLKIT_READY',
-        success: 'Form kit complete. Move to the next mission.',
-        options: [
-          { value: 'input', label: 'Text box', copy: 'Lets a person type an answer.' },
-          { value: 'checkbox', label: 'Checkbox', copy: 'Lets a person turn a choice on.' },
-          { value: 'button', label: 'Submit button', copy: 'Sends the form when clicked.' },
-          { value: 'video', label: 'Movie player', copy: 'Shows media, not a form answer.' },
-          { value: 'poster', label: 'Poster image', copy: 'Decorates the page.' },
-          { value: 'headline', label: 'Big heading', copy: 'Introduces the page.' }
+        type: 'toggle',
+        heading: 'What students will build in Lesson 5',
+        chip: 'lesson intro',
+        tabs: [
+          { label: 'Type', content: previewCard(formField('Name', inputBox('Amina')) + '<div style="font:700 12px/1.5 sans-serif;color:#334155;">Text inputs collect short answers like names and usernames.</div>') },
+          { label: 'Choose', content: previewCard(formField('Club choices', '<div style="display:grid;gap:8px"><div style="padding:10px 12px;border-radius:12px;background:white;border:1px solid #93c5fd;color:#0f172a;font:700 13px/1.2 sans-serif;">[ ] Coding club</div><div style="padding:10px 12px;border-radius:12px;background:white;border:1px solid #93c5fd;color:#0f172a;font:700 13px/1.2 sans-serif;">[ ] Art club</div></div>') + '<div style="font:700 12px/1.5 sans-serif;color:#334155;">Checkboxes and radio buttons help people choose answers.</div>') },
+          { label: 'Send', content: previewCard(formField('Message', '<div style="min-height:84px;padding:12px;border-radius:12px;background:white;border:1px solid #93c5fd;color:#64748b;font:600 13px/1.4 sans-serif;">Hello! I am ready to send my form.</div>') + buttonBox('Send form') + '<div style="font:700 12px/1.5 sans-serif;color:#334155;margin-top:8px;">Buttons send the form after the person finishes.</div>') }
         ],
-        correct: ['input', 'checkbox', 'button']
+        status: 'Tap each card to preview what this lesson will teach.',
+        marker: 'FORM_INTRO_READY'
       },
-      initialCode: '<!-- Find the form tools -->',
-      validator: all([marker('FORM_TOOLKIT_READY')])
+      initialCode: '<!-- Lesson 5 introduction -->',
+      validator: all([marker('FORM_INTRO_READY')])
     },
     {
       title: '2. The Form Tag',
@@ -204,7 +198,7 @@ module.exports = function buildLesson5Interactive() {
       intro: 'Checkboxes are for choices where you can pick more than one thing.',
       watch: 'Look for the choices that can all be true at the same time.',
       play: 'Tap every card that could use a checkbox.',
-      type: 'Then type <code>&lt;input type="checkbox"&gt;</code> in the editor.',
+      type: 'Then type <code>&lt;input type="checkbox"&gt;</code> in the editor.<br><code>&lt;input type="checkbox"&gt;</code>',
       remember: 'Checkbox = many answers can be on.',
       mission: 'Solve the mini game, then add a checkbox input.',
       hero: formHero('Many choices', 188),
@@ -233,7 +227,7 @@ module.exports = function buildLesson5Interactive() {
       intro: 'Radio buttons are for one choice from a group, like choosing one team color.',
       watch: 'Only one radio choice should win.',
       play: 'Tap the best example of a radio-button question.',
-      type: 'Change the input to <code>type="radio"</code>.',
+      type: 'Change the input to <code>type="radio"</code>.<br>Type this full tag: <code>&lt;input type="radio"&gt;</code>.',
       remember: 'Radio = pick one answer.',
       mission: 'Solve the mini game, then add a radio input.',
       hero: formHero('Pick one', 152),
@@ -259,7 +253,7 @@ module.exports = function buildLesson5Interactive() {
       intro: 'A placeholder shows a helpful hint inside an empty input box.',
       watch: 'See the hint text appear inside the box.',
       play: 'Read the hint before you type.',
-      type: 'Add <code>placeholder="Enter your name"</code> to the text input.',
+      type: 'Type or copy the full tag: <code>&lt;input type="text" placeholder="Enter your name"&gt;</code>.',
       remember: 'Placeholder is a hint, not the real answer.',
       mission: 'Add a helpful placeholder to the input.',
       hero: formHero('Add a hint', 230),
@@ -280,8 +274,8 @@ module.exports = function buildLesson5Interactive() {
       title: '9. Labels Help Humans',
       intro: 'A label tells people exactly what each form box is for.',
       watch: 'See how the word Username becomes its own label.',
-      play: 'Tap the steps in the right order: label first, input second.',
-      type: 'Wrap the text <code>Username:</code> in a <code>&lt;label&gt;</code> tag.',
+      play: 'Tap the buttons in order: label first, input second. Each click will add that part into the code panel for you.',
+      type: 'Start with just the form tag. Then click <code>Place the label</code> and <code>Place the input</code> to build the field.',
       remember: 'Labels are clearer and better for accessibility.',
       mission: 'Add a label around Username.',
       hero: formHero('Label the field', 140),
@@ -294,19 +288,23 @@ module.exports = function buildLesson5Interactive() {
           { value: 'label', label: 'Place the label' },
           { value: 'input', label: 'Place the input' }
         ],
-        success: 'Yes. Labels come before the field here.'
+        insertions: {
+          label: '__INSERT_BEFORE_FORM_CLOSE__  <label>Username:</label>',
+          input: '__INSERT_BEFORE_FORM_CLOSE__  <input type="text">'
+        },
+        success: 'Yes. Labels come before the field here, and both parts were added to the code panel.'
       },
-      initialCode: '<form>\n  Username: <input type="text">\n</form>',
-      validator: all([marker('LABEL_READY'), pairedTag('label')])
+      initialCode: '<form>\n</form>',
+      validator: all([marker('LABEL_READY'), pairedTag('label'), tagWithAttr('input', 'type', 'text')])
     },
     {
       title: '10. Link Label + Input',
       intro: 'A label can point to the exact input by using <code>for</code> on the label and <code>id</code> on the input.',
       watch: 'Both names must match exactly.',
-      play: 'Check that the matching words are the same on both parts.',
-      type: 'Add <code>for="user"</code> and <code>id="user"</code>.',
+      play: 'Look closely at the demo: the label gets <code>for="user"</code> and the input gets <code>id="user"</code>. Those two words must match.',
+      type: 'Step 1: add <code>for="user"</code> inside the opening <code>&lt;label&gt;</code> tag. Step 2: add <code>id="user"</code> inside the opening <code>&lt;input&gt;</code> tag. Make both words exactly <code>user</code>.',
       remember: 'The matching words must be identical.',
-      mission: 'Link the label to the input with matching names.',
+      mission: 'Link the label to the input with matching names so clicking the label points to the correct text box.',
       hero: formHero('Match the names', 168),
       widget: {
         type: 'demo',

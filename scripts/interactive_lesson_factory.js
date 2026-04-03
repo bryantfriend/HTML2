@@ -92,11 +92,13 @@ function buildChoiceWidget(widget, key) {
 }
 
 function buildSequenceWidget(widget, key) {
+  const insertionMap = widget.insertions ? JSON.stringify(widget.insertions).replace(/\\/g, '&#92;').replace(/"/g, '&quot;') : '';
   return `<div class="quest-widget-shell quest-sequence-shell"
       data-quest-sequence="true"
       data-marker="${widget.marker || ''}"
       data-success="${escHtml(widget.success || 'Sequence solved. Nice work!')}"
       data-reset="${escHtml(widget.reset || 'Start at step 1 again.')}"
+      data-insertions="${insertionMap}"
       data-order="${widget.steps.map((step) => step.value).join('|')}">
     <div class="quest-widget-top">
       <div>
@@ -116,7 +118,7 @@ function buildSequenceWidget(widget, key) {
 }
 
 function buildToggleWidget(widget, key) {
-  return `<div class="quest-widget-shell quest-toggle-shell" data-quest-toggle="true">
+  return `<div class="quest-widget-shell quest-toggle-shell" data-quest-toggle="true" data-marker="${widget.marker || ''}">
     <div class="quest-widget-top">
       <div>
         <p class="quest-widget-kicker">${widget.label || 'Explore It'}</p>
@@ -300,6 +302,7 @@ ${inner}
     const order = (root.dataset.order || '').split('|').filter(Boolean);
     const status = root.querySelector('.quest-status');
     const nodes = Array.from(root.querySelectorAll('.quest-sequence-node'));
+    const insertions = root.dataset.insertions ? JSON.parse(root.dataset.insertions) : {};
     let step = 0;
 
     function refreshNodes() {
@@ -314,6 +317,18 @@ ${inner}
         if (value === order[step]) {
           btn.classList.remove('is-wrong');
           btn.classList.add('is-correct');
+          if (editor && insertions[value]) {
+            const addition = String(insertions[value]);
+            if (addition.includes('__INSERT_BEFORE_FORM_CLOSE__')) {
+              const snippet = addition.replace('__INSERT_BEFORE_FORM_CLOSE__', '');
+              editor.value = editor.value.replace(/<\\/form>/i, snippet + '\\n</form>');
+            } else {
+              editor.value = addition.includes('__CURRENT__')
+                ? addition.replace('__CURRENT__', editor.value)
+                : editor.value + addition;
+            }
+            window.IntentEngine.run(window.Intents.updatePreview, { code: editor.value });
+          }
           if (nodes[step]) {
             nodes[step].classList.remove('is-current');
             nodes[step].classList.add('is-done');
@@ -344,11 +359,16 @@ ${inner}
     root.dataset.ready = 'true';
     const buttons = Array.from(root.querySelectorAll('.quest-toggle-btn'));
     const panels = Array.from(root.querySelectorAll('.quest-toggle-panel'));
+    const seen = new Set(buttons[0] ? [buttons[0].dataset.target] : []);
     buttons.forEach(function(button) {
       button.addEventListener('click', function() {
         const target = button.dataset.target;
         buttons.forEach(function(entry) { entry.classList.toggle('is-active', entry === button); });
         panels.forEach(function(panel) { panel.classList.toggle('is-active', panel.id === target); });
+        seen.add(target);
+        if (seen.size >= buttons.length) {
+          markDone(root);
+        }
       });
     });
   });

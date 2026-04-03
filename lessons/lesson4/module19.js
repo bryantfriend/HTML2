@@ -31,7 +31,7 @@ window.Lessons.lesson4.modules[18] = {
     </div>
   </div>
 </div></p>
-    <p class="text-sm italic text-gray-400 mt-4">Mission: Add <code>autoplay</code> to the video tag so the movie starts by itself once the tag is correct.</p>`,
+    <p class="text-sm italic text-gray-400 mt-4">Mission: Type <code>autoplay</code> inside the opening video tag on line 1. Put it before the first <code>&gt;</code> so the movie can start by itself.</p>`,
     svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"></svg>`,
     widgetCode: `<!-- INTERACTIVE MODULE -->
 <style>
@@ -139,8 +139,8 @@ window.Lessons.lesson4.modules[18] = {
 })();
 </script>`,
     hiddenWidgetCode: true,
-    previewScaffold: `<p id="autoplay-status" style="color:#cbd5e1">Add autoplay to make the video start on its own.</p>\n<script>(function(){const video=document.getElementById('autoplay-player');const status=document.getElementById('autoplay-status');if(video&&status&&video.hasAttribute('autoplay')){video.play().catch(()=>{});status.textContent='Autoplay active: the video is trying to start automatically.';}})();</script>`,
-    initialCode: `<video id="autoplay-player" data-challenge="autoplay-video" src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" controls width="300" muted loop playsinline>\n</video>`,
+    previewScaffold: `<div style="padding:14px;border-radius:16px;background:#0f172a;border:1px solid #1e3a5f;color:#cbd5e1;margin-bottom:14px"><p style="margin:0"><strong style="color:#67e8f9">Where it goes:</strong> add <code>autoplay</code> on the first line with the other video settings.</p><p id="autoplay-status" style="margin:10px 0 0;color:#cbd5e1">Add autoplay to make the video start on its own.</p></div>\n<script>(function(){const video=document.getElementById('autoplay-player');const status=document.getElementById('autoplay-status');if(video&&status&&video.hasAttribute('autoplay')){video.play().catch(()=>{});status.textContent='Autoplay active: the video is trying to start automatically.';}})();</script>`,
+    initialCode: `<video id="autoplay-player" data-challenge="autoplay-video" src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" controls width="300" muted loop playsinline>\n</video>\n<!-- Add autoplay inside the opening tag on line 1 -->`,
     hideVisualPanel: true,
     progress: 95,
     validator: function(code) { const tag = code.match(/<video\b[^>]*data-challenge\s*=\s*['"]autoplay-video['"][^>]*>/i); return !!tag && /(?:\s|<)autoplay(?=\s|>)/i.test(tag[0]); }

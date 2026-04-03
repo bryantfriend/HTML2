@@ -1,11 +1,11 @@
 window.Lessons.lesson4.modules[6] = {
     title: "7. Alt text in action",
-    body: `<p>Now combine the two ideas in a clearer way: break the image path on purpose, but keep the alt text so the page still explains the picture.
+    body: `<p>This time the image is already broken. The job is to add a helpful alt message so the page still explains what should be there.
 <div class="lesson-demo-shell">
   <div class="lesson-demo-shell-header">
     <div>
       <p class="lesson-demo-eyebrow">Quick Demo</p>
-      <p class="lesson-demo-heading">Even a broken image can still tell the story.</p>
+      <p class="lesson-demo-heading">Even when the picture fails, alt text still tells the story.</p>
     </div>
     <span class="lesson-demo-chip">backup plan</span>
   </div>
@@ -26,11 +26,11 @@ window.Lessons.lesson4.modules[6] = {
         </div>
       </div>
       <div class="lesson-demo-captions"><div class="lesson-demo-caption active">1. Break the source on purpose.</div><div class="lesson-demo-caption">2. Keep the alt text helpful.</div><div class="lesson-demo-caption">3. Visitors still understand the content.</div></div>
-      <div class="lesson-demo-footer"><div class="lesson-demo-tip"><p class="lesson-demo-tip-title">Break it</p><p class="lesson-demo-tip-copy">Change the source so the file cannot be found.</p></div><div class="lesson-demo-tip"><p class="lesson-demo-tip-title">Keep alt</p><p class="lesson-demo-tip-copy">Leave the words Fluffy cat in place.</p></div><div class="lesson-demo-tip"><p class="lesson-demo-tip-title">See it</p><p class="lesson-demo-tip-copy">The alt text becomes the fallback message.</p></div><button type="button" class="lesson-demo-replay">Replay demo</button></div>
+      <div class="lesson-demo-footer"><div class="lesson-demo-tip"><p class="lesson-demo-tip-title">Notice</p><p class="lesson-demo-tip-copy">The source already points to a missing file.</p></div><div class="lesson-demo-tip"><p class="lesson-demo-tip-title">Add alt</p><p class="lesson-demo-tip-copy">Type a short message that describes the missing picture.</p></div><div class="lesson-demo-tip"><p class="lesson-demo-tip-title">See it</p><p class="lesson-demo-tip-copy">The alt text becomes the fallback message.</p></div><button type="button" class="lesson-demo-replay">Replay demo</button></div>
     </div>
   </div>
 </div></p>
-    <p class="text-sm italic text-gray-400 mt-4">Mission: Change the source so the picture breaks, but keep <code>alt="Fluffy cat"</code> on the image.</p>`,
+    <p class="text-sm italic text-gray-400 mt-4">Mission: The image is already broken. Add <code>alt="Fluffy cat"</code> so the page still explains the missing picture.</p>`,
     svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"></svg>`,
     widgetCode: `<!-- INTERACTIVE MODULE -->
 <style>
@@ -138,9 +138,9 @@ window.Lessons.lesson4.modules[6] = {
 })();
 </script>`,
     hiddenWidgetCode: true,
-    previewScaffold: ``,
-    initialCode: `<img data-challenge="alt-save" src="assets/cat-demo.svg" alt="Fluffy cat" width="190">`,
+    previewScaffold: `<style>.alt-lab{padding:14px;border-radius:16px;background:#0f172a;color:#e2e8f0;border:1px solid #1e3a5f;margin-bottom:14px}.alt-toggle-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.alt-toggle-row button{padding:9px 12px;border-radius:999px;border:1px solid #334155;background:#172033;color:#e2e8f0;font-weight:700;cursor:pointer}.alt-stage{margin-top:12px;padding:12px;border-radius:14px;background:#111827;border:1px dashed rgba(103,232,249,.35);min-height:74px;display:grid;place-items:center;text-align:center}</style>\n<div class="alt-lab"><strong>Alt text lab</strong><p style="margin:8px 0 0">Press the toggle buttons to compare a working image and a broken one. Then add the alt words in your challenge tag.</p><div class="alt-toggle-row"><button type="button" id="show-working-image">Show working image</button><button type="button" id="show-broken-image">Show broken image</button></div><div id="alt-stage" class="alt-stage">Broken image view: if no alt text exists, visitors get almost no help.</div></div>\n<script>(function(){const stage=document.getElementById('alt-stage');const working=document.getElementById('show-working-image');const broken=document.getElementById('show-broken-image');if(working&&stage)working.addEventListener('click',function(){stage.innerHTML='<img src="assets/cat-demo.svg" alt="Fluffy cat" width="140">';});if(broken&&stage)broken.addEventListener('click',function(){stage.textContent='Broken image view: alt text like "Fluffy cat" tells people what should be here.';});})();</script>`,
+    initialCode: `<img data-challenge="alt-save" src="assets/cat-glitch.svg" width="190">`,
     hideVisualPanel: true,
     progress: 35,
-    validator: function(code) { const tag = code.match(/<img\b[^>]*data-challenge\s*=\s*['"]alt-save['"][^>]*>/i); if (!tag) return false; const src = tag[0].match(/\bsrc\s*=\s*['"]([^'"]+)['"]/i); const alt = tag[0].match(/\balt\s*=\s*['"]([^'"]+)['"]/i); return !!src && !!alt && alt[1].trim().toLowerCase() === 'fluffy cat' && !/^assets\/cat-demo\.svg$/i.test(src[1].trim()); }
+    validator: function(code) { const tag = code.match(/<img\b[^>]*data-challenge\s*=\s*['"]alt-save['"][^>]*>/i); if (!tag) return false; const alt = tag[0].match(/\balt\s*=\s*['"]([^'"]+)['"]/i); return !!alt && alt[1].trim().toLowerCase() === 'fluffy cat'; }
 };

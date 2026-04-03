@@ -3,14 +3,14 @@ window.Lessons.lesson5.modules[0] = {
     body: `<section class="quest-body">
     <p class="quest-kicker">Mission Brief</p>
     <h3 class="quest-title">1. Form Mission Control</h3>
-    <p class="quest-summary">Forms are the parts of a website that collect information from people.</p>
+    <p class="quest-summary">Welcome to forms. In this lesson students will learn what forms do, which tags build them, and how inputs, labels, textareas, dropdowns, and buttons work together.</p>
     <div class="quest-step-grid">
-      <div class="quest-step-card"><p class="quest-step-label">Watch</p><p class="quest-step-copy">Watch the form kit light up on the left.</p></div>
-      <div class="quest-step-card"><p class="quest-step-label">Play</p><p class="quest-step-copy">Tap every card that belongs in a form.</p></div>
-      <div class="quest-step-card"><p class="quest-step-label">Type</p><p class="quest-step-copy">No typing yet. Solve the mini game to unlock the mission.</p></div>
+      <div class="quest-step-card"><p class="quest-step-label">Watch</p><p class="quest-step-copy">Watch the sample form fill with a name box, a message box, and a send button.</p></div>
+      <div class="quest-step-card"><p class="quest-step-label">Play</p><p class="quest-step-copy">Tap through the example cards to see the main jobs a form can do.</p></div>
+      <div class="quest-step-card"><p class="quest-step-label">Type</p><p class="quest-step-copy">No typing yet. This first mission is only an introduction to what is coming next.</p></div>
     </div>
-    <div class="quest-memory"><strong>Remember:</strong> A form is a team of controls that collects answers.</div>
-    <p class="quest-mission">Mission: Tap the 3 cards that belong in a form.</p>
+    <div class="quest-memory"><strong>Remember:</strong> A form is a team of website parts that collects information from a person.</div>
+    <p class="quest-mission">Mission: Explore the intro cards to unlock the lesson.</p>
   </section>`,
     svg: ``,
     widgetCode: `<!-- INTERACTIVE MODULE -->
@@ -85,26 +85,21 @@ window.Lessons.lesson5.modules[0] = {
     <rect x="44" y="92" width="176" height="14" rx="7" fill="url(#form-glow-form-kit)"/>
     <text x="242" y="48" fill="#bae6fd" font-size="12" font-family="Arial, sans-serif" text-anchor="end">Form kit</text>
   </svg></div>
-<div class="quest-widget-shell quest-choice-shell"
-      data-quest-choice="true"
-      data-marker="FORM_TOOLKIT_READY"
-      data-success="Form kit complete. Move to the next mission."
-      data-retry="Nice try. Pick the card that matches the mission."
-      data-correct="input|checkbox|button"
-      data-multi="true">
+<div class="quest-widget-shell quest-toggle-shell" data-quest-toggle="true" data-marker="FORM_INTRO_READY">
     <div class="quest-widget-top">
       <div>
-        <p class="quest-widget-kicker">Mini Game</p>
-        <h4 class="quest-widget-title">Find the form tools.</h4>
+        <p class="quest-widget-kicker">Explore It</p>
+        <h4 class="quest-widget-title">What students will build in Lesson 5</h4>
       </div>
-      <span class="quest-chip">3 correct</span>
+      <span class="quest-chip">lesson intro</span>
     </div>
-    <div class="quest-choice-scene"></div>
-    <p class="quest-choice-prompt">Which cards belong in a form?</p>
-    <div class="quest-choice-grid quest-choice-grid-2">
-      <button type="button" class="quest-choice-btn" data-value="input"><span>Text box</span><small>Lets a person type an answer.</small></button><button type="button" class="quest-choice-btn" data-value="checkbox"><span>Checkbox</span><small>Lets a person turn a choice on.</small></button><button type="button" class="quest-choice-btn" data-value="button"><span>Submit button</span><small>Sends the form when clicked.</small></button><button type="button" class="quest-choice-btn" data-value="video"><span>Movie player</span><small>Shows media, not a form answer.</small></button><button type="button" class="quest-choice-btn" data-value="poster"><span>Poster image</span><small>Decorates the page.</small></button><button type="button" class="quest-choice-btn" data-value="headline"><span>Big heading</span><small>Introduces the page.</small></button>
+    <div class="quest-toggle-tabs">
+      <button type="button" class="quest-toggle-btn is-active" data-target="lesson5-1-panel-0">Type</button><button type="button" class="quest-toggle-btn" data-target="lesson5-1-panel-1">Choose</button><button type="button" class="quest-toggle-btn" data-target="lesson5-1-panel-2">Send</button>
     </div>
-    <p class="quest-status" id="lesson5-1-status">Find every correct card.</p>
+    <div class="quest-toggle-panels">
+      <div class="quest-toggle-panel is-active" id="lesson5-1-panel-0"><div style="width:100%;max-width:250px;padding:14px;border-radius:20px;background:linear-gradient(180deg,#f8fbff,#e0f2fe);box-shadow:inset 0 0 0 1px rgba(96,165,250,0.18);"><div style="display:grid;gap:6px;margin-bottom:10px;"><div style="font:700 12px/1.2 sans-serif;color:#0f172a;letter-spacing:0.04em;">Name</div><div style="padding:10px 12px;border-radius:12px;background:white;border:1px solid #93c5fd;color:#475569;font:600 13px/1.2 sans-serif;">Amina</div></div><div style="font:700 12px/1.5 sans-serif;color:#334155;">Text inputs collect short answers like names and usernames.</div></div></div><div class="quest-toggle-panel" id="lesson5-1-panel-1"><div style="width:100%;max-width:250px;padding:14px;border-radius:20px;background:linear-gradient(180deg,#f8fbff,#e0f2fe);box-shadow:inset 0 0 0 1px rgba(96,165,250,0.18);"><div style="display:grid;gap:6px;margin-bottom:10px;"><div style="font:700 12px/1.2 sans-serif;color:#0f172a;letter-spacing:0.04em;">Club choices</div><div style="display:grid;gap:8px"><div style="padding:10px 12px;border-radius:12px;background:white;border:1px solid #93c5fd;color:#0f172a;font:700 13px/1.2 sans-serif;">[ ] Coding club</div><div style="padding:10px 12px;border-radius:12px;background:white;border:1px solid #93c5fd;color:#0f172a;font:700 13px/1.2 sans-serif;">[ ] Art club</div></div></div><div style="font:700 12px/1.5 sans-serif;color:#334155;">Checkboxes and radio buttons help people choose answers.</div></div></div><div class="quest-toggle-panel" id="lesson5-1-panel-2"><div style="width:100%;max-width:250px;padding:14px;border-radius:20px;background:linear-gradient(180deg,#f8fbff,#e0f2fe);box-shadow:inset 0 0 0 1px rgba(96,165,250,0.18);"><div style="display:grid;gap:6px;margin-bottom:10px;"><div style="font:700 12px/1.2 sans-serif;color:#0f172a;letter-spacing:0.04em;">Message</div><div style="min-height:84px;padding:12px;border-radius:12px;background:white;border:1px solid #93c5fd;color:#64748b;font:600 13px/1.4 sans-serif;">Hello! I am ready to send my form.</div></div><div style="padding:11px 14px;border-radius:12px;background:linear-gradient(90deg,#38bdf8,#2563eb);color:white;font:800 13px/1.2 sans-serif;text-align:center;">Send form</div><div style="font:700 12px/1.5 sans-serif;color:#334155;margin-top:8px;">Buttons send the form after the person finishes.</div></div></div>
+    </div>
+    <p class="quest-status">Tap each card to preview what this lesson will teach.</p>
   </div>
 <script>
 (function() {
@@ -204,6 +199,7 @@ window.Lessons.lesson5.modules[0] = {
     const order = (root.dataset.order || '').split('|').filter(Boolean);
     const status = root.querySelector('.quest-status');
     const nodes = Array.from(root.querySelectorAll('.quest-sequence-node'));
+    const insertions = root.dataset.insertions ? JSON.parse(root.dataset.insertions) : {};
     let step = 0;
 
     function refreshNodes() {
@@ -218,6 +214,18 @@ window.Lessons.lesson5.modules[0] = {
         if (value === order[step]) {
           btn.classList.remove('is-wrong');
           btn.classList.add('is-correct');
+          if (editor && insertions[value]) {
+            const addition = String(insertions[value]);
+            if (addition.includes('__INSERT_BEFORE_FORM_CLOSE__')) {
+              const snippet = addition.replace('__INSERT_BEFORE_FORM_CLOSE__', '');
+              editor.value = editor.value.replace(/<\\/form>/i, snippet + '\\n</form>');
+            } else {
+              editor.value = addition.includes('__CURRENT__')
+                ? addition.replace('__CURRENT__', editor.value)
+                : editor.value + addition;
+            }
+            window.IntentEngine.run(window.Intents.updatePreview, { code: editor.value });
+          }
           if (nodes[step]) {
             nodes[step].classList.remove('is-current');
             nodes[step].classList.add('is-done');
@@ -248,18 +256,23 @@ window.Lessons.lesson5.modules[0] = {
     root.dataset.ready = 'true';
     const buttons = Array.from(root.querySelectorAll('.quest-toggle-btn'));
     const panels = Array.from(root.querySelectorAll('.quest-toggle-panel'));
+    const seen = new Set(buttons[0] ? [buttons[0].dataset.target] : []);
     buttons.forEach(function(button) {
       button.addEventListener('click', function() {
         const target = button.dataset.target;
         buttons.forEach(function(entry) { entry.classList.toggle('is-active', entry === button); });
         panels.forEach(function(panel) { panel.classList.toggle('is-active', panel.id === target); });
+        seen.add(target);
+        if (seen.size >= buttons.length) {
+          markDone(root);
+        }
       });
     });
   });
 })();
 </script>`,
-    initialCode: `<!-- Find the form tools -->`,
-    previewScaffold: `<style>\nbody { margin:0; padding:14px; background:linear-gradient(180deg,#eff6ff,#f8fafc); font-family:Arial, sans-serif; color:#0f172a; }\nform { display:grid; gap:12px; max-width:340px; padding:16px; border-radius:18px; background:white; border:1px solid #bfdbfe; box-shadow:0 12px 26px rgba(148,163,184,0.16); }\nlabel { display:block; font-weight:700; margin-bottom:6px; color:#0f172a; }\ninput, textarea, select, button { width:100%; box-sizing:border-box; font:600 14px/1.3 Arial, sans-serif; padding:10px 12px; border-radius:12px; border:1px solid #93c5fd; }\ntextarea { min-height:120px; resize:vertical; }\nbutton { border:none; color:white; background:linear-gradient(90deg,#0ea5e9,#2563eb); font-weight:800; cursor:pointer; }\ndiv { box-sizing:border-box; }\n</style>`,
+    initialCode: `<!-- Lesson 5 introduction -->`,
+    previewScaffold: `<style>\nbody { margin:0; padding:14px; background:linear-gradient(180deg,#020617,#0f172a); font-family:Arial, sans-serif; color:#e2e8f0; }\nform { display:grid; gap:12px; max-width:340px; padding:16px; border-radius:18px; background:linear-gradient(180deg,#f8fbff,#e0f2fe); border:1px solid rgba(125,211,252,0.35); box-shadow:0 12px 26px rgba(2,6,23,0.32); }\nlabel { display:block; font-weight:700; margin-bottom:6px; color:#0f172a; }\ninput, textarea, select, button { width:100%; box-sizing:border-box; font:600 14px/1.3 Arial, sans-serif; padding:10px 12px; border-radius:12px; border:1px solid #93c5fd; }\ntextarea { min-height:120px; resize:vertical; }\nbutton { border:none; color:white; background:linear-gradient(90deg,#0ea5e9,#2563eb); font-weight:800; cursor:pointer; }\ndiv { box-sizing:border-box; }\n</style>`,
     progress: 5,
-    validator: function(code) { return code.includes("<!-- FORM_TOOLKIT_READY -->"); }
+    validator: function(code) { return code.includes("<!-- FORM_INTRO_READY -->"); }
 };

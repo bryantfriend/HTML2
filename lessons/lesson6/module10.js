@@ -79,7 +79,7 @@ window.Lessons.lesson6.modules[9] = {
     <rect x="206" y="80" width="80" height="40" rx="16" fill="#fecdd3"/>
     <text x="270" y="42" fill="#e0f2fe" font-size="12" font-family="Arial, sans-serif" text-anchor="end">Side note</text>
   </svg></div>
-<div class="quest-widget-shell quest-toggle-shell" data-quest-toggle="true">
+<div class="quest-widget-shell quest-toggle-shell" data-quest-toggle="true" data-marker="">
     <div class="quest-widget-top">
       <div>
         <p class="quest-widget-kicker">Explore It</p>
@@ -193,6 +193,7 @@ window.Lessons.lesson6.modules[9] = {
     const order = (root.dataset.order || '').split('|').filter(Boolean);
     const status = root.querySelector('.quest-status');
     const nodes = Array.from(root.querySelectorAll('.quest-sequence-node'));
+    const insertions = root.dataset.insertions ? JSON.parse(root.dataset.insertions) : {};
     let step = 0;
 
     function refreshNodes() {
@@ -207,6 +208,19 @@ window.Lessons.lesson6.modules[9] = {
         if (value === order[step]) {
           btn.classList.remove('is-wrong');
           btn.classList.add('is-correct');
+          if (editor && insertions[value]) {
+            const addition = String(insertions[value]);
+            if (addition.includes('__INSERT_BEFORE_FORM_CLOSE__')) {
+              const snippet = addition.replace('__INSERT_BEFORE_FORM_CLOSE__', '');
+              editor.value = editor.value.replace(/</form>/i, snippet + '
+</form>');
+            } else {
+              editor.value = addition.includes('__CURRENT__')
+                ? addition.replace('__CURRENT__', editor.value)
+                : editor.value + addition;
+            }
+            window.IntentEngine.run(window.Intents.updatePreview, { code: editor.value });
+          }
           if (nodes[step]) {
             nodes[step].classList.remove('is-current');
             nodes[step].classList.add('is-done');
@@ -237,18 +251,23 @@ window.Lessons.lesson6.modules[9] = {
     root.dataset.ready = 'true';
     const buttons = Array.from(root.querySelectorAll('.quest-toggle-btn'));
     const panels = Array.from(root.querySelectorAll('.quest-toggle-panel'));
+    const seen = new Set(buttons[0] ? [buttons[0].dataset.target] : []);
     buttons.forEach(function(button) {
       button.addEventListener('click', function() {
         const target = button.dataset.target;
         buttons.forEach(function(entry) { entry.classList.toggle('is-active', entry === button); });
         panels.forEach(function(panel) { panel.classList.toggle('is-active', panel.id === target); });
+        seen.add(target);
+        if (seen.size >= buttons.length) {
+          markDone(root);
+        }
       });
     });
   });
 })();
 </script>`,
     initialCode: `<main>\n  <article>\n  </article>\n</main>`,
-    previewScaffold: `<style>\nbody { margin:0; padding:14px; background:linear-gradient(180deg,#f8fafc,#eef2ff); font-family:Arial, sans-serif; color:#0f172a; display:grid; gap:10px; }\nheader, nav, main, article, section, aside, footer { display:block; position:relative; padding:14px; border-radius:16px; border:1px solid #cbd5e1; background:white; min-height:18px; }\nheader { background:#dbeafe; }\nnav { background:#fef3c7; }\nmain { background:#dcfce7; }\narticle { background:#e9d5ff; }\nsection { background:#ede9fe; }\naside { background:#fee2e2; }\nfooter { background:#c7d2fe; }\nheader::before, nav::before, main::before, article::before, section::before, aside::before, footer::before {\n  display:block; margin-bottom:8px; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:0.12em; color:#334155;\n}\nheader::before { content:'header'; }\nnav::before { content:'nav'; }\nmain::before { content:'main'; }\narticle::before { content:'article'; }\nsection::before { content:'section'; }\naside::before { content:'aside'; }\nfooter::before { content:'footer'; }\ntable { width:100%; border-collapse:collapse; background:white; border-radius:14px; overflow:hidden; }\ncaption { caption-side:top; padding-bottom:8px; font-weight:800; color:#0f172a; }\nth, td { border:1px solid #cbd5e1; padding:10px; text-align:left; }\nth { background:#e0f2fe; }\n</style>`,
+    previewScaffold: `<style>\nbody { margin:0; padding:14px; background:linear-gradient(180deg,#020617,#0f172a); font-family:Arial, sans-serif; color:#e2e8f0; display:grid; gap:10px; }\nheader, nav, main, article, section, aside, footer { display:block; position:relative; padding:14px; border-radius:16px; border:1px solid #cbd5e1; background:white; min-height:18px; }\nheader { background:#dbeafe; }\nnav { background:#fef3c7; }\nmain { background:#dcfce7; }\narticle { background:#e9d5ff; }\nsection { background:#ede9fe; }\naside { background:#fee2e2; }\nfooter { background:#c7d2fe; }\nheader::before, nav::before, main::before, article::before, section::before, aside::before, footer::before {\n  display:block; margin-bottom:8px; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:0.12em; color:#334155;\n}\nheader::before { content:'header'; }\nnav::before { content:'nav'; }\nmain::before { content:'main'; }\narticle::before { content:'article'; }\nsection::before { content:'section'; }\naside::before { content:'aside'; }\nfooter::before { content:'footer'; }\ntable { width:100%; border-collapse:collapse; background:white; border-radius:14px; overflow:hidden; }\ncaption { caption-side:top; padding-bottom:8px; font-weight:800; color:#0f172a; }\nth, td { border:1px solid #cbd5e1; padding:10px; text-align:left; }\nth { background:#e0f2fe; }\n</style>`,
     progress: 50,
     validator: function(code) { return /<\s*aside\b/i.test(code) && /<\s*\/\s*aside\s*>/i.test(code); }
 };

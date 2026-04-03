@@ -1,6 +1,6 @@
 window.Lessons.lesson4.modules[16] = {
     title: "17. Video Source & Controls",
-    body: `<p>Now give the video something to play and buttons to press.
+    body: `<p>Now give the video something to play and make the controls visible. The starter code now clearly shows where each missing piece goes.
 <div class="lesson-demo-shell">
   <div class="lesson-demo-shell-header">
     <div>
@@ -31,7 +31,7 @@ window.Lessons.lesson4.modules[16] = {
     </div>
   </div>
 </div></p>
-    <p class="text-sm italic text-gray-400 mt-4">Mission: Add <code>src="movie.mp4"</code> and <code>controls</code>. When you get it right, the lesson recap movie from YouTube unlocks below.</p>`,
+    <p class="text-sm italic text-gray-400 mt-4">Mission: Step 1: type <code>movie.mp4</code> between the source quotes. Step 2: type <code>controls</code> inside the opening tag before the first <code>&gt;</code>. When both are there, the lesson recap movie unlocks below.</p>`,
     svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"></svg>`,
     widgetCode: `<!-- INTERACTIVE MODULE -->
 <style>
@@ -139,8 +139,8 @@ window.Lessons.lesson4.modules[16] = {
 })();
 </script>`,
     hiddenWidgetCode: true,
-    previewScaffold: `<div id="movie-unlock" style="padding:14px;border-radius:16px;background:#0f172a;border:1px solid #1e3a5f;color:#cbd5e1;margin-bottom:14px">Add <strong>src="movie.mp4"</strong> and <strong>controls</strong> to unlock the lesson recap video.</div>\n<script>(function(){const video=document.querySelector('video[data-challenge="lesson-movie"]');const slot=document.getElementById('movie-unlock');if(video&&slot&&/^movie\.mp4$/i.test((video.getAttribute('src')||'').trim())&&video.hasAttribute('controls')){slot.innerHTML='<iframe width="100%" height="220" src="https://www.youtube-nocookie.com/embed/qz0aGYrrlhU" title="HTML lesson recap" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';}})();</script>`,
-    initialCode: `<video data-challenge="lesson-movie" width="320"></video>`,
+    previewScaffold: `<style>.movie-guide{display:grid;gap:8px;margin-bottom:14px}.movie-step{padding:10px 12px;border-radius:12px;background:#0f172a;border:1px solid #334155;color:#cbd5e1}.movie-step strong{color:#67e8f9}</style>\n<div class="movie-guide"><div class="movie-step"><strong>Step 1:</strong> Put <code>movie.mp4</code> between <code>src=""</code>.</div><div class="movie-step"><strong>Step 2:</strong> Type <code>controls</code> before the closing <code>&gt;</code> of the opening video tag.</div><div id="movie-unlock" class="movie-step">Add both parts to unlock the recap movie.</div></div>\n<script>(function(){const video=document.querySelector('video[data-challenge="lesson-movie"]');const slot=document.getElementById('movie-unlock');if(video&&slot&&/^movie\.mp4$/i.test((video.getAttribute('src')||'').trim())&&video.hasAttribute('controls')){slot.innerHTML='<iframe width="100%" height="220" src="https://www.youtube-nocookie.com/embed/qz0aGYrrlhU" title="HTML lesson recap" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';}})();</script>`,
+    initialCode: `<video data-challenge="lesson-movie" src="" width="320"></video>\n<!-- Add controls inside the opening tag on line 1 -->`,
     hideVisualPanel: true,
     progress: 85,
     validator: function(code) { const tag = code.match(/<video\b[^>]*data-challenge\s*=\s*['"]lesson-movie['"][^>]*>/i); return !!tag && /\bsrc\s*=\s*['"]movie\.mp4['"]/i.test(tag[0]) && /(?:\s|<)controls(?=\s|>)/i.test(tag[0]); }

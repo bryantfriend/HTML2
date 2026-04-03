@@ -1,6 +1,6 @@
 window.Lessons.lesson7.modules[17] = {
     title: "18. Comments in CSS",
-    body: `<p>HTML comments look like `<!-- -->`. But CSS comments look like `/* this */`.</p>
+    body: `<p>HTML comments look like \`<!-- -->\`. But CSS comments look like \`/* this */\`.</p>
     <p class="text-sm italic text-gray-400 mt-4">Mission: Write a CSS comment inside the style tag.</p>`,
     svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" style="background:#1e293b; border-radius:8px;">
         <rect x="40" y="40" width="160" height="70" fill="#ec4899" rx="10"/>

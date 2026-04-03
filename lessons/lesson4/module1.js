@@ -1,6 +1,6 @@
 window.Lessons.lesson4.modules[0] = {
     title: "1. A World of Pictures",
-    body: `<p>Meet your new media mission with a tiny demo instead of a wall of text.
+    body: `<p>Meet your new media mission with a tiny demo and a photo picker so students can play before they type.
 <div class="lesson-demo-shell">
   <div class="lesson-demo-shell-header">
     <div>
@@ -30,7 +30,7 @@ window.Lessons.lesson4.modules[0] = {
     </div>
   </div>
 </div></p>
-    <p class="text-sm italic text-gray-400 mt-4">Mission: Copy the demo and type an image tag like <code>&lt;img src="assets/cat-demo.svg" alt="A cat"&gt;</code>.</p>`,
+    <p class="text-sm italic text-gray-400 mt-4">Mission: Click the cat photo chip or type it yourself until the challenge tag shows the cat picture with <code>src="assets/cat-demo.svg"</code>.</p>`,
     svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"></svg>`,
     widgetCode: `<!-- INTERACTIVE MODULE -->
 <style>
@@ -138,9 +138,9 @@ window.Lessons.lesson4.modules[0] = {
 })();
 </script>`,
     hiddenWidgetCode: true,
-    previewScaffold: ``,
-    initialCode: ``,
+    previewScaffold: `<style>.photo-picker-shell{padding:14px;border-radius:16px;background:#0f172a;color:#e2e8f0;border:1px solid #1e3a5f;margin-bottom:14px}.photo-picker-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px}.photo-picker-btn{padding:10px 8px;border-radius:14px;border:1px solid #334155;background:#172033;color:#e2e8f0;font-weight:700;cursor:pointer;transition:transform .18s ease,border-color .18s ease}.photo-picker-btn:hover{transform:translateY(-2px);border-color:#67e8f9}.photo-picker-btn.correct{border-color:#22c55e;background:rgba(34,197,94,.15);color:#dcfce7}</style>\n<div class="photo-picker-shell"><strong>Photo picker mission</strong><p style="margin:8px 0 0">Choose the real cat photo to auto-fill the source, or type the code yourself.</p><div class="photo-picker-grid"><button type="button" id="pick-space-cat" class="photo-picker-btn">Space Cat</button><button type="button" id="pick-happy-cat" class="photo-picker-btn">Happy Cat</button><button type="button" id="pick-glitch-cat" class="photo-picker-btn">Glitch Cat</button></div><p id="photo-picker-status" style="margin:10px 0 0;color:#93c5fd">Tip: the real lesson file is <code>assets/cat-demo.svg</code>.</p></div>\n<script>(function(){const editor=document.getElementById('code-editor');const status=document.getElementById('photo-picker-status');const choices=[['pick-space-cat','assets/space-cat.svg'],['pick-happy-cat','assets/cat-demo.svg'],['pick-glitch-cat','assets/cat-glitch.svg']];if(!editor||!status)return;function applySource(src){const tagRegex=/(<img\b[^>]*data-challenge\s*=\s*["']starter-photo["'][^>]*)(>)/i;if(tagRegex.test(editor.value)){editor.value=editor.value.replace(tagRegex,function(match,start,end){if(/\bsrc\s*=\s*["'][^"']*["']/i.test(start)){return start.replace(/\bsrc\s*=\s*["'][^"']*["']/i,'src="'+src+'"')+end;}return start+' src="'+src+'"'+end;});}window.IntentEngine.run(window.Intents.updatePreview,{code:editor.value});const isCorrect=/assets\/cat-demo\.svg/i.test(src);status.innerHTML=isCorrect?'Nice choice. The cat source is loaded in the tag.':'That file exists in the demo picker, but the mission wants the real cat file.';choices.forEach(function(entry){const button=document.getElementById(entry[0]);if(button)button.classList.toggle('correct',button.id==='pick-happy-cat'&&isCorrect);});}choices.forEach(function(entry){const button=document.getElementById(entry[0]);if(button)button.addEventListener('click',function(){applySource(entry[1]);});});})();</script>`,
+    initialCode: `<img data-challenge="starter-photo" alt="Class cat">`,
     hideVisualPanel: true,
     progress: 5,
-    validator: function(code) { return /<\s*img\b/i.test(code) && /\bsrc\s*=\s*['"][^'"]+['"]/i.test(code); }
+    validator: function(code) { return /<img\b(?=[^>]*data-challenge\s*=\s*['"]starter-photo['"])(?=[^>]*src\s*=\s*['"]assets\/cat-demo\.svg['"])[^>]*>/i.test(code); }
 };

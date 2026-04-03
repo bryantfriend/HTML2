@@ -1,6 +1,6 @@
 window.Lessons.lesson4.modules[19] = {
     title: "20. The Media Portfolio Challenge",
-    body: `<p>Final boss time. Build one tiny media gallery with image, audio, and video sections all on the same page, and watch the checklist turn green as each piece is finished.
+    body: `<p>Final boss time. Build one tiny media gallery with image, audio, and video sections all on the same page. The new directions are step by step so students know exactly what to add.
 <div class="lesson-demo-shell">
   <div class="lesson-demo-shell-header">
     <div>
@@ -31,11 +31,11 @@ window.Lessons.lesson4.modules[19] = {
         </div>
       </div>
       <div class="lesson-demo-captions"><div class="lesson-demo-caption active">1. Add clear headings for each media section.</div><div class="lesson-demo-caption">2. Place an image, audio player, and video player under them.</div><div class="lesson-demo-caption">3. That creates a mini media portfolio.</div></div>
-      <div class="lesson-demo-footer"><div class="lesson-demo-tip"><p class="lesson-demo-tip-title">Organize</p><p class="lesson-demo-tip-copy">Use headings so the page feels tidy.</p></div><div class="lesson-demo-tip"><p class="lesson-demo-tip-title">Combine</p><p class="lesson-demo-tip-copy">You need image, audio, and video tags.</p></div><div class="lesson-demo-tip"><p class="lesson-demo-tip-title">Finish</p><p class="lesson-demo-tip-copy">Each completed section turns green before the full mission unlocks.</p></div><button type="button" class="lesson-demo-replay">Replay demo</button></div>
+      <div class="lesson-demo-footer"><div class="lesson-demo-tip"><p class="lesson-demo-tip-title">Step 1</p><p class="lesson-demo-tip-copy">Keep three headings: one for Image, one for Audio, and one for Video.</p></div><div class="lesson-demo-tip"><p class="lesson-demo-tip-title">Step 2</p><p class="lesson-demo-tip-copy">Under each heading, add the matching media tag.</p></div><div class="lesson-demo-tip"><p class="lesson-demo-tip-title">Finish</p><p class="lesson-demo-tip-copy">Each finished section turns green before the full mission unlocks.</p></div><button type="button" class="lesson-demo-replay">Replay demo</button></div>
     </div>
   </div>
 </div></p>
-    <p class="text-sm italic text-gray-400 mt-4">Mission: Create an <code>&lt;h2&gt;</code> for Image, Audio, and Video, then add the three media tags below them.</p>`,
+    <p class="text-sm italic text-gray-400 mt-4">Mission: Step 1: keep three <code>&lt;h2&gt;</code> headings. Step 2: under Image add one <code>&lt;img&gt;</code>. Step 3: under Audio add one <code>&lt;audio&gt;</code>. Step 4: under Video add one <code>&lt;video&gt;</code>.</p>`,
     svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"></svg>`,
     widgetCode: `<!-- INTERACTIVE MODULE -->
 <style>
@@ -143,8 +143,8 @@ window.Lessons.lesson4.modules[19] = {
 })();
 </script>`,
     hiddenWidgetCode: true,
-    previewScaffold: `<style>.portfolio-checklist{display:grid;gap:8px;margin-bottom:14px}.portfolio-check{padding:10px 12px;border-radius:12px;background:#0f172a;color:#cbd5e1;border:1px solid #334155}.portfolio-check.done{border-color:#22c55e;background:rgba(34,197,94,.12);color:#bbf7d0}</style>\n<div class="portfolio-checklist"><div id="portfolio-headings" class="portfolio-check">Add the Image, Audio, and Video headings</div><div id="portfolio-image" class="portfolio-check">Add an image tag</div><div id="portfolio-audio" class="portfolio-check">Add an audio tag</div><div id="portfolio-video" class="portfolio-check">Add a video tag</div></div>\n<script>(function(){const html=document.body.innerHTML;const headingCount=(html.match(/<h2/gi)||[]).length;const headings=document.getElementById('portfolio-headings');const image=document.getElementById('portfolio-image');const audio=document.getElementById('portfolio-audio');const video=document.getElementById('portfolio-video');if(headings)headings.classList.toggle('done',headingCount>=3);if(image)image.classList.toggle('done',/<img\b/i.test(html));if(audio)audio.classList.toggle('done',/<audio\b/i.test(html));if(video)video.classList.toggle('done',/<video\b/i.test(html));})();</script>`,
-    initialCode: `<h2>My Image</h2>\n\n<h2>My Song</h2>\n\n<h2>My Movie</h2>`,
+    previewScaffold: `<style>.portfolio-checklist{display:grid;gap:8px;margin-bottom:14px}.portfolio-check{padding:10px 12px;border-radius:12px;background:#0f172a;color:#cbd5e1;border:1px solid #334155}.portfolio-check.done{border-color:#22c55e;background:#dcfce7;color:#14532d;font-weight:800}</style>\n<div class="portfolio-checklist"><div id="portfolio-headings" class="portfolio-check">Step 1: Keep the Image, Audio, and Video headings</div><div id="portfolio-image" class="portfolio-check">Step 2: Add one image tag under Image</div><div id="portfolio-audio" class="portfolio-check">Step 3: Add one audio tag under Audio</div><div id="portfolio-video" class="portfolio-check">Step 4: Add one video tag under Video</div></div>\n<script>(function(){const html=document.body.innerHTML;const headingCount=(html.match(/<h2/gi)||[]).length;const headings=document.getElementById('portfolio-headings');const image=document.getElementById('portfolio-image');const audio=document.getElementById('portfolio-audio');const video=document.getElementById('portfolio-video');if(headings)headings.classList.toggle('done',headingCount>=3);if(image)image.classList.toggle('done',/<img\b/i.test(html));if(audio)audio.classList.toggle('done',/<audio\b/i.test(html));if(video)video.classList.toggle('done',/<video\b/i.test(html));})();</script>`,
+    initialCode: `<h2>Image</h2>\n<!-- Add one image tag under this heading -->\n\n<h2>Audio</h2>\n<!-- Add one audio tag under this heading -->\n\n<h2>Video</h2>\n<!-- Add one video tag under this heading -->`,
     hideVisualPanel: true,
     progress: 100,
     validator: function(code) { const clean = code.replace(/<script[\s\S]*?<\/script>/gi, ''); const headingCount = (clean.match(/<h2\b/gi) || []).length; return headingCount >= 3 && /<img\b/i.test(clean) && /<audio\b/i.test(clean) && /<video\b/i.test(clean); }

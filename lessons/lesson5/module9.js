@@ -6,8 +6,8 @@ window.Lessons.lesson5.modules[8] = {
     <p class="quest-summary">A label tells people exactly what each form box is for.</p>
     <div class="quest-step-grid">
       <div class="quest-step-card"><p class="quest-step-label">Watch</p><p class="quest-step-copy">See how the word Username becomes its own label.</p></div>
-      <div class="quest-step-card"><p class="quest-step-label">Play</p><p class="quest-step-copy">Tap the steps in the right order: label first, input second.</p></div>
-      <div class="quest-step-card"><p class="quest-step-label">Type</p><p class="quest-step-copy">Wrap the text <code>Username:</code> in a <code>&lt;label&gt;</code> tag.</p></div>
+      <div class="quest-step-card"><p class="quest-step-label">Play</p><p class="quest-step-copy">Tap the buttons in order: label first, input second. Each click will add that part into the code panel for you.</p></div>
+      <div class="quest-step-card"><p class="quest-step-label">Type</p><p class="quest-step-copy">Start with just the form tag. Then click <code>Place the label</code> and <code>Place the input</code> to build the field.</p></div>
     </div>
     <div class="quest-memory"><strong>Remember:</strong> Labels are clearer and better for accessibility.</div>
     <p class="quest-mission">Mission: Add a label around Username.</p>
@@ -88,8 +88,9 @@ window.Lessons.lesson5.modules[8] = {
 <div class="quest-widget-shell quest-sequence-shell"
       data-quest-sequence="true"
       data-marker="LABEL_READY"
-      data-success="Yes. Labels come before the field here."
+      data-success="Yes. Labels come before the field here, and both parts were added to the code panel."
       data-reset="Start at step 1 again."
+      data-insertions="{&quot;label&quot;:&quot;__INSERT_BEFORE_FORM_CLOSE__  <label>Username:</label>&quot;,&quot;input&quot;:&quot;__INSERT_BEFORE_FORM_CLOSE__  <input type=&#92;&quot;text&#92;&quot;>&quot;}"
       data-order="label|input">
     <div class="quest-widget-top">
       <div>
@@ -204,6 +205,7 @@ window.Lessons.lesson5.modules[8] = {
     const order = (root.dataset.order || '').split('|').filter(Boolean);
     const status = root.querySelector('.quest-status');
     const nodes = Array.from(root.querySelectorAll('.quest-sequence-node'));
+    const insertions = root.dataset.insertions ? JSON.parse(root.dataset.insertions) : {};
     let step = 0;
 
     function refreshNodes() {
@@ -218,6 +220,18 @@ window.Lessons.lesson5.modules[8] = {
         if (value === order[step]) {
           btn.classList.remove('is-wrong');
           btn.classList.add('is-correct');
+          if (editor && insertions[value]) {
+            const addition = String(insertions[value]);
+            if (addition.includes('__INSERT_BEFORE_FORM_CLOSE__')) {
+              const snippet = addition.replace('__INSERT_BEFORE_FORM_CLOSE__', '');
+              editor.value = editor.value.replace(/<\\/form>/i, snippet + '\\n</form>');
+            } else {
+              editor.value = addition.includes('__CURRENT__')
+                ? addition.replace('__CURRENT__', editor.value)
+                : editor.value + addition;
+            }
+            window.IntentEngine.run(window.Intents.updatePreview, { code: editor.value });
+          }
           if (nodes[step]) {
             nodes[step].classList.remove('is-current');
             nodes[step].classList.add('is-done');
@@ -248,18 +262,23 @@ window.Lessons.lesson5.modules[8] = {
     root.dataset.ready = 'true';
     const buttons = Array.from(root.querySelectorAll('.quest-toggle-btn'));
     const panels = Array.from(root.querySelectorAll('.quest-toggle-panel'));
+    const seen = new Set(buttons[0] ? [buttons[0].dataset.target] : []);
     buttons.forEach(function(button) {
       button.addEventListener('click', function() {
         const target = button.dataset.target;
         buttons.forEach(function(entry) { entry.classList.toggle('is-active', entry === button); });
         panels.forEach(function(panel) { panel.classList.toggle('is-active', panel.id === target); });
+        seen.add(target);
+        if (seen.size >= buttons.length) {
+          markDone(root);
+        }
       });
     });
   });
 })();
 </script>`,
-    initialCode: `<form>\n  Username: <input type="text">\n</form>`,
-    previewScaffold: `<style>\nbody { margin:0; padding:14px; background:linear-gradient(180deg,#eff6ff,#f8fafc); font-family:Arial, sans-serif; color:#0f172a; }\nform { display:grid; gap:12px; max-width:340px; padding:16px; border-radius:18px; background:white; border:1px solid #bfdbfe; box-shadow:0 12px 26px rgba(148,163,184,0.16); }\nlabel { display:block; font-weight:700; margin-bottom:6px; color:#0f172a; }\ninput, textarea, select, button { width:100%; box-sizing:border-box; font:600 14px/1.3 Arial, sans-serif; padding:10px 12px; border-radius:12px; border:1px solid #93c5fd; }\ntextarea { min-height:120px; resize:vertical; }\nbutton { border:none; color:white; background:linear-gradient(90deg,#0ea5e9,#2563eb); font-weight:800; cursor:pointer; }\ndiv { box-sizing:border-box; }\n</style>`,
+    initialCode: `<form>\n</form>`,
+    previewScaffold: `<style>\nbody { margin:0; padding:14px; background:linear-gradient(180deg,#020617,#0f172a); font-family:Arial, sans-serif; color:#e2e8f0; }\nform { display:grid; gap:12px; max-width:340px; padding:16px; border-radius:18px; background:linear-gradient(180deg,#f8fbff,#e0f2fe); border:1px solid rgba(125,211,252,0.35); box-shadow:0 12px 26px rgba(2,6,23,0.32); }\nlabel { display:block; font-weight:700; margin-bottom:6px; color:#0f172a; }\ninput, textarea, select, button { width:100%; box-sizing:border-box; font:600 14px/1.3 Arial, sans-serif; padding:10px 12px; border-radius:12px; border:1px solid #93c5fd; }\ntextarea { min-height:120px; resize:vertical; }\nbutton { border:none; color:white; background:linear-gradient(90deg,#0ea5e9,#2563eb); font-weight:800; cursor:pointer; }\ndiv { box-sizing:border-box; }\n</style>`,
     progress: 45,
-    validator: function(code) { return code.includes("<!-- LABEL_READY -->") && /<\s*label\b/i.test(code) && /<\s*\/\s*label\s*>/i.test(code); }
+    validator: function(code) { return code.includes("<!-- LABEL_READY -->") && /<\s*label\b/i.test(code) && /<\s*\/\s*label\s*>/i.test(code) && new RegExp("<\\s*input\\b[^>]*\\btype\\s*=\\s*(?:['\"]text['\"]|text)", 'i').test(code); }
 };

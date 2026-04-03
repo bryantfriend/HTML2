@@ -213,6 +213,7 @@ window.Lessons.lesson5.modules[1] = {
     const order = (root.dataset.order || '').split('|').filter(Boolean);
     const status = root.querySelector('.quest-status');
     const nodes = Array.from(root.querySelectorAll('.quest-sequence-node'));
+    const insertions = root.dataset.insertions ? JSON.parse(root.dataset.insertions) : {};
     let step = 0;
 
     function refreshNodes() {
@@ -227,6 +228,18 @@ window.Lessons.lesson5.modules[1] = {
         if (value === order[step]) {
           btn.classList.remove('is-wrong');
           btn.classList.add('is-correct');
+          if (editor && insertions[value]) {
+            const addition = String(insertions[value]);
+            if (addition.includes('__INSERT_BEFORE_FORM_CLOSE__')) {
+              const snippet = addition.replace('__INSERT_BEFORE_FORM_CLOSE__', '');
+              editor.value = editor.value.replace(/<\\/form>/i, snippet + '\\n</form>');
+            } else {
+              editor.value = addition.includes('__CURRENT__')
+                ? addition.replace('__CURRENT__', editor.value)
+                : editor.value + addition;
+            }
+            window.IntentEngine.run(window.Intents.updatePreview, { code: editor.value });
+          }
           if (nodes[step]) {
             nodes[step].classList.remove('is-current');
             nodes[step].classList.add('is-done');
@@ -257,18 +270,23 @@ window.Lessons.lesson5.modules[1] = {
     root.dataset.ready = 'true';
     const buttons = Array.from(root.querySelectorAll('.quest-toggle-btn'));
     const panels = Array.from(root.querySelectorAll('.quest-toggle-panel'));
+    const seen = new Set(buttons[0] ? [buttons[0].dataset.target] : []);
     buttons.forEach(function(button) {
       button.addEventListener('click', function() {
         const target = button.dataset.target;
         buttons.forEach(function(entry) { entry.classList.toggle('is-active', entry === button); });
         panels.forEach(function(panel) { panel.classList.toggle('is-active', panel.id === target); });
+        seen.add(target);
+        if (seen.size >= buttons.length) {
+          markDone(root);
+        }
       });
     });
   });
 })();
 </script>`,
     initialCode: ``,
-    previewScaffold: `<style>\nbody { margin:0; padding:14px; background:linear-gradient(180deg,#eff6ff,#f8fafc); font-family:Arial, sans-serif; color:#0f172a; }\nform { display:grid; gap:12px; max-width:340px; padding:16px; border-radius:18px; background:white; border:1px solid #bfdbfe; box-shadow:0 12px 26px rgba(148,163,184,0.16); }\nlabel { display:block; font-weight:700; margin-bottom:6px; color:#0f172a; }\ninput, textarea, select, button { width:100%; box-sizing:border-box; font:600 14px/1.3 Arial, sans-serif; padding:10px 12px; border-radius:12px; border:1px solid #93c5fd; }\ntextarea { min-height:120px; resize:vertical; }\nbutton { border:none; color:white; background:linear-gradient(90deg,#0ea5e9,#2563eb); font-weight:800; cursor:pointer; }\ndiv { box-sizing:border-box; }\n</style>`,
+    previewScaffold: `<style>\nbody { margin:0; padding:14px; background:linear-gradient(180deg,#020617,#0f172a); font-family:Arial, sans-serif; color:#e2e8f0; }\nform { display:grid; gap:12px; max-width:340px; padding:16px; border-radius:18px; background:linear-gradient(180deg,#f8fbff,#e0f2fe); border:1px solid rgba(125,211,252,0.35); box-shadow:0 12px 26px rgba(2,6,23,0.32); }\nlabel { display:block; font-weight:700; margin-bottom:6px; color:#0f172a; }\ninput, textarea, select, button { width:100%; box-sizing:border-box; font:600 14px/1.3 Arial, sans-serif; padding:10px 12px; border-radius:12px; border:1px solid #93c5fd; }\ntextarea { min-height:120px; resize:vertical; }\nbutton { border:none; color:white; background:linear-gradient(90deg,#0ea5e9,#2563eb); font-weight:800; cursor:pointer; }\ndiv { box-sizing:border-box; }\n</style>`,
     progress: 10,
     validator: function(code) { return /<\s*form\b/i.test(code) && /<\s*\/\s*form\s*>/i.test(code); }
 };

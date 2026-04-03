@@ -1,6 +1,6 @@
 window.Lessons.lesson4.modules[3] = {
     title: "4. Let's add a Cat!",
-    body: `<p>Time for the first full win: write the whole image tag and make the page display a cat.
+    body: `<p>Time for the first full win: build the cat tag piece by piece instead of plain copying.
 <div class="lesson-demo-shell">
   <div class="lesson-demo-shell-header">
     <div>
@@ -30,7 +30,7 @@ window.Lessons.lesson4.modules[3] = {
     </div>
   </div>
 </div></p>
-    <p class="text-sm italic text-gray-400 mt-4">Mission: Write the full image tag with a source.</p>`,
+    <p class="text-sm italic text-gray-400 mt-4">Mission: Use the build buttons or type the code to create one full cat image tag with the correct source and helpful alt text.</p>`,
     svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"></svg>`,
     widgetCode: `<!-- INTERACTIVE MODULE -->
 <style>
@@ -138,9 +138,9 @@ window.Lessons.lesson4.modules[3] = {
 })();
 </script>`,
     hiddenWidgetCode: true,
-    previewScaffold: ``,
-    initialCode: ``,
+    previewScaffold: `<style>.cat-build-shell{padding:14px;border-radius:16px;background:#0f172a;color:#e2e8f0;border:1px solid #1e3a5f;margin-bottom:14px}.cat-build-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.cat-build-btn{padding:10px 12px;border-radius:999px;border:1px solid #334155;background:#172033;color:#e2e8f0;font-weight:700;cursor:pointer;transition:transform .18s ease,border-color .18s ease}.cat-build-btn:hover{transform:translateY(-2px);border-color:#67e8f9}</style>\n<div class="cat-build-shell"><strong>Build the tag</strong><p style="margin:8px 0 0">Press a helper button to add one part, then finish the rest in the code box.</p><div class="cat-build-row"><button type="button" id="cat-build-src" class="cat-build-btn">Add src</button><button type="button" id="cat-build-alt" class="cat-build-btn">Add alt</button><button type="button" id="cat-build-width" class="cat-build-btn">Add width</button></div><p id="cat-build-status" style="margin:10px 0 0;color:#93c5fd">Goal: a complete cat tag that shows the picture.</p></div>\n<script>(function(){const editor=document.getElementById('code-editor');const status=document.getElementById('cat-build-status');if(!editor||!status)return;function updateEditor(transform){editor.value=transform(editor.value||'');window.IntentEngine.run(window.Intents.updatePreview,{code:editor.value});}const actions={src:function(value){if(!/<img\b/i.test(value)) value='<img data-challenge="cat-builder">';return value.replace(/<img\b([^>]*)>/i,function(match,attrs){if(/\bsrc\s*=/.test(attrs)) return '<img'+attrs.replace(/\bsrc\s*=\s*["'][^"']*["']/i,' src="assets/cat-demo.svg"')+'>';return '<img'+attrs+' src="assets/cat-demo.svg">';});},alt:function(value){if(!/<img\b/i.test(value)) value='<img data-challenge="cat-builder">';return value.replace(/<img\b([^>]*)>/i,function(match,attrs){if(/\balt\s*=/.test(attrs)) return '<img'+attrs.replace(/\balt\s*=\s*["'][^"']*["']/i,' alt="Happy cat"')+'>';return '<img'+attrs+' alt="Happy cat">';});},width:function(value){if(!/<img\b/i.test(value)) value='<img data-challenge="cat-builder">';return value.replace(/<img\b([^>]*)>/i,function(match,attrs){if(/\bwidth\s*=/.test(attrs)) return '<img'+attrs.replace(/\bwidth\s*=\s*["'][^"']*["']/i,' width="180"')+'>';return '<img'+attrs+' width="180">';});}};[['cat-build-src','src'],['cat-build-alt','alt'],['cat-build-width','width']].forEach(function(entry){const button=document.getElementById(entry[0]);if(button)button.addEventListener('click',function(){updateEditor(actions[entry[1]]);status.textContent='Nice. That part was added. Finish any missing pieces in the editor.';});});})();</script>`,
+    initialCode: `<img data-challenge="cat-builder">`,
     hideVisualPanel: true,
     progress: 20,
-    validator: function(code) { return /<\s*img\b/i.test(code) && /\bsrc\s*=\s*['"][^'"]+['"]/i.test(code); }
+    validator: function(code) { return /<img\b(?=[^>]*data-challenge\s*=\s*['"]cat-builder['"])(?=[^>]*src\s*=\s*['"]assets\/cat-demo\.svg['"])(?=[^>]*alt\s*=\s*['"][^'"]+['"])[^>]*>/i.test(code); }
 };

@@ -31,7 +31,7 @@ window.Lessons.lesson4.modules[13] = {
     </div>
   </div>
 </div></p>
-    <p class="text-sm italic text-gray-400 mt-4">Mission: Add <code>src="music.mp3"</code> to the opening audio tag to load the beat.</p>`,
+    <p class="text-sm italic text-gray-400 mt-4">Mission: Type <code>music.mp3</code> between the empty source quotes so the opening audio tag becomes <code>src="music.mp3"</code>.</p>`,
     svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"></svg>`,
     widgetCode: `<!-- INTERACTIVE MODULE -->
 <style>
@@ -140,7 +140,7 @@ window.Lessons.lesson4.modules[13] = {
 </script>`,
     hiddenWidgetCode: true,
     previewScaffold: `<style>.dj-booth{padding:12px;border-radius:16px;background:#0f172a;border:1px solid #1e3a5f;color:#cbd5e1;margin-bottom:14px}.dj-lights{display:flex;gap:8px;margin-bottom:10px}.dj-lights span{flex:1;height:10px;border-radius:999px;background:linear-gradient(90deg,#22d3ee,#3b82f6);opacity:.45;animation:djPulse 1.2s ease-in-out infinite}.dj-lights span:nth-child(2){animation-delay:.15s}.dj-lights span:nth-child(3){animation-delay:.3s}@keyframes djPulse{0%,100%{transform:scaleX(.7);opacity:.3}50%{transform:scaleX(1);opacity:1}}</style>\n<div class="dj-booth"><div class="dj-lights"><span></span><span></span><span></span></div><p id="dj-status">Add the music source to load the track.</p></div>\n<script>(function(){const audio=document.getElementById('dj-player');const status=document.getElementById('dj-status');if(audio&&status&&/^music\.mp3$/i.test((audio.getAttribute('src')||'').trim())){audio.src='assets/media-master-tone.wav';status.textContent='Track loaded. Press play!';}})();</script>`,
-    initialCode: `<audio id="dj-player" data-challenge="dj-source" controls>\n</audio>`,
+    initialCode: `<audio id="dj-player" data-challenge="dj-source" src="" controls>\n</audio>`,
     hideVisualPanel: true,
     progress: 70,
     validator: function(code) { return /<audio\b(?=[^>]*data-challenge\s*=\s*['"]dj-source['"])(?=[^>]*src\s*=\s*['"]music\.mp3['"])[^>]*>/i.test(code); }

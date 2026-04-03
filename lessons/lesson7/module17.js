@@ -1,6 +1,6 @@
 window.Lessons.lesson7.modules[16] = {
     title: "17. Letter Spacing",
-    body: `<p>Spread your letters out with `letter-spacing: 5px;`</p>
+    body: `<p>Spread your letters out with \`letter-spacing: 5px;\`</p>
     <p class="text-sm italic text-gray-400 mt-4">Mission: Give the h1 5px of letter spacing.</p>`,
     svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" style="background:#1e293b; border-radius:8px;">
         <rect x="40" y="40" width="160" height="70" fill="#ec4899" rx="10"/>

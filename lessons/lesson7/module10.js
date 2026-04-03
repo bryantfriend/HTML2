@@ -1,6 +1,6 @@
 window.Lessons.lesson7.modules[9] = {
     title: "10. Text Align",
-    body: `<p>To center text, use `text-align: center;`</p>
+    body: `<p>To center text, use \`text-align: center;\`</p>
     <p class="text-sm italic text-gray-400 mt-4">Mission: Center the h1.</p>`,
     svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" style="background:#1e293b; border-radius:8px;">
         <rect x="40" y="40" width="160" height="70" fill="#ec4899" rx="10"/>

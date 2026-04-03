@@ -44,7 +44,7 @@ function layoutHero(label, accent) {
 }
 
 const previewScaffold = `<style>
-body { margin:0; padding:14px; background:linear-gradient(180deg,#f8fafc,#eef2ff); font-family:Arial, sans-serif; color:#0f172a; display:grid; gap:10px; }
+body { margin:0; padding:14px; background:linear-gradient(180deg,#020617,#0f172a); font-family:Arial, sans-serif; color:#e2e8f0; display:grid; gap:10px; }
 header, nav, main, article, section, aside, footer { display:block; position:relative; padding:14px; border-radius:16px; border:1px solid #cbd5e1; background:white; min-height:18px; }
 header { background:#dbeafe; }
 nav { background:#fef3c7; }

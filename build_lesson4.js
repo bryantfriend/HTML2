@@ -180,7 +180,7 @@ modules.forEach((mod, index) => {
     previewScaffold: \`${escTemplate(mod.previewScaffold || "").replace(/\n/g, '\\n')}\`,
     initialCode: \`${escTemplate(mod.initialCode).replace(/\n/g, '\\n')}\`,
     hideVisualPanel: true,
-    progress: ${(index + 1) * 5},
+    progress: ${Math.min(100, (index + 1) * 5)},
     validator: ${mod.validator}
 };`;
   fs.writeFileSync(path.join(outDir, 'module' + (index + 1) + '.js'), fileContent);

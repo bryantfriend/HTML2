@@ -1,11 +1,11 @@
 window.Lessons.lesson4.modules[4] = {
     title: "5. Broken Images",
-    body: `<p>A wrong file path makes the browser shrug. This demo shows what happens when the source is misspelled.
+    body: `<p>A wrong file path makes the browser shrug. This mission is now a repair game instead of a break-it game.
 <div class="lesson-demo-shell">
   <div class="lesson-demo-shell-header">
     <div>
       <p class="lesson-demo-eyebrow">Quick Demo</p>
-      <p class="lesson-demo-heading">A broken file path means no picture appears.</p>
+      <p class="lesson-demo-heading">Repair the file path so the cat comes back.</p>
     </div>
     <span class="lesson-demo-chip">debug mode</span>
   </div>
@@ -26,11 +26,11 @@ window.Lessons.lesson4.modules[4] = {
         </div>
       </div>
       <div class="lesson-demo-captions"><div class="lesson-demo-caption active">1. One wrong letter breaks the path.</div><div class="lesson-demo-caption">2. The browser cannot find the image file.</div><div class="lesson-demo-caption">3. That is how broken images happen.</div></div>
-      <div class="lesson-demo-footer"><div class="lesson-demo-tip"><p class="lesson-demo-tip-title">Misspell</p><p class="lesson-demo-tip-copy">Change the file name on purpose.</p></div><div class="lesson-demo-tip"><p class="lesson-demo-tip-title">Notice</p><p class="lesson-demo-tip-copy">The preview should fail to load the image.</p></div><div class="lesson-demo-tip"><p class="lesson-demo-tip-title">Learn</p><p class="lesson-demo-tip-copy">Tiny typos matter in file paths.</p></div><button type="button" class="lesson-demo-replay">Replay demo</button></div>
+      <div class="lesson-demo-footer"><div class="lesson-demo-tip"><p class="lesson-demo-tip-title">Inspect</p><p class="lesson-demo-tip-copy">The image starts broken on purpose.</p></div><div class="lesson-demo-tip"><p class="lesson-demo-tip-title">Repair</p><p class="lesson-demo-tip-copy">Fix the source so the cat returns.</p></div><div class="lesson-demo-tip"><p class="lesson-demo-tip-title">Learn</p><p class="lesson-demo-tip-copy">Tiny typos matter in file paths.</p></div><button type="button" class="lesson-demo-replay">Replay demo</button></div>
     </div>
   </div>
 </div></p>
-    <p class="text-sm italic text-gray-400 mt-4">Mission: Break the cat image by changing the source to <code>assets/cat-broken.svg</code>.</p>`,
+    <p class="text-sm italic text-gray-400 mt-4">Mission: Repair the broken image by changing the challenge tag to <code>src="assets/cat-demo.svg"</code>. You can click the repair button or type it yourself.</p>`,
     svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"></svg>`,
     widgetCode: `<!-- INTERACTIVE MODULE -->
 <style>
@@ -138,9 +138,9 @@ window.Lessons.lesson4.modules[4] = {
 })();
 </script>`,
     hiddenWidgetCode: true,
-    previewScaffold: ``,
-    initialCode: `<img data-challenge="broken-cat" src="assets/cat-demo.svg" alt="Cat photo" width="190">`,
+    previewScaffold: `<style>.repair-bay{padding:14px;border-radius:16px;background:#0f172a;color:#e2e8f0;border:1px solid #1e3a5f;margin-bottom:14px}.repair-buttons{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.repair-btn{padding:10px 12px;border-radius:999px;border:1px solid #334155;background:#172033;color:#e2e8f0;font-weight:700;cursor:pointer}.repair-btn.repair{border-color:#22c55e;color:#dcfce7}.repair-btn:hover{transform:translateY(-1px)}</style>\n<div class="repair-bay"><strong>Repair bay</strong><p style="margin:8px 0 0">The cat image is broken right now. Choose the repair button or type the correct file name in the code box.</p><div class="repair-buttons"><button type="button" id="repair-cat-path" class="repair-btn repair">Repair with assets/cat-demo.svg</button><button type="button" id="keep-broken-path" class="repair-btn">Keep the broken path</button></div><p id="repair-cat-status" style="margin:10px 0 0;color:#93c5fd">Hint: the word <code>broken</code> should disappear from the source.</p></div>\n<script>(function(){const editor=document.getElementById('code-editor');const status=document.getElementById('repair-cat-status');if(!editor||!status)return;function setSource(src){editor.value=editor.value.replace(/(<img\b[^>]*data-challenge\s*=\s*["']broken-cat["'][^>]*\bsrc\s*=\s*["'])[^"']*(["'][^>]*>)/i,'$1'+src+'$2');window.IntentEngine.run(window.Intents.updatePreview,{code:editor.value});status.textContent=/cat-demo\.svg/i.test(src)?'Nice repair. The cat file is back.':'That keeps the picture broken.';}const repair=document.getElementById('repair-cat-path');const broken=document.getElementById('keep-broken-path');if(repair)repair.addEventListener('click',function(){setSource('assets/cat-demo.svg');});if(broken)broken.addEventListener('click',function(){setSource('assets/cat-broken.svg');});})();</script>`,
+    initialCode: `<img data-challenge="broken-cat" src="assets/cat-broken.svg" alt="Cat photo" width="190">`,
     hideVisualPanel: true,
     progress: 25,
-    validator: function(code) { return /<img\b(?=[^>]*data-challenge\s*=\s*['"]broken-cat['"])(?=[^>]*src\s*=\s*['"]assets\/cat-broken\.svg['"])[^>]*>/i.test(code); }
+    validator: function(code) { return /<img\b(?=[^>]*data-challenge\s*=\s*['"]broken-cat['"])(?=[^>]*src\s*=\s*['"]assets\/cat-demo\.svg['"])[^>]*>/i.test(code); }
 };

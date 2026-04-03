@@ -1,6 +1,13 @@
 const fs = require('fs');
 const path = require('path');
 
+function escTemplate(value) {
+    return String(value || '')
+        .replace(/\\/g, '\\\\')
+        .replace(/`/g, '\\`')
+        .replace(/\$\{/g, '\\${');
+}
+
 const outDir = 'lessons/lesson7';
 if (!fs.existsSync(outDir)) {
     fs.mkdirSync(outDir, { recursive: true });
@@ -99,7 +106,7 @@ const modules = [
         body: "If we only want ONE paragraph to be green, we give it a class: `<p class=\"special\">`. In CSS, we select classes using a dot: `.special`",
         mission: "Add `class=\"urgent\"` to the first paragraph.",
         initialCode: "<style>\n  .urgent { color: red; }\n</style>\n<p>Make me red!</p>\n<p>Leave me alone.</p>",
-        validator: `function(code) { return code.includes("class=\"urgent\""); }`
+        validator: `function(code) { return code.includes('class=\"urgent\"'); }`
     },
     {
         title: "13. Styling a Class",
@@ -160,10 +167,13 @@ const modules = [
 ];
 
 modules.forEach((mod, i) => {
+    const safeBody = escTemplate(mod.body);
+    const safeMission = escTemplate(mod.mission);
+    const safeInitial = escTemplate(mod.initialCode).replace(/\n/g, '\\n');
     const fileContent = `window.Lessons.lesson7.modules[${i}] = {
     title: "${mod.title}",
-    body: \`<p>${mod.body}</p>
-    <p class="text-sm italic text-gray-400 mt-4">Mission: ${mod.mission}</p>\`,
+    body: \`<p>${safeBody}</p>
+    <p class="text-sm italic text-gray-400 mt-4">Mission: ${safeMission}</p>\`,
     svg: \`<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" style="background:#1e293b; border-radius:8px;">
         <rect x="40" y="40" width="160" height="70" fill="#ec4899" rx="10"/>
         <text x="120" y="80" fill="white" font-family="sans-serif" font-size="16" text-anchor="middle">MODULE ${i + 1}</text>
@@ -178,7 +188,7 @@ modules.forEach((mod, i) => {
     }
 })();
 </script>\`,
-    initialCode: \`${mod.initialCode.replace(/`/g, '\\`').replace(/\n/g, '\\n')}\`,
+    initialCode: \`${safeInitial}\`,
     progress: ${(i + 1) * 5},
     validator: ${mod.validator}
 };`;

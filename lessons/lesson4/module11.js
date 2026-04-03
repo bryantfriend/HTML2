@@ -1,6 +1,6 @@
 window.Lessons.lesson4.modules[10] = {
     title: "11. Image Formats",
-    body: `<p>Different file endings tell the browser what kind of image it is loading.
+    body: `<p>Different file endings tell the browser what kind of image it is loading, and now students can drag the animated picture into the code instead of just rewriting the source.
 <div class="lesson-demo-shell">
   <div class="lesson-demo-shell-header">
     <div>
@@ -30,7 +30,7 @@ window.Lessons.lesson4.modules[10] = {
     </div>
   </div>
 </div></p>
-    <p class="text-sm italic text-gray-400 mt-4">Mission: Change the source from the cat image to <code>https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif</code> so the output becomes animated.</p>`,
+    <p class="text-sm italic text-gray-400 mt-4">Mission: Drag the dancing GIF card into the code box, or type the GIF URL yourself, until the preview changes from a still picture to an animated GIF.</p>`,
     svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"></svg>`,
     widgetCode: `<!-- INTERACTIVE MODULE -->
 <style>
@@ -138,8 +138,8 @@ window.Lessons.lesson4.modules[10] = {
 })();
 </script>`,
     hiddenWidgetCode: true,
-    previewScaffold: ``,
-    initialCode: `<img data-challenge="format-swap" src="assets/cat-demo.svg" alt="Dancing cat" width="220">`,
+    previewScaffold: `<style>.gif-browser{padding:14px;border-radius:16px;background:#0f172a;border:1px solid #1e3a5f;color:#e2e8f0;margin-bottom:14px}.gif-browser-track{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:10px}.gif-card{padding:10px;border-radius:14px;background:#172033;border:1px solid #334155;cursor:grab;text-align:center;font-weight:700}.gif-card img{display:block;width:100%;max-width:120px;margin:0 auto 8px;border-radius:10px}.gif-card.dragging{opacity:.65}.gif-drop-tip{margin-top:10px;color:#93c5fd}</style>\n<div class="gif-browser"><strong>Mini browser tray</strong><p style="margin:8px 0 0">Drag the animated cat card into the code box. Drop it anywhere in the editor and the <code>src</code> will update.</p><div class="gif-browser-track"><div class="gif-card"><img src="assets/cat-demo.svg" alt="Still cat"><span>Still image</span></div><div id="drag-gif-card" class="gif-card" draggable="true"><img src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" alt="Animated cat"><span>Drag this GIF</span></div></div><p id="gif-drop-tip" class="gif-drop-tip">Goal GIF: <code>https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif</code></p></div>\n<script>(function(){const editor=document.getElementById('code-editor');const card=document.getElementById('drag-gif-card');const tip=document.getElementById('gif-drop-tip');const url='https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif';if(!editor||!card||!tip)return;window.lesson4DragHandlers=window.lesson4DragHandlers||{};const old=window.lesson4DragHandlers.gifDrop;if(old){editor.removeEventListener('dragover',old.dragover);editor.removeEventListener('dragleave',old.dragleave);editor.removeEventListener('drop',old.drop);}card.addEventListener('dragstart',function(event){card.classList.add('dragging');event.dataTransfer.setData('text/plain',url);});card.addEventListener('dragend',function(){card.classList.remove('dragging');});function dragover(event){event.preventDefault();editor.style.outline='2px solid #22d3ee';}function dragleave(){editor.style.outline='';}function drop(event){event.preventDefault();editor.style.outline='';const dropped=event.dataTransfer.getData('text/plain')||url;if(/\bsrc\s*=\s*["'][^"']*["']/i.test(editor.value)){editor.value=editor.value.replace(/\bsrc\s*=\s*["'][^"']*["']/i,'src="'+dropped+'"');}else{editor.value=editor.value.replace(/<img\b([^>]*)>/i,'<img$1 src="'+dropped+'">');}window.IntentEngine.run(window.Intents.updatePreview,{code:editor.value});tip.textContent='Nice drop. The animated GIF source is now in the code box.';}window.lesson4DragHandlers.gifDrop={dragover:dragover,dragleave:dragleave,drop:drop};editor.addEventListener('dragover',dragover);editor.addEventListener('dragleave',dragleave);editor.addEventListener('drop',drop);})();</script>`,
+    initialCode: `<img data-challenge="format-swap" src="" alt="Dancing cat" width="220">`,
     hideVisualPanel: true,
     progress: 55,
     validator: function(code) { return /<img\b(?=[^>]*data-challenge\s*=\s*['"]format-swap['"])(?=[^>]*src\s*=\s*['"][^'"]*\.gif['"])[^>]*>/i.test(code); }
