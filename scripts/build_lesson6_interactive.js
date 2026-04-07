@@ -44,29 +44,29 @@ function layoutHero(label, accent) {
 }
 
 const previewScaffold = `<style>
-body { margin:0; padding:14px; background:linear-gradient(180deg,#020617,#0f172a); font-family:Arial, sans-serif; color:#e2e8f0; display:grid; gap:10px; }
-header, nav, main, article, section, aside, footer { display:block; position:relative; padding:14px; border-radius:16px; border:1px solid #cbd5e1; background:white; min-height:18px; }
-header { background:#dbeafe; }
-nav { background:#fef3c7; }
-main { background:#dcfce7; }
-article { background:#e9d5ff; }
-section { background:#ede9fe; }
-aside { background:#fee2e2; }
-footer { background:#c7d2fe; }
-header::before, nav::before, main::before, article::before, section::before, aside::before, footer::before {
+#preview-area { margin:0; padding:14px; background:linear-gradient(180deg,#020617,#0f172a); font-family:Arial, sans-serif; color:#e2e8f0; display:grid; gap:10px; }
+#preview-area header, #preview-area nav, #preview-area main, #preview-area article, #preview-area section, #preview-area aside, #preview-area footer { display:block; position:relative; padding:14px; border-radius:16px; border:1px solid #cbd5e1; background:white; min-height:18px; }
+#preview-area header { background:#dbeafe; }
+#preview-area nav { background:#fef3c7; }
+#preview-area main { background:#dcfce7; }
+#preview-area article { background:#e9d5ff; }
+#preview-area section { background:#ede9fe; }
+#preview-area aside { background:#fee2e2; }
+#preview-area footer { background:#c7d2fe; }
+#preview-area header::before, #preview-area nav::before, #preview-area main::before, #preview-area article::before, #preview-area section::before, #preview-area aside::before, #preview-area footer::before {
   display:block; margin-bottom:8px; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:0.12em; color:#334155;
 }
-header::before { content:'header'; }
-nav::before { content:'nav'; }
-main::before { content:'main'; }
-article::before { content:'article'; }
-section::before { content:'section'; }
-aside::before { content:'aside'; }
-footer::before { content:'footer'; }
-table { width:100%; border-collapse:collapse; background:white; border-radius:14px; overflow:hidden; }
-caption { caption-side:top; padding-bottom:8px; font-weight:800; color:#0f172a; }
-th, td { border:1px solid #cbd5e1; padding:10px; text-align:left; }
-th { background:#e0f2fe; }
+#preview-area header::before { content:'header'; }
+#preview-area nav::before { content:'nav'; }
+#preview-area main::before { content:'main'; }
+#preview-area article::before { content:'article'; }
+#preview-area section::before { content:'section'; }
+#preview-area aside::before { content:'aside'; }
+#preview-area footer::before { content:'footer'; }
+#preview-area table { width:100%; border-collapse:collapse; background:white; border-radius:14px; overflow:hidden; }
+#preview-area caption { caption-side:top; padding-bottom:8px; font-weight:800; color:#0f172a; }
+#preview-area th, #preview-area td { border:1px solid #cbd5e1; padding:10px; text-align:left; }
+#preview-area th { background:#e0f2fe; }
 </style>`;
 
 module.exports = function buildLesson6Interactive() {
@@ -139,6 +139,10 @@ module.exports = function buildLesson6Interactive() {
           { value: 'header', label: 'Place the header' },
           { value: 'nav', label: 'Place the nav menu' }
         ],
+        insertions: {
+          header: '<header>\n</header>',
+          nav: '__INSERT_BEFORE_HEADER_CLOSE__  <nav>\n  </nav>'
+        },
         success: 'Great. The menu belongs in the top area here.'
       },
       initialCode: '<header>\n</header>',
@@ -149,7 +153,7 @@ module.exports = function buildLesson6Interactive() {
       intro: 'A nav area often uses a list. That means <code>&lt;ul&gt;</code> on the outside and <code>&lt;li&gt;</code> items inside.',
       watch: 'The list turns into menu choices.',
       play: 'Count the menu items in the preview.',
-      type: 'Add a <code>&lt;ul&gt;</code> with at least 2 <code>&lt;li&gt;</code> items inside the nav.',
+      type: 'Inside the <code>&lt;nav&gt;</code>, add a <code>&lt;ul&gt;</code> and at least two <code>&lt;li&gt;</code> items. Example:<br><code>&lt;nav&gt;...&lt;ul&gt;&lt;li&gt;Home&lt;/li&gt;&lt;li&gt;About&lt;/li&gt;&lt;/ul&gt;...&lt;/nav&gt;</code>',
       remember: 'One list can hold many menu links.',
       mission: 'Build a simple nav menu.',
       hero: layoutHero('Menu list', 212),
@@ -527,12 +531,12 @@ module.exports = function buildLesson6Interactive() {
     gameTitle: 'Structure Safari',
     gamePath: 'minigames/game6.html',
     theme: {
-      accent: '#fbbf24',
-      accentSoft: '#f59e0b',
-      panel: 'rgba(67,20,7,0.82)',
-      panelAlt: 'rgba(17,24,39,0.96)',
+      accent: '#67e8f9',
+      accentSoft: '#38bdf8',
+      panel: 'rgba(8,47,73,0.82)',
+      panelAlt: 'rgba(15,23,42,0.96)',
       success: '#4ade80',
-      ink: '#451a03',
+      ink: '#082f49',
       toggleColumns: 2
     },
     previewScaffold,

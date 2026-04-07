@@ -302,9 +302,9 @@ module.exports = function buildLesson5Interactive() {
       intro: 'A label can point to the exact input by using <code>for</code> on the label and <code>id</code> on the input.',
       watch: 'Both names must match exactly.',
       play: 'Look closely at the demo: the label gets <code>for="user"</code> and the input gets <code>id="user"</code>. Those two words must match.',
-      type: 'Step 1: add <code>for="user"</code> inside the opening <code>&lt;label&gt;</code> tag. Step 2: add <code>id="user"</code> inside the opening <code>&lt;input&gt;</code> tag. Make both words exactly <code>user</code>.',
-      remember: 'The matching words must be identical.',
-      mission: 'Link the label to the input with matching names so clicking the label points to the correct text box.',
+      type: 'You must add BOTH pieces. Step 1: add <code>for="user"</code> inside the opening <code>&lt;label&gt;</code> tag. Step 2: add <code>id="user"</code> inside the opening <code>&lt;input&gt;</code> tag. The mission only completes when both appear.',
+      remember: 'The matching words must be identical, and both attributes are required.',
+      mission: 'Add <code>for="user"</code> to the label and <code>id="user"</code> to the input so clicking the label targets the correct box.',
       hero: formHero('Match the names', 168),
       widget: {
         type: 'demo',

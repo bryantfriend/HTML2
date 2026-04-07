@@ -17,6 +17,123 @@ function finalizePreviewRender(payload, newState, oldState, contextData) {
                     oldScript.parentNode.replaceChild(newScript, oldScript);
                 }
             });
+
+            // Ensure Lesson 4 preview buttons remain interactive even if inline scripts fail.
+            if (lesson && lesson.id === 'lesson4') {
+                const editor = document.getElementById('code-editor');
+                if (!editor) return;
+                const runPreview = () => {
+                    if (window.IntentEngine && window.Intents && window.Intents.updatePreview) {
+                        window.IntentEngine.run(window.Intents.updatePreview, { code: editor.value });
+                    }
+                };
+                const bindOnce = (el, handler) => {
+                    if (!el || el.dataset.bound === 'true') return;
+                    el.dataset.bound = 'true';
+                    el.addEventListener('click', handler);
+                };
+
+                // Module 1: photo picker buttons
+                const pickers = [
+                    ['pick-space-cat', 'assets/space-cat.svg'],
+                    ['pick-happy-cat', 'assets/cat-demo.svg'],
+                    ['pick-glitch-cat', 'assets/cat-glitch.svg']
+                ];
+                pickers.forEach(([id, src]) => {
+                    const button = document.getElementById(id);
+                    bindOnce(button, () => {
+                        const tagRegex = /(<img\\b[^>]*data-challenge\\s*=\\s*["']starter-photo["'][^>]*)(>)/i;
+                        if (tagRegex.test(editor.value)) {
+                            editor.value = editor.value.replace(tagRegex, (match, start, end) => {
+                                if (/\\bsrc\\s*=\\s*["'][^"']*["']/i.test(start)) {
+                                    return start.replace(/\\bsrc\\s*=\\s*["'][^"']*["']/i, `src="${src}"`) + end;
+                                }
+                                return `${start} src="${src}"${end}`;
+                            });
+                            runPreview();
+                        }
+                    });
+                });
+
+                // Module 4: cat tag builder buttons
+                const buildActions = {
+                    'cat-build-src': (value) => {
+                        if (!/<img\\b/i.test(value)) value = '<img data-challenge="cat-builder">';
+                        return value.replace(/<img\\b([^>]*)>/i, (match, attrs) => {
+                            if (/\\bsrc\\s*=/.test(attrs)) return '<img' + attrs.replace(/\\bsrc\\s*=\\s*["'][^"']*["']/i, ' src="assets/cat-demo.svg"') + '>';
+                            return '<img' + attrs + ' src="assets/cat-demo.svg">';
+                        });
+                    },
+                    'cat-build-alt': (value) => {
+                        if (!/<img\\b/i.test(value)) value = '<img data-challenge="cat-builder">';
+                        return value.replace(/<img\\b([^>]*)>/i, (match, attrs) => {
+                            if (/\\balt\\s*=/.test(attrs)) return '<img' + attrs.replace(/\\balt\\s*=\\s*["'][^"']*["']/i, ' alt="Happy cat"') + '>';
+                            return '<img' + attrs + ' alt="Happy cat">';
+                        });
+                    },
+                    'cat-build-width': (value) => {
+                        if (!/<img\\b/i.test(value)) value = '<img data-challenge="cat-builder">';
+                        return value.replace(/<img\\b([^>]*)>/i, (match, attrs) => {
+                            if (/\\bwidth\\s*=/.test(attrs)) return '<img' + attrs.replace(/\\bwidth\\s*=\\s*["'][^"']*["']/i, ' width="180"') + '>';
+                            return '<img' + attrs + ' width="180">';
+                        });
+                    }
+                };
+                Object.keys(buildActions).forEach((id) => {
+                    const button = document.getElementById(id);
+                    bindOnce(button, () => {
+                        editor.value = buildActions[id](editor.value || '');
+                        runPreview();
+                    });
+                });
+
+                // Module 5: repair buttons
+                const repairMap = {
+                    'repair-cat-path': 'assets/cat-demo.svg',
+                    'keep-broken-path': 'assets/cat-broken.svg'
+                };
+                Object.keys(repairMap).forEach((id) => {
+                    const button = document.getElementById(id);
+                    bindOnce(button, () => {
+                        const src = repairMap[id];
+                        editor.value = editor.value.replace(/(<img\\b[^>]*data-challenge\\s*=\\s*["']broken-cat["'][^>]*\\bsrc\\s*=\\s*["'])[^"']*(["'][^>]*>)/i, `$1${src}$2`);
+                        runPreview();
+                    });
+                });
+
+                // Module 7: alt text demo toggles (preview-only helpers)
+                bindOnce(document.getElementById('show-working-image'), () => {
+                    const stage = document.getElementById('alt-stage');
+                    if (stage) stage.innerHTML = '<img src="assets/cat-demo.svg" alt="Fluffy cat" width="140">';
+                });
+                bindOnce(document.getElementById('show-broken-image'), () => {
+                    const stage = document.getElementById('alt-stage');
+                    if (stage) stage.textContent = 'Broken image view: alt text like "Fluffy cat" tells people what should be here.';
+                });
+
+                // Module 11: allow click to apply GIF source as a fallback to drag
+                const gifCard = document.getElementById('drag-gif-card');
+                bindOnce(gifCard, () => {
+                    const src = 'https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif';
+                    if (/\\bsrc\\s*=\\s*["'][^"']*["']/i.test(editor.value)) {
+                        editor.value = editor.value.replace(/\\bsrc\\s*=\\s*["'][^"']*["']/i, `src="${src}"`);
+                    } else {
+                        editor.value = editor.value.replace(/<img\\b([^>]*)>/i, `<img$1 src="${src}">`);
+                    }
+                    runPreview();
+                });
+
+                // Module 16: insert video tag button
+                const insertVideo = document.getElementById('insert-video-demo');
+                bindOnce(insertVideo, () => {
+                    const openTag = '<video>';
+                    const closeTag = '</video>';
+                    const current = (editor.value || '').trim();
+                    if (!current) editor.value = openTag + '\\n' + closeTag;
+                    else if (!/<\\s*video\\b/i.test(current)) editor.value = current + (current.endsWith('\\n') ? '' : '\\n') + openTag + '\\n' + closeTag;
+                    runPreview();
+                });
+            }
         }
     }
 }

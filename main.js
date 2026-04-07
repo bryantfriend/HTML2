@@ -128,6 +128,83 @@ document.getElementById('code-editor').addEventListener('input', function (e) {
     window.IntentEngine.run(window.Intents.updatePreview, { code: e.target.value });
 });
 
+window.updateLessonLineNumbers = function () {
+    const editor = document.getElementById('code-editor');
+    const gutter = document.getElementById('lesson-gutter');
+    if (!editor || !gutter) return;
+    const lineCount = Math.max((editor.value.match(/\n/g) || []).length + 1, 1);
+    gutter.textContent = Array.from({ length: lineCount }, function (_, index) {
+        return String(index + 1);
+    }).join('\n');
+    gutter.scrollTop = editor.scrollTop;
+};
+
+window.applyLessonAutoIndent = function (editor, indent) {
+    const start = editor.selectionStart;
+    const end = editor.selectionEnd;
+    const insert = '\n' + indent;
+    editor.value = editor.value.slice(0, start) + insert + editor.value.slice(end);
+    const cursor = start + insert.length;
+    editor.selectionStart = editor.selectionEnd = cursor;
+};
+
+window.applyLessonAutoBlock = function (editor, tagName, indent) {
+    const start = editor.selectionStart;
+    const end = editor.selectionEnd;
+    const indentUnit = '  ';
+    const insert = '\n' + indent + indentUnit + '\n' + indent + '</' + tagName + '>';
+    editor.value = editor.value.slice(0, start) + insert + editor.value.slice(end);
+    const cursor = start + 1 + indent.length + indentUnit.length;
+    editor.selectionStart = editor.selectionEnd = cursor;
+};
+
+const lessonEditor = document.getElementById('code-editor');
+if (lessonEditor) {
+    lessonEditor.addEventListener('keydown', function (e) {
+        if (e.key === 'Tab') {
+            e.preventDefault();
+            const start = lessonEditor.selectionStart;
+            const end = lessonEditor.selectionEnd;
+            lessonEditor.value = lessonEditor.value.slice(0, start) + '  ' + lessonEditor.value.slice(end);
+            lessonEditor.selectionStart = lessonEditor.selectionEnd = start + 2;
+            lessonEditor.dispatchEvent(new Event('input', { bubbles: true }));
+            return;
+        }
+
+        if (e.key === 'Enter') {
+            const start = lessonEditor.selectionStart;
+            const before = lessonEditor.value.slice(0, start);
+            const lineStart = before.lastIndexOf('\n') + 1;
+            const line = before.slice(lineStart);
+            const indentMatch = line.match(/^\s*/);
+            const indent = indentMatch ? indentMatch[0] : '';
+            const openTagMatch = line.match(/<([a-z][\\w-]*)(\\s[^<>]*)?>\\s*$/i);
+            const isClosing = /<\\s*\\//.test(line);
+            const isSelfClosing = /\\/\\s*>\\s*$/.test(line);
+
+            if (openTagMatch && !isClosing && !isSelfClosing) {
+                e.preventDefault();
+                window.applyLessonAutoBlock(lessonEditor, openTagMatch[1], indent);
+                lessonEditor.dispatchEvent(new Event('input', { bubbles: true }));
+                return;
+            }
+
+            e.preventDefault();
+            window.applyLessonAutoIndent(lessonEditor, indent);
+            lessonEditor.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+    });
+
+    lessonEditor.addEventListener('input', function () {
+        window.updateLessonLineNumbers();
+    });
+
+    lessonEditor.addEventListener('scroll', function () {
+        const gutter = document.getElementById('lesson-gutter');
+        if (gutter) gutter.scrollTop = lessonEditor.scrollTop;
+    });
+}
+
 document.getElementById('back-menu-btn').addEventListener('click', function () {
     window.IntentEngine.run(window.Intents.showMenu, {});
 });

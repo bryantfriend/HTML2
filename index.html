@@ -100,8 +100,11 @@
                 <div id="code-input-container" class="p-4 bg-[#1e1e1e]">
                     <label class="block text-xs text-gray-500 mb-2 code-font uppercase tracking-widest">Input
                         Code</label>
-                    <textarea id="code-editor" class="w-full h-48 md:h-64 p-4 code-font text-sm rounded-md"
-                        spellcheck="false"></textarea>
+                    <div class="lesson-editor-wrap">
+                        <pre id="lesson-gutter" class="lesson-gutter" aria-hidden="true">1</pre>
+                        <textarea id="code-editor" class="lesson-editor w-full h-48 md:h-64 code-font text-sm rounded-md"
+                            spellcheck="false"></textarea>
+                    </div>
                 </div>
                 <div class="p-4 bg-[#252525] border-t border-gray-700">
                     <div class="flex justify-between items-center mb-2">

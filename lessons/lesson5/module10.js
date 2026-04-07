@@ -7,10 +7,10 @@ window.Lessons.lesson5.modules[9] = {
     <div class="quest-step-grid">
       <div class="quest-step-card"><p class="quest-step-label">Watch</p><p class="quest-step-copy">Both names must match exactly.</p></div>
       <div class="quest-step-card"><p class="quest-step-label">Play</p><p class="quest-step-copy">Look closely at the demo: the label gets <code>for="user"</code> and the input gets <code>id="user"</code>. Those two words must match.</p></div>
-      <div class="quest-step-card"><p class="quest-step-label">Type</p><p class="quest-step-copy">Step 1: add <code>for="user"</code> inside the opening <code>&lt;label&gt;</code> tag. Step 2: add <code>id="user"</code> inside the opening <code>&lt;input&gt;</code> tag. Make both words exactly <code>user</code>.</p></div>
+      <div class="quest-step-card"><p class="quest-step-label">Type</p><p class="quest-step-copy">You must add BOTH pieces. Step 1: add <code>for="user"</code> inside the opening <code>&lt;label&gt;</code> tag. Step 2: add <code>id="user"</code> inside the opening <code>&lt;input&gt;</code> tag. The mission only completes when both appear.</p></div>
     </div>
-    <div class="quest-memory"><strong>Remember:</strong> The matching words must be identical.</div>
-    <p class="quest-mission">Mission: Link the label to the input with matching names so clicking the label points to the correct text box.</p>
+    <div class="quest-memory"><strong>Remember:</strong> The matching words must be identical, and both attributes are required.</div>
+    <p class="quest-mission">Mission: Add <code>for="user"</code> to the label and <code>id="user"</code> to the input so clicking the label targets the correct box.</p>
   </section>`,
     svg: ``,
     widgetCode: `<!-- INTERACTIVE MODULE -->
@@ -37,8 +37,11 @@ window.Lessons.lesson5.modules[9] = {
 .quest-browser-dots span:nth-child(2) { background:#fbbf24; }
 .quest-browser-dots span:nth-child(3) { background:#4ade80; }
 .quest-browser-bar { flex:1; min-width:0; padding:8px 12px; border-radius:999px; background:rgba(15,23,42,0.9); border:1px solid rgba(148,163,184,0.16); color:#a5f3fc; font:700 11px/1.2 monospace; }
-.quest-demo-grid { display:grid; gap:12px; }
+.quest-demo-grid { display:grid; gap:12px; align-items:stretch; grid-auto-rows:1fr; }
 .quest-demo-panel,.quest-toggle-panel,.quest-choice-scene { padding:14px; border-radius:18px; background:rgba(15,23,42,0.75); border:1px solid rgba(148,163,184,0.12); }
+.quest-demo-panel { display:flex; flex-direction:column; gap:10px; min-height:220px; height:100%; }
+.quest-demo-snippet { flex:1; }
+.quest-demo-preview { flex:1; min-height:160px; height:100%; }
 .quest-panel-label { margin:0 0 8px; color:var(--quest-accent); font-size:11px; letter-spacing:0.16em; text-transform:uppercase; }
 .quest-demo-snippet { margin:0; min-height:76px; padding:12px; border-radius:14px; background:rgba(2,6,23,0.9); color:#f8fafc; font:700 13px/1.6 monospace; white-space:pre-wrap; opacity:0; transform:translateY(8px); transition:opacity 220ms ease, transform 220ms ease; }
 .quest-demo-snippet.is-visible { opacity:1; transform:translateY(0); }
