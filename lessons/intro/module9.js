@@ -18,10 +18,13 @@ window.Lessons.intro.modules[8] = {
 .intro-demo-status { color: #cbd5e1; font-size: 13px; }
 .doctype-lab { background: linear-gradient(180deg, #0f172a, #111827); border-radius: 14px; padding: 16px; color: white; min-height: 300px; }
 .doctype-options { display: grid; gap: 10px; margin-top: 14px; }
-.doctype-choice { border: 1px solid #334155; background: #1e293b; color: #e2e8f0; border-radius: 12px; padding: 12px 14px; font: 700 14px/1.5 monospace; cursor: pointer; text-align: left; transition: 0.18s ease; }
+.doctype-choice { position: relative; border: 1px solid #334155; background: #1e293b; color: #e2e8f0; border-radius: 12px; padding: 12px 44px 12px 14px; font: 700 14px/1.5 monospace; cursor: pointer; text-align: left; transition: 0.18s ease; }
 .doctype-choice:hover { border-color: #67e8f9; transform: translateY(-1px); }
-.doctype-choice.correct { border-color: #10b981; background: rgba(16, 185, 129, 0.18); }
-.doctype-choice.wrong { border-color: #ef4444; background: rgba(239, 68, 68, 0.18); }
+.doctype-choice::after { content: ''; position: absolute; right: 14px; top: 50%; transform: translateY(-50%); font-size: 12px; font-weight: 800; letter-spacing: 0.08em; opacity: 0; transition: 0.18s ease; }
+.doctype-choice.correct { border-color: #10b981; background: rgba(16, 185, 129, 0.18); box-shadow: 0 0 12px rgba(16, 185, 129, 0.35); }
+.doctype-choice.correct::after { content: 'OK'; color: #10b981; opacity: 1; }
+.doctype-choice.wrong { border-color: #ef4444; background: rgba(239, 68, 68, 0.18); box-shadow: 0 0 12px rgba(239, 68, 68, 0.35); }
+.doctype-choice.wrong::after { content: 'X'; color: #f87171; opacity: 1; }
 .doctype-screen { margin-top: 14px; border-radius: 14px; border: 1px solid rgba(103, 232, 249, 0.14); background: rgba(15, 23, 42, 0.85); padding: 14px; min-height: 120px; display: flex; flex-direction: column; justify-content: center; }
 .doctype-status { color: #67e8f9; font-weight: 700; font-size: 13px; }
 .doctype-boot { margin-top: 8px; color: #cbd5e1; font-size: 13px; line-height: 1.5; }

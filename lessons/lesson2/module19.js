@@ -1,6 +1,6 @@
 window.Lessons.lesson2.modules[18] = {
     title: "19. Mission Review: Text Tags",
-    body: `<p>This checkpoint helps students practice the text tags by name, which is the part many of them miss on the exam.</p>
+    body: `<p>⚡ Quick quiz! Show your skills with text tag names—stay sharp! 💻</p>
     <p class="text-sm italic text-gray-400 mt-4">Mission: Answer all 3 text questions correctly.</p>`,
     svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg"><text x="120" y="80" fill="#00f2ff" font-family="monospace" font-size="16" text-anchor="middle">TEXT CHECK</text></svg>`,
     initialCode: `<!-- Lesson 2 review checkpoint -->`,

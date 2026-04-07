@@ -178,9 +178,9 @@ if (lessonEditor) {
             const line = before.slice(lineStart);
             const indentMatch = line.match(/^\s*/);
             const indent = indentMatch ? indentMatch[0] : '';
-            const openTagMatch = line.match(/<([a-z][\\w-]*)(\\s[^<>]*)?>\\s*$/i);
-            const isClosing = /<\\s*\\//.test(line);
-            const isSelfClosing = /\\/\\s*>\\s*$/.test(line);
+            const openTagMatch = line.match(/<([a-z][\w-]*)(\s[^<>]*)?>\s*$/i);
+            const isClosing = /<\s*\//.test(line);
+            const isSelfClosing = /\/\s*>\s*$/.test(line);
 
             if (openTagMatch && !isClosing && !isSelfClosing) {
                 e.preventDefault();

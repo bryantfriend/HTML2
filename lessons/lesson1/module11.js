@@ -22,7 +22,7 @@ window.Lessons.lesson1.modules[10] = {
 
 .modal-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 10; }
 .rename-modal { background: white; padding: 20px; border-radius: 12px; width: 80%; text-align: center; }
-.rename-input { width: 100%; padding: 10px; border: 2px solid #3b82f6; border-radius: 8px; font-size: 18px; text-align: center; margin: 15px 0; font-family: monospace; }
+.rename-input { width: 100%; padding: 10px; border: 2px solid #3b82f6; border-radius: 8px; font-size: 18px; text-align: center; margin: 15px 0; font-family: monospace; color: #0f172a; }
 .save-btn { background: #3b82f6; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; }
 
 .browser { position: absolute; inset: 10px; background: white; border-radius: 8px; display: none; flex-direction: column; z-index: 20; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }

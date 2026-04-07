@@ -11,7 +11,7 @@ window.Lessons.lesson1.modules[12] = {
 .count { font-size: 16px; color: #00ff9d;}
 .list { flex: 1; display: flex; flex-direction: column; gap: 8px;}
 .item { background: rgba(239,68,68,0.1); border: 1px solid #ef4444; padding: 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 13px;}
-.item.fixed { background: rgba(16,185,129,0.1); border-color: #10b981; color: #00ff9d;}
+.item.bug-fixed { background: rgba(16,185,129,0.1); border-color: #10b981; color: #00ff9d;}
 .overlay { position: absolute; inset: 0; background: rgba(15,23,42,0.95); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10; border-radius: 12px; text-align: center; }
 </style>
 <script>
@@ -58,8 +58,8 @@ window.Lessons.lesson1.modules[12] = {
 
     function markBug(id) {
         const el = document.getElementById(id);
-        if(el && !el.classList.contains('fixed')) {
-            el.classList.add('fixed');
+        if(el && !el.classList.contains('bug-fixed')) {
+            el.classList.add('bug-fixed');
             el.lastElementChild.innerText = '✅';
         }
     }
