@@ -8,7 +8,7 @@ window.LessonManifest = {
         { id: 'lesson4', moduleCount: 21 },
         { id: 'lesson5', moduleCount: 20 },
         { id: 'lesson6', moduleCount: 20 },
-        { id: 'lesson7', moduleCount: 14 },
+        { id: 'lesson7', moduleCount: 20 },
         { id: 'lesson8', moduleCount: 20 },
         { id: 'lesson9', moduleCount: 20 },
         { id: 'lesson10', moduleCount: 20 },
