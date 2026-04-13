@@ -152,8 +152,19 @@ window.applyLessonAutoBlock = function (editor, tagName, indent) {
     const start = editor.selectionStart;
     const end = editor.selectionEnd;
     const indentUnit = '  ';
-    const insert = '\n' + indent + indentUnit + '\n' + indent + '</' + tagName + '>';
-    editor.value = editor.value.slice(0, start) + insert + editor.value.slice(end);
+    const after = editor.value.slice(end);
+    const closingTagRegex = new RegExp('^\\s*</' + tagName + '>');
+    const isAlreadyClosed = closingTagRegex.test(after);
+
+    let insert = '';
+    if (isAlreadyClosed) {
+        insert = '\n' + indent + indentUnit + '\n' + indent;
+        editor.value = editor.value.slice(0, start) + insert + after.replace(/^\\s*/, '');
+    } else {
+        insert = '\n' + indent + indentUnit + '\n' + indent + '</' + tagName + '>';
+        editor.value = editor.value.slice(0, start) + insert + after;
+    }
+    
     const cursor = start + 1 + indent.length + indentUnit.length;
     editor.selectionStart = editor.selectionEnd = cursor;
 };
