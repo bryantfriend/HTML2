@@ -2,7 +2,7 @@ window.Lessons.lesson7.modules[13] = {
     title: "14. Glowing Shadows",
     body: `<p>For the ultimate cyber effect, we need glow! We use <code>box-shadow</code> to add glow.</p>
     <p>Format: <code>box-shadow: 0px 0px 20px cyan;</code> (X-offset, Y-offset, spread, color).</p>
-    <p class="text-sm italic text-gray-400 mt-4">Mission: Add <code>box-shadow</code> to <code>#badge</code>. Pick your spread and your color to make it glow like neon! You are a styling master!</p>`,
+    <p class="text-sm italic text-gray-400 mt-4">Mission: Type exactly: <code>box-shadow: 0px 0px 20px cyan;</code> inside the #badge braces.</p>`,
     svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" style="background:#0f172a; border-radius:8px;">
     <rect x="70" y="40" width="100" height="70" fill="#1e293b" rx="15" stroke="#22d3ee" stroke-width="2">
         <animate attributeName="filter" values="drop-shadow(0 0 0px #22d3ee); drop-shadow(0 0 25px #22d3ee); drop-shadow(0 0 0px #22d3ee)" dur="3s" repeatCount="indefinite"/>

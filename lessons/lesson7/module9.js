@@ -2,7 +2,7 @@ window.Lessons.lesson7.modules[8] = {
     title: "9. Classes: The Rank",
     body: `<p>We learned how to target HTML kinds (like <code>body</code>) and IDs (like <code>#badge</code>). Now let's try classes!</p>
     <p>Our paragraph has <code>class="rank"</code>. To target it in CSS, we use a period (<code>.</code>): <code>.rank { }</code>.</p>
-    <p class="text-sm italic text-gray-400 mt-4">Mission: Target <code>.rank</code> and give it a cool custom <code>color</code>!</p>`,
+    <p class="text-sm italic text-gray-400 mt-4">Mission: Type exactly: <code>color: yellow;</code> inside the .rank braces.</p>`,
     svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" style="background:#0f172a; border-radius:8px;">
     <polygon points="120,20 150,110 50,50 190,50 90,110" fill="none" stroke="#64748b" stroke-width="3">
         <animate attributeName="fill" values="none;#fbbf24;none" dur="3s" repeatCount="indefinite"/>

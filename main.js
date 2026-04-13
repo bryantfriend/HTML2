@@ -197,12 +197,14 @@ if (lessonEditor) {
                 e.preventDefault();
                 window.applyLessonAutoBlock(lessonEditor, openTagMatch[1], indent);
                 lessonEditor.dispatchEvent(new Event('input', { bubbles: true }));
+                setTimeout(function() { lessonEditor.blur(); lessonEditor.focus(); }, 10);
                 return;
             }
 
             e.preventDefault();
             window.applyLessonAutoIndent(lessonEditor, indent);
             lessonEditor.dispatchEvent(new Event('input', { bubbles: true }));
+            setTimeout(function() { lessonEditor.blur(); lessonEditor.focus(); }, 10);
         }
     });
 
@@ -213,6 +215,81 @@ if (lessonEditor) {
     lessonEditor.addEventListener('scroll', function () {
         const gutter = document.getElementById('lesson-gutter');
         if (gutter) gutter.scrollTop = lessonEditor.scrollTop;
+    });
+
+    const checkColorAtCursor = function(editor) {
+        const text = editor.value;
+        const pos = editor.selectionStart;
+        const colorRegex = /#(?:[0-9a-fA-F]{3}){1,2}\b|\b(?:red|blue|green|yellow|cyan|magenta|black|white|gray|purple|orange|pink)\b/g;
+        let colorMatch = null;
+        let match;
+        while ((match = colorRegex.exec(text)) !== null) {
+            if (pos >= match.index && pos <= match.index + match[0].length) {
+                colorMatch = match;
+                break;
+            }
+        }
+        
+        const bar = document.getElementById('color-coach-bar');
+        if (!bar) return;
+        const colorPicker = document.getElementById('coach-color-picker');
+        const colorSelect = document.getElementById('coach-color-select');
+        
+        if (colorMatch) {
+           if (colorMatch[0].startsWith('#')) {
+                colorPicker.classList.remove('hidden');
+                colorSelect.classList.add('hidden');
+                colorPicker.value = colorMatch[0].toLowerCase();
+           } else {
+                colorPicker.classList.add('hidden');
+                colorSelect.classList.remove('hidden');
+                colorSelect.value = colorMatch[0].toLowerCase();
+           }
+           bar.dataset.start = colorMatch.index;
+           bar.dataset.end = colorMatch.index + colorMatch[0].length;
+           bar.classList.remove('hidden');
+        } else {
+           bar.classList.add('hidden');
+        }
+    };
+
+    ['click', 'keyup', 'select'].forEach(function(eventName) {
+        lessonEditor.addEventListener(eventName, function() {
+            checkColorAtCursor(lessonEditor);
+        });
+    });
+}
+
+const colorApplyBtn = document.getElementById('coach-color-apply');
+if (colorApplyBtn) {
+    colorApplyBtn.addEventListener('click', function() {
+        const bar = document.getElementById('color-coach-bar');
+        const start = parseInt(bar.dataset.start);
+        const end = parseInt(bar.dataset.end);
+        const editor = document.getElementById('code-editor');
+        
+        const isHex = !document.getElementById('coach-color-picker').classList.contains('hidden');
+        const newColor = isHex ? document.getElementById('coach-color-picker').value : document.getElementById('coach-color-select').value;
+        
+        editor.value = editor.value.slice(0, start) + newColor + editor.value.slice(end);
+        window.IntentEngine.run(window.Intents.updatePreview, { code: editor.value });
+        bar.classList.add('hidden');
+    });
+}
+
+const lessonResetBtn = document.getElementById('lesson-reset-btn');
+if (lessonResetBtn) {
+    lessonResetBtn.addEventListener('click', function() {
+        const currentLesson = window.courseData.lessons[window.state.currentLessonIndex];
+        if (currentLesson) {
+            const currentModule = currentLesson.modules[window.state.currentModuleIndex];
+            if (currentModule) {
+                const editor = document.getElementById('code-editor');
+                editor.value = currentModule.initialCode || "";
+                window.IntentEngine.run(window.Intents.updatePreview, { code: editor.value });
+                window.updateLessonLineNumbers();
+            }
+        }
     });
 }
 

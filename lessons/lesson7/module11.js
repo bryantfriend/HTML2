@@ -2,7 +2,7 @@ window.Lessons.lesson7.modules[10] = {
     title: "11. Text Transformations",
     body: `<p>A cyber badge's name should look authoritative.</p>
     <p>Using <code>text-transform: uppercase;</code> forces all letters to be capitalized, no matter how they were typed in the HTML!</p>
-    <p class="text-sm italic text-gray-400 mt-4">Mission: Target <code>#hero-name</code> and set its <code>text-transform</code> to <code>uppercase</code>.</p>`,
+    <p class="text-sm italic text-gray-400 mt-4">Mission: Type exactly: <code>text-transform: uppercase;</code> inside the h1 braces.</p>`,
     svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" style="background:#0f172a; border-radius:8px;">
     <text x="120" y="85" fill="#ec4899" font-family="sans-serif" font-size="30" font-weight="bold" text-anchor="middle">
         <animate attributeName="opacity" values="1;0;1" dur="2s" repeatCount="indefinite"/>

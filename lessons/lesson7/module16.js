@@ -2,7 +2,7 @@ window.Lessons.lesson7.modules[15] = {
     title: "16. Cinematic Spacing",
     body: `<p>To make our rank look like a movie poster, we can spread the letters apart.</p>
     <p>We use <code>letter-spacing</code> to add space between characters.</p>
-    <p class="text-sm italic text-gray-400 mt-4">Mission: Target <code>.rank</code> and add <code>letter-spacing: 5px;</code> (or pick your own size!).</p>`,
+    <p class="text-sm italic text-gray-400 mt-4">Mission: Type exactly: <code>letter-spacing: 5px;</code> inside the .rank braces.</p>`,
     svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" style="background:#0f172a; border-radius:8px;">
     <text x="120" y="85" fill="#a855f7" font-family="sans-serif" font-size="28" font-weight="bold" text-anchor="middle" letter-spacing="0">
         <animate attributeName="letter-spacing" values="0px; 15px; 0px" dur="4s" repeatCount="indefinite" />

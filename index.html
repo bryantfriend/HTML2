@@ -90,12 +90,30 @@
         <!-- Right Column: Interactive Editor -->
         <section id="editor-section" class="sticky top-8">
             <div class="rounded-xl overflow-hidden shadow-2xl border border-gray-700">
-                <div class="terminal-header p-3 flex items-center">
-                    <span class="dot dot-red"></span>
-                    <span class="dot dot-yellow"></span>
-                    <span class="dot dot-green"></span>
-                    <span class="ml-4 text-xs code-font text-gray-400">CYBER_TERM_1.0 — <span
-                            id="file-name">index.html</span></span>
+                <div class="terminal-header p-3 flex items-center justify-between border-b border-gray-700">
+                    <div class="flex items-center">
+                        <span class="dot dot-red"></span>
+                        <span class="dot dot-yellow"></span>
+                        <span class="dot dot-green"></span>
+                        <span class="ml-4 text-xs code-font text-gray-400">CYBER_TERM_1.0 — <span id="file-name">index.html</span></span>
+                    </div>
+                    <!-- Toolbar container for Reset and future Color Coach -->
+                    <div class="flex items-center gap-3">
+                        <div id="color-coach-bar" class="hidden flex items-center gap-2 bg-gray-900 border border-[var(--neon-pink)] px-2 py-1 rounded">
+                            <span class="text-[10px] code-font text-[var(--neon-pink)]">COLOR DETECTED:</span>
+                            <input type="color" id="coach-color-picker" class="w-5 h-5 p-0 border-0 rounded cursor-pointer bg-transparent">
+                            <select id="coach-color-select" class="text-[10px] bg-black text-white px-1 py-0.5 border border-gray-600 rounded cursor-pointer code-font pt-1 pb-1 hidden">
+                                <option value="red">red</option><option value="blue">blue</option><option value="green">green</option>
+                                <option value="yellow">yellow</option><option value="cyan">cyan</option><option value="magenta">magenta</option>
+                                <option value="black">black</option><option value="white">white</option><option value="gray">gray</option>
+                                <option value="purple">purple</option><option value="orange">orange</option><option value="pink">pink</option>
+                            </select>
+                            <button id="coach-color-apply" class="text-[10px] bg-[var(--neon-pink)] text-white px-2 py-0.5 rounded font-bold hover:bg-pink-400 transition">&check; APPLY</button>
+                        </div>
+                        <button id="lesson-reset-btn" class="bg-gray-800 hover:bg-gray-700 text-gray-300 py-1 px-3 rounded text-[10px] code-font transition border border-gray-600 tracking-wider">
+                            ↺ RESTORE INITIAL
+                        </button>
+                    </div>
                 </div>
                 <div id="code-input-container" class="p-4 bg-[#1e1e1e]">
                     <label class="block text-xs text-gray-500 mb-2 code-font uppercase tracking-widest">Input

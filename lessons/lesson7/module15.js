@@ -2,7 +2,7 @@ window.Lessons.lesson7.modules[14] = {
     title: "15. Hacker Fonts",
     body: `<p>A cyber badge needs a proper terminal font.</p>
     <p>By changing the <code>font-family</code>, we can make our text look like code!</p>
-    <p class="text-sm italic text-gray-400 mt-4">Mission: Expand your <code>body</code> rule and add <code>font-family: monospace;</code>.</p>`,
+    <p class="text-sm italic text-gray-400 mt-4">Mission: Type exactly: <code>font-family: monospace;</code> inside the body braces.</p>`,
     svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" style="background:#0f172a; border-radius:8px;">
     <text x="120" y="85" fill="#f472b6" font-family="serif" font-size="30" font-weight="bold" text-anchor="middle">
         <animate attributeName="font-family" values="serif;sans-serif;monospace;serif" dur="4s" repeatCount="indefinite" calcMode="discrete"/>

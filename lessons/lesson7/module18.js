@@ -2,7 +2,7 @@ window.Lessons.lesson7.modules[17] = {
     title: "18. Leaning Into It",
     body: `<p>We can also tilt our text forwards for a sleek look using <code>font-style</code>.</p>
     <p>By setting it to <code>italic</code>, the words will slant to the right.</p>
-    <p class="text-sm italic text-gray-400 mt-4">Mission: Add <code>font-style: italic;</code> to your <code>#hero-name</code> or <code>.rank</code> block!</p>`,
+    <p class="text-sm italic text-gray-400 mt-4">Mission: Type exactly: <code>font-style: italic;</code> inside the .rank braces.</p>`,
     svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" style="background:#0f172a; border-radius:8px;">
     <g transform="translate(120, 85)">
         <animateTransform attributeName="transform" type="skewX" values="0; -25; 0" dur="3s" repeatCount="indefinite" />

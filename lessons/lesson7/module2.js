@@ -2,7 +2,7 @@ window.Lessons.lesson7.modules[1] = {
     title: "2. The <style> Portal",
     body: `<p>To write CSS, we first have to open a portal in our HTML called the <code>&lt;style&gt;</code> tag.</p>
     <p>Everything you type *inside* this tag will be magically translated into beautiful designs by the browser!</p>
-    <p class="text-sm italic text-gray-400 mt-4">Mission: Create an opening &lt;style&gt; tag and a closing &lt;/style&gt; tag on separate lines.</p>`,
+    <p class="text-sm italic text-gray-400 mt-4">Mission: Type exactly: <code>&lt;style&gt;</code> on line 1, and <code>&lt;/style&gt;</code> on line 3.</p>`,
     svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" style="background:#0f172a; border-radius:8px;">
     <g stroke="#a855f7" stroke-width="3" fill="none" transform="translate(40, 50)">
         <path d="M 30,0 L 0,25 L 30,50">

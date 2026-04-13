@@ -2,7 +2,7 @@ window.Lessons.lesson7.modules[19] = {
     title: "20. Master Stylist",
     body: `<p>You have styled a complete interactive character badge using sheer CSS power! ✨</p>
     <p>Before you ship this, add one final personal touch. Once you are happy with the Masterpiece, you can deploy it.</p>
-    <p class="text-sm italic text-gray-400 mt-4">Mission: Add one last rule anywhere (like color, background, font-size, etc.) and type <strong class="text-pink-400">DEPLOY</strong> somewhere in your code as a comment to finish!</p>`,
+    <p class="text-sm italic text-gray-400 mt-4">Mission: Type your favorite CSS property anywhere, then type exactly: <code>/* DEPLOY */</code> at the bottom to finish the project!</p>`,
     svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" style="background:#0f172a; border-radius:8px; overflow: hidden;">
     <circle cx="120" cy="150" r="80" fill="#1e1b4b">
         <animate attributeName="r" values="80; 160; 80" dur="5s" repeatCount="indefinite" />

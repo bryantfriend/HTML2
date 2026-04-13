@@ -2,7 +2,7 @@ window.Lessons.lesson7.modules[12] = {
     title: "13. Magic Hover Action!",
     body: `<p>We can make CSS respond to our mouse! If we add <code>:hover</code> to a selector, the rules only apply when the mouse is over it.</p>
     <p>Example: <code>.action-btn:hover { background-color: white; }</code></p>
-    <p class="text-sm italic text-gray-400 mt-4">Mission: Add an <code>.action-btn:hover</code> block and change its <code>background-color</code>. Move your mouse over the button in the preview to test it!</p>`,
+    <p class="text-sm italic text-gray-400 mt-4">Mission: Type exactly: <code>background-color: white;</code> inside the .action-btn:hover braces.</p>`,
     svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" style="background:#0f172a; border-radius:8px;">
     <rect x="50" y="60" width="140" height="40" fill="#22d3ee" rx="8">
         <animate attributeName="fill" values="#22d3ee;#ffffff;#22d3ee" dur="3s" repeatCount="indefinite"/>

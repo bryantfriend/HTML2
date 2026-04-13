@@ -2,7 +2,7 @@ window.Lessons.lesson7.modules[6] = {
     title: "7. Neon Borders",
     body: `<p>Let's make our badge pop by adding a solid border. The <code>border</code> property takes three values: thickness, style, and color.</p>
     <p>Example: <code>border: 5px solid red;</code></p>
-    <p class="text-sm italic text-gray-400 mt-4">Mission: Add a <code>border</code> to <code>#badge</code> to give it a glowing tech feel!</p>`,
+    <p class="text-sm italic text-gray-400 mt-4">Mission: Type exactly: <code>border: 5px solid red;</code> inside the #badge braces.</p>`,
     svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" style="background:#0f172a; border-radius:8px;">
     <rect x="50" y="40" width="140" height="70" fill="#1e293b" rx="10" stroke="#facc15" stroke-width="4" stroke-dasharray="10 10">
         <animate attributeName="stroke-dashoffset" values="0;40" dur="2s" repeatCount="indefinite" linear="linear" />

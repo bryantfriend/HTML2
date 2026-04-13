@@ -2,7 +2,7 @@ window.Lessons.lesson7.modules[18] = {
     title: "19. Breathing Space",
     body: `<p>Our badge looks great, but let's push it down a bit from the top of the screen.</p>
     <p>Using <code>margin-top</code>, we can add invisible space *outside* our element to push it around.</p>
-    <p class="text-sm italic text-gray-400 mt-4">Mission: Target <code>#badge</code> and add <code>margin-top: 40px;</code>.</p>`,
+    <p class="text-sm italic text-gray-400 mt-4">Mission: Type exactly: <code>margin-top: 50px;</code> inside the #badge braces.</p>`,
     svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" style="background:#0f172a; border-radius:8px;">
     <line x1="40" y1="20" x2="200" y2="20" stroke="#475569" stroke-width="4" stroke-dasharray="5 5" />
     <rect x="70" y="20" width="100" height="60" fill="#ec4899" rx="10">

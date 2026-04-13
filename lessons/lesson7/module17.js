@@ -2,7 +2,7 @@ window.Lessons.lesson7.modules[16] = {
     title: "17. Bold Statements",
     body: `<p>Our rank is spaced out, but the lines are too thin!</p>
     <p>Using <code>font-weight</code> we can control how thick the words are.</p>
-    <p class="text-sm italic text-gray-400 mt-4">Mission: Add <code>font-weight: bold;</code> to your <code>.rank</code> block!</p>`,
+    <p class="text-sm italic text-gray-400 mt-4">Mission: Type exactly: <code>font-weight: bold;</code> inside the .action-btn braces.</p>`,
     svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" style="background:#0f172a; border-radius:8px;">
     <text x="120" y="85" fill="#fbbf24" font-family="sans-serif" font-size="32" stroke="#fbbf24" stroke-width="0" text-anchor="middle">
         <animate attributeName="stroke-width" values="0;4;0" dur="2s" repeatCount="indefinite" />
