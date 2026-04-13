@@ -12,7 +12,11 @@ function processLoadModule(payload, currentState, contextData) {
         return newState;
     }
 
-    newState.editorContent = currentModule.initialCode || "";
+    if (currentModule.preserveCode && newState.editorContent && newState.editorContent.trim() !== '') {
+        // preserve the student's code from the previous module!
+    } else {
+        newState.editorContent = currentModule.initialCode || "";
+    }
     newState.missionCompleted = false; // Start fresh
 
     if (typeof currentModule.validator === 'function') {
