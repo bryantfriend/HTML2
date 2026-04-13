@@ -3,10 +3,16 @@ window.Lessons.lesson7.modules[10] = {
     body: `<p>A cyber badge's name should look authoritative.</p>
     <p>Using <code>text-transform: uppercase;</code> forces all letters to be capitalized, no matter how they were typed in the HTML!</p>
     <p class="text-sm italic text-gray-400 mt-4">Mission: Target <code>#hero-name</code> and set its <code>text-transform</code> to <code>uppercase</code>.</p>`,
-    svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" style="background:#1e293b; border-radius:8px;">
-        <rect x="40" y="40" width="160" height="70" fill="#ec4899" rx="10"/>
-        <text x="120" y="80" fill="white" font-family="sans-serif" font-size="16" text-anchor="middle">MODULE 11</text>
-    </svg>`,
+    svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" style="background:#0f172a; border-radius:8px;">
+    <text x="120" y="85" fill="#ec4899" font-family="sans-serif" font-size="30" font-weight="bold" text-anchor="middle">
+        <animate attributeName="opacity" values="1;0;1" dur="2s" repeatCount="indefinite"/>
+        a b c
+    </text>
+    <text x="120" y="85" fill="#22d3ee" font-family="sans-serif" font-size="30" font-weight="bold" text-anchor="middle">
+        <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite"/>
+        A B C
+    </text>
+</svg>`,
     widgetCode: `<!-- INTERACTIVE MODULE -->
 <script>
 (function() {

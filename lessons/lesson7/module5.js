@@ -3,10 +3,12 @@ window.Lessons.lesson7.modules[4] = {
     body: `<p>To be more specific, HTML tags can have an <code>id</code>. Our badge wrapper has <code>id="badge"</code>.</p>
     <p>In CSS, we select an ID by putting a hashtag (<code>#</code>) in front of its name: <code>#badge</code>.</p>
     <p class="text-sm italic text-gray-400 mt-4">Mission: Target <code>#badge</code> and give it a different <code>background-color</code>! Also try adding <code>padding: 20px;</code> so it has space inside.</p>`,
-    svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" style="background:#1e293b; border-radius:8px;">
-        <rect x="40" y="40" width="160" height="70" fill="#ec4899" rx="10"/>
-        <text x="120" y="80" fill="white" font-family="sans-serif" font-size="16" text-anchor="middle">MODULE 5</text>
-    </svg>`,
+    svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" style="background:#0f172a; border-radius:8px;">
+    <rect x="40" y="30" width="160" height="90" fill="#1e293b" rx="5" stroke="#334155" stroke-width="2">
+        <animate attributeName="fill" values="#1e293b;#334155;#1e293b" dur="2s" repeatCount="indefinite" />
+    </rect>
+    <text x="120" y="80" fill="#cbd5e1" font-family="monospace" font-size="20" text-anchor="middle">#badge</text>
+</svg>`,
     widgetCode: `<!-- INTERACTIVE MODULE -->
 <script>
 (function() {

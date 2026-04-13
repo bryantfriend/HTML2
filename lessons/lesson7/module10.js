@@ -3,10 +3,14 @@ window.Lessons.lesson7.modules[9] = {
     body: `<p>Our avatar is just a basic emoji wrapped in a div with <code>class="avatar"</code>.</p>
     <p>Want a massive avatar? You can use <code>font-size</code> to make the emoji gigantic, like <code>font-size: 80px;</code>.</p>
     <p class="text-sm italic text-gray-400 mt-4">Mission: Target <code>.avatar</code> and set its <code>font-size</code> to blow it up!</p>`,
-    svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" style="background:#1e293b; border-radius:8px;">
-        <rect x="40" y="40" width="160" height="70" fill="#ec4899" rx="10"/>
-        <text x="120" y="80" fill="white" font-family="sans-serif" font-size="16" text-anchor="middle">MODULE 10</text>
-    </svg>`,
+    svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" style="background:#0f172a; border-radius:8px;">
+    <g transform="translate(120, 75)">
+        <text x="0" y="15" fill="#2dd4bf" font-family="sans-serif" font-size="20" text-anchor="middle">
+            <animateTransform attributeName="transform" type="scale" values="1;3;1" dur="4s" repeatCount="indefinite" />
+            👾
+        </text>
+    </g>
+</svg>`,
     widgetCode: `<!-- INTERACTIVE MODULE -->
 <script>
 (function() {

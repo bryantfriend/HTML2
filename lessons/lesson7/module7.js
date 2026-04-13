@@ -3,10 +3,12 @@ window.Lessons.lesson7.modules[6] = {
     body: `<p>Let's make our badge pop by adding a solid border. The <code>border</code> property takes three values: thickness, style, and color.</p>
     <p>Example: <code>border: 5px solid red;</code></p>
     <p class="text-sm italic text-gray-400 mt-4">Mission: Add a <code>border</code> to <code>#badge</code> to give it a glowing tech feel!</p>`,
-    svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" style="background:#1e293b; border-radius:8px;">
-        <rect x="40" y="40" width="160" height="70" fill="#ec4899" rx="10"/>
-        <text x="120" y="80" fill="white" font-family="sans-serif" font-size="16" text-anchor="middle">MODULE 7</text>
-    </svg>`,
+    svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" style="background:#0f172a; border-radius:8px;">
+    <rect x="50" y="40" width="140" height="70" fill="#1e293b" rx="10" stroke="#facc15" stroke-width="4" stroke-dasharray="10 10">
+        <animate attributeName="stroke-dashoffset" values="0;40" dur="2s" repeatCount="indefinite" linear="linear" />
+    </rect>
+    <text x="120" y="80" fill="#facc15" font-family="sans-serif" font-size="18" text-anchor="middle" font-weight="bold">BORDER</text>
+</svg>`,
     widgetCode: `<!-- INTERACTIVE MODULE -->
 <script>
 (function() {

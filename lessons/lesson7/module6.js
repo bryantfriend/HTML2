@@ -3,10 +3,12 @@ window.Lessons.lesson7.modules[5] = {
     body: `<p>A sharp square badge is cool, but a rounded badge looks sleek and futuristic!</p>
     <p>We use the <code>border-radius</code> property to round the corners of an element.</p>
     <p class="text-sm italic text-gray-400 mt-4">Mission: Add a <code>border-radius</code> to <code>#badge</code>. Try 10px, or maybe even 50px!</p>`,
-    svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" style="background:#1e293b; border-radius:8px;">
-        <rect x="40" y="40" width="160" height="70" fill="#ec4899" rx="10"/>
-        <text x="120" y="80" fill="white" font-family="sans-serif" font-size="16" text-anchor="middle">MODULE 6</text>
-    </svg>`,
+    svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" style="background:#0f172a; border-radius:8px;">
+    <rect x="70" y="25" width="100" height="100" fill="none" stroke="#22d3ee" stroke-width="4">
+        <animate attributeName="rx" values="0;50;0" dur="4s" repeatCount="indefinite" />
+        <animate attributeName="stroke" values="#22d3ee;#ec4899;#22d3ee" dur="4s" repeatCount="indefinite" />
+    </rect>
+</svg>`,
     widgetCode: `<!-- INTERACTIVE MODULE -->
 <script>
 (function() {

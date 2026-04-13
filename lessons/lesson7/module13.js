@@ -3,10 +3,17 @@ window.Lessons.lesson7.modules[12] = {
     body: `<p>We can make CSS respond to our mouse! If we add <code>:hover</code> to a selector, the rules only apply when the mouse is over it.</p>
     <p>Example: <code>.action-btn:hover { background-color: white; }</code></p>
     <p class="text-sm italic text-gray-400 mt-4">Mission: Add an <code>.action-btn:hover</code> block and change its <code>background-color</code>. Move your mouse over the button in the preview to test it!</p>`,
-    svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" style="background:#1e293b; border-radius:8px;">
-        <rect x="40" y="40" width="160" height="70" fill="#ec4899" rx="10"/>
-        <text x="120" y="80" fill="white" font-family="sans-serif" font-size="16" text-anchor="middle">MODULE 13</text>
-    </svg>`,
+    svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" style="background:#0f172a; border-radius:8px;">
+    <rect x="50" y="60" width="140" height="40" fill="#22d3ee" rx="8">
+        <animate attributeName="fill" values="#22d3ee;#ffffff;#22d3ee" dur="3s" repeatCount="indefinite"/>
+    </rect>
+    <text x="120" y="85" fill="#0f172a" font-family="sans-serif" font-size="16" font-weight="bold" text-anchor="middle">HOVER ME</text>
+    
+    <g transform="translate(190, 120)">
+        <animateTransform attributeName="transform" type="translate" values="0,0; -70,-35; 0,0" dur="3s" repeatCount="indefinite" />
+        <path d="M0,0 L15,5 L10,12 L18,22 L14,25 L6,15 L0,22 Z" fill="white" stroke="black" stroke-width="1.5" />
+    </g>
+</svg>`,
     widgetCode: `<!-- INTERACTIVE MODULE -->
 <script>
 (function() {
