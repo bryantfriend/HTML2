@@ -9,25 +9,15 @@ window.Lessons.lesson7.modules[0] = {
     </rect>
 </svg>`,
     widgetCode: `<!-- INTERACTIVE MODULE -->
-<script>
-(function() {
-    const editor = document.getElementById('code-editor');
-    if (editor) {
-        editor.readOnly = true;
-        editor.style.opacity = "0.5";
-        editor.value = "/* Complete the drag-and-drop mini-game below! */";
-    }
-})();
-</script>`,
-    previewScaffold: `<div style="display:flex; justify-content:space-around; align-items:center; height: 180px; text-align:center;">
+<div style="display:flex; justify-content:space-around; align-items:center; height: 180px; text-align:center; background: #0f172a; border-radius: 8px; margin-top: 10px; border: 1px solid #1e3a5f; padding: 10px;">
     <div id="wardrobe" style="flex:1;">
-        <p style="font-family: monospace; color: #a855f7;">CSS Wardrobe</p>
-        <div draggable="true" id="drag-shirt" style="width: 60px; height: 50px; background:#ec4899; color:white; border-radius: 8px; margin: 10px auto; cursor:grab; line-height:50px; font-family:sans-serif; font-size:12px;">Shirt</div>
-        <div draggable="true" id="drag-pants" style="width: 60px; height: 50px; background:#22d3ee; color:black; border-radius: 8px; margin: 10px auto; cursor:grab; line-height:50px; font-family:sans-serif; font-size:12px;">Pants</div>
+        <p style="font-family: monospace; color: #a855f7; margin-bottom: 5px; font-weight: bold;">CSS Wardrobe</p>
+        <div draggable="true" id="drag-shirt" style="width: 60px; height: 50px; background:#ec4899; color:white; border-radius: 8px; margin: 10px auto; cursor:grab; line-height:50px; font-family:sans-serif; font-size:12px; font-weight:bold; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">Shirt</div>
+        <div draggable="true" id="drag-pants" style="width: 60px; height: 50px; background:#22d3ee; color:black; border-radius: 8px; margin: 10px auto; cursor:grab; line-height:50px; font-family:sans-serif; font-size:12px; font-weight:bold; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">Pants</div>
     </div>
     <div id="skeleton-box" style="flex:1;">
-        <p style="font-family: monospace; color: #94a3b8;">HTML Skeleton</p>
-        <div id="dropzone" style="width: 80px; height: 130px; border: 2px dashed #475569; border-radius: 8px; margin: 0 auto; display:flex; flex-direction:column; justify-content:flex-start; align-items:center; padding-top:10px; transition: 0.3s background;">
+        <p style="font-family: monospace; color: #94a3b8; margin-bottom: 5px; font-weight: bold;">HTML Skeleton</p>
+        <div id="dropzone" style="width: 80px; height: 130px; border: 2px dashed #475569; border-radius: 8px; margin: 0 auto; display:flex; flex-direction:column; justify-content:flex-start; align-items:center; padding-top:10px; transition: 0.3s background; background: #1e293b;">
             <div style="font-size: 28px; line-height:1;">💀</div>
             <div id="shirt-slot" style="width: 50px; height: 40px; margin-top:5px; border: 1px dotted #334155;"></div>
             <div id="pants-slot" style="width: 40px; height: 40px; margin-top:2px; border: 1px dotted #334155;"></div>
@@ -36,6 +26,14 @@ window.Lessons.lesson7.modules[0] = {
 </div>
 <script>
 (function() {
+    const editor = document.getElementById('code-editor');
+    if (editor) {
+        editor.readOnly = true;
+        editor.style.opacity = "0.5";
+        // Do not overwrite editor.value immediately so initialCode handles it, just leave instructions.
+        editor.value = "/* Complete the drag-and-drop mini-game on the left! */";
+    }
+
     let itemsDropped = 0;
     const dropzone = document.getElementById('dropzone');
     const dragShirt = document.getElementById('drag-shirt');
@@ -47,11 +45,11 @@ window.Lessons.lesson7.modules[0] = {
     dragShirt.addEventListener('dragstart', handleDragStart);
     dragPants.addEventListener('dragstart', handleDragStart);
 
-    dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.style.backgroundColor = '#1e293b'; });
-    dropzone.addEventListener('dragleave', e => { dropzone.style.backgroundColor = 'transparent'; });
+    dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.style.backgroundColor = '#334155'; });
+    dropzone.addEventListener('dragleave', e => { dropzone.style.backgroundColor = '#1e293b'; });
     dropzone.addEventListener('drop', e => {
         e.preventDefault();
-        dropzone.style.backgroundColor = 'transparent';
+        dropzone.style.backgroundColor = '#1e293b';
         const id = e.dataTransfer.getData('text/plain');
         if (id === 'drag-shirt') {
             shirtSlot.style.background = '#ec4899';
@@ -78,7 +76,7 @@ window.Lessons.lesson7.modules[0] = {
     });
 })();
 </script>`,
-    initialCode: ``,
+    initialCode: `/* Complete the drag-and-drop mini-game on the left! */`,
     preserveCode: false,
     progress: 5,
     validator: function(code) { return code.includes("READY"); }
