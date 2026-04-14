@@ -19,7 +19,7 @@ window.Lessons.lesson7.modules[9] = {
 })();
 </script>`,
     previewScaffold: `<div id="badge">
-  <div class="avatar" style="font-size: 50px;">👾</div>
+  <div class="avatar">👾</div>
   <h1 id="hero-name">New Recruit</h1>
   <p class="rank">Level 1 Hacker</p>
   <button class="action-btn">Scan Network</button>

@@ -74,6 +74,9 @@ function finalizeLessonModule(payload, newState, oldState, contextData) {
                 if (window.updateLessonLineNumbers) {
                     window.updateLessonLineNumbers();
                 }
+                if (window.IntentEngine && window.Intents && window.Intents.updatePreview) {
+                    window.IntentEngine.run(window.Intents.updatePreview, { code: codeEditor.value });
+                }
             }
 
             const inputContainer = document.getElementById('code-input-container');
