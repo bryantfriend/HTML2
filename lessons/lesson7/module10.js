@@ -18,7 +18,12 @@ window.Lessons.lesson7.modules[9] = {
     if (editor) { editor.readOnly = false; editor.style.opacity = "1"; }
 })();
 </script>`,
-    previewScaffold: `<div id="badge">\n  <div class="avatar">👾</div>\n  <h1 id="hero-name">New Recruit</h1>\n  <p class="rank">Level 1 Hacker</p>\n  <button class="action-btn">Scan Network</button>\n</div>`,
+    previewScaffold: `<div id="badge">
+  <div class="avatar" style="font-size: 50px;">👾</div>
+  <h1 id="hero-name">New Recruit</h1>
+  <p class="rank">Level 1 Hacker</p>
+  <button class="action-btn">Scan Network</button>
+</div>`,
     initialCode: `<style>\n  body {\n    background-color: black;\n  }\n  #badge {\n    background-color: #333;\n    padding: 20px;\n    border-radius: 15px;\n    border: 3px solid cyan;\n    text-align: center;\n  }\n  h1 {\n    color: cyan;\n  }\n  .rank {\n    color: yellow;\n  }\n  .avatar {\n    \n  }\n</style>`,
     preserveCode: true,
     progress: 72,

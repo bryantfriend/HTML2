@@ -13,6 +13,12 @@ window.Lessons.lesson7.modules[2] = {
     </circle>
 </svg>`,
     widgetCode: `<!-- INTERACTIVE MODULE -->
+<div id="skeleton-box" style="text-align:center; background:#1e293b; padding:15px; border-radius: 8px; margin-top:10px; border: 1px solid #1e3a5f;">
+  <style>#shirt { background-color: #64748b; } #pants { background-color: #475569; }</style>
+  <div style="font-size: 50px; line-height: 1; margin-bottom:-5px;">💀</div>
+  <div id="shirt" style="width: 70px; height: 60px; border-radius: 8px; margin: 0 auto; transition: background 0.3s;"></div>
+  <div id="pants" style="width: 50px; height: 60px; border-radius: 4px; margin: 5px auto 0;"></div>
+</div>
 <script>
 (function() {
     const editor = document.getElementById('code-editor');
@@ -22,10 +28,12 @@ window.Lessons.lesson7.modules[2] = {
     }
 })();
 </script>`,
-    previewScaffold: `<div id="skeleton-box" style="text-align:center;">
+
+    previewScaffold: `<div id="skeleton-box" style="text-align:center; padding: 20px;">
+  <style>#shirt { background-color: #64748b; } #pants { background-color: #475569; }</style>
   <div style="font-size: 50px; line-height: 1; margin-bottom:-5px;">💀</div>
-  <div id="shirt" style="width: 70px; height: 60px; background: #64748b; border-radius: 8px; margin: 0 auto;"></div>
-  <div id="pants" style="width: 50px; height: 60px; background: #475569; border-radius: 4px; margin: 5px auto 0;"></div>
+  <div id="shirt" style="width: 70px; height: 60px; border-radius: 8px; margin: 0 auto; transition: background 0.3s;"></div>
+  <div id="pants" style="width: 50px; height: 60px; border-radius: 4px; margin: 5px auto 0;"></div>
 </div>`,
     initialCode: `<style>\n  #shirt {\n    \n  }\n</style>`,
     preserveCode: true,

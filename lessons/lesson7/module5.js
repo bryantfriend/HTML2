@@ -19,7 +19,12 @@ window.Lessons.lesson7.modules[4] = {
     }
 })();
 </script>`,
-    previewScaffold: `<div id="badge">\n  <div class="avatar" style="font-size: 50px;">👾</div>\n  <h1 id="hero-name">New Recruit</h1>\n  <p class="rank">Level 1 Hacker</p>\n  <button class="action-btn">Scan Network</button>\n</div>`,
+    previewScaffold: `<div id="badge">
+  <div class="avatar" style="font-size: 50px;">👾</div>
+  <h1 id="hero-name">New Recruit</h1>
+  <p class="rank">Level 1 Hacker</p>
+  <button class="action-btn">Scan Network</button>
+</div>`,
     initialCode: `<style>\n  body {\n    background-color: black;\n  }\n  #badge {\n    \n  }\n</style>`,
     preserveCode: true,
     progress: 30,

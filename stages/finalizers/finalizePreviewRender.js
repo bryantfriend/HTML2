@@ -5,8 +5,34 @@ function finalizePreviewRender(payload, newState, oldState, contextData) {
             const lesson = (contextData.courseData && contextData.courseData.lessons) ? contextData.courseData.lessons[newState.currentLessonIndex] : null;
             const currentModule = lesson ? lesson.modules[newState.currentModuleIndex] : null;
             const scaffold = currentModule && currentModule.previewScaffold ? currentModule.previewScaffold : "";
-            let safeEditorContent = (newState.editorContent || "").replace(/(^|\\}|(?:<\\/style>)|(?:<style>)|[\\s\\n])body\\s*\\{/gi, '$1#preview-area {');
-            previewArea.innerHTML = scaffold + safeEditorContent;
+            
+            // Robustly scope 'body' styles to the preview area only
+            let scopedCode = (newState.editorContent || "").replace(/(^|\s|,|}|(?:<\/style>)|(?:<style>))body(\s*\{|\s*,)/gi, '$1#preview-area$2');
+            
+            // DEFENSIVE: If it's Lesson 7 and the scaffold somehow failed, provide a fallback badge box
+            // so the student at least sees a container to style.
+            let finalHtml = scaffold;
+            if (lesson && lesson.id === 'lesson7' && !finalHtml.includes('id="badge"') && !finalHtml.includes('id="skeleton-box"')) {
+                finalHtml = '<div id="badge" style="padding:20px; border:1px dashed #334155;">[NEURAL_LINK_ACTIVE]</div>';
+            }
+
+            previewArea.innerHTML = finalHtml + scopedCode;
+
+            // SYNC STYLING TO TOP PANEL: If the user styles an ID like #shirt or #pants, 
+            // we want it to reflect in the SVG/Widget panel too.
+            const svgDisplay = document.getElementById('svg-display');
+            if (svgDisplay && scopedCode.includes('<style>')) {
+                const existingStyle = svgDisplay.querySelector('style.student-sync-css');
+                if (existingStyle) existingStyle.remove();
+                
+                const styleMatch = scopedCode.match(/<style>([\s\S]*?)<\/style>/i);
+                if (styleMatch) {
+                    const newStyle = document.createElement('style');
+                    newStyle.className = 'student-sync-css';
+                    newStyle.textContent = styleMatch[1];
+                    svgDisplay.appendChild(newStyle);
+                }
+            }
 
             // Execute any scripts that were injected via innerHTML
             const scripts = previewArea.querySelectorAll('script');
