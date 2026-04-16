@@ -1,12 +1,44 @@
-window.Lessons.lesson8.modules[8] = {
-    title: "9. Borders",
-    body: `<section class="box-brief">
+const fs = require('fs');
+const path = require('path');
+
+const outDir = path.join(__dirname, '..', 'lessons', 'lesson8');
+fs.mkdirSync(outDir, { recursive: true });
+
+function esc(value) {
+  return String(value)
+    .replace(/\\/g, '\\\\')
+    .replace(/`/g, '\\`')
+    .replace(/\$\{/g, '\\${');
+}
+
+function cssRuleText(rules) {
+  return rules.map((rule) => `${rule.property}: ${rule.value};`).join('\n');
+}
+
+function moduleFile(index, mod) {
+  const marker = `L8_M${index + 1}_WIN`;
+  const progress = (index + 1) * 5;
+  const config = JSON.stringify({
+    marker,
+    index: index + 1,
+    total: modules.length,
+    kind: mod.kind,
+    goal: mod.goal,
+    selector: mod.selector || '.box',
+    rules: mod.rules,
+    options: mod.options || [],
+    quiz: mod.quiz || []
+  });
+
+  return `window.Lessons.lesson8.modules[${index}] = {
+    title: ${JSON.stringify(mod.title)},
+    body: \`<section class="box-brief">
       <p class="box-kicker">Box Model Lab</p>
-      <h3>Pick a border style.</h3>
-      <p><strong>Goal:</strong> Create a 5px dashed black border.</p>
-    </section>`,
-    svg: ``,
-    widgetCode: `<!-- INTERACTIVE MODULE -->
+      <h3>${esc(mod.short)}</h3>
+      <p><strong>Goal:</strong> ${esc(mod.goal)}</p>
+    </section>\`,
+    svg: \`\`,
+    widgetCode: \`<!-- INTERACTIVE MODULE -->
 <style>
 .box-brief{display:grid;gap:8px;padding:16px;border-radius:8px;background:#111827;border:1px solid rgba(103,232,249,.22);color:#dbeafe}.box-brief h3{margin:0;color:#f8fafc;font-size:21px}.box-brief p{margin:0;line-height:1.45}.box-kicker{color:#67e8f9;text-transform:uppercase;letter-spacing:.18em;font-size:11px;font-weight:800}
 .box-game{display:grid;gap:14px;width:100%;padding:16px;border-radius:8px;background:linear-gradient(180deg,#101827,#172033);border:1px solid rgba(103,232,249,.25);color:#f8fafc;box-shadow:0 18px 38px rgba(0,0,0,.28)}
@@ -20,20 +52,20 @@ window.Lessons.lesson8.modules[8] = {
 .box-demo{transition:all .2s ease;display:grid;place-items:center;text-align:center;font-weight:900}.target-outline{position:absolute;border:3px dashed #ef4444;border-radius:8px;pointer-events:none}.choice-card{padding:12px;border-radius:8px;background:white;border:2px solid #cbd5e1;cursor:pointer;font-weight:900;min-width:120px;text-align:center;transition:all .18s ease}.choice-card.selected{border-color:#2563eb;box-shadow:0 0 0 4px rgba(37,99,235,.12)}.choice-card.good{border-color:#16a34a;background:#dcfce7}.choice-card.bad{border-color:#dc2626;background:#fee2e2}
 .box-confetti{position:absolute;width:8px;height:12px;background:#22c55e;animation:box-pop 720ms ease forwards}@keyframes box-pop{to{transform:translate(var(--x),var(--y)) rotate(540deg);opacity:0}}@media(max-width:800px){.box-layout{grid-template-columns:1fr}.box-stage{min-height:250px}.box-btn{width:100%}.choice-card{flex:1 1 140px}}
 </style>
-<div class="box-game" data-box-game data-config='{"marker":"L8_M9_WIN","index":9,"total":20,"kind":"choices","goal":"Create a 5px dashed black border.","selector":".box","rules":[{"property":"border","value":"5px dashed black"}],"options":[{"label":"5px solid black","value":"5px solid black"},{"label":"5px dashed black","value":"5px dashed black"},{"label":"5px dotted black","value":"5px dotted black"}],"quiz":[]}'>
+<div class="box-game" data-box-game data-config='${esc(config)}'>
   <div class="box-hud">
-    <div class="box-hud-row"><div class="box-title">Module 9 / 20</div><div class="box-stat" data-xp>XP 0</div><div class="box-stat" data-attempts>Attempts 0</div></div>
+    <div class="box-hud-row"><div class="box-title">Module ${index + 1} / ${modules.length}</div><div class="box-stat" data-xp>XP 0</div><div class="box-stat" data-attempts>Attempts 0</div></div>
     <div class="box-meter"><span data-xp-bar></span></div>
     <div class="box-meter"><span data-progress-bar></span></div>
   </div>
-  <div class="box-goal">Goal: Create a 5px dashed black border.</div>
+  <div class="box-goal">Goal: ${esc(mod.goal)}</div>
   <div class="box-layout">
     <div class="box-stage" data-stage></div>
     <div class="box-side">
       <pre class="box-code" data-code></pre>
       <div class="box-task">
         <label data-task-label>Type the CSS rule:</label>
-        <input class="box-input" data-css-input spellcheck="false" autocomplete="off" placeholder="border: 5px dashed black;">
+        <input class="box-input" data-css-input spellcheck="false" autocomplete="off" placeholder="${esc(cssRuleText(mod.rules))}">
       </div>
     </div>
   </div>
@@ -48,13 +80,13 @@ window.Lessons.lesson8.modules[8] = {
       const state={xp:Number(localStorage.getItem(storeKey)||0)};
       function sound(type){ window.lesson8LastSound=type; try{ const A=window.AudioContext||window.webkitAudioContext; if(!A)return; const ctx=new A(); const osc=ctx.createOscillator(); const gain=ctx.createGain(); osc.frequency.value=type==='success'?740:type==='error'?180:420; gain.gain.value=.035; osc.connect(gain); gain.connect(ctx.destination); osc.start(); setTimeout(function(){osc.stop();ctx.close();},90);}catch(e){} }
       function addXp(amount){ state.xp+=amount; localStorage.setItem(storeKey,String(state.xp)); }
-      function cssEscape(value){return String(value).replace(/[-\/\\^$*+?.()|[\]{}]/g,'\\$&')}
-      function ruleMatches(text,rule){ const pattern=new RegExp(rule.property.replace(/-/g,'\\-')+'\\s*:\\s*'+cssEscape(rule.value)+'\\s*;?','i'); return pattern.test(text); }
+      function cssEscape(value){return String(value).replace(/[-\\/\\\\^$*+?.()|[\\]{}]/g,'\\\\$&')}
+      function ruleMatches(text,rule){ const pattern=new RegExp(rule.property.replace(/-/g,'\\\\-')+'\\\\s*:\\\\s*'+cssEscape(rule.value)+'\\\\s*;?','i'); return pattern.test(text); }
       function typedOk(root,cfg){ const text=root.querySelector('[data-css-input]').value.trim(); return cfg.rules.every(function(rule){return ruleMatches(text,rule);}); }
       function updateHud(root,cfg){ root.querySelector('[data-xp]').textContent='XP '+state.xp; root.querySelector('[data-xp-bar]').style.width=Math.min(100,state.xp%100)+'%'; root.querySelector('[data-progress-bar]').style.width=Math.round((cfg.index/cfg.total)*100)+'%'; root.querySelector('[data-attempts]').textContent='Attempts '+(root._attempts||0); }
       function setFeedback(root,text,mode){ const el=root.querySelector('[data-feedback]'); el.textContent=text; el.classList.toggle('good',mode==='good'); el.classList.toggle('bad',mode==='bad'); }
       function confetti(root){ const stage=root.querySelector('[data-stage]'); for(let i=0;i<26;i++){ const bit=document.createElement('i'); bit.className='box-confetti'; bit.style.left='50%'; bit.style.top='50%'; bit.style.background=['#22c55e','#67e8f9','#facc15','#fb7185'][i%4]; bit.style.setProperty('--x',(Math.random()*360-180)+'px'); bit.style.setProperty('--y',(Math.random()*-220-40)+'px'); stage.appendChild(bit); setTimeout(()=>bit.remove(),760); } }
-      function renderCode(root,cfg){ const active=root._activeRule||cfg.rules[0]; const lines=[cfg.selector+' {'].concat(cfg.rules.map(function(rule){ const open=rule.property===active.property?'<mark>':''; const close=rule.property===active.property?'</mark>':''; return '  '+open+rule.property+': '+rule.value+';'+close;}),['}']); root.querySelector('[data-code]').innerHTML=lines.join('\n'); }
+      function renderCode(root,cfg){ const active=root._activeRule||cfg.rules[0]; const lines=[cfg.selector+' {'].concat(cfg.rules.map(function(rule){ const open=rule.property===active.property?'<mark>':''; const close=rule.property===active.property?'</mark>':''; return '  '+open+rule.property+': '+rule.value+';'+close;}),['}']); root.querySelector('[data-code]').innerHTML=lines.join('\\n'); }
       function setRules(root,cfg,updates){ cfg.rules.forEach(function(rule){ if(Object.prototype.hasOwnProperty.call(updates,rule.property)){ rule.value=String(updates[rule.property]); root._activeRule=rule; }}); renderCode(root,cfg); }
       function attempt(root,cfg,msg,bad){ root._attempts=(root._attempts||0)+1; const decay=Math.max(1,5-Math.floor((root._attempts-1)/3)); addXp(decay); updateHud(root,cfg); setFeedback(root,msg+(bad?'':' (+'+decay+' XP)'),bad?'bad':''); sound(bad?'error':'click'); }
       function tryWin(root,cfg,msg){ const input=root.querySelector('[data-css-input]'); const ok=typedOk(root,cfg); input.classList.toggle('ok',ok); input.classList.toggle('no',!ok&&input.value.trim().length>0); if(!root._visualDone){ setFeedback(root,'Hit the visual target first, then type the CSS.','bad'); return; } if(!ok){ setFeedback(root,'Now type the matching CSS exactly enough for the browser to understand.','bad'); return; } if(root.dataset.won==='true')return; root.dataset.won='true'; addXp(10); updateHud(root,cfg); setFeedback(root,msg||'Perfect! Visual target plus CSS matched.','good'); sound('success'); confetti(root); window.completeModule(cfg.marker); }
@@ -84,8 +116,64 @@ window.Lessons.lesson8.modules[8] = {
   document.querySelectorAll('[data-box-game]').forEach(function(root){ if(root.dataset.ready==='true')return; root.dataset.ready='true'; window.Lesson8StrictGame.init(root); });
   const editor=document.getElementById('code-editor'); if(editor){ editor.readOnly=true; editor.style.opacity='.65'; }
 })();
-</script>`,
-    initialCode: `<!-- Complete the visual challenge and typed CSS task. -->`,
-    progress: 45,
-    validator: function(code) { return code.includes("L8_M9_WIN"); }
-};
+</script>\`,
+    initialCode: \`<!-- Complete the visual challenge and typed CSS task. -->\`,
+    progress: ${progress},
+    validator: function(code) { return code.includes("${marker}"); }
+};`;
+}
+
+const quiz15 = [
+  { q: 'What pushes boxes apart?', a: ['padding', 'margin', 'radius'], c: 1 },
+  { q: 'Margin lives...', a: ['outside', 'inside', 'inside text'], c: 0 },
+  { q: 'Big gap between cards?', a: ['margin', 'font-size', 'color'], c: 0 }
+];
+const quiz16 = [
+  { q: 'What gives text breathing room?', a: ['padding', 'margin', 'display'], c: 0 },
+  { q: 'Padding is...', a: ['inside', 'outside', 'invisible'], c: 0 },
+  { q: 'Bigger background area?', a: ['padding', 'href', 'src'], c: 0 }
+];
+const quiz17 = [
+  { q: 'Rounded corners use...', a: ['border-radius', 'padding-top', 'margin'], c: 0 },
+  { q: 'A circle needs radius...', a: ['50%', '5px', 'solid'], c: 0 },
+  { q: 'Sharp to smooth?', a: ['radius', 'width', 'inline'], c: 0 }
+];
+
+const modules = [
+  { title: '1. Everything is a Box', short: 'Reveal the invisible boxes.', goal: 'Highlight every element box, then type the outline rule.', kind: 'clickBoxes', selector: '*', rules: [{ property: 'outline', value: '3px solid cyan' }] },
+  { title: '2. Visualizing the Box', short: 'Make the box appear.', goal: 'Match an 8px red border.', kind: 'borderSlider', selector: '.box', rules: [{ property: 'border', value: '8px solid red' }] },
+  { title: '3. Height and Width', short: 'Match the target size.', goal: 'Resize to exactly 180px by 110px.', kind: 'sizeMatch', selector: '.box', rules: [{ property: 'width', value: '180px' }, { property: 'height', value: '110px' }] },
+  { title: '4. Padding', short: 'Give text breathing room.', goal: 'Set inside space to 24px.', kind: 'singleSlider', selector: '.box', rules: [{ property: 'padding', value: '24px' }] },
+  { title: '5. Specific Padding', short: 'Fix every side.', goal: 'Set top/bottom to 20px and left/right to 30px.', kind: 'fourPadding', selector: '.box', rules: [{ property: 'padding-top', value: '20px' }, { property: 'padding-right', value: '30px' }, { property: 'padding-bottom', value: '20px' }, { property: 'padding-left', value: '30px' }] },
+  { title: '6. Margin', short: 'Separate overlapping boxes.', goal: 'Use exactly 30px of margin to separate the boxes.', kind: 'margin', selector: '.box', rules: [{ property: 'margin', value: '30px' }] },
+  { title: '7. Centering', short: 'Find the centering rule.', goal: 'Choose and type the rule that centers the box.', kind: 'choices', selector: '.box', rules: [{ property: 'margin', value: '0 auto' }], options: [{ label: 'float: left', value: 'left' }, { label: 'margin: 0 auto', value: '0 auto' }, { label: 'padding: 40px', value: '40px' }] },
+  { title: '8. Margin vs Padding', short: 'Inside or outside?', goal: 'Identify padding as inside space, then type it.', kind: 'insideOutside', selector: '.box', rules: [{ property: 'padding', value: '20px' }] },
+  { title: '9. Borders', short: 'Pick a border style.', goal: 'Create a 5px dashed black border.', kind: 'choices', selector: '.box', rules: [{ property: 'border', value: '5px dashed black' }], options: [{ label: '5px solid black', value: '5px solid black' }, { label: '5px dashed black', value: '5px dashed black' }, { label: '5px dotted black', value: '5px dotted black' }] },
+  { title: '10. Border Radius', short: 'Morph square to rounded.', goal: 'Round the corners to 30px.', kind: 'singleSlider', selector: '.box', rules: [{ property: 'border-radius', value: '30px' }] },
+  { title: '11. Circle', short: 'Build a perfect circle.', goal: 'Turn the square into a circle with 50%.', kind: 'singleSlider', selector: '.box', rules: [{ property: 'border-radius', value: '50%' }] },
+  { title: '12. Box Sizing Bug', short: 'Break it, then fix it.', goal: 'Use border-box so padding stays inside the width.', kind: 'boxSizing', selector: '.box', rules: [{ property: 'box-sizing', value: 'border-box' }] },
+  { title: '13. Block vs Inline', short: 'Make elements share one line.', goal: 'Make the elements appear on one line with inline display.', kind: 'displayChoice', selector: '.item', rules: [{ property: 'display', value: 'inline' }], options: [{ label: 'display: block', value: 'block' }, { label: 'display: inline', value: 'inline' }] },
+  { title: '14. Inline-Block', short: 'Side-by-side puzzle.', goal: 'Make boxes sit in one row while keeping width and height.', kind: 'displayChoice', selector: '.box', rules: [{ property: 'display', value: 'inline-block' }], options: [{ label: 'display: block', value: 'block' }, { label: 'display: inline-block', value: 'inline-block' }] },
+  { title: '15. Review: Margin', short: 'Timed margin burst.', goal: 'Win the quiz, then type the margin rule.', kind: 'quiz', selector: '.box', rules: [{ property: 'margin', value: '50px' }], quiz: quiz15 },
+  { title: '16. Review: Padding', short: 'Timed padding burst.', goal: 'Win the quiz, then type the padding rule.', kind: 'quiz', selector: '.box', rules: [{ property: 'padding', value: '30px' }], quiz: quiz16 },
+  { title: '17. Review: Radius', short: 'Timed radius burst.', goal: 'Win the quiz, then type the radius rule.', kind: 'quiz', selector: '.box', rules: [{ property: 'border-radius', value: '15px' }], quiz: quiz17 },
+  { title: '18. Shorthand Padding', short: 'Decode the clock.', goal: 'Choose top, right, bottom, left, then type the shorthand.', kind: 'shorthand', selector: '.box', rules: [{ property: 'padding', value: '10px 20px 30px 40px' }] },
+  { title: '19. Transparent Borders', short: 'Discover the hidden box.', goal: 'Make background and border transparent while space remains.', kind: 'transparent', selector: '.ghost', rules: [{ property: 'background', value: 'transparent' }, { property: 'border', value: '10px solid transparent' }] },
+  { title: '20. The Ultimate Box Challenge', short: 'Build the card.', goal: 'Match the social card target with padding, margin, border, and radius.', kind: 'finalCard', selector: '.card', rules: [{ property: 'padding', value: '20px' }, { property: 'margin', value: '20px' }, { property: 'border-radius', value: '15px' }, { property: 'border', value: '2px solid cyan' }] }
+];
+
+fs.writeFileSync(path.join(outDir, 'metadata.js'), `window.Lessons = window.Lessons || {};
+window.Lessons.lesson8 = {
+    id: "lesson8",
+    title: "Lesson 8: The Box Model",
+    description: "Play fast box-model labs that make students see, adjust, read, and type real CSS.",
+    gameTitle: "Box Builder",
+    gamePath: "minigames/game8.html",
+    modules: []
+};`);
+
+modules.forEach((mod, index) => {
+  fs.writeFileSync(path.join(outDir, `module${index + 1}.js`), moduleFile(index, mod));
+});
+
+console.log('Generated strict interactive Lesson 8 box-model modules.');

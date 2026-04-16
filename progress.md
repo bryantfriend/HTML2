@@ -86,6 +86,15 @@ Original prompt: Let's update all the modules in Lesson 4 to be more interactive
   - Static verification: `node --check` passed for the generator and all generated Lesson 8 module files.
   - Browser verification is still pending because Playwright smoke-test attempts hung in this desktop environment even after switching from Edge to bundled Chromium and blocking external CDN requests.
   - Updated the root `build_lesson8.js` entry point so future `node build_lesson8.js` runs call the new game generator instead of restoring the older typing-only modules.
+- Tightened Lesson 8 Box Model upgrade after review:
+  - Added `scripts/build_lesson8_strict_game.js` and changed `build_lesson8.js` to call it.
+  - Every generated Lesson 8 module now includes a clear `Goal: ...`, visual problem, interactive fix, live CSS code panel with highlighted active property, and a required typed CSS task.
+  - Unlock now requires both the visual challenge and correct typed CSS syntax/value; random interaction alone no longer completes modules.
+  - Attempts are counted and XP per attempt decays over repeated attempts to reduce spam.
+  - Module 6 now starts with overlapping boxes and requires exactly `margin: 30px;`.
+  - Module 13 now uses a visual display challenge where elements must move onto one line with `display: inline;`.
+  - Module 18 now requires decoding top, right, bottom, left before typing `padding: 10px 20px 30px 40px;`.
+  - Verification: `node --check scripts/build_lesson8_strict_game.js`, `node build_lesson8.js`, and `node --check` for every generated Lesson 8 module passed.
     - Module 11 passes only with the `DOCTYPE_PICKED` marker plus `<!DOCTYPE HTML>`
 - Small polish fix:
   - Updated the Module 8 demo text so it now says “finish the skeleton” instead of the leftover “build the house.”

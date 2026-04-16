@@ -1,4 +1,4 @@
-require('./scripts/build_lesson8_game');
+require('./scripts/build_lesson8_strict_game');
 /*
 const fs = require('fs');
 const path = require('path');
