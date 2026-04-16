@@ -77,7 +77,15 @@ Original prompt: Let's update all the modules in Lesson 4 to be more interactive
   - Found and fixed a Module 11 runtime issue: a top-level `const` in `lessons/intro/module9.js` could be redeclared when the module script was re-executed, which blocked the mission flow. Wrapped that editor setup in an IIFE.
   - Node validator check confirmed:
     - Module 8 passes only with skeleton completion marker plus `<body></body>`
-    - Module 9 passes only with the `STACK_SEEN` marker
+  - Module 9 passes only with the `STACK_SEEN` marker
+
+- Started Lesson 8 Box Model upgrade:
+  - Added `scripts/build_lesson8_game.js`, a new generator that rebuilds all 20 Lesson 8 modules as interactive mini-games.
+  - Each Lesson 8 module now uses a reusable game shell with XP, progress bars, instant feedback, sound hooks, confetti, and marker-based unlocks.
+  - Rebuilt `lessons/lesson8/module1.js` through `module20.js` and updated Lesson 8 metadata copy.
+  - Static verification: `node --check` passed for the generator and all generated Lesson 8 module files.
+  - Browser verification is still pending because Playwright smoke-test attempts hung in this desktop environment even after switching from Edge to bundled Chromium and blocking external CDN requests.
+  - Updated the root `build_lesson8.js` entry point so future `node build_lesson8.js` runs call the new game generator instead of restoring the older typing-only modules.
     - Module 11 passes only with the `DOCTYPE_PICKED` marker plus `<!DOCTYPE HTML>`
 - Small polish fix:
   - Updated the Module 8 demo text so it now says “finish the skeleton” instead of the leftover “build the house.”

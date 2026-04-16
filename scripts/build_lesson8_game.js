@@ -1,12 +1,37 @@
-window.Lessons.lesson8.modules[10] = {
-    title: "11. Circle",
-    body: `<section class="box-brief">
+const fs = require('fs');
+const path = require('path');
+
+const outDir = path.join(__dirname, '..', 'lessons', 'lesson8');
+fs.mkdirSync(outDir, { recursive: true });
+
+function esc(value) {
+  return String(value)
+    .replace(/\\/g, '\\\\')
+    .replace(/`/g, '\\`')
+    .replace(/\$\{/g, '\\${');
+}
+
+function moduleFile(index, mod) {
+  const marker = `L8_M${index + 1}_WIN`;
+  const progress = (index + 1) * 5;
+  const config = JSON.stringify({
+    marker,
+    index: index + 1,
+    total: modules.length,
+    kind: mod.kind,
+    target: mod.target || {},
+    prompts: mod.prompts || []
+  });
+
+  return `window.Lessons.lesson8.modules[${index}] = {
+    title: ${JSON.stringify(mod.title)},
+    body: \`<section class="box-brief">
       <p class="box-kicker">Box Model Lab</p>
-      <h3>Build a perfect circle.</h3>
-      <p>Push radius to 50 percent.</p>
-    </section>`,
-    svg: ``,
-    widgetCode: `<!-- INTERACTIVE MODULE -->
+      <h3>${esc(mod.short)}</h3>
+      <p>${esc(mod.mission)}</p>
+    </section>\`,
+    svg: \`\`,
+    widgetCode: \`<!-- INTERACTIVE MODULE -->
 <style>
 .box-brief{display:grid;gap:8px;padding:16px;border-radius:8px;background:#111827;border:1px solid rgba(103,232,249,.22);color:#dbeafe}
 .box-brief h3{margin:0;color:#f8fafc;font-size:21px}.box-brief p{margin:0;line-height:1.45}.box-kicker{color:#67e8f9;text-transform:uppercase;letter-spacing:.18em;font-size:11px;font-weight:800}
@@ -20,9 +45,9 @@ window.Lessons.lesson8.modules[10] = {
 .box-zone{min-height:96px;min-width:150px;padding:12px;border-radius:8px;border:2px dashed #94a3b8;background:#eef2ff;display:grid;gap:8px;align-content:start}.box-token{padding:10px;border-radius:8px;background:#0ea5e9;color:white;font-weight:900;text-align:center;cursor:pointer;touch-action:none}.box-confetti{position:absolute;width:8px;height:12px;background:#22c55e;animation:box-pop 720ms ease forwards}@keyframes box-pop{to{transform:translate(var(--x),var(--y)) rotate(540deg);opacity:0}}
 @media(max-width:720px){.box-stage{min-height:250px}.box-btn{width:100%}.choice-card{flex:1 1 140px}}
 </style>
-<div class="box-game" data-box-game data-config='{"marker":"L8_M11_WIN","index":11,"total":20,"kind":"circle","target":{},"prompts":[]}'>
+<div class="box-game" data-box-game data-config='${esc(config)}'>
   <div class="box-hud">
-    <div class="box-hud-row"><div class="box-title">Module 11 / 20</div><div class="box-stat" data-xp>XP 0</div></div>
+    <div class="box-hud-row"><div class="box-title">Module ${index + 1} / ${modules.length}</div><div class="box-stat" data-xp>XP 0</div></div>
     <div class="box-meter"><span data-xp-bar></span></div>
     <div class="box-meter"><span data-progress-bar></span></div>
   </div>
@@ -72,9 +97,65 @@ window.Lessons.lesson8.modules[10] = {
   document.querySelectorAll('[data-box-game]').forEach(function(root){ if(root.dataset.ready==='true')return; root.dataset.ready='true'; window.Lesson8Game.init(root); });
   const editor=document.getElementById('code-editor'); if(editor){ editor.readOnly=true; editor.style.opacity='.65'; }
 })();
-</script>`,
-    initialCode: `<!-- Play the Box Model mini-game to unlock this module. -->`,
+</script>\`,
+    initialCode: \`<!-- Play the Box Model mini-game to unlock this module. -->\`,
     hideVisualPanel: false,
-    progress: 55,
-    validator: function(code) { return code.includes("L8_M11_WIN"); }
-};
+    progress: ${progress},
+    validator: function(code) { return code.includes("${marker}"); }
+};`;
+}
+
+const quiz15 = [
+  { q: 'What pushes boxes apart?', a: ['padding', 'margin', 'radius'], c: 1 },
+  { q: 'Margin lives...', a: ['outside', 'inside', 'in text'], c: 0 },
+  { q: 'Big gap between cards?', a: ['margin', 'font-size', 'color'], c: 0 }
+];
+const quiz16 = [
+  { q: 'What gives text breathing room?', a: ['padding', 'margin', 'display'], c: 0 },
+  { q: 'Padding is...', a: ['inside', 'outside', 'invisible'], c: 0 },
+  { q: 'Bigger background area?', a: ['padding', 'href', 'src'], c: 0 }
+];
+const quiz17 = [
+  { q: 'Rounded corners use...', a: ['border-radius', 'padding-top', 'margin'], c: 0 },
+  { q: 'Circle needs radius...', a: ['50%', '5px', 'solid'], c: 0 },
+  { q: 'Sharp to smooth?', a: ['radius', 'width', 'inline'], c: 0 }
+];
+
+const modules = [
+  { title: '1. Everything is a Box', short: 'Reveal the invisible boxes.', mission: 'Tap every page piece, then scan.', kind: 'clickBoxes' },
+  { title: '2. Visualizing the Box', short: 'Make the box appear.', mission: 'Drag the border slider until the box is obvious.', kind: 'borderSlider' },
+  { title: '3. Height and Width', short: 'Match the target size.', mission: 'Resize the box to fit the red outline.', kind: 'sizeMatch' },
+  { title: '4. Padding', short: 'Give text breathing room.', mission: 'Increase inner space until the message feels fixed.', kind: 'padding' },
+  { title: '5. Specific Padding', short: 'Fix every side.', mission: 'Adjust top, right, bottom, and left padding.', kind: 'fourPadding' },
+  { title: '6. Margin', short: 'Separate the boxes.', mission: 'Use outside space to stop the overlap.', kind: 'margin' },
+  { title: '7. Centering', short: 'Find the centering rule.', mission: 'Choose the CSS logic that centers the box.', kind: 'center' },
+  { title: '8. Margin vs Padding', short: 'Inside or outside?', mission: 'Make fast decisions: padding or margin.', kind: 'decide' },
+  { title: '9. Borders', short: 'Pick a border style.', mission: 'Try styles and activate the dashed target.', kind: 'borderStyle' },
+  { title: '10. Border Radius', short: 'Morph square to rounded.', mission: 'Drag radius until corners become smooth.', kind: 'radius' },
+  { title: '11. Circle', short: 'Build a perfect circle.', mission: 'Push radius to 50 percent.', kind: 'circle' },
+  { title: '12. Box Sizing Bug', short: 'Break it, then fix it.', mission: 'Toggle border-box to repair the oversized box.', kind: 'boxSizing' },
+  { title: '13. Block vs Inline', short: 'Sort layout behavior.', mission: 'Check which tags stack and which tags sit in a row.', kind: 'blockInline' },
+  { title: '14. Inline-Block', short: 'Side-by-side puzzle.', mission: 'Make every box keep size while sharing a row.', kind: 'inlineBlock' },
+  { title: '15. Review: Margin', short: 'Timed margin burst.', mission: 'Answer fast. Mistakes are safe.', kind: 'timedQuiz', prompts: quiz15 },
+  { title: '16. Review: Padding', short: 'Timed padding burst.', mission: 'Answer fast. Build the streak.', kind: 'timedQuiz', prompts: quiz16 },
+  { title: '17. Review: Radius', short: 'Timed radius burst.', mission: 'Answer fast. Round out the review.', kind: 'timedQuiz', prompts: quiz17 },
+  { title: '18. Shorthand Padding', short: 'Decode the clock.', mission: 'Tap the sides in shorthand order.', kind: 'shorthand' },
+  { title: '19. Transparent Borders', short: 'Discover the hidden box.', mission: 'Make the box invisible without deleting its space.', kind: 'transparent' },
+  { title: '20. The Ultimate Box Challenge', short: 'Build the card.', mission: 'Tune padding, margin, border, and radius to finish.', kind: 'finalCard' }
+];
+
+fs.writeFileSync(path.join(outDir, 'metadata.js'), `window.Lessons = window.Lessons || {};
+window.Lessons.lesson8 = {
+    id: "lesson8",
+    title: "Lesson 8: The Box Model",
+    description: "Play fast box-model labs for margins, padding, borders, radius, sizing, and display.",
+    gameTitle: "Box Builder",
+    gamePath: "minigames/game8.html",
+    modules: []
+};`);
+
+modules.forEach((mod, index) => {
+  fs.writeFileSync(path.join(outDir, `module${index + 1}.js`), moduleFile(index, mod));
+});
+
+console.log('Generated interactive Lesson 8 box-model modules.');

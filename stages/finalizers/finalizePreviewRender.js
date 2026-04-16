@@ -9,10 +9,10 @@ function finalizePreviewRender(payload, newState, oldState, contextData) {
             // Robustly scope 'body' styles to the preview area only
             let scopedCode = (newState.editorContent || "").replace(/(^|\s|,|}|(?:<\/style>)|(?:<style>))body(\s*\{|\s*,)/gi, '$1#preview-area$2');
             
-            // DEFENSIVE: If it's Lesson 7 and the scaffold somehow failed, provide a fallback badge box
+            // DEFENSIVE: If it's Lesson 7 and the scaffold is empty, provide a fallback badge box
             // so the student at least sees a container to style.
             let finalHtml = scaffold;
-            if (lesson && lesson.id === 'lesson7' && !finalHtml.includes('id="badge"') && !finalHtml.includes('id="skeleton-box"')) {
+            if (lesson && lesson.id === 'lesson7' && !finalHtml.trim()) {
                 finalHtml = '<div id="badge" style="padding:20px; border:1px dashed #334155;">[NEURAL_LINK_ACTIVE]</div>';
             }
 

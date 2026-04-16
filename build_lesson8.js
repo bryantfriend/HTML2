@@ -1,3 +1,5 @@
+require('./scripts/build_lesson8_game');
+/*
 const fs = require('fs');
 const path = require('path');
 
@@ -36,7 +38,7 @@ const modules = [
     { title: "17. Review: Radius", body: "To make rounded corners?", mission: "Add 15px border radius.", initialCode: "<style>\n  .b { background: lime; }\n</style>\n<div class=\"b\">Round me</div>", validator: `function(code) { return code.includes("border-radius:") && code.includes("15px"); }` },
     { title: "18. Shorthand Padding", body: "`padding: 10px 20px 30px 40px;` sets TOP, RIGHT, BOTTOM, LEFT in that order (clockwise).", mission: "Set padding to `10px 20px;` (10 top/bottom, 20 left/right)", initialCode: "<style>\n  .b { background: orange; }\n</style>\n<div class=\"b\">Clockwise</div>", validator: `function(code) { return code.includes("padding:") && code.includes("10px 20px"); }` },
     { title: "19. Transparent Borders", body: "You can make a box look invisible but still take up space!", mission: "Change background and border to `transparent`.", initialCode: "<style>\n  .ghost { border: 2px solid black; background: white; width: 100px; height: 100px; }\n</style>\n<div class=\"ghost\"></div>", validator: `function(code) { return (code.match(/transparent/gi)||[]).length >= 1; }` },
-    { title: "20. The Ultimate Box Challenge", body: "Build a beautiful card! A centered box, with a solid border, rounded corners, inner padding, and margin to push it off the screen edges.", mission: "Complete the `.card` classes CSS according to the instructions.", initialCode: "<style>\n  .card {\n    width: 300px;\n    background: #1e293b;\n    color: white;\n    /* add margin auto, 20px padding, 15px radius, 2px solid cyan border */\n  }\n</style>\n<div class=\"card\"><h2>Profile</h2><p>I am a card.</p></div>", validator: `function(code) { return code.includes("margin:") && code.includes("auto") && code.includes("padding:") && code.includes("20px") && code.includes("radius:") && code.includes("border:"); }` }
+    { title: "20. The Ultimate Box Challenge", body: "Build a beautiful card! A centered box, with a solid border, rounded corners, inner padding, and margin to push it off the screen edges.", mission: "Complete the `.card` classes CSS according to the instructions.", initialCode: "<style>\n  .card {\n    width: 300px;\n    background: #1e293b;\n    color: white;\n    add margin auto, 20px padding, 15px radius, 2px solid cyan border\n  }\n</style>\n<div class=\"card\"><h2>Profile</h2><p>I am a card.</p></div>", validator: `function(code) { return code.includes("margin:") && code.includes("auto") && code.includes("padding:") && code.includes("20px") && code.includes("radius:") && code.includes("border:"); }` }
 ];
 
 modules.forEach((mod, i) => {
@@ -67,3 +69,4 @@ modules.forEach((mod, i) => {
 });
 
 console.log("Successfully generated lesson8 modules!");
+*/
