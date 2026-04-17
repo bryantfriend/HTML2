@@ -164,3 +164,13 @@ Original prompt: Let's update all the modules in Lesson 4 to be more interactive
   - `lessons/manifest.js`
   - `stages/processors/processStartLesson.js`
   - `stages/finalizers/finalizeCompleteLesson.js`
+- Fixed Lesson 8 modules not initializing:
+  - Root cause: the generated embedded Lesson 8 game script contained backslash-sensitive strings that became invalid browser JavaScript after being placed inside module template strings.
+  - Replaced the regex/backslash-heavy CSS validation helper with safer string-based CSS declaration parsing.
+  - Replaced the live-code panel newline join with `String.fromCharCode(10)` so the generated browser script parses correctly.
+  - Regenerated all `lessons/lesson8/module*.js` files from `scripts/build_lesson8_strict_game.js`.
+- Verification for Lesson 8 fix:
+  - `node --check scripts\build_lesson8_strict_game.js` passed.
+  - `node --check` passed for every `lessons/lesson8/module*.js` file.
+  - Static audit confirmed all 20 modules have a stage, controls, live CSS code panel, CSS input task, valid config, parser-safe embedded script, completion marker, and validators that start locked.
+  - Browser smoke test completed all 20 Lesson 8 modules through their visual interaction plus typed CSS task and confirmed each module unlocked the next button.
