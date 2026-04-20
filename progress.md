@@ -185,3 +185,23 @@ Original prompt: Let's update all the modules in Lesson 4 to be more interactive
   - `node --check` passed for every `lessons/lesson9/module*.js` file.
   - Static audit confirmed all 20 modules have parser-safe embedded scripts, live CSS panels, inputs, controls, completion markers, and locked-start validators.
   - Browser smoke test completed all 20 Lesson 9 modules through their actual visual interaction plus typed CSS task and confirmed each module unlocked.
+- Fixed Lesson 8 Module 1 clarity:
+  - Updated the Module 1 goal to explicitly say to click all 3 cards, scan them, then type `outline: 3px solid cyan;`.
+  - Added a visible "Copy this CSS" answer chip above the input so students do not have to infer the answer from placeholder text.
+  - Added step-by-step in-stage guidance for the Header/Image/Button reveal activity.
+  - Improved feedback so after all boxes are revealed and scanned, students are told exactly what CSS rule to type.
+  - Regenerated all Lesson 8 modules from `scripts/build_lesson8_strict_game.js`.
+- Verification for Lesson 8 Module 1 clarity fix:
+  - `node --check scripts\build_lesson8_strict_game.js` passed.
+  - `node --check` passed for every `lessons/lesson8/module*.js` file.
+  - Browser smoke test passed for Lesson 8 Module 1: clicked Header/Image/Button, clicked Scan boxes, typed `OUTLINE : 3px solid CYAN`, and confirmed `L8_M1_WIN` completion.
+- Fixed Lesson 9 typed-CSS clarity:
+  - Added a visible "Copy this CSS" answer chip to every Lesson 9 Flexbox module, matching the Lesson 8 clarity pattern.
+  - Updated Lesson 9 Module 1 goal and feedback to explicitly say to click `Activate Flexbox`, then type `display: flex;`.
+  - Regenerated all Lesson 9 modules from `scripts/build_lesson9_flex_game.js`.
+- Verification for Lesson 8 and Lesson 9 typed-CSS clarity:
+  - `node --check scripts\build_lesson8_strict_game.js` passed.
+  - `node --check scripts\build_lesson9_flex_game.js` passed.
+  - `node --check` passed for all 40 generated Lesson 8 and Lesson 9 module files.
+  - Static audit confirmed every Lesson 8 and Lesson 9 module has a CSS input, visible answer chip, and parser-safe embedded script.
+  - Browser smoke test passed for Lesson 9 Module 1: clicked `Activate Flexbox`, typed `DISPLAY : FLEX`, and confirmed `L9_M1_WIN` completion.
