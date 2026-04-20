@@ -1,12 +1,225 @@
-window.Lessons.lesson9.modules[10] = {
-    title: "11. Navbar Builder",
-    body: `<section class="box-brief">
-      <p class="box-kicker">Flexbox Lab</p>
-      <h3>Navbar Builder</h3>
-      <p><strong>Goal:</strong> Build a navbar with logo, links, and button.</p>
-    </section>`,
-    svg: ``,
-    widgetCode: `<!-- FLEXBOX GAME MODULE -->
+const fs = require('fs');
+const path = require('path');
+
+const outDir = path.join('lessons', 'lesson9');
+fs.mkdirSync(outDir, { recursive: true });
+
+const metadata = `window.Lessons = window.Lessons || {};
+window.Lessons.lesson9 = {
+    id: "lesson9",
+    title: "Lesson 9: Layouts with Flexbox",
+    description: "Build, break, and fix layouts with Flexbox mini-games.",
+    gameTitle: "Flex Master",
+    gamePath: "minigames/game9.html",
+    modules: []
+};`;
+
+const modules = [
+  {
+    title: '1. Flexbox Power Switch',
+    goal: 'Turn a messy stack into a flex row.',
+    kind: 'power',
+    selector: '.row',
+    rules: [{ property: 'display', value: 'flex' }]
+  },
+  {
+    title: '2. Justify Content',
+    goal: 'Move the cards to the center of the row.',
+    kind: 'choice',
+    selector: '.row',
+    rules: [{ property: 'justify-content', value: 'center' }],
+    options: ['flex-start', 'center', 'flex-end']
+  },
+  {
+    title: '3. Align Items',
+    goal: 'Lift the boxes into the vertical center.',
+    kind: 'choice',
+    selector: '.row',
+    rules: [{ property: 'align-items', value: 'center' }],
+    options: ['flex-start', 'center', 'flex-end']
+  },
+  {
+    title: '4. Flex Direction',
+    goal: 'Stack the mission cards into a column.',
+    kind: 'choice',
+    selector: '.row',
+    rules: [{ property: 'flex-direction', value: 'column' }],
+    options: ['row', 'column', 'row-reverse']
+  },
+  {
+    title: '5. Gap',
+    goal: 'Set the perfect 20px space between boxes.',
+    kind: 'slider',
+    selector: '.row',
+    rules: [{ property: 'gap', value: '20px' }],
+    slider: { min: 0, max: 40, target: 20, unit: 'px' }
+  },
+  {
+    title: '6. Flex Wrap',
+    goal: 'Let the cards wrap onto a new line.',
+    kind: 'choice',
+    selector: '.row',
+    rules: [{ property: 'flex-wrap', value: 'wrap' }],
+    options: ['nowrap', 'wrap', 'wrap-reverse']
+  },
+  {
+    title: '7. Flex Grow',
+    goal: 'Make the power cell grow to fill extra space.',
+    kind: 'grow',
+    selector: '.power-cell',
+    rules: [{ property: 'flex-grow', value: '1' }]
+  },
+  {
+    title: '8. Order',
+    goal: 'Send the VIP card to the front of the line.',
+    kind: 'choice',
+    selector: '.vip',
+    rules: [{ property: 'order', value: '-1' }],
+    options: ['0', '-1', '2']
+  },
+  {
+    title: '9. Space Between',
+    goal: 'Push the first and last items to the edges.',
+    kind: 'choice',
+    selector: '.row',
+    rules: [{ property: 'justify-content', value: 'space-between' }],
+    options: ['center', 'space-between', 'space-around']
+  },
+  {
+    title: '10. Align Self',
+    goal: 'Move one special item to the bottom by itself.',
+    kind: 'choice',
+    selector: '.special',
+    rules: [{ property: 'align-self', value: 'flex-end' }],
+    options: ['auto', 'center', 'flex-end']
+  },
+  {
+    title: '11. Navbar Builder',
+    goal: 'Build a navbar with logo, links, and button.',
+    kind: 'builder',
+    selector: '.nav',
+    rules: [
+      { property: 'display', value: 'flex' },
+      { property: 'justify-content', value: 'space-between' },
+      { property: 'align-items', value: 'center' }
+    ]
+  },
+  {
+    title: '12. Responsive Wrap',
+    goal: 'Make the gallery wrap so cards stop squishing.',
+    kind: 'choice',
+    selector: '.gallery',
+    rules: [
+      { property: 'display', value: 'flex' },
+      { property: 'flex-wrap', value: 'wrap' }
+    ],
+    options: ['nowrap', 'wrap', 'column']
+  },
+  {
+    title: '13. Flex Basis',
+    goal: 'Set every card base size to 150px.',
+    kind: 'slider',
+    selector: '.card',
+    rules: [{ property: 'flex-basis', value: '150px' }],
+    slider: { min: 80, max: 220, target: 150, unit: 'px' }
+  },
+  {
+    title: '14. Flex Shorthand',
+    goal: 'Decode flex: grow shrink basis.',
+    kind: 'shorthand',
+    selector: '.card',
+    rules: [{ property: 'flex', value: '1 1 150px' }]
+  },
+  {
+    title: '15. Review: Centering',
+    goal: 'Win the quick Flexbox center quiz.',
+    kind: 'quiz',
+    selector: '.row',
+    rules: [
+      { property: 'justify-content', value: 'center' },
+      { property: 'align-items', value: 'center' }
+    ],
+    quiz: [
+      { q: 'Which property moves items left to right?', a: ['align-items', 'justify-content', 'gap'], c: 1 },
+      { q: 'Which value centers items?', a: ['center', 'wrap', 'column'], c: 0 },
+      { q: 'Which property moves items up and down?', a: ['order', 'align-items', 'flex-grow'], c: 1 }
+    ]
+  },
+  {
+    title: '16. Review: Direction',
+    goal: 'Choose the rules that control flow.',
+    kind: 'quiz',
+    selector: '.row',
+    rules: [
+      { property: 'flex-direction', value: 'column' },
+      { property: 'gap', value: '20px' }
+    ],
+    quiz: [
+      { q: 'Which value stacks items vertically?', a: ['row', 'column', 'nowrap'], c: 1 },
+      { q: 'Which property adds space between items?', a: ['gap', 'order', 'display'], c: 0 },
+      { q: 'What turns Flexbox on?', a: ['display: flex', 'flex: on', 'layout: flex'], c: 0 }
+    ]
+  },
+  {
+    title: '17. Review: Item Powers',
+    goal: 'Spot rules that affect one flex item.',
+    kind: 'quiz',
+    selector: '.special',
+    rules: [
+      { property: 'order', value: '-1' },
+      { property: 'align-self', value: 'flex-end' }
+    ],
+    quiz: [
+      { q: 'Which property changes one item position in line?', a: ['order', 'gap', 'wrap'], c: 0 },
+      { q: 'Which property lets one item align differently?', a: ['align-self', 'justify-content', 'display'], c: 0 },
+      { q: 'Which property lets an item use extra room?', a: ['flex-grow', 'border', 'font-size'], c: 0 }
+    ]
+  },
+  {
+    title: '18. Debug the Broken Toolbar',
+    goal: 'Fix the toolbar with flex, center alignment, and gap.',
+    kind: 'debug',
+    selector: '.toolbar',
+    rules: [
+      { property: 'display', value: 'flex' },
+      { property: 'align-items', value: 'center' },
+      { property: 'gap', value: '16px' }
+    ]
+  },
+  {
+    title: '19. Profile Card Layout',
+    goal: 'Use Flexbox to place an avatar beside text.',
+    kind: 'profile',
+    selector: '.profile',
+    rules: [
+      { property: 'display', value: 'flex' },
+      { property: 'align-items', value: 'center' },
+      { property: 'gap', value: '18px' }
+    ]
+  },
+  {
+    title: '20. Final Flex Challenge',
+    goal: 'Build a responsive dashboard row.',
+    kind: 'final',
+    selector: '.dashboard',
+    rules: [
+      { property: 'display', value: 'flex' },
+      { property: 'justify-content', value: 'space-between' },
+      { property: 'align-items', value: 'center' },
+      { property: 'gap', value: '20px' },
+      { property: 'flex-wrap', value: 'wrap' }
+    ]
+  }
+];
+
+function cssText(rules) {
+  return rules.map(rule => `${rule.property}: ${rule.value};`).join(' ');
+}
+
+function widget(config) {
+  const json = JSON.stringify(config).replace(/'/g, '&apos;');
+  const placeholder = cssText(config.rules).replace(/"/g, '&quot;');
+  return `<!-- FLEXBOX GAME MODULE -->
 <style>
 .flex-game{display:grid;gap:14px;width:100%;padding:16px;border-radius:10px;background:linear-gradient(160deg,#07111f,#172033 60%,#0f766e);border:1px solid rgba(45,212,191,.32);color:#ecfeff;box-shadow:0 18px 38px rgba(0,0,0,.3)}
 .flex-hud{display:grid;gap:10px}.flex-row{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.flex-title{font-family:Orbitron,sans-serif;color:#67e8f9;font-size:13px;letter-spacing:.14em;text-transform:uppercase}.flex-stat{font:800 12px/1.2 Fira Code,monospace;color:#d1fae5}
@@ -19,20 +232,20 @@ window.Lessons.lesson9.modules[10] = {
 .demo-lane{width:100%;min-height:190px;border:3px dashed #0f172a;border-radius:12px;padding:12px;background:rgba(255,255,255,.75);transition:all .2s ease}.demo-item{display:grid;place-items:center;width:70px;height:58px;border-radius:12px;background:#38bdf8;color:#082f49;font-weight:900;border:3px solid #0f172a;box-shadow:0 8px 0 rgba(15,23,42,.18);transition:all .2s ease}.demo-item.hot{background:#facc15}.demo-item.vip{background:#fb7185}.demo-item.power{background:#86efac}.demo-avatar{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#fb7185,#facc15);border:4px solid #0f172a}
 .flex-confetti{position:absolute;width:8px;height:12px;background:#22c55e;animation:flex-pop 720ms ease forwards}@keyframes flex-pop{to{transform:translate(var(--x),var(--y)) rotate(540deg);opacity:0}}@media(max-width:800px){.flex-layout{grid-template-columns:1fr}.flex-stage{min-height:250px}.flex-btn{width:100%}}
 </style>
-<div class="flex-game" data-flex-game data-config='{"title":"11. Navbar Builder","goal":"Build a navbar with logo, links, and button.","kind":"builder","selector":".nav","rules":[{"property":"display","value":"flex"},{"property":"justify-content","value":"space-between"},{"property":"align-items","value":"center"}],"index":11,"total":20,"marker":"L9_M11_WIN"}'>
+<div class="flex-game" data-flex-game data-config='${json}'>
   <div class="flex-hud">
-    <div class="flex-row"><div class="flex-title">Module 11 / 20</div><div class="flex-stat" data-xp>XP 0</div><div class="flex-stat" data-attempts>Attempts 0</div></div>
+    <div class="flex-row"><div class="flex-title">Module ${config.index} / ${config.total}</div><div class="flex-stat" data-xp>XP 0</div><div class="flex-stat" data-attempts>Attempts 0</div></div>
     <div class="flex-meter"><span data-xp-bar></span></div>
     <div class="flex-meter"><span data-progress-bar></span></div>
   </div>
-  <div class="flex-goal">Goal: Build a navbar with logo, links, and button.</div>
+  <div class="flex-goal">Goal: ${config.goal}</div>
   <div class="flex-layout">
     <div class="flex-stage" data-stage></div>
     <div class="flex-side">
       <pre class="flex-code" data-code></pre>
       <div class="flex-task">
         <label>Type the CSS that matches your fix:</label>
-        <input class="flex-input" data-css-input spellcheck="false" autocomplete="off" placeholder="display: flex; justify-content: space-between; align-items: center;">
+        <input class="flex-input" data-css-input spellcheck="false" autocomplete="off" placeholder="${placeholder}">
       </div>
     </div>
   </div>
@@ -81,8 +294,28 @@ window.Lessons.lesson9.modules[10] = {
   document.querySelectorAll('[data-flex-game]').forEach(function(root){ if(root.dataset.ready==='true')return; root.dataset.ready='true'; window.Lesson9FlexGame.init(root); });
   const editor=document.getElementById('code-editor'); if(editor){ editor.readOnly=true; editor.style.opacity='.65'; }
 })();
-</script>`,
-    initialCode: `<!-- Complete the visual challenge and typed CSS task. -->`,
-    progress: 55,
-    validator: function(code) { return code.includes("L9_M11_WIN"); }
-};
+</script>`;
+}
+
+fs.writeFileSync(path.join(outDir, 'metadata.js'), metadata);
+
+modules.forEach((mod, index) => {
+  const marker = `L9_M${index + 1}_WIN`;
+  const config = Object.assign({}, mod, { index: index + 1, total: modules.length, marker });
+  const content = `window.Lessons.lesson9.modules[${index}] = {
+    title: ${JSON.stringify(mod.title)},
+    body: \`<section class="box-brief">
+      <p class="box-kicker">Flexbox Lab</p>
+      <h3>${mod.title.replace(/^\d+\.\s*/, '')}</h3>
+      <p><strong>Goal:</strong> ${mod.goal}</p>
+    </section>\`,
+    svg: \`\`,
+    widgetCode: \`${widget(config).replace(/`/g, '\\`').replace(/\$\{/g, '\\${')}\`,
+    initialCode: \`<!-- Complete the visual challenge and typed CSS task. -->\`,
+    progress: ${(index + 1) * 5},
+    validator: function(code) { return code.includes(${JSON.stringify(marker)}); }
+};`;
+  fs.writeFileSync(path.join(outDir, `module${index + 1}.js`), content);
+});
+
+console.log('Generated interactive Lesson 9 flexbox modules.');

@@ -174,3 +174,14 @@ Original prompt: Let's update all the modules in Lesson 4 to be more interactive
   - `node --check` passed for every `lessons/lesson8/module*.js` file.
   - Static audit confirmed all 20 modules have a stage, controls, live CSS code panel, CSS input task, valid config, parser-safe embedded script, completion marker, and validators that start locked.
   - Browser smoke test completed all 20 Lesson 8 modules through their visual interaction plus typed CSS task and confirmed each module unlocked the next button.
+- Upgraded Lesson 9 into an interactive Flexbox lesson:
+  - Replaced the repeated placeholder "type FLEX" modules with 20 distinct Flexbox mini-games.
+  - Added a new generator at `scripts/build_lesson9_flex_game.js`; `build_lesson9.js` now delegates to it.
+  - Modules now cover `display: flex`, `justify-content`, `align-items`, `flex-direction`, `gap`, `flex-wrap`, `flex-grow`, `order`, `align-self`, navbars, responsive galleries, `flex-basis`, shorthand, debugging, profile cards, and a final dashboard challenge.
+  - Each module includes a visual target, live CSS code panel, interactive buttons/sliders/quizzes, XP/attempt feedback, confetti, and a required typed CSS task before unlocking.
+- Verification for Lesson 9 upgrade:
+  - `node --check build_lesson9.js` passed.
+  - `node --check scripts\build_lesson9_flex_game.js` passed.
+  - `node --check` passed for every `lessons/lesson9/module*.js` file.
+  - Static audit confirmed all 20 modules have parser-safe embedded scripts, live CSS panels, inputs, controls, completion markers, and locked-start validators.
+  - Browser smoke test completed all 20 Lesson 9 modules through their actual visual interaction plus typed CSS task and confirmed each module unlocked.
