@@ -20,11 +20,11 @@ function finalizeCompleteLesson(payload, newState, oldState, contextData) {
         document.getElementById('mission-subtitle').textContent = "MISSION_ACCOMPLISHED";
 
         const lesson = window.courseData.lessons[newState.currentLessonIndex];
-        function buildExam1Code(score) {
+        function buildExamCode(prefix, score) {
             const seed = window.exam1SessionSeed || Date.now();
             const stamp = String(seed).slice(-6);
             const checksum = ((score * 17) + (seed % 89)).toString(36).toUpperCase();
-            return `EX1-${String(score).padStart(2, '0')}-${stamp}-${checksum}`;
+            return `${prefix}-${String(score).padStart(2, '0')}-${stamp}-${checksum}`;
         }
 
         let emojiCompletionHtml = "";
@@ -46,7 +46,7 @@ function finalizeCompleteLesson(payload, newState, oldState, contextData) {
         if (lesson && lesson.id === 'exam1') {
             const score = Object.values(window.exam1Answers || {}).filter(entry => entry && entry.correct).length;
             if (!window.exam1ResultCode) {
-                window.exam1ResultCode = buildExam1Code(score);
+                window.exam1ResultCode = buildExamCode('EX1', score);
             }
             emojiCompletionHtml =
                 `<div class="mb-6 text-6xl">${window.lessonEmoji || '📝'}</div>` +
@@ -57,6 +57,23 @@ function finalizeCompleteLesson(payload, newState, oldState, contextData) {
                 `<p class="heading-font text-3xl text-[var(--neon-pink)] break-all">${window.exam1ResultCode}</p>` +
                 `</div>` +
                 `<p class="text-[var(--neon-pink)] font-bold text-xl mb-8">Show this score and code to your teacher.</p>`;
+            gameButtonHtml = '';
+        }
+
+        if (lesson && lesson.id === 'exam2') {
+            const score = 100;
+            if (!window.exam2ResultCode) {
+                window.exam2ResultCode = buildExamCode('EX2', score);
+            }
+            emojiCompletionHtml =
+                `<div class="mb-6 text-6xl">${window.lessonEmoji || '🚀'}</div>` +
+                `<h2 class="heading-font text-5xl text-white mb-4 glow-text">HTML FINAL COMPLETE</h2>` +
+                `<p class="text-[var(--neon-cyan)] code-font text-2xl mb-4">Full Marks: ${score} / 100</p>` +
+                `<div class="mb-8 rounded-xl border border-[var(--neon-pink)] bg-[var(--neon-pink)]/10 px-6 py-5">` +
+                `<p class="text-sm uppercase tracking-[0.3em] text-gray-400 mb-2">Write Down This Exam Code</p>` +
+                `<p class="heading-font text-3xl text-[var(--neon-pink)] break-all">${window.exam2ResultCode}</p>` +
+                `</div>` +
+                `<p class="text-[var(--neon-pink)] font-bold text-xl mb-8">Every mission is guided, so finishing the exam earns full credit.</p>`;
             gameButtonHtml = '';
         }
 

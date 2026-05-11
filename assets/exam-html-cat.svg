@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 180" role="img" aria-labelledby="title desc">
+  <title id="title">Happy exam cat</title>
+  <desc id="desc">A smiling cartoon cat face for the HTML exam.</desc>
+  <rect width="220" height="180" rx="28" fill="#e0f2fe"/>
+  <circle cx="110" cy="96" r="58" fill="#fbbf24" stroke="#92400e" stroke-width="6"/>
+  <path d="M66 58 84 26l18 32" fill="#f59e0b" stroke="#92400e" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M154 58 136 26l-18 32" fill="#f59e0b" stroke="#92400e" stroke-width="6" stroke-linejoin="round"/>
+  <circle cx="88" cy="92" r="7" fill="#0f172a"/>
+  <circle cx="132" cy="92" r="7" fill="#0f172a"/>
+  <path d="M102 112q8 10 16 0" fill="none" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/>
+  <path d="M110 100v11" fill="none" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/>
+  <path d="M54 102h26M50 114h28M166 102h-26M170 114h-28" fill="none" stroke="#0f172a" stroke-width="4" stroke-linecap="round"/>
+</svg>
