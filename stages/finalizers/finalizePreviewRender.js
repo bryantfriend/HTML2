@@ -26,7 +26,28 @@ function finalizePreviewRender(payload, newState, oldState, contextData) {
                 finalHtml = '<div id="badge" style="padding:20px; border:1px dashed #334155;">[NEURAL_LINK_ACTIVE]</div>';
             }
 
-            previewArea.innerHTML = finalHtml + scopedCode;
+            const previewDefaults = `
+                <style data-preview-defaults>
+                    #preview-area ul {
+                        list-style: disc;
+                        list-style-position: outside;
+                        padding-left: 1.5rem;
+                        margin: 1em 0;
+                    }
+                    #preview-area ol {
+                        list-style: decimal;
+                        list-style-position: outside;
+                        padding-left: 1.5rem;
+                        margin: 1em 0;
+                    }
+                    #preview-area li {
+                        display: list-item;
+                        margin: 0.25em 0;
+                    }
+                </style>
+            `;
+
+            previewArea.innerHTML = previewDefaults + finalHtml + scopedCode;
 
             // SYNC STYLING TO TOP PANEL: If the user styles an ID like #shirt or #pants, 
             // we want it to reflect in the SVG/Widget panel too.
