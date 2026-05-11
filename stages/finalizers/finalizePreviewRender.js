@@ -6,8 +6,18 @@ function finalizePreviewRender(payload, newState, oldState, contextData) {
             const currentModule = lesson ? lesson.modules[newState.currentModuleIndex] : null;
             const scaffold = currentModule && currentModule.previewScaffold ? currentModule.previewScaffold : "";
             
-            // Robustly scope 'body' styles to the preview area only
-            let scopedCode = (newState.editorContent || "").replace(/(^|\s|,|}|(?:<\/style>)|(?:<style>))body(\s*\{|\s*,)/gi, '$1#preview-area$2');
+            // Robustly scope 'body' styles to the preview area only.
+            // CSS lessons use the editor like a styles.css file, so wrap CSS in a style tag
+            // and show it against the module's preview scaffold.
+            const isCssLesson = lesson && (lesson.id === 'lesson8' || lesson.id === 'lesson9');
+            let editorCode = newState.editorContent || "";
+            let scopedCode = editorCode.replace(/(^|\s|,|}|(?:<\/style>)|(?:<style>))body(\s*\{|\s*,)/gi, '$1#preview-area$2');
+            if (isCssLesson && !/<\s*style\b/i.test(editorCode)) {
+                const selector = currentModule && currentModule.cssSelector ? currentModule.cssSelector : '';
+                const cssLooksBare = selector && !/[{}]/.test(editorCode) && /:\s*[^;]+;?/i.test(editorCode);
+                const cssCode = cssLooksBare ? `${selector} {\n  ${editorCode.trim()}\n}` : editorCode;
+                scopedCode = `<style>${cssCode}</style>`;
+            }
             
             // DEFENSIVE: If it's Lesson 7 and the scaffold is empty, provide a fallback badge box
             // so the student at least sees a container to style.

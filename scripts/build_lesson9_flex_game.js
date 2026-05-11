@@ -218,6 +218,20 @@ function cssText(rules) {
   return rules.map(rule => `${rule.property}: ${rule.value};`).join(' ');
 }
 
+function cssStarter(selector) {
+  return `/* styles.css - type the CSS rule inside this selector */\n${selector} {\n  \n}`;
+}
+
+function previewScaffold() {
+  return `<div class="lesson9-css-preview" style="display:grid;gap:14px;padding:18px;border-radius:14px;background:#eefcf9;color:#0f172a;">
+  <div class="row nav gallery toolbar profile dashboard" style="min-height:150px;padding:12px;border:3px dashed #0f172a;border-radius:12px;background:#ffffff;">
+    <div class="card demo-item" style="width:70px;height:58px;display:grid;place-items:center;background:#38bdf8;border:3px solid #0f172a;border-radius:10px;font-weight:900;">A</div>
+    <div class="card vip special power-cell" style="width:70px;height:58px;display:grid;place-items:center;background:#facc15;border:3px solid #0f172a;border-radius:10px;font-weight:900;">B</div>
+    <div class="card" style="width:70px;height:58px;display:grid;place-items:center;background:#fb7185;border:3px solid #0f172a;border-radius:10px;font-weight:900;">C</div>
+  </div>
+</div>`;
+}
+
 function widget(config) {
   const json = JSON.stringify(config).replace(/'/g, '&apos;');
   const answerText = cssText(config.rules);
@@ -267,7 +281,7 @@ function widget(config) {
       function sound(type){ window.lesson9LastSound=type; try{ const A=window.AudioContext||window.webkitAudioContext; if(!A)return; const ctx=new A(); const osc=ctx.createOscillator(); const gain=ctx.createGain(); osc.frequency.value=type==='success'?780:type==='error'?170:430; gain.gain.value=.03; osc.connect(gain); gain.connect(ctx.destination); osc.start(); setTimeout(function(){osc.stop();ctx.close();},85);}catch(e){} }
       function addXp(amount){ state.xp+=amount; localStorage.setItem(storeKey,String(state.xp)); }
       function cleanCssValue(value){ return String(value).trim().toLowerCase().split('').reduce(function(result,ch){ const isSpace=ch===' '||ch===String.fromCharCode(9)||ch===String.fromCharCode(10)||ch===String.fromCharCode(13); if(isSpace)return result.endsWith(' ')?result:result+' '; return result+ch; },'').trim(); }
-      function ruleMatches(text,rule){ const expectedProperty=String(rule.property).trim().toLowerCase(); const expectedValue=cleanCssValue(rule.value); return String(text).split(';').some(function(part){ const colon=part.indexOf(':'); if(colon<0)return false; const property=part.slice(0,colon).trim().toLowerCase(); const value=cleanCssValue(part.slice(colon+1)); return property===expectedProperty&&value===expectedValue; }); }
+      function ruleMatches(text,rule){ const expectedProperty=String(rule.property).trim().toLowerCase(); const expectedValue=cleanCssValue(rule.value); return String(text).split(';').some(function(part){ const colon=part.indexOf(':'); if(colon<0)return false; const property=part.slice(0,colon).split('{').pop().trim().toLowerCase(); const value=cleanCssValue(part.slice(colon+1)); return property===expectedProperty&&value===expectedValue; }); }
       function typedOk(root,cfg){ const text=root.querySelector('[data-css-input]').value.trim(); return (cfg.targetRules||cfg.rules).every(function(rule){return ruleMatches(text,rule);}); }
       function updateHud(root,cfg){ root.querySelector('[data-xp]').textContent='XP '+state.xp; root.querySelector('[data-xp-bar]').style.width=Math.min(100,state.xp%100)+'%'; root.querySelector('[data-progress-bar]').style.width=Math.round((cfg.index/cfg.total)*100)+'%'; root.querySelector('[data-attempts]').textContent='Attempts '+(root._attempts||0); }
       function setFeedback(root,text,mode){ const el=root.querySelector('[data-feedback]'); el.textContent=text; el.classList.toggle('good',mode==='good'); el.classList.toggle('bad',mode==='bad'); }
@@ -298,7 +312,7 @@ function widget(config) {
     })();
   }
   document.querySelectorAll('[data-flex-game]').forEach(function(root){ if(root.dataset.ready==='true')return; root.dataset.ready='true'; window.Lesson9FlexGame.init(root); });
-  const editor=document.getElementById('code-editor'); if(editor){ editor.readOnly=true; editor.style.opacity='.65'; }
+  const editor=document.getElementById('code-editor'); if(editor){ editor.readOnly=false; editor.style.opacity='1'; }
 })();
 </script>`;
 }
@@ -308,6 +322,8 @@ fs.writeFileSync(path.join(outDir, 'metadata.js'), metadata);
 modules.forEach((mod, index) => {
   const marker = `L9_M${index + 1}_WIN`;
   const config = Object.assign({}, mod, { index: index + 1, total: modules.length, marker });
+  const starterCode = cssStarter(mod.selector);
+  const rulesJson = JSON.stringify(mod.rules);
   const content = `window.Lessons.lesson9.modules[${index}] = {
     title: ${JSON.stringify(mod.title)},
     body: \`<section class="box-brief">
@@ -317,9 +333,32 @@ modules.forEach((mod, index) => {
     </section>\`,
     svg: \`\`,
     widgetCode: \`${widget(config).replace(/`/g, '\\`').replace(/\$\{/g, '\\${')}\`,
-    initialCode: \`<!-- Complete the visual challenge and typed CSS task. -->\`,
+    cssSelector: ${JSON.stringify(mod.selector)},
+    previewScaffold: \`${previewScaffold().replace(/`/g, '\\`').replace(/\$\{/g, '\\${')}\`,
+    initialCode: \`${starterCode.replace(/`/g, '\\`').replace(/\$\{/g, '\\${')}\`,
     progress: ${(index + 1) * 5},
-    validator: function(code) { return code.includes(${JSON.stringify(marker)}); }
+    validator: function(code) {
+      const rules = ${rulesJson};
+      function cleanCssValue(value) {
+        return String(value).trim().toLowerCase().split('').reduce(function(result, ch) {
+          const isSpace = ch === ' ' || ch === String.fromCharCode(9) || ch === String.fromCharCode(10) || ch === String.fromCharCode(13);
+          if (isSpace) return result.endsWith(' ') ? result : result + ' ';
+          return result + ch;
+        }, '').trim();
+      }
+      function ruleMatches(text, rule) {
+        const expectedProperty = String(rule.property).trim().toLowerCase();
+        const expectedValue = cleanCssValue(rule.value);
+        return String(text).split(';').some(function(part) {
+          const colon = part.indexOf(':');
+          if (colon < 0) return false;
+          const property = part.slice(0, colon).split('{').pop().trim().toLowerCase();
+          const value = cleanCssValue(part.slice(colon + 1));
+          return property === expectedProperty && value === expectedValue;
+        });
+      }
+      return code.includes(${JSON.stringify(marker)}) || rules.every(function(rule) { return ruleMatches(code, rule); });
+    }
 };`;
   fs.writeFileSync(path.join(outDir, `module${index + 1}.js`), content);
 });

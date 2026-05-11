@@ -205,3 +205,17 @@ Original prompt: Let's update all the modules in Lesson 4 to be more interactive
   - `node --check` passed for all 40 generated Lesson 8 and Lesson 9 module files.
   - Static audit confirmed every Lesson 8 and Lesson 9 module has a CSS input, visible answer chip, and parser-safe embedded script.
   - Browser smoke test passed for Lesson 9 Module 1: clicked `Activate Flexbox`, typed `DISPLAY : FLEX`, and confirmed `L9_M1_WIN` completion.
+- Fixed Lesson 8/9 main editor CSS workflow:
+  - Root cause: the mini-game CSS input could call `completeModule`, but the main `INPUT CODE` editor was readonly and only completed when a hidden marker was inserted.
+  - Lesson 8 and Lesson 9 modules now start with a real `styles.css` selector scaffold instead of a blank/comment-only editor.
+  - The lesson preview now treats Lesson 8 and Lesson 9 editor content as CSS, wraps it in a `<style>` tag, and applies it to a visible scaffold so students see output changes.
+  - Module validators now accept the actual CSS rules typed in the main editor, with whitespace/case tolerance, while still accepting widget completion markers.
+  - Regenerated all Lesson 8 and Lesson 9 modules.
+- Verification for main editor CSS workflow:
+  - `node --check stages\finalizers\finalizePreviewRender.js` passed.
+  - `node --check scripts\build_lesson8_strict_game.js` passed.
+  - `node --check scripts\build_lesson9_flex_game.js` passed.
+  - `node --check` passed for all 40 generated Lesson 8 and Lesson 9 module files.
+  - Node validation confirmed Lesson 8 Module 1 accepts both scaffolded `* { outline: 3px solid cyan; }` and bare `OUTLINE : 3px solid CYAN`.
+  - Node validation confirmed Lesson 9 Module 1 accepts both scaffolded `.row { display: flex; }` and bare `DISPLAY : FLEX`.
+  - Browser smoke test passed through the real menu flow for Lesson 8 Module 1: editor started as writable `styles.css`, typed CSS updated preview outline, and the Next button unlocked.
