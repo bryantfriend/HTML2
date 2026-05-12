@@ -4,7 +4,7 @@ window.Lessons.lesson3.modules[10] = {
     <p class="text-sm italic text-gray-400 mt-4">Mission: Watch the animation and click "Continue" in the code editor when you're ready.</p>`,
     svg: `<svg width="240" height="150" viewBox="0 0 240 150" xmlns="http://www.w3.org/2000/svg" id="m11-svg" style="background:#0f172a; border-radius:8px;">
         <rect x="20" y="20" width="200" height="110" rx="4" fill="#1e293b" />
-        <g id="m11-play-group" cursor="pointer" onclick="window.startM11Demo()">
+        <g id="m11-play-group" cursor="pointer" tabindex="0" role="button" aria-label="Play nested list demo">
             <rect x="95" y="50" width="50" height="50" fill="transparent" />
             <circle cx="120" cy="75" r="25" fill="#3b82f6" id="m11-play-circle" />
             <polygon points="115,65 115,85 132,75" fill="white" />
@@ -26,17 +26,18 @@ window.Lessons.lesson3.modules[10] = {
 <script>
 (function() {
     const editor = document.getElementById('code-editor');
+    const playBtn = document.getElementById('m11-play-group');
     if (editor) {
         editor.readOnly = true;
         editor.style.opacity = "0.8";
     }
 
     window.startM11Demo = function() {
-        const playBtn = document.getElementById('m11-play-group');
         const msg = document.getElementById('m11-msg');
         const scroll = document.getElementById('m11-demo-scroll');
         
-        if (!playBtn || !scroll) return;
+        if (!playBtn || !scroll || playBtn.dataset.playing === 'true') return;
+        playBtn.dataset.playing = 'true';
 
         playBtn.style.display = 'none';
         scroll.style.display = 'block';
@@ -71,6 +72,7 @@ window.Lessons.lesson3.modules[10] = {
                 clearInterval(typing);
                 msg.textContent = "Finished! Click Continue below.";
                 msg.setAttribute('fill', '#10b981');
+                delete playBtn.dataset.playing;
                 if (editor) {
                     editor.value = "<!-- Nested list example! -->\\n<button onclick='alert(\"Lists inside lists are powerful!\")'>Continue</button>";
                     editor.dispatchEvent(new Event('input', { bubbles: true }));
@@ -78,6 +80,17 @@ window.Lessons.lesson3.modules[10] = {
             }
         }, 60);
     };
+
+    if (playBtn && !playBtn.dataset.bound) {
+        playBtn.dataset.bound = 'true';
+        playBtn.addEventListener('click', window.startM11Demo);
+        playBtn.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                window.startM11Demo();
+            }
+        });
+    }
 })();
 </script>`,
     initialCode: `<!-- Click the blue play button to start! -->`,
