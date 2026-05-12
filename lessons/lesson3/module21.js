@@ -14,16 +14,16 @@ window.Lessons.lesson3.modules[20] = {
 .emoji-btn:active { transform: scale(0.9); }
 </style>
 <div class='emoji-grid'>
-  <button class='emoji-btn' onclick='window.selectEmoji("🤯")'>🤯</button>
-  <button class='emoji-btn' onclick='window.selectEmoji("🥱")'>🥱</button>
-  <button class='emoji-btn' onclick='window.selectEmoji("😡")'>😡</button>
-  <button class='emoji-btn' onclick='window.selectEmoji("😭")'>😭</button>
-  <button class='emoji-btn' onclick='window.selectEmoji("🥵")'>🥵</button>
-  <button class='emoji-btn' onclick='window.selectEmoji("🤩")'>🤩</button>
-  <button class='emoji-btn' onclick='window.selectEmoji("😎")'>😎</button>
-  <button class='emoji-btn' onclick='window.selectEmoji("🤓")'>🤓</button>
-  <button class='emoji-btn' onclick='window.selectEmoji("🚀")'>🚀</button>
-  <button class='emoji-btn' onclick='window.selectEmoji("🧠")'>🧠</button>
+  <button class='emoji-btn' data-emoji='🤯' type='button'>🤯</button>
+  <button class='emoji-btn' data-emoji='🥱' type='button'>🥱</button>
+  <button class='emoji-btn' data-emoji='😡' type='button'>😡</button>
+  <button class='emoji-btn' data-emoji='😭' type='button'>😭</button>
+  <button class='emoji-btn' data-emoji='🥵' type='button'>🥵</button>
+  <button class='emoji-btn' data-emoji='🤩' type='button'>🤩</button>
+  <button class='emoji-btn' data-emoji='😎' type='button'>😎</button>
+  <button class='emoji-btn' data-emoji='🤓' type='button'>🤓</button>
+  <button class='emoji-btn' data-emoji='🚀' type='button'>🚀</button>
+  <button class='emoji-btn' data-emoji='🧠' type='button'>🧠</button>
 </div>
 <script>
 (function() {
@@ -49,6 +49,12 @@ window.Lessons.lesson3.modules[20] = {
             }
         }
     };
+
+    document.querySelectorAll('.emoji-btn[data-emoji]').forEach(function(button) {
+        button.addEventListener('click', function() {
+            window.selectEmoji(button.dataset.emoji);
+        });
+    });
 })();
 </script>`,
     initialCode: `<!-- Click an emoji that represents your feeling! -->`,

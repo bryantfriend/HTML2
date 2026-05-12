@@ -43,14 +43,34 @@ window.Lessons.lesson3.modules[19] = {
     const demoBtn = document.getElementById('m20-demo-btn');
     const demoGroup = document.getElementById('m20-demo-group');
     const editor = document.getElementById('code-editor');
+
+    function hasHeadingAndList(code, heading, listTag) {
+        const lower = String(code || '').toLowerCase();
+        const headingToken = '<h2>' + heading + '</h2>';
+        const headingIndex = lower.indexOf(headingToken);
+        if (headingIndex === -1) return false;
+
+        const afterHeading = lower.slice(headingIndex + headingToken.length);
+        const listOpen = '<' + listTag + '>';
+        const listClose = '</' + listTag + '>';
+        const listStart = afterHeading.indexOf(listOpen);
+        const nextHeading = afterHeading.indexOf('<h2>');
+        if (listStart === -1) return false;
+        if (nextHeading !== -1 && listStart > nextHeading) return false;
+
+        const listSection = afterHeading.slice(listStart);
+        const listEnd = listSection.indexOf(listClose);
+        if (listEnd === -1) return false;
+
+        const listBody = listSection.slice(0, listEnd + listClose.length);
+        const itemMatches = listBody.match(/<li\b[\s\S]*?<\/li>/gi) || [];
+        return itemMatches.length >= 2;
+    }
     
     function validateSection(val) {
-        const c = val.toLowerCase();
-        
-        // Detailed checks for each section
-        const hasFoods = new RegExp("<h2>\\\\s*foods\\\\s*<\\\\/h2>\\\\s*<ul>\\\\s*<li>\\\\s*.*?\\\\s*<\\\\/li>\\\\s*<li>\\\\s*.*?\\\\s*<\\\\/li>\\\\s*<\\\\/ul>", "is").test(c);
-        const hasGames = new RegExp("<h2>\\\\s*games\\\\s*<\\\\/h2>\\\\s*<ul>\\\\s*<li>\\\\s*.*?\\\\s*<\\\\/li>\\\\s*<li>\\\\s*.*?\\\\s*<\\\\/li>\\\\s*<\\\\/ul>", "is").test(c);
-        const hasRoutine = new RegExp("<h2>\\\\s*routine\\\\s*<\\\\/h2>\\\\s*<ol>\\\\s*<li>\\\\s*.*?\\\\s*<\\\\/li>\\\\s*<li>\\\\s*.*?\\\\s*<\\\\/li>\\\\s*<\\\\/ol>", "is").test(c);
+        const hasFoods = hasHeadingAndList(val, 'foods', 'ul');
+        const hasGames = hasHeadingAndList(val, 'games', 'ul');
+        const hasRoutine = hasHeadingAndList(val, 'routine', 'ol');
         
         if (hasFoods) {
             s1.setAttribute('fill', '#064e3b'); t1.setAttribute('fill', '#10b981'); t1.textContent = "Foods ✅";
@@ -118,10 +138,31 @@ window.Lessons.lesson3.modules[19] = {
     progress: 100,
     validator: function (code) {
         if (!code) return false;
-        const c = code.toLowerCase();
-        const hasFoods = new RegExp("<h2>\\\\s*foods\\\\s*<\\\\/h2>\\\\s*<ul>\\\\s*<li>\\\\s*.*?\\\\s*<\\\\/li>\\\\s*<li>\\\\s*.*?\\\\s*<\\\\/li>\\\\s*<\\\\/ul>", "is").test(c);
-        const hasGames = new RegExp("<h2>\\\\s*games\\\\s*<\\\\/h2>\\\\s*<ul>\\\\s*<li>\\\\s*.*?\\\\s*<\\\\/li>\\\\s*<li>\\\\s*.*?\\\\s*<\\\\/li>\\\\s*<\\\\/ul>", "is").test(c);
-        const hasRoutine = new RegExp("<h2>\\\\s*routine\\\\s*<\\\\/h2>\\\\s*<ol>\\\\s*<li>\\\\s*.*?\\\\s*<\\\\/li>\\\\s*<li>\\\\s*.*?\\\\s*<\\\\/li>\\\\s*<\\\\/ol>", "is").test(c);
-        return hasFoods && hasGames && hasRoutine;
+        function hasHeadingAndList(source, heading, listTag) {
+            const lower = String(source || '').toLowerCase();
+            const headingToken = '<h2>' + heading + '</h2>';
+            const headingIndex = lower.indexOf(headingToken);
+            if (headingIndex === -1) return false;
+
+            const afterHeading = lower.slice(headingIndex + headingToken.length);
+            const listOpen = '<' + listTag + '>';
+            const listClose = '</' + listTag + '>';
+            const listStart = afterHeading.indexOf(listOpen);
+            const nextHeading = afterHeading.indexOf('<h2>');
+            if (listStart === -1) return false;
+            if (nextHeading !== -1 && listStart > nextHeading) return false;
+
+            const listSection = afterHeading.slice(listStart);
+            const listEnd = listSection.indexOf(listClose);
+            if (listEnd === -1) return false;
+
+            const listBody = listSection.slice(0, listEnd + listClose.length);
+            const itemMatches = listBody.match(/<li\b[\s\S]*?<\/li>/gi) || [];
+            return itemMatches.length >= 2;
+        }
+
+        return hasHeadingAndList(code, 'foods', 'ul') &&
+            hasHeadingAndList(code, 'games', 'ul') &&
+            hasHeadingAndList(code, 'routine', 'ol');
     }
 };
