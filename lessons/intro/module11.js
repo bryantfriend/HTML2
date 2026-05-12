@@ -21,7 +21,7 @@ window.Lessons.intro.modules[10] = {
       <div class="intro-slash-kicker">Quick Demo</div>
       <div style="font-size:13px;">The slash turns an opening tag into a closing tag.</div>
     </div>
-    <button type="button" class="intro-slash-replay" onclick="window.playIntroSlashDemo()">Replay</button>
+    <button type="button" class="intro-slash-replay" id="intro-slash-demo-replay">Replay</button>
   </div>
   <div class="intro-slash-grid">
     <div class="intro-slash-panel">
@@ -57,6 +57,8 @@ window.Lessons.intro.modules[10] = {
       frame++;
     }, 900);
   };
+  const replayBtn = document.getElementById('intro-slash-demo-replay');
+  if (replayBtn) replayBtn.addEventListener('click', window.playIntroSlashDemo);
   const editor = document.getElementById('code-editor');
   if (editor) { editor.readOnly = false; editor.style.opacity = '1'; }
   window.playIntroSlashDemo();

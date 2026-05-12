@@ -21,31 +21,39 @@ window.Lessons.intro.modules[17] = {
 .sb-card { flex: 1; background: white; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); opacity: 0; transform: translateY(20px); transition: 0.5s; }
 .progress-bar { position: absolute; bottom: 0; left: 0; height: 6px; background: #00ff9d; width: 0%; transition: width 1s linear; display: none; }
 </style>
+<script>
+window.playIntroPosterDemo = function() {
+    const playBtn = document.getElementById('play-btn');
+    const pbar = document.getElementById('pbar');
+    const sb = document.getElementById('sb');
+    if (!playBtn || !pbar || !sb || playBtn.dataset.playing === 'true') return;
+    playBtn.dataset.playing = 'true';
+    playBtn.style.display = 'none';
+    pbar.style.display = 'block';
+    sb.style.display = 'flex';
+    setTimeout(() => { sb.style.opacity = '1'; pbar.style.width = '10%'; }, 100);
+    setTimeout(() => { document.getElementById('nav').style.transform = 'translateY(0)'; pbar.style.width = '20%'; }, 1000);
+    setTimeout(() => { document.getElementById('logo').style.opacity = '1'; pbar.style.width = '30%'; }, 2000);
+    setTimeout(() => { document.getElementById('links').style.opacity = '1'; pbar.style.width = '40%'; }, 3000);
+    setTimeout(() => { const hero = document.getElementById('hero'); hero.style.opacity = '1'; hero.style.transform = 'scale(1)'; pbar.style.width = '50%'; }, 4000);
+    setTimeout(() => { document.getElementById('h1').style.opacity = '1'; document.getElementById('h1').style.transform = 'translateY(0)'; pbar.style.width = '60%'; }, 5000);
+    setTimeout(() => { document.getElementById('p').style.opacity = '1'; document.getElementById('p').style.transform = 'translateY(0)'; pbar.style.width = '70%'; }, 6000);
+    setTimeout(() => { document.getElementById('btn-ui').style.opacity = '1'; document.getElementById('btn-ui').style.transform = 'scale(1)'; pbar.style.width = '80%'; }, 7000);
+    setTimeout(() => { document.getElementById('cards').style.transform = 'translateY(0)'; pbar.style.width = '90%'; }, 8000);
+    setTimeout(() => { document.querySelectorAll('.sb-card').forEach((c, i) => setTimeout(() => { c.style.opacity = '1'; c.style.transform = 'translateY(0)'; }, i * 200)); pbar.style.width = '95%'; }, 8500);
+    setTimeout(() => {
+        pbar.style.width = '100%';
+        setTimeout(() => { pbar.style.display = 'none'; }, 500);
+        const editor = document.getElementById('code-editor');
+        if (editor && !editor.value.includes('POSTER' + '_BUILT')) {
+            editor.value += '\\n<!-- ' + 'POSTER' + '_BUILT' + ' -->';
+            editor.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+    }, 10000);
+};
+</script>
 <div class="poster-container" id="pc">
-    <button class="play-btn" id="play-btn" onclick="
-        this.style.display = 'none';
-        const pbar = document.getElementById('pbar'); pbar.style.display = 'block';
-        const sb = document.getElementById('sb'); sb.style.display = 'flex';
-        setTimeout(() => { sb.style.opacity = '1'; pbar.style.width = '10%'; }, 100);
-        setTimeout(() => { document.getElementById('nav').style.transform = 'translateY(0)'; pbar.style.width = '20%'; }, 1000);
-        setTimeout(() => { document.getElementById('logo').style.opacity = '1'; pbar.style.width = '30%'; }, 2000);
-        setTimeout(() => { document.getElementById('links').style.opacity = '1'; pbar.style.width = '40%'; }, 3000);
-        setTimeout(() => { const hero = document.getElementById('hero'); hero.style.opacity = '1'; hero.style.transform = 'scale(1)'; pbar.style.width = '50%'; }, 4000);
-        setTimeout(() => { document.getElementById('h1').style.opacity = '1'; document.getElementById('h1').style.transform = 'translateY(0)'; pbar.style.width = '60%'; }, 5000);
-        setTimeout(() => { document.getElementById('p').style.opacity = '1'; document.getElementById('p').style.transform = 'translateY(0)'; pbar.style.width = '70%'; }, 6000);
-        setTimeout(() => { document.getElementById('btn-ui').style.opacity = '1'; document.getElementById('btn-ui').style.transform = 'scale(1)'; pbar.style.width = '80%'; }, 7000);
-        setTimeout(() => { document.getElementById('cards').style.transform = 'translateY(0)'; pbar.style.width = '90%'; }, 8000);
-        setTimeout(() => { document.querySelectorAll('.sb-card').forEach((c, i) => setTimeout(() => { c.style.opacity = '1'; c.style.transform = 'translateY(0)'; }, i * 200)); pbar.style.width = '95%'; }, 8500);
-        setTimeout(() => { 
-            pbar.style.width = '100%';
-            setTimeout(() => { pbar.style.display = 'none'; }, 500);
-            const editor = document.getElementById('code-editor');
-            if(!editor.value.includes('POSTER' + '_BUILT')) {
-                editor.value += '\\n<!-- ' + 'POSTER' + '_BUILT' + ' -->';
-                editor.dispatchEvent(new Event('input', { bubbles: true }));
-            }
-        }, 10000);
-    ">▶ PLAY VIDEO</button>
+    <button class="play-btn" id="play-btn" type="button">▶ PLAY VIDEO</button>
     <div class="site-builder" id="sb">
         <div class="sb-nav" id="nav">
             <div class="sb-logo" id="logo">MySite</div>
@@ -61,7 +69,13 @@ window.Lessons.intro.modules[17] = {
         </div>
     </div>
     <div class="progress-bar" id="pbar"></div>
-</div>`,
+</div>
+<script>
+(function() {
+    const playBtn = document.getElementById('play-btn');
+    if (playBtn) playBtn.addEventListener('click', window.playIntroPosterDemo);
+})();
+</script>`,
     initialCode: ``,
             progress: 90,
             validator: function (code) { return code.includes("POSTER_BUILT"); }

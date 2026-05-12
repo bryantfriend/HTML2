@@ -47,7 +47,7 @@ if (introRefreshEditor) { introRefreshEditor.readOnly = false; introRefreshEdito
       <div class="intro-refresh-kicker">Quick Demo</div>
       <div style="font-size:13px;">Change the word first, then use the refresh button.</div>
     </div>
-    <button type="button" class="intro-refresh-replay" onclick="window.playIntroRefreshDemo()">Replay</button>
+    <button type="button" class="intro-refresh-replay" id="intro-refresh-demo-replay">Replay</button>
   </div>
   <div class="intro-refresh-grid">
     <div class="intro-refresh-panel">
@@ -78,7 +78,13 @@ if (introRefreshEditor) { introRefreshEditor.readOnly = false; introRefreshEdito
       }
    " style="padding:5px 10px; background:#3b82f6; color:white; border:none; border-radius:4px; font-weight:bold; cursor:pointer; font-size:12px; transition:0.3s;">↻ REFRESH BROWSER</button>
 </div>
-<script>window.playIntroRefreshDemo();</script>`,
+<script>
+(function() {
+  const replayBtn = document.getElementById('intro-refresh-demo-replay');
+  if (replayBtn) replayBtn.addEventListener('click', window.playIntroRefreshDemo);
+  window.playIntroRefreshDemo();
+})();
+</script>`,
     initialCode: `<h2>Welcome</h2>`,
     progress: 70,
     validator: function (code) { return code.includes("REFRESHED"); }

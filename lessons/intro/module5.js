@@ -22,7 +22,7 @@ window.Lessons.intro.modules[4] = {
       <div class="intro-demo-kicker">Quick Demo</div>
       <div style="font-size:13px;">Watch the tag pair appear, then type the same thing below.</div>
     </div>
-    <button type="button" class="intro-demo-replay" onclick="window.playIntroHtmlDemo()">Replay</button>
+    <button type="button" class="intro-demo-replay" id="intro-html-demo-replay">Replay</button>
   </div>
   <div class="intro-demo-stage">
     <div class="intro-demo-panel">
@@ -65,6 +65,8 @@ window.Lessons.intro.modules[4] = {
     }, 900);
   }
   window.playIntroHtmlDemo = runDemo;
+  const replayBtn = document.getElementById('intro-html-demo-replay');
+  if (replayBtn) replayBtn.addEventListener('click', runDemo);
   const editor = document.getElementById('code-editor');
   if (editor) { editor.readOnly = false; editor.style.opacity = '1'; }
   runDemo();

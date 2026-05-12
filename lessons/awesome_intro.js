@@ -1396,7 +1396,7 @@ setTimeout(window.initDrag, 100);
 </style>
 
 <div class="svg-stage">
-    <button class="play-btn" id="play-btn" onclick="window.playSVG()">▶ PLAY SVG</button>
+    <button class="play-btn" id="play-btn" type="button">▶ PLAY SVG</button>
     
     <svg class="svg-canvas" id="canvas" viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg">
         <g class="spin-group" style="transform-origin: 200px 175px;">
@@ -1410,8 +1410,11 @@ setTimeout(window.initDrag, 100);
 
 <script>
 window.playSVG = function() {
-    document.getElementById('play-btn').style.opacity = '0';
-    setTimeout(() => document.getElementById('play-btn').style.display = 'none', 300);
+    const playBtn = document.getElementById('play-btn');
+    if (!playBtn || playBtn.dataset.playing === 'true') return;
+    playBtn.dataset.playing = 'true';
+    playBtn.style.opacity = '0';
+    setTimeout(() => playBtn.style.display = 'none', 300);
     
     const canvas = document.getElementById('canvas');
     canvas.style.opacity = '1';
@@ -1427,6 +1430,8 @@ window.playSVG = function() {
         } catch(e) {}
     }, 4000);
 }
+const playBtn = document.getElementById('play-btn');
+if (playBtn) playBtn.addEventListener('click', window.playSVG);
 </script>`,
             progress: 90,
             validator: function (code) { return code.includes("SVG_PLAYED"); }

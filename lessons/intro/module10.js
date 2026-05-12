@@ -19,7 +19,7 @@ window.Lessons.intro.modules[9] = {
       <div class="intro-symbol-kicker">Quick Demo</div>
       <div style="font-size:13px;">Tags begin with <code>&lt;</code> and end with <code>&gt;</code>.</div>
     </div>
-    <button type="button" class="intro-symbol-replay" onclick="window.playIntroBracketDemo()">Replay</button>
+    <button type="button" class="intro-symbol-replay" id="intro-bracket-demo-replay">Replay</button>
   </div>
   <div class="intro-symbol-frame">
     <div id="intro-bracket-demo" class="intro-symbol-code"></div>
@@ -50,6 +50,8 @@ window.Lessons.intro.modules[9] = {
       frame++;
     }, 700);
   };
+  const replayBtn = document.getElementById('intro-bracket-demo-replay');
+  if (replayBtn) replayBtn.addEventListener('click', window.playIntroBracketDemo);
   const editor = document.getElementById('code-editor');
   if (editor) { editor.readOnly = false; editor.style.opacity = '1'; }
   window.playIntroBracketDemo();

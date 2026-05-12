@@ -95,7 +95,7 @@ if (introBodyEditor) { introBodyEditor.readOnly = false; introBodyEditor.style.o
       <div class="intro-demo-kicker">Quick Demo</div>
       <div style="font-size:13px;">Watch the body tag appear, then type it while you finish the skeleton.</div>
     </div>
-    <button type="button" class="intro-demo-replay" onclick="window.playIntroBodyDemo()">Replay</button>
+    <button type="button" class="intro-demo-replay" id="intro-body-demo-replay">Replay</button>
   </div>
   <div class="intro-demo-stage">
     <div class="intro-demo-panel">
@@ -124,7 +124,13 @@ if (introBodyEditor) { introBodyEditor.readOnly = false; introBodyEditor.style.o
     </div>
   </div>
 </div>
-<script>window.playIntroBodyDemo();</script>`,
+<script>
+(function() {
+  const replayBtn = document.getElementById('intro-body-demo-replay');
+  if (replayBtn) replayBtn.addEventListener('click', window.playIntroBodyDemo);
+  window.playIntroBodyDemo();
+})();
+</script>`,
   initialCode: ``,
   progress: 30,
   validator: function (code) {

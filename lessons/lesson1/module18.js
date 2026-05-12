@@ -30,6 +30,8 @@ window.Lessons.lesson1.modules[17] = {
 <script>
 window.playSVG = function() {
     const playBtn = document.getElementById('play-btn');
+    if (!playBtn || playBtn.dataset.playing === 'true') return;
+    playBtn.dataset.playing = 'true';
     playBtn.style.opacity = '0';
     setTimeout(() => playBtn.style.display = 'none', 300);
     
@@ -43,7 +45,7 @@ window.playSVG = function() {
 }
 </script>
 <div class="svg-stage">
-    <button class="play-btn" id="play-btn" onclick="window.playSVG()">▶ PLAY SVG</button>
+    <button class="play-btn" id="play-btn" type="button">▶ PLAY SVG</button>
     <svg class="svg-canvas" id="canvas" viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg">
         <g class="spin-group" style="transform-origin: 200px 175px;">
             <circle cx="200" cy="175" r="100" class="shape draw-circle"/>
@@ -52,7 +54,13 @@ window.playSVG = function() {
             <line x1="100" y1="175" x2="300" y2="175" class="shape draw-line"/>
         </g>
     </svg>
-</div>`,
+</div>
+<script>
+(function() {
+    const playBtn = document.getElementById('play-btn');
+    if (playBtn) playBtn.addEventListener('click', window.playSVG);
+})();
+</script>`,
     initialCode: ``,
     progress: 90,
     validator: function (code) { return code.includes("SVG_PLAYED"); }

@@ -22,7 +22,7 @@ window.Lessons.intro.modules[12] = {
       <div class="intro-edit-kicker">Quick Demo</div>
       <div style="font-size:13px;">Tiny edits in code change the output right away.</div>
     </div>
-    <button type="button" class="intro-edit-replay" onclick="window.playIntroEditDemo()">Replay</button>
+    <button type="button" class="intro-edit-replay" id="intro-edit-demo-replay">Replay</button>
   </div>
   <div class="intro-edit-grid">
     <div class="intro-edit-panel">
@@ -60,6 +60,8 @@ window.Lessons.intro.modules[12] = {
       frame++;
     }, 1000);
   };
+  const replayBtn = document.getElementById('intro-edit-demo-replay');
+  if (replayBtn) replayBtn.addEventListener('click', window.playIntroEditDemo);
   const editor = document.getElementById('code-editor');
   if (editor) { editor.readOnly = false; editor.style.opacity = '1'; }
   window.playIntroEditDemo();

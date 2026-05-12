@@ -84,7 +84,7 @@ window.pickDoctypeLine = function(button, isCorrect) {
       <div class="intro-demo-kicker">Quick Demo</div>
       <div style="font-size:13px;">Watch the first line appear, then type that same line below.</div>
     </div>
-    <button type="button" class="intro-demo-replay" onclick="window.playIntroDoctypeDemo()">Replay</button>
+    <button type="button" class="intro-demo-replay" id="intro-doctype-demo-replay">Replay</button>
   </div>
   <div class="intro-demo-stage">
     <div class="intro-demo-panel">
@@ -108,7 +108,13 @@ window.pickDoctypeLine = function(button, isCorrect) {
     <div id="doctype-boot" class="doctype-boot">Once you find it here, type the full line in the editor to finish the mission.</div>
   </div>
 </div>
-<script>window.playIntroDoctypeDemo();</script>`,
+<script>
+(function() {
+  const replayBtn = document.getElementById('intro-doctype-demo-replay');
+  if (replayBtn) replayBtn.addEventListener('click', window.playIntroDoctypeDemo);
+  window.playIntroDoctypeDemo();
+})();
+</script>`,
   initialCode: ``,
   progress: 45,
   validator: function (code) {

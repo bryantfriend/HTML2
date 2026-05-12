@@ -22,7 +22,7 @@ window.Lessons.intro.modules[11] = {
       <div class="intro-p-kicker">Quick Demo</div>
       <div style="font-size:13px;">Paragraph tags wrap readable text.</div>
     </div>
-    <button type="button" class="intro-p-replay" onclick="window.playIntroParagraphDemo()">Replay</button>
+    <button type="button" class="intro-p-replay" id="intro-paragraph-demo-replay">Replay</button>
   </div>
   <div class="intro-p-grid">
     <div class="intro-p-panel">
@@ -61,6 +61,8 @@ window.Lessons.intro.modules[11] = {
       frame++;
     }, 850);
   };
+  const replayBtn = document.getElementById('intro-paragraph-demo-replay');
+  if (replayBtn) replayBtn.addEventListener('click', window.playIntroParagraphDemo);
   const editor = document.getElementById('code-editor');
   if (editor) { editor.readOnly = false; editor.style.opacity = '1'; }
   window.playIntroParagraphDemo();
