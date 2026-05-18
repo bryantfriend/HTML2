@@ -1,44 +1,19 @@
 const fs = require('fs');
 const path = require('path');
-const { writeInteractiveLesson, escHtml } = require('./interactive_lesson_factory');
 
-function marker(name) {
-  return `code.includes("<!-- ${name} -->")`;
+function escTemplate(value) {
+  return String(value || '').replace(/\\/g, '\\\\').replace(/`/g, '\\`');
 }
 
-function tag(name) {
-  return `/<\\s*${name}\\b/i.test(code)`;
+function escDouble(value) {
+  return String(value || '').replace(/\\/g, '\\\\').replace(/"/g, '\\"');
 }
 
-function endTag(name) {
-  return `/<\\s*\\/\\s*${name}\\s*>/i.test(code)`;
-}
-
-function pairedTag(name) {
-  return `${tag(name)} && ${endTag(name)}`;
-}
-
-function countTag(name, count) {
-  return `(code.match(/<\\s*${name}\\b/gi) || []).length >= ${count}`;
-}
-
-function attr(name, valuePattern) {
-  if (!valuePattern) {
-    return `/\\b${name}\\s*=\\s*["'][^"']+["']/i.test(code)`;
-  }
-  return `/\\b${name}\\s*=\\s*["']${valuePattern}["']/i.test(code)`;
-}
-
-function textInsideTag(name, textPattern) {
-  return `/<\\s*${name}\\b[^>]*>[\\s\\S]*?${textPattern}[\\s\\S]*?<\\s*\\/\\s*${name}\\s*>/i.test(code)`;
-}
-
-function containsPattern(pattern) {
-  return `/${pattern}/i.test(code)`;
-}
-
-function all(parts) {
-  return `function(code) { return ${parts.join(' && ')}; }`;
+function escHtml(value) {
+  return String(value || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
 }
 
 function htmlDoc(inner) {
@@ -47,7 +22,7 @@ function htmlDoc(inner) {
     '<html>',
     '<head>',
     '  <meta charset="UTF-8">',
-    '  <title>HTML Final Mission</title>',
+    '  <title>Exam 2</title>',
     '</head>',
     '<body>',
     inner,
@@ -56,29 +31,10 @@ function htmlDoc(inner) {
   ].join('\n');
 }
 
-function hero(label, sublabel, accent) {
-  return `<svg class="quest-svg-stage" viewBox="0 0 320 150" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <rect x="10" y="10" width="300" height="130" rx="24" fill="#0f172a" stroke="rgba(148,163,184,0.2)"/>
-    <rect x="28" y="26" width="264" height="18" rx="9" fill="${accent}"/>
-    <rect x="28" y="58" width="122" height="56" rx="18" fill="#e0f2fe"/>
-    <rect x="170" y="58" width="122" height="24" rx="12" fill="#fef3c7"/>
-    <rect x="170" y="90" width="122" height="24" rx="12" fill="#dcfce7"/>
-    <text x="160" y="42" fill="#082f49" font-size="12" text-anchor="middle" font-family="Arial, sans-serif">${escHtml(label)}</text>
-    <text x="160" y="132" fill="#cbd5e1" font-size="12" text-anchor="middle" font-family="Arial, sans-serif">${escHtml(sublabel)}</text>
-  </svg>`;
-}
-
-function previewCard(title, body, color) {
-  return `<div style="width:100%;max-width:260px;padding:16px;border-radius:20px;background:linear-gradient(180deg,#ffffff,#f8fafc);box-shadow:inset 0 0 0 1px rgba(148,163,184,0.22);">
-    <div style="padding:10px 12px;border-radius:14px;background:${color};color:#0f172a;font:900 12px/1.2 Arial,sans-serif;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;">${escHtml(title)}</div>
-    ${body}
-  </div>`;
-}
-
 const previewScaffold = `<style>
 #preview-area { margin:0; padding:18px; background:linear-gradient(180deg,#eff6ff,#f8fafc); color:#0f172a; font-family:Arial,sans-serif; line-height:1.55; }
 #preview-area body { margin:0; font-family:Arial,sans-serif; background:white; color:#0f172a; padding:18px; border-radius:18px; box-shadow:inset 0 0 0 1px rgba(148,163,184,0.22); }
-#preview-area h1, #preview-area h2 { margin:0 0 12px; color:#0f172a; }
+#preview-area h1, #preview-area h2, #preview-area h3 { margin:0 0 12px; color:#0f172a; }
 #preview-area p { margin:0 0 12px; }
 #preview-area strong, #preview-area b { color:#0b57d0; }
 #preview-area em, #preview-area i { color:#c026d3; }
@@ -97,560 +53,463 @@ const previewScaffold = `<style>
 #preview-area footer { background:#fee2e2; }
 </style>`;
 
-module.exports = function buildExam2HtmlFinal() {
-  const modules = [
-    {
-      title: '1. HTML Mission Start',
-      kicker: 'Final Mission',
-      intro: 'This easy final is secretly one more guided practice lap. Tap the card that tells what HTML really does.',
-      watch: 'Look at the three page parts on the screen.',
-      play: 'Tap the card that matches HTML.',
-      type: 'No typing yet. Warm up first.',
-      remember: 'HTML gives a webpage its structure.',
-      mission: 'Choose the job of HTML.',
-      hero: hero('HTML = structure', 'Easy points. Keep moving.', '#67e8f9'),
-      widget: {
-        type: 'choice',
-        heading: 'What is HTML mainly used for?',
-        chip: '1 easy answer',
-        prompt: 'Pick the best job for HTML.',
-        marker: 'EX2_M1_READY',
-        success: 'Nice. HTML builds the structure of a webpage.',
-        retry: 'Try again. Think structure, not paint or movement.',
-        options: [
-          { value: 'structure', label: 'Build the structure', copy: 'Headings, paragraphs, images, forms, and page parts.' },
-          { value: 'style', label: 'Paint the colors', copy: 'That is mostly CSS.' },
-          { value: 'motion', label: 'Make everything move', copy: 'That is usually JavaScript.' }
-        ],
-        correct: ['structure']
-      },
-      initialCode: htmlDoc('  <h1>HTML Final Mission</h1>\n  <p>Start by picking the best answer on the left.</p>'),
-      validator: all([marker('EX2_M1_READY')])
-    },
-    {
-      title: '2. The Biggest Heading',
-      kicker: 'Text Tags',
-      intro: 'Headings help readers know what a page is about right away.',
-      watch: 'Notice how a big title stands out in the preview.',
-      play: 'Read the heading card in the demo area.',
-      type: 'Type <code>&lt;h1&gt;My First Page&lt;/h1&gt;</code> inside the body.',
-      remember: '<code>&lt;h1&gt;</code> is the biggest heading tag.',
-      mission: 'Add one big page heading.',
-      hero: hero('Big title first', 'Students can see it instantly.', '#a5f3fc'),
-      widget: {
-        type: 'demo',
-        heading: 'A page title should be easy to spot.',
-        chip: 'type h1',
-        browserTitle: 'index.html',
-        code: '<h1>My First Page</h1>',
-        preview: previewCard('Heading', '<h1 style="margin:0;font:900 28px/1.1 Arial,sans-serif;">My First Page</h1>', '#bfdbfe'),
-        captions: ['Start with an opening h1 tag.', 'Put the title words in the middle.', 'Close the h1 tag to finish the heading.']
-      },
-      initialCode: htmlDoc('  <!-- Type your h1 heading below this line -->\n'),
-      validator: all([textInsideTag('h1', 'my\\s*first\\s*page')])
-    },
-    {
-      title: '3. Add a Paragraph',
-      kicker: 'Text Tags',
-      intro: 'Paragraph tags hold normal sentence text on a page.',
-      watch: 'The heading stays bold while the paragraph sits underneath it.',
-      play: 'Look for the sentence block in the preview card.',
-      type: 'Type <code>&lt;p&gt;I am learning HTML.&lt;/p&gt;</code> under the heading.',
-      remember: '<code>&lt;p&gt;</code> is for a paragraph of text.',
-      mission: 'Add one paragraph.',
-      hero: hero('Heading + paragraph', 'The page gets real content now.', '#93c5fd'),
-      widget: {
-        type: 'demo',
-        heading: 'Most pages mix headings and paragraphs.',
-        chip: 'type p',
-        browserTitle: 'index.html',
-        code: '<p>I am learning HTML.</p>',
-        preview: previewCard('Paragraph', '<p style="margin:0;color:#334155;font:700 15px/1.5 Arial,sans-serif;">I am learning HTML.</p>', '#dbeafe'),
-        captions: ['Open the paragraph tag.', 'Write the sentence inside it.', 'Close the tag so the browser knows where the paragraph ends.']
-      },
-      initialCode: htmlDoc('  <h1>My First Page</h1>\n  <!-- Add your paragraph here -->\n'),
-      validator: all([textInsideTag('p', 'i\\s*am\\s*learning\\s*html')])
-    },
-    {
-      title: '4. True or False: Break Line',
-      kicker: 'Text Tags',
-      intro: 'A line break is a tiny tag that jumps text to the next line.',
-      watch: 'See the two short lines stack instead of sitting side by side.',
-      play: 'Pick true or false, then add the break tag in the code.',
-      type: 'Put <code>&lt;br&gt;</code> between <code>Hello</code> and <code>World</code>.',
-      remember: '<code>&lt;br&gt;</code> does not need a closing tag here.',
-      mission: 'Use a line break correctly.',
-      hero: hero('Hello', 'World on the next line.', '#fde68a'),
-      widget: {
-        type: 'choice',
-        heading: 'True or false: The <br> tag moves text to a new line.',
-        chip: 'true / false',
-        prompt: 'Pick the best answer.',
-        marker: 'EX2_M4_TRUE',
-        success: 'Correct. A line break moves the next text to a new line.',
-        retry: 'Try again. Think of pressing Enter once.',
-        options: [
-          { value: 'true', label: 'True', copy: 'It starts a new line.' },
-          { value: 'false', label: 'False', copy: 'It keeps everything on one line.' }
-        ],
-        correct: ['true']
-      },
-      initialCode: htmlDoc('  <p>Hello\n  World</p>\n'),
-      validator: all([marker('EX2_M4_TRUE'), tag('br')])
-    },
-    {
-      title: '5. Make It Strong',
-      kicker: 'Text Tags',
-      intro: 'Strong text makes an important word stand out.',
-      watch: 'The key word looks more powerful in the preview.',
-      play: 'Read the example word that pops out.',
-      type: 'Wrap the word <code>important</code> with <code>&lt;strong&gt;</code> tags.',
-      remember: '<code>&lt;strong&gt;</code> is a great choice for important text.',
-      mission: 'Make one word strong.',
-      hero: hero('Important words pop', 'Students see the change fast.', '#f9a8d4'),
-      widget: {
-        type: 'demo',
-        heading: 'Strong text calls attention to the important part.',
-        chip: 'type strong',
-        browserTitle: 'index.html',
-        code: '<strong>important</strong>',
-        preview: previewCard('Strong', '<p style="margin:0;font:700 15px/1.5 Arial,sans-serif;">This is <strong>important</strong>.</p>', '#fbcfe8'),
-        captions: ['Open the strong tag before the key word.', 'Leave the other words outside it.', 'Close the strong tag after the key word.']
-      },
-      initialCode: htmlDoc('  <p>This is important.</p>\n'),
-      validator: all([textInsideTag('strong', 'important')])
-    },
-    {
-      title: '6. Italic Feeling',
-      kicker: 'Text Tags',
-      intro: 'Emphasized text leans and helps a word feel special.',
-      watch: 'The highlighted word looks different right away.',
-      play: 'Spot the tilted word in the preview card.',
-      type: 'Wrap the word <code>exciting</code> with <code>&lt;em&gt;</code> tags.',
-      remember: '<code>&lt;em&gt;</code> emphasizes a word.',
-      mission: 'Add one emphasized word.',
-      hero: hero('Small emphasis', 'A tiny tag can change the feeling.', '#c4b5fd'),
-      widget: {
-        type: 'demo',
-        heading: 'Emphasis makes a word feel different.',
-        chip: 'type em',
-        browserTitle: 'index.html',
-        code: '<em>exciting</em>',
-        preview: previewCard('Emphasis', '<p style="margin:0;font:700 15px/1.5 Arial,sans-serif;">HTML is <em>exciting</em>.</p>', '#ddd6fe'),
-        captions: ['Open the em tag before the special word.', 'Keep the rest of the sentence outside it.', 'Close the em tag right after the word.']
-      },
-      initialCode: htmlDoc('  <p>HTML is exciting.</p>\n'),
-      validator: all([textInsideTag('em', 'exciting')])
-    },
-    {
-      title: '7. Build a Bullet List',
-      kicker: 'Lists',
-      intro: 'Unordered lists show bullet points for items that do not need numbers.',
-      watch: 'The preview turns plain words into a real bullet list.',
-      play: 'Notice the bullets appear automatically.',
-      type: 'Add <code>&lt;ul&gt;</code> with 2 items: <code>Apples</code> and <code>Bananas</code>.',
-      remember: '<code>&lt;ul&gt;</code> goes outside and <code>&lt;li&gt;</code> goes inside.',
-      mission: 'Create a 2-item bullet list.',
-      hero: hero('Bullets = unordered list', 'Great for favorites and supplies.', '#86efac'),
-      widget: {
-        type: 'demo',
-        heading: 'A bullet list keeps items neat.',
-        chip: 'ul + li',
-        browserTitle: 'list.html',
-        code: '<ul>\n  <li>Apples</li>\n  <li>Bananas</li>\n</ul>',
-        preview: previewCard('List', '<ul style="margin:0;padding-left:24px;"><li>Apples</li><li>Bananas</li></ul>', '#dcfce7'),
-        captions: ['Start with the ul tag.', 'Add one li for each item.', 'Close both the li tags and the ul tag.']
-      },
-      initialCode: htmlDoc('  <!-- Build your bullet list here -->\n'),
-      validator: all([pairedTag('ul'), countTag('li', 2), containsPattern('apples'), containsPattern('bananas')])
-    },
-    {
-      title: '8. Number the Steps',
-      kicker: 'Lists',
-      intro: 'Ordered lists use numbers when the order matters.',
-      watch: 'The preview shows step 1 and step 2.',
-      play: 'Think recipe steps or morning routines.',
-      type: 'Add <code>&lt;ol&gt;</code> with 2 items: <code>Wake up</code> and <code>Eat breakfast</code>.',
-      remember: '<code>&lt;ol&gt;</code> makes a numbered list.',
-      mission: 'Create a 2-step ordered list.',
-      hero: hero('Numbers = ordered list', 'Use it when sequence matters.', '#fcd34d'),
-      widget: {
-        type: 'demo',
-        heading: 'Ordered lists are perfect for steps.',
-        chip: 'ol + li',
-        browserTitle: 'steps.html',
-        code: '<ol>\n  <li>Wake up</li>\n  <li>Eat breakfast</li>\n</ol>',
-        preview: previewCard('Steps', '<ol style="margin:0;padding-left:24px;"><li>Wake up</li><li>Eat breakfast</li></ol>', '#fef3c7'),
-        captions: ['Open the ol tag for a numbered list.', 'Add one li for each step.', 'Close the ol tag when the list is done.']
-      },
-      initialCode: htmlDoc('  <!-- Build your numbered list here -->\n'),
-      validator: all([pairedTag('ol'), countTag('li', 2), `/wake\\s*up/i.test(code)`, `/eat\\s*breakfast/i.test(code)`])
-    },
-    {
-      title: '9. Easy Image Tag',
-      kicker: 'Images',
-      intro: 'The image tag places a picture on the page.',
-      watch: 'When the tag appears, the cat picture appears too.',
-      play: 'Use the exact source shown in the mission text.',
-      type: 'Type <code>&lt;img src="assets/exam-html-cat.svg"&gt;</code> inside the body.',
-      remember: '<code>src</code> tells the browser where the image lives.',
-      mission: 'Show the cat image.',
-      hero: hero('Picture power', 'One tag, instant image.', '#7dd3fc'),
-      widget: {
-        type: 'demo',
-        heading: 'The img tag can place a picture with one line.',
-        chip: 'type img',
-        browserTitle: 'images.html',
-        code: '<img src="assets/exam-html-cat.svg">',
-        preview: previewCard('Image', '<img src="assets/exam-html-cat.svg" alt="Cat" style="margin:0 auto;">', '#dbeafe'),
-        captions: ['Open the img tag.', 'Add the src attribute with the picture path.', 'Close the tag with > so the picture can appear.']
-      },
-      initialCode: htmlDoc('  <!-- Type the img tag here -->\n'),
-      validator: all([tag('img'), attr('src', 'assets\\/exam-html-cat\\.svg')])
-    },
-    {
-      title: '10. Alt Text Helps',
-      kicker: 'Images',
-      intro: 'Alt text explains an image if it does not load or if someone uses a screen reader.',
-      watch: 'The mission is easy: keep the same image and add the helpful words.',
-      play: 'Pick the true statement, then type the alt text.',
-      type: 'Add <code>alt="happy cat"</code> to the image tag.',
-      remember: 'Alt text describes the image.',
-      mission: 'Add helpful alt text.',
-      hero: hero('Pictures need words too', 'Alt text is part of good HTML.', '#bae6fd'),
-      widget: {
-        type: 'choice',
-        heading: 'True or false: Alt text describes the picture.',
-        chip: 'true / false',
-        prompt: 'Pick the best answer.',
-        marker: 'EX2_M10_TRUE',
-        success: 'Exactly. Alt text tells what the picture is.',
-        retry: 'Try again. Think description, not decoration.',
-        options: [
-          { value: 'true', label: 'True', copy: 'Alt text describes the image.' },
-          { value: 'false', label: 'False', copy: 'Alt text changes the color of the image.' }
-        ],
-        correct: ['true']
-      },
-      initialCode: htmlDoc('  <img src="assets/exam-html-cat.svg">\n'),
-      validator: all([marker('EX2_M10_TRUE'), attr('alt', 'happy\\s*cat')])
-    },
-    {
-      title: '11. Form Shell',
-      kicker: 'Forms',
-      intro: 'A form wraps inputs and buttons that collect information.',
-      watch: 'The dashed box in the preview shows the form area.',
-      play: 'See the whole form container before adding smaller pieces later.',
-      type: 'Type <code>&lt;form&gt;&lt;/form&gt;</code> inside the body.',
-      remember: 'Forms hold interactive inputs.',
-      mission: 'Create the form container.',
-      hero: hero('Form = container', 'Big box first, details second.', '#38bdf8'),
-      widget: {
-        type: 'demo',
-        heading: 'Start a form before adding inputs.',
-        chip: 'type form',
-        browserTitle: 'form.html',
-        code: '<form></form>',
-        preview: previewCard('Form', '<form style="margin:0;"><p style="margin:0;color:#0f172a;font:700 14px/1.4 Arial,sans-serif;">Your form box is ready.</p></form>', '#e0f2fe'),
-        captions: ['Open the form tag first.', 'Leave space inside it for inputs later.', 'Close the form tag to finish the container.']
-      },
-      initialCode: htmlDoc('  <!-- Build your form here -->\n'),
-      validator: all([pairedTag('form')])
-    },
-    {
-      title: '12. Text Input',
-      kicker: 'Forms',
-      intro: 'A text input gives the student a place to type words.',
-      watch: 'The field appears as soon as the input tag is added.',
-      play: 'Use the exact <code>type="text"</code> value.',
-      type: 'Inside the form, type <code>&lt;input type="text"&gt;</code>.',
-      remember: 'Text fields use <code>type="text"</code>.',
-      mission: 'Add a text input inside the form.',
-      hero: hero('Typing field', 'Students know this one fast.', '#67e8f9'),
-      widget: {
-        type: 'choice',
-        heading: 'Which input type makes a normal typing box?',
-        chip: '1 easy answer',
-        prompt: 'Pick the best type, then type it in the editor.',
-        marker: 'EX2_M12_TYPE',
-        success: 'Right. A normal typing box uses type="text".',
-        retry: 'Try again. Think plain typing field.',
-        options: [
-          { value: 'text', label: 'text', copy: 'A normal typing field.' },
-          { value: 'checkbox', label: 'checkbox', copy: 'A tiny box you check.' },
-          { value: 'radio', label: 'radio', copy: 'A choice dot.' }
-        ],
-        correct: ['text']
-      },
-      initialCode: htmlDoc('  <form>\n    <!-- Add your text input here -->\n  </form>\n'),
-      validator: all([marker('EX2_M12_TYPE'), tag('input'), attr('type', 'text')])
-    },
-    {
-      title: '13. Label + Input Team',
-      kicker: 'Forms',
-      intro: 'A label tells the student what the input is for.',
-      watch: 'The label appears above the input in the preview.',
-      play: 'Match the same word in <code>for</code> and <code>id</code>.',
-      type: 'Add <code>&lt;label for="name"&gt;Name&lt;/label&gt;</code> and make the input <code>id="name"</code>.',
-      remember: 'The label <code>for</code> value should match the input <code>id</code>.',
-      mission: 'Connect the label and input.',
-      hero: hero('Label says what to type', 'Matching words make the connection.', '#22d3ee'),
-      widget: {
-        type: 'sequence',
-        heading: 'Build the label team in order.',
-        chip: '2 steps',
-        marker: 'EX2_M13_FLOW',
-        steps: [
-          { value: 'label', label: 'Place the label first' },
-          { value: 'input', label: 'Then match the input id' }
-        ],
-        success: 'Nice. Labels and inputs work best together.'
-      },
-      initialCode: htmlDoc('  <form>\n    <input type="text">\n  </form>\n'),
-      validator: all([marker('EX2_M13_FLOW'), textInsideTag('label', 'name'), attr('for', 'name'), attr('id', 'name')])
-    },
-    {
-      title: '14. Send Button',
-      kicker: 'Forms',
-      intro: 'Buttons let students click to submit or continue.',
-      watch: 'The bright button appears at the bottom of the form.',
-      play: 'Choose the tag that makes a real button.',
-      type: 'Add <code>&lt;button&gt;Send&lt;/button&gt;</code> inside the form.',
-      remember: 'Buttons use the <code>&lt;button&gt;</code> tag.',
-      mission: 'Add a send button.',
-      hero: hero('Button time', 'Every form needs a way to click forward.', '#38bdf8'),
-      widget: {
-        type: 'choice',
-        heading: 'Which tag makes a button?',
-        chip: '1 answer',
-        prompt: 'Pick the button tag, then type it in the editor.',
-        marker: 'EX2_M14_BUTTON',
-        success: 'Perfect. That is the button tag.',
-        retry: 'Try again. Look for the tag that creates a clickable button.',
-        options: [
-          { value: 'button', label: '<button>', copy: 'A clickable button element.' },
-          { value: 'press', label: '<press>', copy: 'This is not a real HTML tag.' },
-          { value: 'click', label: '<click>', copy: 'This is not a real HTML tag either.' }
-        ],
-        correct: ['button']
-      },
-      initialCode: htmlDoc('  <form>\n    <label for="name">Name</label>\n    <input id="name" type="text">\n  </form>\n'),
-      validator: all([marker('EX2_M14_BUTTON'), textInsideTag('button', 'send')])
-    },
-    {
-      title: '15. Head and Body Jobs',
-      kicker: 'Page Structure',
-      intro: 'The head stores behind-the-scenes page info, and the body holds the visible page content.',
-      watch: 'One card is hidden info. The other is what the student sees.',
-      play: 'Tap both correct job cards.',
-      type: 'No typing on this one. Just sort the jobs.',
-      remember: 'Body is for visible content.',
-      mission: 'Choose the correct jobs for head and body.',
-      hero: hero('Hidden info vs visible page', 'A simple but important split.', '#bfdbfe'),
-      widget: {
-        type: 'choice',
-        heading: 'Tap the 2 true statements.',
-        chip: '2 correct',
-        prompt: 'Find the jobs that really match head and body.',
-        marker: 'EX2_M15_READY',
-        multi: true,
-        success: 'Great. Head holds page info and body shows page content.',
-        retry: 'Close. Pick the statements about hidden info and visible content.',
-        options: [
-          { value: 'head', label: 'The head stores page info', copy: 'Like title and meta tags.' },
-          { value: 'body', label: 'The body shows page content', copy: 'Like headings, paragraphs, and images.' },
-          { value: 'bodyhidden', label: 'The body hides everything', copy: 'That is not right.' },
-          { value: 'headvisible', label: 'The head shows the main page text', copy: 'That is usually the body job.' }
-        ],
-        correct: ['head', 'body']
-      },
-      initialCode: htmlDoc('  <h1>Visible content lives here.</h1>\n'),
-      validator: all([marker('EX2_M15_READY')])
-    },
-    {
-      title: '16. True or False: Doctype',
-      kicker: 'Page Structure',
-      intro: 'The doctype line tells the browser which kind of document it is reading.',
-      watch: 'This one is an easy memory checkpoint.',
-      play: 'Pick true or false.',
-      type: 'No typing needed here.',
-      remember: 'Most HTML pages begin with <code>&lt;!DOCTYPE html&gt;</code>.',
-      mission: 'Answer the doctype checkpoint.',
-      hero: hero('First line matters', 'A fast confidence booster.', '#ddd6fe'),
-      widget: {
-        type: 'choice',
-        heading: 'True or false: Most HTML files start with <!DOCTYPE html>.',
-        chip: 'true / false',
-        prompt: 'Pick the best answer.',
-        marker: 'EX2_M16_TRUE',
-        success: 'Correct. That line usually comes first.',
-        retry: 'Try again. Think first line of the page.',
-        options: [
-          { value: 'true', label: 'True', copy: 'That is the usual first line.' },
-          { value: 'false', label: 'False', copy: 'That is not right for a normal HTML page.' }
-        ],
-        correct: ['true']
-      },
-      initialCode: htmlDoc('  <p>Doctype is usually the first line above everything else.</p>\n'),
-      validator: all([marker('EX2_M16_TRUE')])
-    },
-    {
-      title: '17. Semantic Page Shell',
-      kicker: 'Semantic HTML',
-      intro: 'Semantic tags give the big areas of a page clear jobs.',
-      watch: 'Top, middle, and bottom each get their own named section.',
-      play: 'Tap the order first, then type the tags.',
-      type: 'Add <code>&lt;header&gt;</code>, <code>&lt;main&gt;</code>, and <code>&lt;footer&gt;</code> in that order.',
-      remember: 'Header = top, main = middle, footer = bottom.',
-      mission: 'Build the semantic shell.',
-      hero: hero('Top • Middle • Bottom', 'Easy page map review.', '#93c5fd'),
-      widget: {
-        type: 'sequence',
-        heading: 'Tap the page parts in order.',
-        chip: '3 steps',
-        marker: 'EX2_M17_FLOW',
-        steps: [
-          { value: 'header', label: 'Header first' },
-          { value: 'main', label: 'Main second' },
-          { value: 'footer', label: 'Footer third' }
-        ],
-        success: 'Perfect. That is a clean page shell.'
-      },
-      initialCode: htmlDoc('  <!-- Build the page shell here -->\n'),
-      validator: all([marker('EX2_M17_FLOW'), pairedTag('header'), pairedTag('main'), pairedTag('footer')])
-    },
-    {
-      title: '18. Menu and Story',
-      kicker: 'Semantic HTML',
-      intro: 'A nav tag can hold the menu, and an article tag can hold one full story.',
-      watch: 'The preview shows a menu block and a story block.',
-      play: 'Pick the two semantic tags you need, then type them.',
-      type: 'Put <code>&lt;nav&gt;</code> inside the header and <code>&lt;article&gt;</code> inside the main area.',
-      remember: 'Nav is for navigation. Article is for one full piece of content.',
-      mission: 'Add nav and article.',
-      hero: hero('Menu + story', 'Two easy semantic wins.', '#86efac'),
-      widget: {
-        type: 'choice',
-        heading: 'Which 2 tags fit this page best?',
-        chip: '2 correct',
-        prompt: 'Pick the menu tag and the story tag.',
-        marker: 'EX2_M18_READY',
-        multi: true,
-        success: 'Yes. Nav fits the menu and article fits the story.',
-        retry: 'Try again. One tag is for the menu and one is for the main story card.',
-        options: [
-          { value: 'nav', label: '<nav>', copy: 'A menu area with links.' },
-          { value: 'article', label: '<article>', copy: 'One full story or post.' },
-          { value: 'blink', label: '<blink>', copy: 'Not a real modern semantic tag.' },
-          { value: 'bigbox', label: '<bigbox>', copy: 'Also not a real HTML tag.' }
-        ],
-        correct: ['nav', 'article']
-      },
-      initialCode: htmlDoc('  <header>\n  </header>\n  <main>\n  </main>\n'),
-      validator: all([marker('EX2_M18_READY'), pairedTag('nav'), pairedTag('article')])
-    },
-    {
-      title: '19. Final HTML Build',
-      kicker: 'Victory Build',
-      intro: 'Final easy build: show that you can put the most important HTML pieces together.',
-      watch: 'This is not a trick. It is a guided wrap-up.',
-      play: 'Use the checklist, then type the missing pieces.',
-      type: 'Make sure your page includes an <code>&lt;h1&gt;</code>, a <code>&lt;p&gt;</code>, an <code>&lt;img&gt;</code>, a <code>&lt;form&gt;</code>, and a <code>&lt;button&gt;</code>.',
-      remember: 'If you can build a tiny page, you understand a lot already.',
-      mission: 'Build the tiny HTML page.',
-      hero: hero('Tiny page = big win', 'Finish strong and earn full marks.', '#67e8f9'),
-      widget: {
-        type: 'toggle',
-        heading: 'Tap through the final checklist.',
-        chip: '5 parts',
-        tabs: [
-          { label: 'Title', content: previewCard('Need 1', '<p style="margin:0;">A big heading at the top.</p>', '#dbeafe') },
-          { label: 'Text', content: previewCard('Need 2', '<p style="margin:0;">A paragraph under the heading.</p>', '#fef3c7') },
-          { label: 'Image', content: previewCard('Need 3', '<img src="assets/exam-html-cat.svg" alt="Cat" style="margin:0 auto;">', '#dcfce7') },
-          { label: 'Form', content: previewCard('Need 4', '<form style="margin:0;"><label>Name</label><input type="text"></form>', '#e0f2fe') },
-          { label: 'Button', content: previewCard('Need 5', '<button type="button">Send</button>', '#fee2e2') }
-        ],
-        status: 'Tap every checklist card, then finish the page in the editor.'
-      },
-      initialCode: htmlDoc('  <h1>HTML Victory</h1>\n  <p>I can build with HTML.</p>\n  <!-- Add the image, form, and button below -->\n'),
-      validator: all([tag('h1'), tag('p'), tag('img'), tag('form'), tag('button')])
+const baseWidgetStyle = `<style>
+.exam2-shell{display:grid;gap:14px;padding:18px;border-radius:24px;background:linear-gradient(180deg,rgba(8,47,73,.86),rgba(15,23,42,.98));border:1px solid rgba(148,163,184,.16);box-shadow:0 18px 40px rgba(2,6,23,.26);color:#e2e8f0}
+.exam2-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.exam2-kicker{margin:0;color:#67e8f9;font-size:11px;font-weight:800;letter-spacing:.22em;text-transform:uppercase}
+.exam2-heading{margin:4px 0 0;color:#fff;font-size:18px;line-height:1.35}
+.exam2-chip{display:inline-flex;align-items:center;justify-content:center;padding:7px 12px;border-radius:999px;background:rgba(15,23,42,.72);border:1px solid rgba(103,232,249,.22);color:#cffafe;font-size:10px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;white-space:nowrap}
+.exam2-timer{display:inline-flex;align-items:center;justify-content:center;padding:7px 12px;border-radius:999px;background:rgba(6,78,59,.42);border:1px solid rgba(74,222,128,.28);color:#dcfce7;font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
+.exam2-prompt{margin:0;color:#dbeafe;font-size:14px;line-height:1.6}
+.exam2-code-target{padding:12px 14px;border-radius:16px;background:rgba(2,6,23,.86);border:1px solid rgba(148,163,184,.14);color:#f8fafc;font:700 13px/1.6 monospace;white-space:pre-wrap}
+.exam2-option-grid{display:grid;gap:10px}
+.exam2-option{width:100%;text-align:left;padding:14px 16px;border-radius:16px;border:1px solid rgba(148,163,184,.16);background:rgba(15,23,42,.74);color:#f8fafc;cursor:pointer;transition:transform .14s ease,border-color .14s ease,background .14s ease,box-shadow .14s ease}
+.exam2-option:hover{transform:translateY(-1px);border-color:rgba(103,232,249,.36)}
+.exam2-option strong{display:block;margin-bottom:4px;color:#fff;font-size:14px}
+.exam2-option span{display:block;color:#cbd5e1;font-size:12px;line-height:1.45}
+.exam2-option.selected{border-color:rgba(103,232,249,.46);background:rgba(8,47,73,.62);box-shadow:0 0 0 1px rgba(103,232,249,.18)}
+.exam2-submit{justify-self:start;padding:11px 16px;border:none;border-radius:999px;background:linear-gradient(90deg,#67e8f9,#38bdf8);color:#082f49;font:800 13px/1.2 Arial,sans-serif;cursor:pointer;transition:transform .14s ease,box-shadow .14s ease}
+.exam2-submit:hover{transform:translateY(-1px);box-shadow:0 0 18px rgba(56,189,248,.22)}
+.exam2-status{margin:0;padding:11px 13px;border-radius:14px;background:rgba(15,23,42,.68);border:1px solid rgba(148,163,184,.12);color:#bae6fd;font-size:13px;line-height:1.5}
+.exam2-shell.submitted .exam2-status{color:#dcfce7;border-color:rgba(74,222,128,.24);background:rgba(20,83,45,.34)}
+@media(min-width:720px){.exam2-option-grid.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.exam2-option-grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}}
+</style>`;
+
+function buildBody(index, total, title, prompt, answerMode) {
+  return `<section class="space-y-4 rounded-[24px] border border-cyan-400/15 bg-[linear-gradient(180deg,rgba(15,23,42,0.96),rgba(11,18,32,0.94))] p-5 shadow-[0_18px_40px_rgba(2,6,23,0.22)]">
+    <p class="text-[11px] font-extrabold uppercase tracking-[0.22em] text-[var(--neon-cyan)]">HTML Final Exam</p>
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <h3 class="heading-font text-2xl text-white">${index}. ${title}</h3>
+      <span class="rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.18em] text-cyan-100">Question ${index} of ${total}</span>
+    </div>
+    <p class="text-[15px] leading-7 text-slate-200">${prompt}</p>
+    <div class="grid gap-3 md:grid-cols-3">
+      <div class="rounded-2xl border border-slate-400/10 bg-slate-900/60 p-3 text-sm text-slate-200"><strong class="block text-[11px] uppercase tracking-[0.18em] text-cyan-300">Format</strong>${answerMode}</div>
+      <div class="rounded-2xl border border-slate-400/10 bg-slate-900/60 p-3 text-sm text-slate-200"><strong class="block text-[11px] uppercase tracking-[0.18em] text-cyan-300">Pace</strong>40-minute exam. Take your time and record one answer for each question.</div>
+      <div class="rounded-2xl border border-slate-400/10 bg-slate-900/60 p-3 text-sm text-slate-200"><strong class="block text-[11px] uppercase tracking-[0.18em] text-cyan-300">Rule</strong>Once you submit an answer, it is recorded for your score.</div>
+    </div>
+  </section>`;
+}
+
+function baseExamScript(rootId, questionKey, marker) {
+  return `
+(function() {
+  const root = document.getElementById('${rootId}');
+  if (!root) return;
+  const editor = document.getElementById('code-editor');
+  const status = root.querySelector('[data-exam2-status]');
+  window.exam2Answers = window.exam2Answers || {};
+  window.exam2TotalQuestions = 20;
+  window.exam2DurationMs = 40 * 60 * 1000;
+  window.exam2SessionSeed = window.exam2SessionSeed || Date.now();
+  window.exam2Started = true;
+
+  function formatClock(ms) {
+    const safe = Math.max(0, ms);
+    const totalSeconds = Math.floor(safe / 1000);
+    const minutes = String(Math.floor(totalSeconds / 60)).padStart(2, '0');
+    const seconds = String(totalSeconds % 60).padStart(2, '0');
+    return minutes + ':' + seconds;
+  }
+
+  window.exam2RenderTimer = window.exam2RenderTimer || function() {
+    const remaining = window.exam2DurationMs - (Date.now() - window.exam2SessionSeed);
+    document.querySelectorAll('[data-exam2-timer]').forEach(function(node) {
+      node.textContent = 'Time Left ' + formatClock(remaining);
+    });
+  };
+
+  if (!window.exam2ClockInterval) {
+    window.exam2ClockInterval = setInterval(window.exam2RenderTimer, 1000);
+  }
+  window.exam2RenderTimer();
+
+  if (editor) {
+    editor.readOnly = false;
+    editor.style.opacity = '1';
+  }
+
+  function appendMarker(current, markerText) {
+    const markerLine = '<!-- ' + markerText + ' -->';
+    if (String(current || '').includes(markerLine)) return current;
+    const joiner = current && !String(current).endsWith('\\n') ? '\\n' : '';
+    return String(current || '') + joiner + markerLine;
+  }
+
+  function lockButtons() {
+    root.querySelectorAll('button').forEach(function(button) {
+      if (button.dataset.keepEnabled === 'true') return;
+      button.disabled = true;
+    });
+  }
+
+  function recordAnswer(correct, response) {
+    if (root.dataset.submitted === 'true') return;
+    root.dataset.submitted = 'true';
+    root.classList.add('submitted');
+    window.exam2Answers['${questionKey}'] = { correct: !!correct, response: response };
+    if (status) status.textContent = 'Answer recorded. Continue when you are ready.';
+    if (editor) {
+      editor.value = appendMarker(editor.value, '${marker}');
+      editor.dispatchEvent(new Event('input', { bubbles: true }));
     }
-  ];
+    lockButtons();
+  }
+`;
+}
 
-  writeInteractiveLesson({
-    lessonId: 'exam2',
-    outDir: 'lessons/exam2',
-    title: 'Exam 2: HTML Victory Mission',
-    description: 'A 40-minute, ultra-friendly HTML final that teaches while students play through easy wins.',
-    gameTitle: '',
-    gamePath: '',
-    theme: {
-      accent: '#67e8f9',
-      accentSoft: '#38bdf8',
-      panel: 'rgba(8,47,73,0.82)',
-      panelAlt: 'rgba(15,23,42,0.96)',
-      success: '#4ade80',
-      ink: '#082f49',
-      toggleColumns: 5
-    },
-    previewScaffold,
-    modules
-  });
-
-  const outDir = path.resolve('lessons/exam2');
-  const finalModule = `window.Lessons.exam2.modules[19] = {
-    title: "20. Finish and Reflect",
-    body: "<section class=\\"quest-body\\"><p class=\\"quest-kicker\\">Final Mission</p><h3 class=\\"quest-title\\">You made it to the end.</h3><p class=\\"quest-summary\\">Pick the emoji that matches how this HTML final felt. Finishing every mission gives full marks.</p><div class=\\"quest-memory\\"><strong>Remember:</strong> This exam is designed to teach while students finish it, so completing all missions means a perfect score.</div><p class=\\"quest-mission\\">Mission: Tap one emoji to finish the exam.</p></section>",
-    svg: \`\`,
-    widgetCode: \`<!-- INTERACTIVE MODULE -->
-<style>
-.exam2-emoji-wrap{display:grid;gap:14px;padding:18px;border-radius:24px;background:linear-gradient(180deg,rgba(15,23,42,.96),rgba(11,18,32,.94));border:1px solid rgba(148,163,184,.14);box-shadow:0 16px 40px rgba(2,6,23,.24)}
-.exam2-emoji-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
-.exam2-emoji-btn{border:none;border-radius:18px;padding:14px;background:rgba(15,23,42,.74);color:white;font-size:32px;cursor:pointer;transition:transform .15s ease, background .15s ease, box-shadow .15s ease}
-.exam2-emoji-btn:hover{transform:translateY(-2px) scale(1.03);background:rgba(8,47,73,.82);box-shadow:0 0 18px rgba(103,232,249,.16)}
-.exam2-emoji-status{margin:0;padding:10px 12px;border-radius:14px;background:rgba(15,23,42,.66);border:1px solid rgba(148,163,184,.12);color:#bae6fd;font-size:13px;line-height:1.5;text-align:center}
-@media(max-width:720px){.exam2-emoji-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-</style>
-<div class="exam2-emoji-wrap">
-  <div class="exam2-emoji-grid">
-    <button type="button" class="exam2-emoji-btn" data-emoji="🤩">🤩</button>
-    <button type="button" class="exam2-emoji-btn" data-emoji="😎">😎</button>
-    <button type="button" class="exam2-emoji-btn" data-emoji="🧠">🧠</button>
-    <button type="button" class="exam2-emoji-btn" data-emoji="🚀">🚀</button>
-    <button type="button" class="exam2-emoji-btn" data-emoji="🔥">🔥</button>
+function choiceWidget(questionKey, marker, heading, prompt, options) {
+  const rootId = `exam2-${questionKey}`;
+  const optionsHtml = options.map((option) => (
+    `<button type="button" class="exam2-option" data-value="${escHtml(option.value)}" data-correct="${option.correct ? 'true' : 'false'}"><strong>${escHtml(option.label)}</strong><span>${escHtml(option.copy)}</span></button>`
+  )).join('');
+  return `<!-- INTERACTIVE MODULE -->
+${baseWidgetStyle}
+<div class="exam2-shell" id="${rootId}">
+  <div class="exam2-top">
+    <div>
+      <p class="exam2-kicker">Record One Answer</p>
+      <h4 class="exam2-heading">${escHtml(heading)}</h4>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <span class="exam2-chip">Multiple Choice</span>
+      <span class="exam2-timer" data-exam2-timer>Time Left 40:00</span>
+    </div>
   </div>
-  <p class="exam2-emoji-status">Pick one emoji to finish your HTML victory mission.</p>
+  <p class="exam2-prompt">${escHtml(prompt)}</p>
+  <div class="exam2-option-grid cols-2">${optionsHtml}</div>
+  <p class="exam2-status" data-exam2-status>Select one answer to record it.</p>
 </div>
 <script>
-(function() {
-  const editor = document.getElementById('code-editor');
-  const buttons = Array.from(document.querySelectorAll('.exam2-emoji-btn'));
-  const status = document.querySelector('.exam2-emoji-status');
-  if (editor) {
-    editor.readOnly = true;
-    editor.style.opacity = '0.7';
-  }
+${baseExamScript(rootId, questionKey, marker)}
+  const buttons = Array.from(root.querySelectorAll('.exam2-option'));
   buttons.forEach(function(button) {
     button.addEventListener('click', function() {
-      const emoji = button.dataset.emoji;
-      window.lessonEmoji = emoji;
-      buttons.forEach(function(other) { other.style.background = 'rgba(15,23,42,.74)'; });
-      button.style.background = 'rgba(20,83,45,.6)';
-      if (status) status.textContent = 'Perfect. Full marks unlocked.';
-      if (editor) {
-        editor.value = '<!-- EXAM2_FULL_MARKS -->\\n<!-- EMOJI_SELECTED -->';
-        editor.dispatchEvent(new Event('input', { bubbles: true }));
-      }
+      if (root.dataset.submitted === 'true') return;
+      buttons.forEach(function(other) { other.classList.remove('selected'); });
+      button.classList.add('selected');
+      recordAnswer(button.dataset.correct === 'true', button.dataset.value);
     });
   });
 })();
-</script>\`,
-    initialCode: \`<!-- Pick an emoji to finish your HTML final -->\`,
-    previewScaffold: \`${previewScaffold.replace(/\n/g, '\\n')}\`,
-    progress: 100,
-    validator: function(code) { return /EXAM2_FULL_MARKS/i.test(code) && /EMOJI_SELECTED/i.test(code); }
-  };`;
+</script>`;
+}
 
-  fs.writeFileSync(path.join(outDir, 'module20.js'), finalModule);
-  return modules;
+function typingWidget(questionKey, marker, heading, prompt, targetCode, evaluatorExpression) {
+  const rootId = `exam2-${questionKey}`;
+  return `<!-- INTERACTIVE MODULE -->
+${baseWidgetStyle}
+<div class="exam2-shell" id="${rootId}">
+  <div class="exam2-top">
+    <div>
+      <p class="exam2-kicker">Type Then Submit</p>
+      <h4 class="exam2-heading">${escHtml(heading)}</h4>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <span class="exam2-chip">Typing Task</span>
+      <span class="exam2-timer" data-exam2-timer>Time Left 40:00</span>
+    </div>
+  </div>
+  <p class="exam2-prompt">${escHtml(prompt)}</p>
+  <div class="exam2-code-target">${escHtml(targetCode)}</div>
+  <button type="button" class="exam2-submit" data-submit-answer>Submit Answer</button>
+  <p class="exam2-status" data-exam2-status>Type your answer in the code editor, then press Submit Answer.</p>
+</div>
+<script>
+${baseExamScript(rootId, questionKey, marker)}
+  const submitButton = root.querySelector('[data-submit-answer]');
+  if (submitButton) {
+    submitButton.addEventListener('click', function() {
+      const code = editor ? editor.value : '';
+      const correct = (${evaluatorExpression});
+      recordAnswer(correct, String(code || '').trim().slice(0, 180));
+    });
+  }
+})();
+</script>`;
+}
+
+function reflectionWidget() {
+  const rootId = 'exam2-finish';
+  return `<!-- INTERACTIVE MODULE -->
+${baseWidgetStyle}
+<div class="exam2-shell" id="${rootId}">
+  <div class="exam2-top">
+    <div>
+      <p class="exam2-kicker">Finish Exam</p>
+      <h4 class="exam2-heading">Record how the exam felt, then finish.</h4>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <span class="exam2-chip">Reflection</span>
+      <span class="exam2-timer" data-exam2-timer>Time Left 40:00</span>
+    </div>
+  </div>
+  <p class="exam2-prompt">Pick one emoji to end the exam and reveal the score screen.</p>
+  <div class="exam2-option-grid cols-3">
+    <button type="button" class="exam2-option" data-emoji="😎"><strong>😎</strong><span>Confident</span></button>
+    <button type="button" class="exam2-option" data-emoji="🧠"><strong>🧠</strong><span>Thinking hard</span></button>
+    <button type="button" class="exam2-option" data-emoji="🚀"><strong>🚀</strong><span>Ready for more</span></button>
+    <button type="button" class="exam2-option" data-emoji="😅"><strong>😅</strong><span>A little tricky</span></button>
+    <button type="button" class="exam2-option" data-emoji="🔥"><strong>🔥</strong><span>Strong finish</span></button>
+    <button type="button" class="exam2-option" data-emoji="🙂"><strong>🙂</strong><span>All done</span></button>
+  </div>
+  <p class="exam2-status" data-exam2-status>Choose one emoji to finish the exam.</p>
+</div>
+<script>
+${baseExamScript(rootId, 'finish', 'EX2_FINISHED')}
+  const buttons = Array.from(root.querySelectorAll('[data-emoji]'));
+  buttons.forEach(function(button) {
+    button.addEventListener('click', function() {
+      if (root.dataset.submitted === 'true') return;
+      buttons.forEach(function(other) { other.classList.remove('selected'); });
+      button.classList.add('selected');
+      window.lessonEmoji = button.dataset.emoji;
+      recordAnswer(true, button.dataset.emoji);
+    });
+  });
+})();
+</script>`;
+}
+
+function writeMetadata(outDir) {
+  fs.writeFileSync(path.join(outDir, 'metadata.js'), `window.Lessons = window.Lessons || {};
+window.Lessons.exam2 = {
+    id: "exam2",
+    title: "Exam 2: HTML Checkpoint",
+    description: "A 40-minute HTML exam with multiple choice, true/false, and tag typing. Score is shown at the end.",
+    gameTitle: "",
+    gamePath: "",
+    modules: []
+};`);
+}
+
+function writeModule(outDir, index, module) {
+  const fileContent = `window.Lessons.exam2.modules[${index}] = {
+    title: "${escDouble(module.title)}",
+    body: \`${escTemplate(module.body)}\`,
+    svg: \`\`,
+    widgetCode: \`${escTemplate(module.widgetCode)}\`,
+    initialCode: \`${escTemplate(module.initialCode).replace(/\n/g, '\\n')}\`,
+    previewScaffold: \`${escTemplate(previewScaffold).replace(/\n/g, '\\n')}\`,
+    progress: ${module.progress},
+    validator: ${module.validator}
+};`;
+  fs.writeFileSync(path.join(outDir, `module${index + 1}.js`), fileContent);
+}
+
+module.exports = function buildExam2HtmlFinal() {
+  const outDir = path.resolve('lessons/exam2');
+  fs.mkdirSync(outDir, { recursive: true });
+
+  writeMetadata(outDir);
+
+  const questions = [
+    {
+      title: '1. What Is HTML Mostly Used For?',
+      body: buildBody(1, 20, 'What Is HTML Mostly Used For?', 'Choose the best job for HTML.', 'Click one answer.'),
+      widgetCode: choiceWidget('q1', 'EX2_Q1_SUBMITTED', 'HTML mainly helps a webpage with...', 'Pick the best answer.', [
+        { value: 'structure', label: 'Structure', copy: 'It builds the parts of the page.', correct: true },
+        { value: 'color', label: 'Color', copy: 'That is mostly CSS.', correct: false },
+        { value: 'animation', label: 'Animation', copy: 'That is usually JavaScript.', correct: false }
+      ]),
+      initialCode: htmlDoc('  <p>Question 1: click one answer on the left.</p>'),
+      validator: 'function(code) { return /EX2_Q1_SUBMITTED/i.test(code); }'
+    },
+    {
+      title: '2. True or False: Browsers Read HTML',
+      body: buildBody(2, 20, 'True or False: Browsers Read HTML', 'Decide whether the statement is true or false.', 'Click True or False.'),
+      widgetCode: choiceWidget('q2', 'EX2_Q2_SUBMITTED', 'A browser reads HTML and shows a webpage.', 'Pick True or False.', [
+        { value: 'true', label: 'True', copy: 'Browsers turn HTML into what people see.', correct: true },
+        { value: 'false', label: 'False', copy: 'That statement is not correct.', correct: false }
+      ]),
+      initialCode: htmlDoc('  <p>Question 2: true or false.</p>'),
+      validator: 'function(code) { return /EX2_Q2_SUBMITTED/i.test(code); }'
+    },
+    {
+      title: '3. Type the Doctype',
+      body: buildBody(3, 20, 'Type the Doctype', 'Type the first line used in a normal HTML file.', 'Type the line in the editor, then press Submit Answer.'),
+      widgetCode: typingWidget('q3', 'EX2_Q3_SUBMITTED', 'Type the doctype line.', 'Use lowercase html to match the common version.', '<!DOCTYPE html>', '/<!doctype\\s+html>/i.test(code)'),
+      initialCode: '<html>\n<head>\n  <meta charset="UTF-8">\n  <title>Exam 2</title>\n</head>\n<body>\n  <p>Type the doctype above this html tag.</p>\n</body>\n</html>',
+      validator: 'function(code) { return /EX2_Q3_SUBMITTED/i.test(code); }'
+    },
+    {
+      title: '4. Which Tag Holds Visible Content?',
+      body: buildBody(4, 20, 'Which Tag Holds Visible Content?', 'Choose the tag that usually holds what students can actually see on the page.', 'Click one answer.'),
+      widgetCode: choiceWidget('q4', 'EX2_Q4_SUBMITTED', 'Visible page content usually goes inside...', 'Pick the best answer.', [
+        { value: 'body', label: '<body>', copy: 'This holds the visible webpage content.', correct: true },
+        { value: 'head', label: '<head>', copy: 'This usually holds behind-the-scenes page info.', correct: false },
+        { value: 'title', label: '<title>', copy: 'This sets the browser tab title.', correct: false }
+      ]),
+      initialCode: htmlDoc('  <p>Question 4: choose one answer.</p>'),
+      validator: 'function(code) { return /EX2_Q4_SUBMITTED/i.test(code); }'
+    },
+    {
+      title: '5. Type One Main Heading',
+      body: buildBody(5, 20, 'Type One Main Heading', 'Create a large page title using an h1 tag.', 'Type the tag in the editor, then press Submit Answer.'),
+      widgetCode: typingWidget('q5', 'EX2_Q5_SUBMITTED', 'Type one h1 heading.', 'Use the exact sample heading shown below.', '<h1>My Page</h1>', '/<\\s*h1\\b[^>]*>\\s*my\\s*page\\s*<\\s*\\/\\s*h1\\s*>/i.test(code)'),
+      initialCode: htmlDoc('  <!-- Type your main heading below -->\n'),
+      validator: 'function(code) { return /EX2_Q5_SUBMITTED/i.test(code); }'
+    },
+    {
+      title: '6. True or False: The p Tag Makes a Paragraph',
+      body: buildBody(6, 20, 'True or False: The p Tag Makes a Paragraph', 'Decide whether the paragraph statement is true or false.', 'Click True or False.'),
+      widgetCode: choiceWidget('q6', 'EX2_Q6_SUBMITTED', 'The <p> tag creates a paragraph.', 'Pick True or False.', [
+        { value: 'true', label: 'True', copy: 'A paragraph tag wraps normal sentence text.', correct: true },
+        { value: 'false', label: 'False', copy: 'That is not the job of the p tag.', correct: false }
+      ]),
+      initialCode: htmlDoc('  <p>Question 6: true or false.</p>'),
+      validator: 'function(code) { return /EX2_Q6_SUBMITTED/i.test(code); }'
+    },
+    {
+      title: '7. Which Tag Makes a Bullet List?',
+      body: buildBody(7, 20, 'Which Tag Makes a Bullet List?', 'Choose the list tag that makes bullet points.', 'Click one answer.'),
+      widgetCode: choiceWidget('q7', 'EX2_Q7_SUBMITTED', 'A bullet list uses which outer tag?', 'Pick the best answer.', [
+        { value: 'ul', label: '<ul>', copy: 'This creates an unordered bullet list.', correct: true },
+        { value: 'ol', label: '<ol>', copy: 'This creates a numbered list.', correct: false },
+        { value: 'li', label: '<li>', copy: 'This is an item inside a list.', correct: false }
+      ]),
+      initialCode: htmlDoc('  <p>Question 7: choose one answer.</p>'),
+      validator: 'function(code) { return /EX2_Q7_SUBMITTED/i.test(code); }'
+    },
+    {
+      title: '8. Type the ul Tag Pair',
+      body: buildBody(8, 20, 'Type the ul Tag Pair', 'Type the opening and closing ul tags.', 'Type the tag pair in the editor, then press Submit Answer.'),
+      widgetCode: typingWidget('q8', 'EX2_Q8_SUBMITTED', 'Type the unordered list shell.', 'No list items are needed for this question.', '<ul></ul>', '/<\\s*ul\\b[^>]*>\\s*<\\s*\\/\\s*ul\\s*>/i.test(code)'),
+      initialCode: htmlDoc('  <!-- Type the ul tags here -->\n'),
+      validator: 'function(code) { return /EX2_Q8_SUBMITTED/i.test(code); }'
+    },
+    {
+      title: '9. Which Tag Makes a Numbered List?',
+      body: buildBody(9, 20, 'Which Tag Makes a Numbered List?', 'Choose the list tag that numbers the items.', 'Click one answer.'),
+      widgetCode: choiceWidget('q9', 'EX2_Q9_SUBMITTED', 'A numbered list uses which outer tag?', 'Pick the best answer.', [
+        { value: 'ol', label: '<ol>', copy: 'This creates an ordered numbered list.', correct: true },
+        { value: 'ul', label: '<ul>', copy: 'This creates bullets, not numbers.', correct: false },
+        { value: 'li', label: '<li>', copy: 'This is one item, not the whole list.', correct: false }
+      ]),
+      initialCode: htmlDoc('  <p>Question 9: choose one answer.</p>'),
+      validator: 'function(code) { return /EX2_Q9_SUBMITTED/i.test(code); }'
+    },
+    {
+      title: '10. Type One List Item',
+      body: buildBody(10, 20, 'Type One List Item', 'Add one list item inside the starter ul.', 'Type the tag in the editor, then press Submit Answer.'),
+      widgetCode: typingWidget('q10', 'EX2_Q10_SUBMITTED', 'Type one list item.', 'Use the exact sample tag shown below.', '<li>Item</li>', '/<\\s*li\\b[^>]*>\\s*item\\s*<\\s*\\/\\s*li\\s*>/i.test(code)'),
+      initialCode: htmlDoc('  <ul>\n    <!-- Type one list item here -->\n  </ul>\n'),
+      validator: 'function(code) { return /EX2_Q10_SUBMITTED/i.test(code); }'
+    },
+    {
+      title: '11. Which Attribute Tells the Image File Path?',
+      body: buildBody(11, 20, 'Which Attribute Tells the Image File Path?', 'Choose the attribute that points to the image file.', 'Click one answer.'),
+      widgetCode: choiceWidget('q11', 'EX2_Q11_SUBMITTED', 'Which attribute tells the browser which image file to show?', 'Pick the best answer.', [
+        { value: 'src', label: 'src', copy: 'This points to the image file path.', correct: true },
+        { value: 'alt', label: 'alt', copy: 'This describes the image with words.', correct: false },
+        { value: 'href', label: 'href', copy: 'This is commonly used with links.', correct: false }
+      ]),
+      initialCode: htmlDoc('  <p>Question 11: choose one answer.</p>'),
+      validator: 'function(code) { return /EX2_Q11_SUBMITTED/i.test(code); }'
+    },
+    {
+      title: '12. Type an Image Tag',
+      body: buildBody(12, 20, 'Type an Image Tag', 'Add a simple image tag using the class cat picture.', 'Type the tag in the editor, then press Submit Answer.'),
+      widgetCode: typingWidget('q12', 'EX2_Q12_SUBMITTED', 'Type the image tag.', 'The image should use the class cat file and an alt label.', '<img src="assets/exam-html-cat.svg" alt="cat">', '/<\\s*img\\b[^>]*\\bsrc\\s*=\\s*["\\\']assets\\/exam-html-cat\\.svg["\\\'][^>]*\\balt\\s*=\\s*["\\\']cat["\\\'][^>]*>/i.test(code) || /<\\s*img\\b[^>]*\\balt\\s*=\\s*["\\\']cat["\\\'][^>]*\\bsrc\\s*=\\s*["\\\']assets\\/exam-html-cat\\.svg["\\\'][^>]*>/i.test(code)'),
+      initialCode: htmlDoc('  <!-- Type the image tag here -->\n'),
+      validator: 'function(code) { return /EX2_Q12_SUBMITTED/i.test(code); }'
+    },
+    {
+      title: '13. True or False: Alt Text Describes an Image',
+      body: buildBody(13, 20, 'True or False: Alt Text Describes an Image', 'Decide whether alt text helps describe a picture.', 'Click True or False.'),
+      widgetCode: choiceWidget('q13', 'EX2_Q13_SUBMITTED', 'Alt text describes the image for people and screen readers.', 'Pick True or False.', [
+        { value: 'true', label: 'True', copy: 'Alt text is a description of the picture.', correct: true },
+        { value: 'false', label: 'False', copy: 'That is not correct.', correct: false }
+      ]),
+      initialCode: htmlDoc('  <p>Question 13: true or false.</p>'),
+      validator: 'function(code) { return /EX2_Q13_SUBMITTED/i.test(code); }'
+    },
+    {
+      title: '14. Type the Form Tag Pair',
+      body: buildBody(14, 20, 'Type the Form Tag Pair', 'Create the opening and closing form tags.', 'Type the tag pair in the editor, then press Submit Answer.'),
+      widgetCode: typingWidget('q14', 'EX2_Q14_SUBMITTED', 'Type the form shell.', 'No inputs are needed for this question.', '<form></form>', '/<\\s*form\\b[^>]*>\\s*<\\s*\\/\\s*form\\s*>/i.test(code)'),
+      initialCode: htmlDoc('  <!-- Type the form tags here -->\n'),
+      validator: 'function(code) { return /EX2_Q14_SUBMITTED/i.test(code); }'
+    },
+    {
+      title: '15. Which Input Type Makes a Normal Text Box?',
+      body: buildBody(15, 20, 'Which Input Type Makes a Normal Text Box?', 'Choose the input type that creates a regular typing box.', 'Click one answer.'),
+      widgetCode: choiceWidget('q15', 'EX2_Q15_SUBMITTED', 'Which input type makes a normal text field?', 'Pick the best answer.', [
+        { value: 'text', label: 'text', copy: 'A regular typing field.', correct: true },
+        { value: 'checkbox', label: 'checkbox', copy: 'A small check box.', correct: false },
+        { value: 'radio', label: 'radio', copy: 'A choice dot.', correct: false }
+      ]),
+      initialCode: htmlDoc('  <form>\n    <!-- Question 15 -->\n  </form>\n'),
+      validator: 'function(code) { return /EX2_Q15_SUBMITTED/i.test(code); }'
+    },
+    {
+      title: '16. Type a Label Tag',
+      body: buildBody(16, 20, 'Type a Label Tag', 'Add a label that says Name and points to name.', 'Type the label in the editor, then press Submit Answer.'),
+      widgetCode: typingWidget('q16', 'EX2_Q16_SUBMITTED', 'Type the label tag.', 'Use the exact sample tag shown below.', '<label for="name">Name</label>', '/<\\s*label\\b[^>]*\\bfor\\s*=\\s*["\\\']name["\\\'][^>]*>\\s*name\\s*<\\s*\\/\\s*label\\s*>/i.test(code)'),
+      initialCode: htmlDoc('  <form>\n    <input id="name" type="text">\n  </form>\n'),
+      validator: 'function(code) { return /EX2_Q16_SUBMITTED/i.test(code); }'
+    },
+    {
+      title: '17. Which Tag Makes a Button?',
+      body: buildBody(17, 20, 'Which Tag Makes a Button?', 'Choose the tag that creates a clickable button.', 'Click one answer.'),
+      widgetCode: choiceWidget('q17', 'EX2_Q17_SUBMITTED', 'Which tag creates a button on the page?', 'Pick the best answer.', [
+        { value: 'button', label: '<button>', copy: 'This makes a clickable button.', correct: true },
+        { value: 'press', label: '<press>', copy: 'This is not a real HTML tag.', correct: false },
+        { value: 'click', label: '<click>', copy: 'This is not a real HTML tag either.', correct: false }
+      ]),
+      initialCode: htmlDoc('  <form>\n    <!-- Question 17 -->\n  </form>\n'),
+      validator: 'function(code) { return /EX2_Q17_SUBMITTED/i.test(code); }'
+    },
+    {
+      title: '18. True or False: Header, Main, and Footer Are Semantic Tags',
+      body: buildBody(18, 20, 'True or False: Header, Main, and Footer Are Semantic Tags', 'Decide whether those tags are semantic HTML.', 'Click True or False.'),
+      widgetCode: choiceWidget('q18', 'EX2_Q18_SUBMITTED', 'Header, main, and footer are semantic tags.', 'Pick True or False.', [
+        { value: 'true', label: 'True', copy: 'They describe the job of each page area.', correct: true },
+        { value: 'false', label: 'False', copy: 'That statement is not correct.', correct: false }
+      ]),
+      initialCode: htmlDoc('  <p>Question 18: true or false.</p>'),
+      validator: 'function(code) { return /EX2_Q18_SUBMITTED/i.test(code); }'
+    },
+    {
+      title: '19. Which Tag Usually Holds Menu Links?',
+      body: buildBody(19, 20, 'Which Tag Usually Holds Menu Links?', 'Choose the semantic tag commonly used for navigation links.', 'Click one answer.'),
+      widgetCode: choiceWidget('q19', 'EX2_Q19_SUBMITTED', 'Which semantic tag usually holds menu links?', 'Pick the best answer.', [
+        { value: 'nav', label: '<nav>', copy: 'This is commonly used for navigation menus.', correct: true },
+        { value: 'article', label: '<article>', copy: 'This is commonly used for one story or post.', correct: false },
+        { value: 'footer', label: '<footer>', copy: 'This is usually the bottom section.', correct: false }
+      ]),
+      initialCode: htmlDoc('  <header>\n    <!-- Question 19 -->\n  </header>\n'),
+      validator: 'function(code) { return /EX2_Q19_SUBMITTED/i.test(code); }'
+    },
+    {
+      title: '20. Type the Footer Tag Pair',
+      body: buildBody(20, 20, 'Type the Footer Tag Pair', 'Create the opening and closing footer tags.', 'Type the tag pair in the editor, then press Submit Answer.'),
+      widgetCode: typingWidget('q20', 'EX2_Q20_SUBMITTED', 'Type the footer shell.', 'Use the exact semantic tag pair shown below.', '<footer></footer>', '/<\\s*footer\\b[^>]*>\\s*<\\s*\\/\\s*footer\\s*>/i.test(code)'),
+      initialCode: htmlDoc('  <header></header>\n  <main></main>\n  <!-- Type the footer tags below -->\n'),
+      validator: 'function(code) { return /EX2_Q20_SUBMITTED/i.test(code); }'
+    },
+    {
+      title: '21. Finish Exam',
+      body: `<section class="space-y-4 rounded-[24px] border border-cyan-400/15 bg-[linear-gradient(180deg,rgba(15,23,42,0.96),rgba(11,18,32,0.94))] p-5 shadow-[0_18px_40px_rgba(2,6,23,0.22)]">
+        <p class="text-[11px] font-extrabold uppercase tracking-[0.22em] text-[var(--neon-cyan)]">HTML Final Exam</p>
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <h3 class="heading-font text-2xl text-white">21. Finish Exam</h3>
+          <span class="rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.18em] text-cyan-100">Final Step</span>
+        </div>
+        <p class="text-[15px] leading-7 text-slate-200">Pick one emoji to finish the exam and reveal the score screen.</p>
+      </section>`,
+      widgetCode: reflectionWidget(),
+      initialCode: '<!-- Pick one emoji to finish Exam 2 -->',
+      validator: 'function(code) { return /EX2_FINISHED/i.test(code); }'
+    }
+  ];
+
+  questions.forEach((module, index) => {
+    writeModule(outDir, index, {
+      ...module,
+      progress: Math.round(((index + 1) / questions.length) * 100)
+    });
+  });
+
+  return questions;
 };

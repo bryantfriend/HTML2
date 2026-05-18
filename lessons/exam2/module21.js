@@ -1,18 +1,13 @@
-window.Lessons.exam2.modules[13] = {
-    title: "14. Type the Form Tag Pair",
+window.Lessons.exam2.modules[20] = {
+    title: "21. Finish Exam",
     body: `<section class="space-y-4 rounded-[24px] border border-cyan-400/15 bg-[linear-gradient(180deg,rgba(15,23,42,0.96),rgba(11,18,32,0.94))] p-5 shadow-[0_18px_40px_rgba(2,6,23,0.22)]">
-    <p class="text-[11px] font-extrabold uppercase tracking-[0.22em] text-[var(--neon-cyan)]">HTML Final Exam</p>
-    <div class="flex flex-wrap items-center justify-between gap-3">
-      <h3 class="heading-font text-2xl text-white">14. Type the Form Tag Pair</h3>
-      <span class="rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.18em] text-cyan-100">Question 14 of 20</span>
-    </div>
-    <p class="text-[15px] leading-7 text-slate-200">Create the opening and closing form tags.</p>
-    <div class="grid gap-3 md:grid-cols-3">
-      <div class="rounded-2xl border border-slate-400/10 bg-slate-900/60 p-3 text-sm text-slate-200"><strong class="block text-[11px] uppercase tracking-[0.18em] text-cyan-300">Format</strong>Type the tag pair in the editor, then press Submit Answer.</div>
-      <div class="rounded-2xl border border-slate-400/10 bg-slate-900/60 p-3 text-sm text-slate-200"><strong class="block text-[11px] uppercase tracking-[0.18em] text-cyan-300">Pace</strong>40-minute exam. Take your time and record one answer for each question.</div>
-      <div class="rounded-2xl border border-slate-400/10 bg-slate-900/60 p-3 text-sm text-slate-200"><strong class="block text-[11px] uppercase tracking-[0.18em] text-cyan-300">Rule</strong>Once you submit an answer, it is recorded for your score.</div>
-    </div>
-  </section>`,
+        <p class="text-[11px] font-extrabold uppercase tracking-[0.22em] text-[var(--neon-cyan)]">HTML Final Exam</p>
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <h3 class="heading-font text-2xl text-white">21. Finish Exam</h3>
+          <span class="rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.18em] text-cyan-100">Final Step</span>
+        </div>
+        <p class="text-[15px] leading-7 text-slate-200">Pick one emoji to finish the exam and reveal the score screen.</p>
+      </section>`,
     svg: ``,
     widgetCode: `<!-- INTERACTIVE MODULE -->
 <style>
@@ -36,26 +31,32 @@ window.Lessons.exam2.modules[13] = {
 .exam2-shell.submitted .exam2-status{color:#dcfce7;border-color:rgba(74,222,128,.24);background:rgba(20,83,45,.34)}
 @media(min-width:720px){.exam2-option-grid.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.exam2-option-grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}}
 </style>
-<div class="exam2-shell" id="exam2-q14">
+<div class="exam2-shell" id="exam2-finish">
   <div class="exam2-top">
     <div>
-      <p class="exam2-kicker">Type Then Submit</p>
-      <h4 class="exam2-heading">Type the form shell.</h4>
+      <p class="exam2-kicker">Finish Exam</p>
+      <h4 class="exam2-heading">Record how the exam felt, then finish.</h4>
     </div>
     <div class="flex flex-wrap gap-2">
-      <span class="exam2-chip">Typing Task</span>
+      <span class="exam2-chip">Reflection</span>
       <span class="exam2-timer" data-exam2-timer>Time Left 40:00</span>
     </div>
   </div>
-  <p class="exam2-prompt">No inputs are needed for this question.</p>
-  <div class="exam2-code-target">&lt;form&gt;&lt;/form&gt;</div>
-  <button type="button" class="exam2-submit" data-submit-answer>Submit Answer</button>
-  <p class="exam2-status" data-exam2-status>Type your answer in the code editor, then press Submit Answer.</p>
+  <p class="exam2-prompt">Pick one emoji to end the exam and reveal the score screen.</p>
+  <div class="exam2-option-grid cols-3">
+    <button type="button" class="exam2-option" data-emoji="😎"><strong>😎</strong><span>Confident</span></button>
+    <button type="button" class="exam2-option" data-emoji="🧠"><strong>🧠</strong><span>Thinking hard</span></button>
+    <button type="button" class="exam2-option" data-emoji="🚀"><strong>🚀</strong><span>Ready for more</span></button>
+    <button type="button" class="exam2-option" data-emoji="😅"><strong>😅</strong><span>A little tricky</span></button>
+    <button type="button" class="exam2-option" data-emoji="🔥"><strong>🔥</strong><span>Strong finish</span></button>
+    <button type="button" class="exam2-option" data-emoji="🙂"><strong>🙂</strong><span>All done</span></button>
+  </div>
+  <p class="exam2-status" data-exam2-status>Choose one emoji to finish the exam.</p>
 </div>
 <script>
 
 (function() {
-  const root = document.getElementById('exam2-q14');
+  const root = document.getElementById('exam2-finish');
   if (!root) return;
   const editor = document.getElementById('code-editor');
   const status = root.querySelector('[data-exam2-status]');
@@ -108,27 +109,29 @@ window.Lessons.exam2.modules[13] = {
     if (root.dataset.submitted === 'true') return;
     root.dataset.submitted = 'true';
     root.classList.add('submitted');
-    window.exam2Answers['q14'] = { correct: !!correct, response: response };
+    window.exam2Answers['finish'] = { correct: !!correct, response: response };
     if (status) status.textContent = 'Answer recorded. Continue when you are ready.';
     if (editor) {
-      editor.value = appendMarker(editor.value, 'EX2_Q14_SUBMITTED');
+      editor.value = appendMarker(editor.value, 'EX2_FINISHED');
       editor.dispatchEvent(new Event('input', { bubbles: true }));
     }
     lockButtons();
   }
 
-  const submitButton = root.querySelector('[data-submit-answer]');
-  if (submitButton) {
-    submitButton.addEventListener('click', function() {
-      const code = editor ? editor.value : '';
-      const correct = (/<\\s*form\\b[^>]*>\\s*<\\s*\\/\\s*form\\s*>/i.test(code));
-      recordAnswer(correct, String(code || '').trim().slice(0, 180));
+  const buttons = Array.from(root.querySelectorAll('[data-emoji]'));
+  buttons.forEach(function(button) {
+    button.addEventListener('click', function() {
+      if (root.dataset.submitted === 'true') return;
+      buttons.forEach(function(other) { other.classList.remove('selected'); });
+      button.classList.add('selected');
+      window.lessonEmoji = button.dataset.emoji;
+      recordAnswer(true, button.dataset.emoji);
     });
-  }
+  });
 })();
 </script>`,
-    initialCode: `<!DOCTYPE html>\n<html>\n<head>\n  <meta charset="UTF-8">\n  <title>Exam 2</title>\n</head>\n<body>\n  <!-- Type the form tags here -->\n\n</body>\n</html>`,
+    initialCode: `<!-- Pick one emoji to finish Exam 2 -->`,
     previewScaffold: `<style>\n#preview-area { margin:0; padding:18px; background:linear-gradient(180deg,#eff6ff,#f8fafc); color:#0f172a; font-family:Arial,sans-serif; line-height:1.55; }\n#preview-area body { margin:0; font-family:Arial,sans-serif; background:white; color:#0f172a; padding:18px; border-radius:18px; box-shadow:inset 0 0 0 1px rgba(148,163,184,0.22); }\n#preview-area h1, #preview-area h2, #preview-area h3 { margin:0 0 12px; color:#0f172a; }\n#preview-area p { margin:0 0 12px; }\n#preview-area strong, #preview-area b { color:#0b57d0; }\n#preview-area em, #preview-area i { color:#c026d3; }\n#preview-area ul, #preview-area ol { padding-left:24px; margin:0 0 12px; }\n#preview-area li { margin-bottom:6px; }\n#preview-area img { display:block; max-width:180px; border-radius:16px; border:3px solid #bae6fd; background:#e0f2fe; padding:6px; margin:10px 0; }\n#preview-area form, #preview-area header, #preview-area nav, #preview-area main, #preview-area article, #preview-area footer { display:block; padding:14px; border-radius:16px; margin-bottom:12px; }\n#preview-area form { border:2px dashed #38bdf8; background:#f0f9ff; }\n#preview-area label { display:block; font-weight:700; margin-bottom:6px; }\n#preview-area input, #preview-area button { padding:10px 12px; border-radius:12px; border:1px solid #94a3b8; font:600 14px/1.2 Arial,sans-serif; }\n#preview-area button { background:#38bdf8; color:#082f49; border-color:#0ea5e9; }\n#preview-area header { background:#dbeafe; }\n#preview-area nav { background:#fef3c7; }\n#preview-area main { background:#dcfce7; }\n#preview-area article { background:#ede9fe; }\n#preview-area footer { background:#fee2e2; }\n</style>`,
-    progress: 67,
-    validator: function(code) { return /EX2_Q14_SUBMITTED/i.test(code); }
+    progress: 100,
+    validator: function(code) { return /EX2_FINISHED/i.test(code); }
 };

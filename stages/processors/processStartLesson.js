@@ -14,5 +14,18 @@ function processStartLesson(payload, currentState, contextData) {
         window.exam1ResultCode = "";
         window.lessonEmoji = null;
     }
+    if (lesson && lesson.id === 'exam2') {
+        window.exam2Answers = {};
+        window.exam2SessionSeed = Date.now();
+        window.exam2ResultCode = "";
+        window.exam2TotalQuestions = 20;
+        window.exam2Started = false;
+        if (window.exam2ClockInterval) {
+            clearInterval(window.exam2ClockInterval);
+            window.exam2ClockInterval = null;
+        }
+        window.exam2RenderTimer = null;
+        window.lessonEmoji = null;
+    }
     return newState;
 }

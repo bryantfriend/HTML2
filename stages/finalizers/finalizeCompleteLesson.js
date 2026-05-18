@@ -21,7 +21,7 @@ function finalizeCompleteLesson(payload, newState, oldState, contextData) {
 
         const lesson = window.courseData.lessons[newState.currentLessonIndex];
         function buildExamCode(prefix, score) {
-            const seed = window.exam1SessionSeed || Date.now();
+            const seed = window.exam2SessionSeed || window.exam1SessionSeed || Date.now();
             const stamp = String(seed).slice(-6);
             const checksum = ((score * 17) + (seed % 89)).toString(36).toUpperCase();
             return `${prefix}-${String(score).padStart(2, '0')}-${stamp}-${checksum}`;
@@ -61,19 +61,24 @@ function finalizeCompleteLesson(payload, newState, oldState, contextData) {
         }
 
         if (lesson && lesson.id === 'exam2') {
-            const score = 100;
+            const total = window.exam2TotalQuestions || 20;
+            const score = Object.entries(window.exam2Answers || {})
+                .filter(([key, entry]) => /^q\d+$/i.test(key) && entry && entry.correct)
+                .length;
+            const percent = total ? Math.round((score / total) * 100) : 0;
             if (!window.exam2ResultCode) {
                 window.exam2ResultCode = buildExamCode('EX2', score);
             }
             emojiCompletionHtml =
                 `<div class="mb-6 text-6xl">${window.lessonEmoji || '🚀'}</div>` +
-                `<h2 class="heading-font text-5xl text-white mb-4 glow-text">HTML FINAL COMPLETE</h2>` +
-                `<p class="text-[var(--neon-cyan)] code-font text-2xl mb-4">Full Marks: ${score} / 100</p>` +
+                `<h2 class="heading-font text-5xl text-white mb-4 glow-text">HTML EXAM COMPLETE</h2>` +
+                `<p class="text-[var(--neon-cyan)] code-font text-2xl mb-2">Score: ${score} / ${total}</p>` +
+                `<p class="text-gray-300 text-lg mb-4">${percent}%</p>` +
                 `<div class="mb-8 rounded-xl border border-[var(--neon-pink)] bg-[var(--neon-pink)]/10 px-6 py-5">` +
                 `<p class="text-sm uppercase tracking-[0.3em] text-gray-400 mb-2">Write Down This Exam Code</p>` +
                 `<p class="heading-font text-3xl text-[var(--neon-pink)] break-all">${window.exam2ResultCode}</p>` +
                 `</div>` +
-                `<p class="text-[var(--neon-pink)] font-bold text-xl mb-8">Every mission is guided, so finishing the exam earns full credit.</p>`;
+                `<p class="text-[var(--neon-pink)] font-bold text-xl mb-8">Show this score and code to your teacher.</p>`;
             gameButtonHtml = '';
         }
 
