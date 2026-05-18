@@ -18,7 +18,7 @@ function processStartLesson(payload, currentState, contextData) {
         window.exam2Answers = {};
         window.exam2SessionSeed = Date.now();
         window.exam2ResultCode = "";
-        window.exam2TotalQuestions = 20;
+        window.exam2TotalQuestions = 50;
         window.exam2Started = false;
         if (window.exam2ClockInterval) {
             clearInterval(window.exam2ClockInterval);

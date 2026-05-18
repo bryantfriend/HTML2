@@ -1,10 +1,10 @@
-window.Lessons.exam2.modules[9] = {
-    title: "10. Which tag makes a bulleted list?",
+window.Lessons.exam2.modules[23] = {
+    title: "24. What does `autoplay` do on media?",
     body: `<section class="space-y-4 rounded-[24px] border border-cyan-400/15 bg-[linear-gradient(180deg,rgba(15,23,42,0.96),rgba(11,18,32,0.94))] p-5 shadow-[0_18px_40px_rgba(2,6,23,0.22)]">
   <p class="text-[11px] font-extrabold uppercase tracking-[0.22em] text-[var(--neon-cyan)]">HTML Final Exam</p>
   <div class="flex flex-wrap items-center justify-between gap-3">
-    <h3 class="heading-font text-2xl text-white">10. Which tag makes a bulleted list?</h3>
-    <span class="rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.18em] text-cyan-100">Question 10 of 50</span>
+    <h3 class="heading-font text-2xl text-white">24. What does \`autoplay\` do on media?</h3>
+    <span class="rounded-full border border-cyan-400/20 bg-cyan-400/10 px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.18em] text-cyan-100">Question 24 of 50</span>
   </div>
   <p class="text-[15px] leading-7 text-slate-200">Pick one answer. Your score appears only at the end.</p>
   <div class="grid gap-3 md:grid-cols-3">
@@ -33,11 +33,11 @@ window.Lessons.exam2.modules[9] = {
 .exam2-shell.submitted .exam2-status{color:#dcfce7;border-color:rgba(74,222,128,.24);background:rgba(20,83,45,.34)}
 @media(min-width:720px){.exam2-option-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
-<div class="exam2-shell" id="exam2-q10">
+<div class="exam2-shell" id="exam2-q24">
   <div class="exam2-top">
     <div>
       <p class="exam2-kicker">Record One Answer</p>
-      <h4 class="exam2-heading">Which tag makes a bulleted list?</h4>
+      <h4 class="exam2-heading">What does \`autoplay\` do on media?</h4>
     </div>
     <div class="flex flex-wrap gap-2">
       <span class="exam2-chip">Multiple Choice</span>
@@ -45,13 +45,13 @@ window.Lessons.exam2.modules[9] = {
     </div>
   </div>
   <p class="exam2-prompt">Choose the best answer.</p>
-  <div class="exam2-option-grid"><button type="button" class="exam2-option" data-value="wrong1" data-correct="false"><strong>A. &lt;ol&gt;</strong><span>Not the best answer</span></button><button type="button" class="exam2-option" data-value="correct" data-correct="true"><strong>B. &lt;ul&gt;</strong><span>Best answer</span></button><button type="button" class="exam2-option" data-value="wrong3" data-correct="false"><strong>C. &lt;nav&gt;</strong><span>Not the best answer</span></button><button type="button" class="exam2-option" data-value="wrong2" data-correct="false"><strong>D. &lt;table&gt;</strong><span>Not the best answer</span></button></div>
+  <div class="exam2-option-grid"><button type="button" class="exam2-option" data-value="wrong2" data-correct="false"><strong>A. It makes the video full screen.</strong><span>Not the best answer</span></button><button type="button" class="exam2-option" data-value="wrong1" data-correct="false"><strong>B. It changes the sound into text.</strong><span>Not the best answer</span></button><button type="button" class="exam2-option" data-value="wrong3" data-correct="false"><strong>C. It deletes the pause button.</strong><span>Not the best answer</span></button><button type="button" class="exam2-option" data-value="correct" data-correct="true"><strong>D. It tries to start playing automatically.</strong><span>Best answer</span></button></div>
   <p class="exam2-status" data-exam2-status>Choose one answer to save it.</p>
 </div>
 <script>
 
 (function() {
-  const root = document.getElementById('exam2-q10');
+  const root = document.getElementById('exam2-q24');
   if (!root) return;
   const editor = document.getElementById('code-editor');
   const status = root.querySelector('[data-exam2-status]');
@@ -97,10 +97,10 @@ window.Lessons.exam2.modules[9] = {
     if (root.dataset.submitted === 'true') return;
     root.dataset.submitted = 'true';
     root.classList.add('submitted');
-    window.exam2Answers['q10'] = { correct: !!correct, response: response };
+    window.exam2Answers['q24'] = { correct: !!correct, response: response };
     if (status) status.textContent = 'Answer saved. Move to the next question when you are ready.';
     if (editor) {
-      editor.value = appendMarker(editor.value, 'EX2_Q10_SUBMITTED');
+      editor.value = appendMarker(editor.value, 'EX2_Q24_SUBMITTED');
       editor.dispatchEvent(new Event('input', { bubbles: true }));
     }
     root.querySelectorAll('button').forEach(function(button) {
@@ -119,7 +119,7 @@ window.Lessons.exam2.modules[9] = {
   });
 })();
 </script>`,
-    initialCode: "<!-- Question 10: click one answer on the left to save it. -->",
+    initialCode: "<!-- Question 24: click one answer on the left to save it. -->",
     previewScaffold: `<style>
 #preview-area { margin:0; padding:18px; background:linear-gradient(180deg,#eff6ff,#f8fafc); color:#0f172a; font-family:Arial,sans-serif; line-height:1.55; }
 #preview-area body { margin:0; font-family:Arial,sans-serif; background:white; color:#0f172a; padding:18px; border-radius:18px; box-shadow:inset 0 0 0 1px rgba(148,163,184,0.22); }
@@ -128,6 +128,6 @@ window.Lessons.exam2.modules[9] = {
 #preview-area .exam-page { padding:20px; border-radius:16px; background:linear-gradient(180deg,#ffffff,#f8fafc); border:1px solid #dbeafe; }
 #preview-area .exam-page strong { color:#0b57d0; }
 </style>`,
-    progress: 20,
-    validator: function(code) { return /EX2_Q10_SUBMITTED/i.test(code); }
+    progress: 47,
+    validator: function(code) { return /EX2_Q24_SUBMITTED/i.test(code); }
 };
