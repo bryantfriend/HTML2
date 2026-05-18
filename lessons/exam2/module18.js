@@ -44,8 +44,8 @@ window.Lessons.exam2.modules[17] = {
       <span class="exam2-timer" data-exam2-timer>Time Left 40:00</span>
     </div>
   </div>
-  <p class="exam2-prompt">Choose the best answer.</p>
-  <div class="exam2-option-grid"><button type="button" class="exam2-option" data-value="wrong2" data-correct="false"><strong>A. It turns a list into a heading.</strong><span>Not the best answer</span></button><button type="button" class="exam2-option" data-value="correct" data-correct="true"><strong>B. It helps when an image does not load and supports accessibility.</strong><span>Best answer</span></button><button type="button" class="exam2-option" data-value="wrong1" data-correct="false"><strong>C. It makes text rainbow colored.</strong><span>Not the best answer</span></button><button type="button" class="exam2-option" data-value="wrong3" data-correct="false"><strong>D. It closes an HTML tag automatically.</strong><span>Not the best answer</span></button></div>
+  <p class="exam2-prompt">Choose one answer.</p>
+  <div class="exam2-option-grid"><button type="button" class="exam2-option" data-value="wrong2" data-correct="false"><strong>A. It turns a list into a heading.</strong><span>Tap to choose this answer.</span></button><button type="button" class="exam2-option" data-value="correct" data-correct="true"><strong>B. It helps when an image does not load and supports accessibility.</strong><span>Tap to choose this answer.</span></button><button type="button" class="exam2-option" data-value="wrong1" data-correct="false"><strong>C. It makes text rainbow colored.</strong><span>Tap to choose this answer.</span></button><button type="button" class="exam2-option" data-value="wrong3" data-correct="false"><strong>D. It closes an HTML tag automatically.</strong><span>Tap to choose this answer.</span></button></div>
   <p class="exam2-status" data-exam2-status>Choose one answer to save it.</p>
 </div>
 <script>

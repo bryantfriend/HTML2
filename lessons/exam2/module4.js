@@ -44,8 +44,8 @@ window.Lessons.exam2.modules[3] = {
       <span class="exam2-timer" data-exam2-timer>Time Left 40:00</span>
     </div>
   </div>
-  <p class="exam2-prompt">Choose the best answer.</p>
-  <div class="exam2-option-grid"><button type="button" class="exam2-option" data-value="wrong3" data-correct="false"><strong>A. Delete all closing tags.</strong><span>Not the best answer</span></button><button type="button" class="exam2-option" data-value="wrong2" data-correct="false"><strong>B. Hide the webpage title.</strong><span>Not the best answer</span></button><button type="button" class="exam2-option" data-value="wrong1" data-correct="false"><strong>C. Turn the page into CSS.</strong><span>Not the best answer</span></button><button type="button" class="exam2-option" data-value="correct" data-correct="true"><strong>D. This is an HTML5 document.</strong><span>Best answer</span></button></div>
+  <p class="exam2-prompt">Choose one answer.</p>
+  <div class="exam2-option-grid"><button type="button" class="exam2-option" data-value="wrong3" data-correct="false"><strong>A. Delete all closing tags.</strong><span>Tap to choose this answer.</span></button><button type="button" class="exam2-option" data-value="wrong2" data-correct="false"><strong>B. Hide the webpage title.</strong><span>Tap to choose this answer.</span></button><button type="button" class="exam2-option" data-value="wrong1" data-correct="false"><strong>C. Turn the page into CSS.</strong><span>Tap to choose this answer.</span></button><button type="button" class="exam2-option" data-value="correct" data-correct="true"><strong>D. This is an HTML5 document.</strong><span>Tap to choose this answer.</span></button></div>
   <p class="exam2-status" data-exam2-status>Choose one answer to save it.</p>
 </div>
 <script>

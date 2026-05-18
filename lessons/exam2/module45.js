@@ -44,8 +44,8 @@ window.Lessons.exam2.modules[44] = {
       <span class="exam2-timer" data-exam2-timer>Time Left 40:00</span>
     </div>
   </div>
-  <p class="exam2-prompt">Choose the best answer.</p>
-  <div class="exam2-option-grid"><button type="button" class="exam2-option" data-value="wrong1" data-correct="false"><strong>A. &lt;audio&gt;</strong><span>Not the best answer</span></button><button type="button" class="exam2-option" data-value="wrong2" data-correct="false"><strong>B. &lt;ol&gt;</strong><span>Not the best answer</span></button><button type="button" class="exam2-option" data-value="correct" data-correct="true"><strong>C. &lt;footer&gt;</strong><span>Best answer</span></button><button type="button" class="exam2-option" data-value="wrong3" data-correct="false"><strong>D. &lt;input&gt;</strong><span>Not the best answer</span></button></div>
+  <p class="exam2-prompt">Choose one answer.</p>
+  <div class="exam2-option-grid"><button type="button" class="exam2-option" data-value="wrong1" data-correct="false"><strong>A. &lt;audio&gt;</strong><span>Tap to choose this answer.</span></button><button type="button" class="exam2-option" data-value="wrong2" data-correct="false"><strong>B. &lt;ol&gt;</strong><span>Tap to choose this answer.</span></button><button type="button" class="exam2-option" data-value="correct" data-correct="true"><strong>C. &lt;footer&gt;</strong><span>Tap to choose this answer.</span></button><button type="button" class="exam2-option" data-value="wrong3" data-correct="false"><strong>D. &lt;input&gt;</strong><span>Tap to choose this answer.</span></button></div>
   <p class="exam2-status" data-exam2-status>Choose one answer to save it.</p>
 </div>
 <script>

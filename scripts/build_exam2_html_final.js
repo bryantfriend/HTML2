@@ -98,12 +98,12 @@ function buildQuestionObjects() {
   return QUESTIONS.map(([title, correct, wrong1, wrong2, wrong3], index) => ({
     id: index + 1,
     title,
-    prompt: 'Choose the best answer.',
-    correct: { value: 'correct', label: correct, copy: 'Best answer' },
+    prompt: 'Choose one answer.',
+    correct: { value: 'correct', label: correct, copy: 'Tap to choose this answer.' },
     wrong: [
-      { value: 'wrong1', label: wrong1, copy: 'Not the best answer' },
-      { value: 'wrong2', label: wrong2, copy: 'Not the best answer' },
-      { value: 'wrong3', label: wrong3, copy: 'Not the best answer' }
+      { value: 'wrong1', label: wrong1, copy: 'Tap to choose this answer.' },
+      { value: 'wrong2', label: wrong2, copy: 'Tap to choose this answer.' },
+      { value: 'wrong3', label: wrong3, copy: 'Tap to choose this answer.' }
     ]
   }));
 }

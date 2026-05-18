@@ -44,8 +44,8 @@ window.Lessons.exam2.modules[0] = {
       <span class="exam2-timer" data-exam2-timer>Time Left 40:00</span>
     </div>
   </div>
-  <p class="exam2-prompt">Choose the best answer.</p>
-  <div class="exam2-option-grid"><button type="button" class="exam2-option" data-value="wrong1" data-correct="false"><strong>A. Changing the weather outside.</strong><span>Not the best answer</span></button><button type="button" class="exam2-option" data-value="wrong2" data-correct="false"><strong>B. Charging a laptop battery.</strong><span>Not the best answer</span></button><button type="button" class="exam2-option" data-value="correct" data-correct="true"><strong>C. Building the structure of a webpage.</strong><span>Best answer</span></button><button type="button" class="exam2-option" data-value="wrong3" data-correct="false"><strong>D. Printing money at home.</strong><span>Not the best answer</span></button></div>
+  <p class="exam2-prompt">Choose one answer.</p>
+  <div class="exam2-option-grid"><button type="button" class="exam2-option" data-value="wrong1" data-correct="false"><strong>A. Changing the weather outside.</strong><span>Tap to choose this answer.</span></button><button type="button" class="exam2-option" data-value="wrong2" data-correct="false"><strong>B. Charging a laptop battery.</strong><span>Tap to choose this answer.</span></button><button type="button" class="exam2-option" data-value="correct" data-correct="true"><strong>C. Building the structure of a webpage.</strong><span>Tap to choose this answer.</span></button><button type="button" class="exam2-option" data-value="wrong3" data-correct="false"><strong>D. Printing money at home.</strong><span>Tap to choose this answer.</span></button></div>
   <p class="exam2-status" data-exam2-status>Choose one answer to save it.</p>
 </div>
 <script>
